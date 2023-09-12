@@ -13,10 +13,6 @@ import {
   useColorScheme,
 } from 'react-native';
 
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import "./src/i18n"
@@ -33,8 +29,9 @@ function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    flex: 1
+    // backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    flex: 1,
+    backgroundColor: '#121212'
   };
 
   return (

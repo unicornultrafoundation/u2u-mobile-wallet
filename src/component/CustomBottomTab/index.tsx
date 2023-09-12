@@ -1,5 +1,7 @@
 import React from 'react';
 import { Image, Platform, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import Icon from '../Icon';
+import styles from './styles';
 
 const TABBAR_HEIGHT = 80
 
@@ -16,7 +18,7 @@ export default ({ state, descriptors, navigation, theme }: any) => {
     <View 
       style={{ 
         justifyContent: 'center',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         flexDirection: 'row', 
         height: TABBAR_HEIGHT,
         width: viewportWidth,
@@ -55,135 +57,54 @@ export default ({ state, descriptors, navigation, theme }: any) => {
         }) => {
           if (route.name === 'HomeStack') {
             return (
-              <Text style={{fontSize: 12, color: focused ? '#1EAA7F' : '#646464'}}>
+              <Text style={[styles.tabTitle, {color: focused ? '#1EAA7F' : '#646464'}]}>
                 Home
               </Text>
             )
           } else if (route.name === 'DappStack') {
             return (
-              <Text style={{fontSize: 12, color: focused ? '#1EAA7F' : '#646464'}}>
+              <Text style={[styles.tabTitle, {color: focused ? '#1EAA7F' : '#646464'}]}>
                 Dapp
               </Text>
             )
           } else if (route.name === 'U2UStack') {
             return (
-              <Text style={{fontSize: 12, color: focused ? '#1EAA7F' : '#646464'}}>
+              <Text style={[styles.tabTitle, {color: focused ? '#1EAA7F' : '#646464'}]}>
                 U2U
               </Text>
             )
           } else if (route.name === 'InvestmentStack') {
             return (
-              <Text style={{fontSize: 12, color: focused ? '#1EAA7F' : '#646464'}}>
+              <Text style={[styles.tabTitle, {color: focused ? '#1EAA7F' : '#646464'}]}>
                 Investment
               </Text>
             )
           } else if (route.name === 'WalletStack') {
             return (
-              <Text style={{fontSize: 12, color: focused ? '#1EAA7F' : '#646464'}}>
+              <Text style={[styles.tabTitle, {color: focused ? '#1EAA7F' : '#646464'}]}>
                 Wallet
               </Text>
             )
           }
         }
 
-        // const renderIcon = ({color, size, focused}: {color: string, size: number, focused: boolean}) => {
-        //   let iconName = '';
+        const renderIcon = ({size, focused}: {size: number, focused: boolean}) => {
+          let iconName = '';
+          if (route.name === 'HomeStack') {
+            iconName = focused ? 'home-active' : 'home'
+          } else if (route.name === 'DappStack') {
+            iconName = focused ? 'dapp-active' : 'dapp'
+          } else if (route.name === 'U2UStack') {
+            iconName = focused ? 'u2u-active' : 'u2u'
+          } else if (route.name === 'InvestmentStack') {
+            iconName = focused ? 'investment-active' : 'investment'
+          } else if (route.name === 'WalletStack') {
+            iconName = focused ? 'wallet-active' : 'wallet'
+          }
 
-        //   if (route.name === 'Home') {
-        //     return (
-        //       <Image
-        //         style={{width: 24, height: 24, marginTop: 12, marginBottom: 2}}
-        //         source={
-        //           focused
-        //             ? require('../../assets/icon/home_dark.png')
-        //             : require('../../assets/icon/home_dark_inactive.png')
-        //         }
-        //       />
-        //     );
-        //   } else if (route.name === 'News') {
-        //     iconName = 'newspaper-o';
-        //   } else if (route.name === 'Transaction') {
-        //     return (
-        //       <Image
-        //         style={{width: 24, height: 24, marginTop: 12, marginBottom: 2}}
-        //         source={
-        //           focused
-        //             ? require('../../assets/icon/transaction_dark.png')
-        //             : require('../../assets/icon/transaction_dark_inactive.png')
-        //         }
-        //       />
-        //     );
-        //   } else if (route.name === 'Setting') {
-        //     return (
-        //       <Image
-        //         style={{width: 24, height: 24, marginTop: 12, marginBottom: 2}}
-        //         source={
-        //           focused
-        //             ? require('../../assets/icon/setting_dark.png')
-        //             : require('../../assets/icon/setting_dark_inactive.png')
-        //         }
-        //       />
-        //     );
-        //   } else if (route.name === 'DualNode') {
-        //     return (
-        //       <Image
-        //         style={{width: 24, height: 24, marginTop: 12, marginBottom: 2}}
-        //         source={
-        //           focused
-        //             ? require('../../assets/icon/dual_node.png')
-        //             : require('../../assets/icon/dual_node_inactive.png')
-        //         }
-        //       />
-        //     );
-        //   } else if (route.name === 'Staking') {
-        //     return (
-        //       <Image
-        //         style={{width: 24, height: 24, marginTop: 12, marginBottom: 2}}
-        //         source={
-        //           focused
-        //             ? require('../../assets/icon/staking_dark.png')
-        //             : require('../../assets/icon/staking_dark_inactive.png')
-        //         }
-        //       />
-        //     );
-        //   } else if (route.name === 'Address') {
-        //     return (
-        //       <Image
-        //         style={{width: 24, height: 24, marginTop: 12, marginBottom: 2}}
-        //         source={
-        //           focused
-        //             ? require('../../assets/icon/address_book_dark.png')
-        //             : require('../../assets/icon/address_book_dark_inactive.png')
-        //         }
-        //       />
-        //     );
-        //   } else if (route.name === 'DEX') {
-        //     return (
-        //       <Image
-        //         style={{width: 24, height: 24, marginTop: 12, marginBottom: 2}}
-        //         source={
-        //           focused
-        //             ? require('../../assets/icon/kai_dex_dark.png')
-        //             : require('../../assets/icon/kai_dex_dark_inactive.png')
-        //         }
-        //       />
-        //     )
-        //   } else if (route.name === 'DApp') {
-        //     return (
-        //       <Image
-        //         style={{width: 24, height: 24, marginTop: 12, marginBottom: 2}}
-        //         source={
-        //           focused
-        //             ? require('../../assets/icon/dapp.png')
-        //             : require('../../assets/icon/dapp_inactive.png')
-        //         }
-        //       />
-        //     )
-        //   }
-
-        //   // You can return any component that you like here!
-        //   return <Icon name={iconName} size={size} color={color} />;
-        // }
+          // You can return any component that you like here!
+          return <Icon name={iconName} width={size} height={size} />;
+        }
 
         return (
           <TouchableOpacity
@@ -198,14 +119,16 @@ export default ({ state, descriptors, navigation, theme }: any) => {
               width: viewportWidth / 5 ,
               alignItems: 'center',
               justifyContent: 'center',
+              borderTopColor: isFocused ? '#1EAA7F' : 'transparent',
+              borderTopWidth: 2,
+              height: '100%'
             }}
           >
-            {/* {renderIcon({color: 'transparent', size: 24, focused: isFocused})} */}
+            {renderIcon({size: 22, focused: isFocused})}
             {renderLabel({focused: isFocused})}
           </TouchableOpacity>
         );
       })}
-      {/* </ScrollView> */}
     </View>
   );
 }
