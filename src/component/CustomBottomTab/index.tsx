@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Image, Platform, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import Icon from '../Icon';
 import styles from './styles';
+import { usePreferenceStore } from '../../state/preferences';
+import { darkTheme, lightTheme } from '../../theme/color';
 
 const TABBAR_HEIGHT = 80
 
-export default ({ state, descriptors, navigation, theme }: any) => {
+export default ({ state, descriptors, navigation }: any) => {
   const {width: viewportWidth} = useWindowDimensions();
+  const {darkMode} = usePreferenceStore()
 
-  // const showTabBar = useRecoilValue(showTabBarAtom);
-
-  // if (!showTabBar) {
-  //   return null
-  // }
+  const theme = useMemo(() => {
+    if (darkMode) {
+      return darkTheme
+    }
+    return lightTheme
+  }, [darkMode])
 
   return (
     <View 
@@ -22,7 +26,7 @@ export default ({ state, descriptors, navigation, theme }: any) => {
         flexDirection: 'row', 
         height: TABBAR_HEIGHT,
         width: viewportWidth,
-        backgroundColor: '#121212',
+        backgroundColor: darkMode ? '#181818' : '#FFFFFF',
         // borderTopColor: theme.backgroundFocusColor,
       }}
     >
