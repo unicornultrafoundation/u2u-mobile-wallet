@@ -2,14 +2,14 @@ import React from 'react';
 // import HomeInactive from '../../asset/icon/home.png'
 import { DimensionValue, Image, ImageStyle } from 'react-native';
 
-const HomeInactive = require('../../asset/icon/home.png')
-const HomeActive = require('../../asset/icon/home-active.png')
-const DappInactive = require('../../asset/icon/dapp.png')
-const DappActive = require('../../asset/icon/dapp-active.png')
-const U2UInactive = require('../../asset/icon/u2u-active.png')
-const U2UActive = require('../../asset/icon/u2u-active.png')
-const InvestionInactive = require('../../asset/icon/investment.png')
-const InvestionActive = require('../../asset/icon/investment.png')
+const DiscoverInactive = require('../../asset/icon/discover.png')
+const DiscoverActive = require('../../asset/icon/discover-active.png')
+const EcosystemInactive = require('../../asset/icon/ecosystem.png')
+const EcosystemActive = require('../../asset/icon/ecosystem-active.png')
+const BrowserInactive = require('../../asset/icon/browser.png')
+const BrowserActive = require('../../asset/icon/browser-active.png')
+const StakingInactive = require('../../asset/icon/staking.png')
+const StakingActive = require('../../asset/icon/staking-active.png')
 const WalletInactive = require('../../asset/icon/wallet.png')
 const WalletActive = require('../../asset/icon/wallet-active.png')
 
@@ -20,10 +20,10 @@ const Icon = ({name, width, height, style}: {
   style?: ImageStyle
 }) => {
   switch (name) {
-    case 'home':
+    case 'discover':
       return (
         <Image
-          source={HomeInactive}
+          source={DiscoverInactive}
           style={[
             style,
             {
@@ -33,10 +33,10 @@ const Icon = ({name, width, height, style}: {
           ]}
         />
       )
-    case 'home-active':
+    case 'discover-active':
       return (
         <Image
-          source={HomeActive}
+          source={DiscoverActive}
           style={[
             style,
             {
@@ -46,10 +46,10 @@ const Icon = ({name, width, height, style}: {
           ]}
         />
       )
-    case 'dapp': 
+    case 'ecosystem': 
       return (
         <Image
-          source={DappInactive}
+          source={EcosystemInactive}
           style={[
             style,
             {
@@ -59,10 +59,10 @@ const Icon = ({name, width, height, style}: {
           ]}
         />
       )
-    case 'dapp-active':
+    case 'ecosystem-active':
       return (
         <Image
-          source={DappActive}
+          source={EcosystemActive}
           style={[
             style,
             {
@@ -72,10 +72,10 @@ const Icon = ({name, width, height, style}: {
           ]}
         />
       )
-    case 'u2u': 
+    case 'browser': 
       return (
         <Image
-          source={U2UInactive}
+          source={BrowserInactive}
           style={[
             style,
             {
@@ -85,10 +85,10 @@ const Icon = ({name, width, height, style}: {
           ]}
         />
       )
-    case 'u2u-active':
+    case 'browser-active':
       return (
         <Image
-          source={U2UActive}
+          source={BrowserActive}
           style={[
             style,
             {
@@ -98,10 +98,10 @@ const Icon = ({name, width, height, style}: {
           ]}
         />
       )
-    case 'investment': 
+    case 'staking': 
       return (
         <Image
-          source={InvestionInactive}
+          source={StakingInactive}
           style={[
             style,
             {
@@ -111,10 +111,10 @@ const Icon = ({name, width, height, style}: {
           ]}
         />
       )
-    case 'investment-active': 
+    case 'staking-active': 
       return (
         <Image
-          source={InvestionActive}
+          source={StakingActive}
           style={[
             style,
             {
