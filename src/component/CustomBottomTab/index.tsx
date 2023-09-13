@@ -3,7 +3,7 @@ import { Image, Platform, Text, TouchableOpacity, useWindowDimensions, View } fr
 import Icon from '../Icon';
 import styles from './styles';
 import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
+import { color, darkTheme, lightTheme } from '../../theme/color';
 
 const TABBAR_HEIGHT = 80
 
@@ -27,7 +27,6 @@ export default ({ state, descriptors, navigation }: any) => {
         height: TABBAR_HEIGHT,
         width: viewportWidth,
         backgroundColor: darkMode ? '#181818' : '#FFFFFF',
-        // borderTopColor: theme.backgroundFocusColor,
       }}
     >
       {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}> */}
@@ -59,34 +58,34 @@ export default ({ state, descriptors, navigation }: any) => {
         const renderLabel = ({focused}: {
           focused: boolean;
         }) => {
-          if (route.name === 'HomeStack') {
+          if (route.name === 'DiscoverStack') {
             return (
-              <Text style={[styles.tabTitle, {color: focused ? '#1EAA7F' : '#646464'}]}>
-                Home
+              <Text style={[styles.tabTitle, {color: focused ? color.primary[500] : color.neutral[500]}]}>
+                Discover
               </Text>
             )
-          } else if (route.name === 'DappStack') {
+          } else if (route.name === 'EcosystemStack') {
             return (
-              <Text style={[styles.tabTitle, {color: focused ? '#1EAA7F' : '#646464'}]}>
-                Dapp
-              </Text>
-            )
-          } else if (route.name === 'U2UStack') {
-            return (
-              <Text style={[styles.tabTitle, {color: focused ? '#1EAA7F' : '#646464'}]}>
-                U2U
-              </Text>
-            )
-          } else if (route.name === 'InvestmentStack') {
-            return (
-              <Text style={[styles.tabTitle, {color: focused ? '#1EAA7F' : '#646464'}]}>
-                Investment
+              <Text style={[styles.tabTitle, {color: focused ? color.primary[500] : color.neutral[500]}]}>
+                Ecosystem
               </Text>
             )
           } else if (route.name === 'WalletStack') {
             return (
-              <Text style={[styles.tabTitle, {color: focused ? '#1EAA7F' : '#646464'}]}>
+              <Text style={[styles.tabTitle, {color: focused ? color.primary[500] : color.neutral[500]}]}>
                 Wallet
+              </Text>
+            )
+          } else if (route.name === 'StakingStack') {
+            return (
+              <Text style={[styles.tabTitle, {color: focused ? color.primary[500] : color.neutral[500]}]}>
+                Staking
+              </Text>
+            )
+          } else if (route.name === 'BrowserStack') {
+            return (
+              <Text style={[styles.tabTitle, {color: focused ? color.primary[500] : color.neutral[500]}]}>
+                Browser
               </Text>
             )
           }
@@ -94,16 +93,16 @@ export default ({ state, descriptors, navigation }: any) => {
 
         const renderIcon = ({size, focused}: {size: number, focused: boolean}) => {
           let iconName = '';
-          if (route.name === 'HomeStack') {
-            iconName = focused ? 'home-active' : 'home'
-          } else if (route.name === 'DappStack') {
-            iconName = focused ? 'dapp-active' : 'dapp'
-          } else if (route.name === 'U2UStack') {
-            iconName = focused ? 'u2u-active' : 'u2u'
-          } else if (route.name === 'InvestmentStack') {
-            iconName = focused ? 'investment-active' : 'investment'
+          if (route.name === 'DiscoverStack') {
+            iconName = focused ? 'discover-active' : 'discover'
+          } else if (route.name === 'EcosystemStack') {
+            iconName = focused ? 'ecosystem-active' : 'ecosystem'
           } else if (route.name === 'WalletStack') {
             iconName = focused ? 'wallet-active' : 'wallet'
+          } else if (route.name === 'StakingStack') {
+            iconName = focused ? 'staking-active' : 'staking'
+          } else if (route.name === 'BrowserStack') {
+            iconName = focused ? 'browser-active' : 'browser'
           }
 
           // You can return any component that you like here!
@@ -123,7 +122,7 @@ export default ({ state, descriptors, navigation }: any) => {
               width: viewportWidth / 5 ,
               alignItems: 'center',
               justifyContent: 'center',
-              borderTopColor: isFocused ? '#1EAA7F' : 'transparent',
+              borderTopColor: isFocused ? color.primary[500] : 'transparent',
               borderTopWidth: 2,
               height: '100%'
             }}
