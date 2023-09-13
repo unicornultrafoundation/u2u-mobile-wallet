@@ -21,6 +21,7 @@ const Tab = ({selectedTab, onChange, tabs, tabStyle, containerStyle}: TabProps) 
         const isActive = selectedTab === tabItem.value
         return (
           <TouchableOpacity
+            key={`tab-${tabItem.value}`}
             style={[
               styles.tabContainer,
               {borderColor: isActive ? '#2EBD85' : 'transparent'},
