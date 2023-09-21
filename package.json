@@ -16,6 +16,7 @@
     "@react-navigation/native-stack": "^6.9.13",
     "bignumber.js": "^9.1.2",
     "crypto": "^1.0.1",
+    "ethers": "^6.7.1",
     "events": "^3.3.0",
     "i18next": "^23.5.1",
     "intl-pluralrules": "^2.0.1",
