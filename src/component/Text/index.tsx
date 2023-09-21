@@ -1,6 +1,9 @@
 import React, { useMemo } from 'react'
 import { Text as RNText, TextProps, TextStyle } from 'react-native'
 import { typography } from '../../theme/typography';
+import { usePreferenceStore } from '../../state/preferences';
+import theme from '../../theme';
+import { darkTheme, lightTheme } from '../../theme/color';
 
 interface Props extends TextProps {
   type?: string;
@@ -8,6 +11,7 @@ interface Props extends TextProps {
 }
 
 const Text = ({children, style, type = 'label-regular', ...rest}: Props) => {
+  const {darkMode} = usePreferenceStore()
   const [typoType, variant] = useMemo(() => {
     return type.split('-')
   }, [type])
@@ -16,10 +20,19 @@ const Text = ({children, style, type = 'label-regular', ...rest}: Props) => {
     return typography[typoType][variant]
   }, [typoType, variant])
 
+  const textColor = useMemo(() => {
+    if (darkMode) return darkTheme.text.title
+    return lightTheme.text.title
+  }, [darkMode])
+
   return (
     <RNText
       {...rest}
-      style={[defaultStyle, style]}
+      style={[
+        defaultStyle,
+        {color: textColor},
+        style
+      ]}
     >
       {children}
     </RNText>

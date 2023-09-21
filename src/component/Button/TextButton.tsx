@@ -4,7 +4,7 @@ import { color as colorConfig } from '../../theme/color';
 import { TouchableOpacity } from 'react-native';
 import { BaseButtonProps } from './type';
 
-const TextButton = ({color, fullWidth, children, ...rest}: BaseButtonProps) => {
+const TextButton = ({color, fullWidth, children, style, textStyle, ...rest}: BaseButtonProps) => {
   const textColor = useMemo(() => {
     switch (color) {
       case 'primary':
@@ -23,12 +23,20 @@ const TextButton = ({color, fullWidth, children, ...rest}: BaseButtonProps) => {
   return (
     <TouchableOpacity
       {...rest}
-      style={{
-        flexDirection: 'row',
-        justifyContent: fullWidth ? 'space-between' : 'center'
-      }}
+      style={[
+        {
+          flexDirection: 'row',
+          justifyContent: fullWidth ? 'space-between' : 'center'
+        },
+        style
+      ]}
     >
-      <Text style={{color: textColor}}>{children}</Text>
+      <Text style={{
+        ...{color: textColor},
+        ...textStyle
+      }}>
+        {children}
+      </Text>
     </TouchableOpacity>
   )
 };

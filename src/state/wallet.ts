@@ -1,15 +1,13 @@
 import { create } from 'zustand'
 
 interface WalletState {
-  address: string;
-  privateKey: string;
-  currentBalance: string;
-  fetchBalance: () => void
+  seedPhrase: string;
+  selectedIndex: number;
+  accessWallet: (seedPhrase: string) => void
 }
 
 export const useWalletStore = create<WalletState>((set) => ({
-  address: "",
-  privateKey: "",
-  currentBalance: "0",
-  fetchBalance: () => set({ currentBalance: "1" }),
+  seedPhrase: "",
+  selectedIndex: 1,
+  accessWallet: (seedPhrase) => set({ seedPhrase }),
 }))

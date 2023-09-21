@@ -6,7 +6,7 @@ import Text from '../Text';
 import { BaseButtonProps } from './type';
 
 
-const FillButton = ({color = 'primary', disabled, fullWidth, children, ...rest}: BaseButtonProps) => {
+const FillButton = ({color = 'primary', disabled, fullWidth, children, style, textStyle, ...rest}: BaseButtonProps) => {
   const [bgColor, textColor] = useMemo(() => {
     if (disabled) {
       return [colorConfig.primary[600], colorConfig.primary[300]]
@@ -39,11 +39,20 @@ const FillButton = ({color = 'primary', disabled, fullWidth, children, ...rest}:
         {
           backgroundColor: bgColor,
           flexDirection: 'row',
-          justifyContent: fullWidth ? 'space-between' : 'center'
-        }
+        },
+        fullWidth ? {width: '100%'} : {},
+        style
       ]}
     >
-      <Text style={{color: textColor}}>{children}</Text>
+      <Text style={{
+        ...{
+          color: textColor
+        },
+        ...styles.textSyle,
+        ...textStyle
+      }}>
+        {children}
+      </Text>
     </TouchableOpacity>
   )
 }

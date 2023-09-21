@@ -5,7 +5,7 @@ import { BaseButtonProps } from './type';
 import Text from '../Text';
 import styles from './styles';
 
-const StatusButton = ({color = 'primary', fullWidth, children, ...rest}: BaseButtonProps) => {
+const StatusButton = ({color = 'primary', fullWidth, children, style, ...rest}: BaseButtonProps) => {
   const [bgColor, textColor] = useMemo(() => {
     switch (color) {
       case 'info':
@@ -33,8 +33,8 @@ const StatusButton = ({color = 'primary', fullWidth, children, ...rest}: BaseBut
         {
           backgroundColor: bgColor,
           flexDirection: 'row',
-          justifyContent: fullWidth ? 'space-between' : 'center'
-        }
+        },
+        style
       ]}
     >
       <Text style={{color: textColor}}>{children}</Text>
