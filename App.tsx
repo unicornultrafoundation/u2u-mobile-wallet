@@ -6,12 +6,7 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  Text,
-  useColorScheme,
-} from 'react-native';
+import { StatusBar } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -41,10 +36,11 @@ function App(): JSX.Element {
 
   return (
     <NavigationContainer>
-      <SafeAreaView style={backgroundStyle}>
+      {/* <SafeAreaView style={backgroundStyle}> */}
         <StatusBar
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
+          // backgroundColor="transparent"
         />
         {wallet.address === "" ? (
           <OnboardingStackScreen />
@@ -60,7 +56,7 @@ function App(): JSX.Element {
             <Tab.Screen name="BrowserStack" component={BrowserStackScreen} />
           </Tab.Navigator>
         )}
-      </SafeAreaView>
+      {/* </SafeAreaView> */}
     </NavigationContainer>
   );
 }

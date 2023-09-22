@@ -1,6 +1,7 @@
 import React from 'react';
 // import HomeInactive from '../../asset/icon/home.png'
 import { DimensionValue, Image, ImageStyle } from 'react-native';
+import { Svg, Path } from 'react-native-svg'
 
 const DiscoverInactive = require('../../asset/icon/discover.png')
 const DiscoverActive = require('../../asset/icon/discover-active.png')
@@ -19,6 +20,9 @@ const Icon = ({name, width, height, style}: {
   height?: DimensionValue;
   style?: ImageStyle
 }) => {
+  const w = width || 24
+  const h = height || 24
+
   switch (name) {
     case 'discover':
       return (
@@ -27,8 +31,8 @@ const Icon = ({name, width, height, style}: {
           style={[
             style,
             {
-              width: width || 24,
-              height: height || 24
+              width: w,
+              height: h
             }
           ]}
         />
@@ -40,8 +44,8 @@ const Icon = ({name, width, height, style}: {
           style={[
             style,
             {
-              width: width || 24,
-              height: height || 24
+              width: w,
+              height: h
             }
           ]}
         />
@@ -53,8 +57,8 @@ const Icon = ({name, width, height, style}: {
           style={[
             style,
             {
-              width: width || 24,
-              height: height || 24
+              width: w,
+              height: h
             }
           ]}
         />
@@ -66,8 +70,8 @@ const Icon = ({name, width, height, style}: {
           style={[
             style,
             {
-              width: width || 24,
-              height: height || 24
+              width: w,
+              height: h
             }
           ]}
         />
@@ -79,8 +83,8 @@ const Icon = ({name, width, height, style}: {
           style={[
             style,
             {
-              width: width || 24,
-              height: height || 24
+              width: w,
+              height: h
             }
           ]}
         />
@@ -92,8 +96,8 @@ const Icon = ({name, width, height, style}: {
           style={[
             style,
             {
-              width: width || 24,
-              height: height || 24
+              width: w,
+              height: h
             }
           ]}
         />
@@ -105,8 +109,8 @@ const Icon = ({name, width, height, style}: {
           style={[
             style,
             {
-              width: width || 24,
-              height: height || 24
+              width: w,
+              height: h
             }
           ]}
         />
@@ -118,8 +122,8 @@ const Icon = ({name, width, height, style}: {
           style={[
             style,
             {
-              width: width || 24,
-              height: height || 24
+              width: w,
+              height: h
             }
           ]}
         />
@@ -131,8 +135,8 @@ const Icon = ({name, width, height, style}: {
           style={[
             style,
             {
-              width: width || 24,
-              height: height || 24
+              width: w,
+              height: h
             }
           ]}
         />
@@ -144,11 +148,25 @@ const Icon = ({name, width, height, style}: {
           style={[
             style,
             {
-              width: width || 24,
-              height: height || 24
+              width: w,
+              height: h
             }
           ]}
         />
+      )
+    case 'arrow-left':
+      return (
+        <Svg
+          width={`${w}`}
+          height={`${h}`}
+          viewBox={`0 0 ${w} ${h}`}
+          fill="none"
+        >
+          <Path
+            d="M21.9887 12.1703L22 11.9827C22 11.2204 21.4463 10.5914 20.7307 10.4991L20.5486 10.4875L7.01376 10.4887L10.9001 6.46994C11.3215 5.95889 11.3611 5.21531 10.9965 4.6596L10.875 4.49894C10.3848 3.9336 9.57289 3.84268 8.98108 4.25695L8.82554 4.38248L2.48302 10.8035C1.88993 11.3523 1.84281 12.2795 2.34284 12.8883L8.82516 19.614C9.42036 20.1686 10.3381 20.1198 10.875 19.505C11.3671 18.9414 11.3684 18.0979 10.9068 17.5341L7.08794 13.4792L20.5486 13.4779C21.2885 13.4779 21.8991 12.9075 21.9887 12.1703Z"
+            fill="#D8D8D8"
+          />
+        </Svg>
       )
     default:
       return null

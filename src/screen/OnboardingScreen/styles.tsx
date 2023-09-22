@@ -11,9 +11,9 @@ export const styles = StyleSheet.create({
   bottomContainer: {
     width: '100%',
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 46,
     alignItems: 'center',
     justifyContent: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
   }
 });
