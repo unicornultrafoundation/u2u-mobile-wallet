@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, FlatList, View } from 'react-native'
+import Clipboard from '@react-native-clipboard/clipboard';
 import { styles } from './styles'
 import Text from '../../component/Text'
 import { useTranslation } from 'react-i18next'
@@ -7,10 +8,14 @@ import { usePreferenceStore } from '../../state/preferences'
 import { darkTheme, lightTheme } from '../../theme/color'
 import { generateMnemonic } from '../../util/wallet'
 import Button from '../../component/Button'
+import { useWallet } from '../../hook/useWallet'
+import Icon from '../../component/Icon'
+import theme from '../../theme'
 
 const Step3 = () => {
   const { t } = useTranslation<string>()
   const { darkMode } = usePreferenceStore()
+  const { accessWallet } = useWallet()
 
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
@@ -21,6 +26,14 @@ const Step3 = () => {
     const s = generateMnemonic()
     setSeed(s || '')
   }, [])
+
+  const handleSaveSeed = () => {
+    accessWallet(seed)
+  };
+
+  const handleCopy = () => {
+    Clipboard.setString(seed);
+  }
 
   return (
     <View style={styles.passwordContainer}>
@@ -53,11 +66,24 @@ const Step3 = () => {
             />
           )}
         </View>
-        <Button
-          type='text'
-        >
-          Copy to clipboard
-        </Button>
+        {seed.length > 0 && (
+          <Button
+            type='text'
+            style={{
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              marginTop: 12,
+              paddingHorizontal: 8
+            }}
+            textStyle={{
+              color: theme.color.neutral[0]
+            }}
+            onPress={handleCopy}
+          >
+            <Icon name='copy' width={16} height={16} style={{marginRight: 2}} />
+            Copy to clipboard
+          </Button>
+        )}
       </View>
       {seed.length > 0 && (
         <Button
@@ -65,6 +91,7 @@ const Step3 = () => {
           style={{
             borderRadius: 60
           }}
+          onPress={handleSaveSeed}
         >
           Continue
         </Button>

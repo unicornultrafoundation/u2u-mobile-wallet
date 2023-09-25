@@ -3,7 +3,7 @@ import { useWalletStore } from "../state/wallet";
 import { getWalletFromMnemonic } from "../util/wallet";
 
 export function useWallet() {
-  const { seedPhrase, selectedIndex } = useWalletStore()
+  const { seedPhrase, selectedIndex, accessWallet } = useWalletStore()
 
   const wallet = useMemo(() => {
     if (!seedPhrase) {
@@ -17,5 +17,5 @@ export function useWallet() {
     return getWalletFromMnemonic(seedPhrase, selectedIndex)
   }, [seedPhrase, selectedIndex])
 
-  return {wallet}
+  return {wallet, accessWallet}
 }

@@ -28,6 +28,7 @@ const Step2 = ({password, onChange, nextStep}: {
         autofillFromClipboard={false}
         handleChange={handleChange}
         numberOfInputs={6}
+        autoFocus={true}
         keyboardType="phone-pad"
         secureTextEntry={true}
         style={styles.otpContainer}

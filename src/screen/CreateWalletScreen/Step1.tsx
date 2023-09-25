@@ -26,6 +26,7 @@ const Step1 = ({onChange, nextStep}: {
       <OtpInputs
         autofillFromClipboard={false}
         handleChange={handleChange}
+        autoFocus={true}
         numberOfInputs={6}
         keyboardType="phone-pad"
         secureTextEntry={true}
