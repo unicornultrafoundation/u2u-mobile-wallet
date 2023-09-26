@@ -88,6 +88,9 @@ const OnboardingScreen = () => {
             textStyle={{
               color: preferenceTheme.text.title
             }}
+            onPress={() => {
+              navigation.navigate('ImportWallet')
+            }}
           >
             {t('alreadyHaveAccount')}
           </Button>

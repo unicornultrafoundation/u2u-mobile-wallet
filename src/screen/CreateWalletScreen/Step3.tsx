@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, FlatList, View } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 import Clipboard from '@react-native-clipboard/clipboard';
 import { styles } from './styles'
 import Text from '../../component/Text'
@@ -24,6 +24,7 @@ const Step3 = () => {
   useEffect(() => {
     setSeed('')
     const s = generateMnemonic()
+    console.log(s)
     setSeed(s || '')
   }, [])
 
@@ -38,32 +39,48 @@ const Step3 = () => {
   return (
     <View style={styles.passwordContainer}>
       <Text style={styles.welcomeTitle}>
-        {t('recoveryPhase')}
+        {t('recoveryPhrase')}
       </Text>
       <Text style={styles.instructionText}>
-        {t('phaseWarning')}
+        {t('phraseWarning')}
       </Text>
       <Text style={styles.instructionText}>
-        {t('phaseDescription')}
+        {t('phraseDescription')}
       </Text>
       <View style={{width: '100%', flex: 1}}>
         <View style={[styles.seedContainer, {backgroundColor: preferenceTheme.background.background}]}>
           {seed.length === 0 ? (
             <ActivityIndicator />
           ) : (
-            <FlatList
-              data={seed.split(" ")}
-              numColumns={4}
-              keyExtractor={(item, index) => `seed-${item}-${index}` }
-              style={{ width: '100%' }}
-              renderItem={({item: word}) => {
-                return (
-                  <View style={{flex: 1, padding: 8}}>
-                    <Text style={styles.seed}>{word}</Text>
-                  </View>
-                )
-              }}
-            />
+            <View style={{ width: '100%' }}>
+              <View style={{width: '100%', flexDirection: 'row' }}>
+                {seed.split(" ").slice(0, 4).map((word, index) => {
+                  return (
+                    <View style={{padding: 8, width: "25%"}} key={`seed-${word}-${index}`}>
+                      <Text style={styles.seed}>{word}</Text>
+                    </View>
+                  )
+                })}
+              </View>
+              <View style={{width: '100%', flexDirection: 'row' }}>
+                {seed.split(" ").slice(4, 8).map((word, index) => {
+                  return (
+                    <View style={{padding: 8, width: "25%"}} key={`seed-${word}-${index}`}>
+                      <Text style={styles.seed}>{word}</Text>
+                    </View>
+                  )
+                })}
+              </View>
+              <View style={{width: '100%', flexDirection: 'row' }}>
+                {seed.split(" ").slice(8, 12).map((word, index) => {
+                  return (
+                    <View style={{padding: 8, width: "25%"}} key={`seed-${word}-${index}`}>
+                      <Text style={styles.seed}>{word}</Text>
+                    </View>
+                  )
+                })}
+              </View>
+            </View>
           )}
         </View>
         {seed.length > 0 && (

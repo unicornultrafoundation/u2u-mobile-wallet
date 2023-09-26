@@ -2,22 +2,21 @@ import React, { useState } from 'react'
 import { ImageBackground, TouchableOpacity, View } from 'react-native';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
-import BACKGROUND from '../../asset/images/create_wallet_bg.png'
-import Icon from '../../component/Icon';
-import { styles } from './styles';
 import { useNavigation } from '@react-navigation/native';
-import Steps from '../../component/Steps';
+import BACKGROUND from '../../asset/images/create_wallet_bg.png'
 import Step1 from './Step1';
 import Step2 from './Step2';
-import Step3 from './Step3';
 import { useLocalStore } from '../../state/local';
+import Step3 from './Step3';
+import Icon from '../../component/Icon';
+import Steps from '../../component/Steps';
+import { styles } from './styles';
 
-const CreateWalletScreen = () => {
+const ImportWalletScreen = () => {
   const navigation = useNavigation<any>()
   const {darkMode} = usePreferenceStore()
-  const { savePassword } = useLocalStore()
-
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const { savePassword } = useLocalStore()
 
   const [currentStep, setCurrentStep] = useState(0)
   const [password, setPassword] = useState('')
@@ -69,7 +68,6 @@ const CreateWalletScreen = () => {
           flex: 1,
         }}
       >
-        {/* Header section */}
         <View
           style={styles.header}
         >
@@ -83,6 +81,6 @@ const CreateWalletScreen = () => {
       </ImageBackground>
     </View>
   )
-}
+};
 
-export default CreateWalletScreen;
+export default ImportWalletScreen;
