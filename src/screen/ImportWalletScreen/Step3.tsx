@@ -20,8 +20,9 @@ const Step3 = () => {
   }
 
   const handleSaveSeed = () => {
-    // TODO: validate wallet seed
-    accessWallet(seedList.join(" "))
+    const isOK = seedList.every((item) => item != "")
+
+    if (isOK) accessWallet(seedList.join(" "))
   };
 
   return (
