@@ -4,7 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface LocalState {
   password: string;
-  savePassword: (newPassword: string) => void
+  savePassword: (newPassword: string) => void;
+  initing: boolean;
+  saveIniting: (value: boolean) => void;
 }
 
 export const useLocalStore = create(
@@ -12,6 +14,8 @@ export const useLocalStore = create(
     (set) => ({
       password: "",
       savePassword: (newPassword: string) => set({ password: newPassword }),
+      initing: true,
+      saveIniting: (value: boolean) => set({ initing: value }),
     }),
     {
       name: "local-storage", // unique name

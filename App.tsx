@@ -21,6 +21,8 @@ import { useWallet } from './src/hook/useWallet';
 import OnboardingStackScreen from './src/stack/OnboardingStack';
 import { usePreferenceStore } from './src/state/preferences';
 import { darkTheme, lightTheme } from './src/theme/color';
+import { useHydration } from './src/hook/useHydration';
+import SplashScreen from './src/screen/SplashScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,6 +35,11 @@ function App(): JSX.Element {
   };
 
   const {wallet} = useWallet()
+  const {loaded} = useHydration()
+
+  if (!loaded) {
+    return <SplashScreen />
+  }
 
   return (
     <NavigationContainer>
