@@ -2,14 +2,22 @@ import React from 'react';
 import { styles } from './styles';
 import { Text, TouchableOpacity, View } from 'react-native';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import { usePreferenceStore } from '../../state/preferences';
+import { darkTheme, lightTheme } from '../../theme/color';
+import WalletHeader from './WalletHeader';
 
 const Separator = () => <View style={styles.separator}/>;
 
-const SettingScreen = () => {
+const WalletScreen = () => {
+  const {darkMode} = usePreferenceStore()
+  const preferenceTheme = darkMode ? darkTheme : lightTheme
+
   return (
-    <View style={styles.container}>
-      {/*<ImageBackground source={require('../../asset/background/background.png')} style={styles.image}/>*/}
-      {/*<ImageBackground source={{uri: 'https://reactnative.dev/img/opengraph.png'}} resizeMode="cover" style={styles.image}/>*/}
+    <View style={[
+      styles.container,
+      {backgroundColor: preferenceTheme.background.background}
+    ]}>
+      <WalletHeader />
       <View style={[styles.section, styles.headerSection]}>
         <TouchableOpacity>
           <FontAwesome6 style={{ fontSize: 24 }} color="white" name={'circle-user'} solid />
@@ -22,4 +30,4 @@ const SettingScreen = () => {
   );
 };
 
-export default SettingScreen;
+export default WalletScreen;

@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
+import { getPhonePaddingTop } from '../../util/platform';
 
 export const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#090909'
+    flex: 1,
+    paddingTop: getPhonePaddingTop()
   },
   section: {
     paddingHorizontal: 16,

@@ -1,15 +1,15 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SettingScreen from '../screen/SettingScreen';
+import WalletScreen from '../screen/WalletScreen';
 
 const WalletStack = createNativeStackNavigator();
 
 const WalletStackScreen = () => {
   return (
     <WalletStack.Navigator
-      initialRouteName="Setting"
+      initialRouteName="Wallet"
       screenOptions={{ headerShown: false }}
     >
-      <WalletStack.Screen name="Setting" component={SettingScreen} />
+      <WalletStack.Screen name="Wallet" component={WalletScreen} />
     </WalletStack.Navigator>
   );
 }
