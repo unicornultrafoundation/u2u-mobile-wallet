@@ -1,4 +1,4 @@
-import { TouchableOpacityProps } from "react-native";
+import { TextStyle, TouchableOpacityProps } from "react-native";
 
 export interface BaseButtonProps extends TouchableOpacityProps {
   type?: 'fill' | 'text' | 'status' | 'link'
@@ -7,4 +7,5 @@ export interface BaseButtonProps extends TouchableOpacityProps {
     'info' | 'info-subtle' | 'success' | 'success-subtle' | 'warning' | 'warning-subtle'
   fullWidth?: boolean
   withIcon?: boolean
+  textStyle?: TextStyle
 }

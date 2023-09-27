@@ -1,4 +1,19 @@
 {
   "appName": "U2U Wallet",
-  "stakingTitle": "U2U Staking"
+  "stakingTitle": "U2U Staking",
+  "createNewWallet": "Create new wallet",
+  "helloU2U": "Hello Uniceran",
+  "welcomeU2U": "Welcome to Unicorn Ultra Ecosystem",
+  "continueCreateWalletImport": "To continue, please Create New Wallet or Import your seed phrase",
+  "alreadyHaveAccount": "Already have an account",
+  "welcomeWallet": "Welcome to U2U Wallet",
+  "setupAppPassword": "Set up U2U App with password",
+  "confirmPasswordTitle": "Confirm Security Password",
+  "confirmDescription": "Please re-confirm your password",
+  "recoveryPhrase": "Recovery Phase",
+  "phraseWarning": "Never share these words. Anyone who learns them can steal all of your assets. U2U will never ask you for them.",
+  "phraseDescription": "The 14 words below are your wallet's recovery phrase. This phrase lets you recover your wallet if you lose your device. Back up it to somewhere safe.",
+  "seedPhraseSignIn": "Sign in with recovery phrase",
+  "seedPhraseSignInDescription": "This is a 12 words phrase you were given when you created you wallet",
+  "enterSeedPhrase": "Please enter those words."
 }

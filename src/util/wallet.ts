@@ -1,4 +1,5 @@
 import Web3 from 'web3'
+import '@ethersproject/shims';
 import { ethers } from 'ethers';
 
 export const generateNewWallet = () => {
@@ -6,9 +7,9 @@ export const generateNewWallet = () => {
   return web3.eth.accounts.create();
 }
 
-export const getWalletFromMnemonic = async (
+export const getWalletFromMnemonic = (
   mnemonic: string,
-  index?: string
+  index = 1
 ) => {
   const path = `m/44'/60'/0'/0/${index}`
   const wallet = ethers.HDNodeWallet.fromPhrase(mnemonic.trim(), path);
