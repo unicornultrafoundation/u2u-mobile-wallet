@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Text as RNText, TextProps, TextStyle } from 'react-native'
+import { Text as RNText, StyleProp, TextProps, TextStyle } from 'react-native'
 import { typography } from '../../theme/typography';
 import { usePreferenceStore } from '../../state/preferences';
 import theme from '../../theme';
@@ -7,7 +7,7 @@ import { darkTheme, lightTheme } from '../../theme/color';
 
 interface Props extends TextProps {
   type?: string;
-  style?: TextStyle
+  style?: StyleProp<TextStyle>
 }
 
 const Text = ({children, style, type = 'label-regular', ...rest}: Props) => {
