@@ -23,8 +23,11 @@ import { usePreferenceStore } from './src/state/preferences';
 import { darkTheme, lightTheme } from './src/theme/color';
 import { useHydration } from './src/hook/useHydration';
 import SplashScreen from './src/screen/SplashScreen';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const Tab = createBottomTabNavigator();
+
+const queryClient = new QueryClient()
 
 function App(): JSX.Element {
   const {darkMode: isDarkMode} = usePreferenceStore()
@@ -42,29 +45,31 @@ function App(): JSX.Element {
   }
 
   return (
-    <NavigationContainer>
-      {/* <SafeAreaView style={backgroundStyle}> */}
-        <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={backgroundStyle.backgroundColor}
-          // backgroundColor="transparent"
-        />
-        {wallet.address === "" ? (
-          <OnboardingStackScreen />
-        ) : (
-          <Tab.Navigator
-            tabBar={({state, descriptors, navigation}) => <CustomBottomTab state={state} descriptors={descriptors} navigation={navigation} />}
-            screenOptions={{ headerShown: false }}
-          >
-            <Tab.Screen name="DiscoverStack" component={DiscoverStackScreen} />
-            <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
-            <Tab.Screen name="WalletStack" component={WalletStackScreen} />
-            <Tab.Screen name="StakingStack" component={StakingStackScreen} />
-            <Tab.Screen name="BrowserStack" component={BrowserStackScreen} />
-          </Tab.Navigator>
-        )}
-      {/* </SafeAreaView> */}
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        {/* <SafeAreaView style={backgroundStyle}> */}
+          <StatusBar
+            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+            backgroundColor={backgroundStyle.backgroundColor}
+            // backgroundColor="transparent"
+          />
+          {wallet.address === "" ? (
+            <OnboardingStackScreen />
+          ) : (
+            <Tab.Navigator
+              tabBar={({state, descriptors, navigation}) => <CustomBottomTab state={state} descriptors={descriptors} navigation={navigation} />}
+              screenOptions={{ headerShown: false }}
+            >
+              <Tab.Screen name="DiscoverStack" component={DiscoverStackScreen} />
+              <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
+              <Tab.Screen name="WalletStack" component={WalletStackScreen} />
+              <Tab.Screen name="StakingStack" component={StakingStackScreen} />
+              <Tab.Screen name="BrowserStack" component={BrowserStackScreen} />
+            </Tab.Navigator>
+          )}
+        {/* </SafeAreaView> */}
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }
 

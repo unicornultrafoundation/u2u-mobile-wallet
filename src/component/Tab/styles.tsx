@@ -5,18 +5,19 @@ export default StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     borderBottomWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)'
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   tabContainer: {
     borderBottomWidth: 2,
-    borderColor: 'transparent',
     paddingHorizontal: 24,
     paddingVertical: 12,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   tabTitle: {
     fontSize: 16,
-    lineHeight: 20
+    lineHeight: 20,
+    textAlign: 'center',
+    justifyContent: 'center',
   }
 })
