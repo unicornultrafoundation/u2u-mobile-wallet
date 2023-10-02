@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import React from 'react'
-import { ScrollView, View } from 'react-native';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { useTokenTxHistory } from '../../../hook/useTokenTxHistory';
 import { useWallet } from '../../../hook/useWallet';
 import { styles } from './styles';
@@ -16,14 +16,22 @@ const TokenTxHistory = () => {
   const tokenMeta = params?.tokenMeta || {}
 
   const {wallet} = useWallet()
-  const {txList} = useTokenTxHistory(wallet.address, tokenMeta.address)
+  const {loading, txList} = useTokenTxHistory(wallet.address, tokenMeta.address)
+
+  if (loading) {
+    return (
+      <View>
+        <ActivityIndicator />
+      </View>
+    )
+  }
+
   return (
     <ScrollView>
       {txList.map((txItem: Record<string, any>) => {
-        console.log('txItem', txItem)
         const isSend = wallet.address.toLowerCase() === txItem.from.toLowerCase()
         return (
-          <View style={styles.txRowContainer}>
+          <View style={styles.txRowContainer} key={`token-tx-${txItem.hash}`}>
             <Icon
               name={isSend ? 'arrow-up-circle' : 'arrow-down-circle'}
               color={isSend ? theme.accentColor.error.normal : theme.accentColor.tertiary.normal}

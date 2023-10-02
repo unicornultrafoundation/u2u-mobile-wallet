@@ -8,6 +8,7 @@ import { truncate } from '../../util/string';
 
 const WalletHeader = () => {
   const {wallet} = useWallet()
+
   return (
     <View style={styles.headerSection}>
       <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
