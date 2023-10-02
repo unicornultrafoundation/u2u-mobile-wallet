@@ -87,5 +87,12 @@ export const styles = StyleSheet.create({
     color: theme.color.neutral[500],
     textAlign: 'center',
     marginTop: 4
+  },
+  tokenContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 4
   }
 });

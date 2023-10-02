@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
 import { styles } from './styles';
 import Text from '../../component/Text';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,7 @@ const Step3 = () => {
   const { accessWallet } = useWallet()
 
   const [seedList, setSeedList] = useState(Array(12).fill(""))
+  const [loading, setLoading] = useState(false)
 
   const handleUpdateSeedWord = (value: string, index: number) => {
     const newSeed = [...seedList]
@@ -22,7 +23,13 @@ const Step3 = () => {
   const handleSaveSeed = () => {
     const isOK = seedList.every((item) => item != "")
 
-    if (isOK) accessWallet(seedList.join(" "))
+    if (isOK) {
+      setLoading(true)
+      setTimeout(() => {
+        accessWallet(seedList.join(" "))
+        setLoading(false)
+      }, 100)
+    }
   };
 
   return (

@@ -74,7 +74,7 @@ const CreateWalletScreen = () => {
           style={styles.header}
         >
           <TouchableOpacity onPress={handleBack}>
-            <Icon name="arrow-left" />
+            <Icon name="arrow-left" width={24} height={24} />
           </TouchableOpacity>
           <Steps current={currentStep} steps={4} />
           <View />

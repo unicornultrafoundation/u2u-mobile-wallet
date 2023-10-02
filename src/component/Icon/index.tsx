@@ -14,11 +14,12 @@ const StakingActive = require('../../asset/icon/staking-active.png')
 const WalletInactive = require('../../asset/icon/wallet.png')
 const WalletActive = require('../../asset/icon/wallet-active.png')
 
-const Icon = ({name, width, height, style}: {
+const Icon = ({name, width, height, color, style}: {
   name: string;
   width?: DimensionValue;
   height?: DimensionValue;
   style?: ImageStyle
+  color?: string;
 }) => {
   const w = width || 24
   const h = height || 24
@@ -281,6 +282,32 @@ const Icon = ({name, width, height, style}: {
               <Path d="M14.9741 2.75024V5.65924C14.9741 7.07924 16.1231 8.23124 17.5421 8.23424C18.8591 8.23724 20.2061 8.23824 20.2971 8.23224" stroke="#272727" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               <Path d="M14.784 15.5579H9.38696" stroke="#272727" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               <Path d="M12.7425 10.6057H9.38647" stroke="#272727" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'question-mark-circle':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 21 20" fill="none">
+              <Path d="M8.15626 7.3C8.37632 6.6985 8.81067 6.1913 9.38238 5.86822C9.95409 5.54514 10.6263 5.42704 11.2799 5.53484C11.9334 5.64264 12.5263 5.96937 12.9533 6.45718C13.3804 6.94498 13.6141 7.56237 13.6131 8.2C13.6131 10 10.8051 10.9 10.8051 10.9M10.88 14.5H10.8894M20.24 10C20.24 14.9706 16.0494 19 10.88 19C5.71063 19 1.52002 14.9706 1.52002 10C1.52002 5.02944 5.71063 1 10.88 1C16.0494 1 20.24 5.02944 20.24 10Z" stroke="#8D8D8D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'arrow-up-circle':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 18 17" fill="none">
+              <Path fillRule="evenodd" clipRule="evenodd" d="M16.7083 8.49992C16.7083 4.24325 13.2574 0.791585 8.99992 0.791585C4.74325 0.791585 1.29159 4.24325 1.29159 8.49992C1.29159 12.7566 4.74325 16.2083 8.99992 16.2083C13.2574 16.2083 16.7083 12.7566 16.7083 8.49992Z" stroke={color || "#D21C1C"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M11.8926 9.7019L9.00008 6.7969L6.10758 9.7019" stroke={color || "#D21C1C"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'arrow-down-circle':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 18 17" fill="none">
+              <Path fillRule="evenodd" clipRule="evenodd" d="M1.29175 8.50008C1.29175 12.7567 4.74258 16.2084 9.00008 16.2084C13.2567 16.2084 16.7084 12.7567 16.7084 8.50008C16.7084 4.24342 13.2567 0.791748 9.00008 0.791748C4.74258 0.791748 1.29175 4.24342 1.29175 8.50008Z" stroke={color || "#0FA44D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M6.10742 7.2981L8.99992 10.2031L11.8924 7.2981" stroke={color || "#0FA44D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </Svg>
           </View>
         )

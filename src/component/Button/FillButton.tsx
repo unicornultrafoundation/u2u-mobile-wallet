@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import styles from './styles'
 import { color as colorConfig } from '../../theme/color';
 import Text from '../Text';
 import { BaseButtonProps } from './type';
 
 
-const FillButton = ({color = 'primary', disabled, fullWidth, children, style, textStyle, ...rest}: BaseButtonProps) => {
+const FillButton = ({color = 'primary', disabled, fullWidth, children, style, textStyle, loading, ...rest}: BaseButtonProps) => {
   const [bgColor, textColor] = useMemo(() => {
     if (disabled) {
       return [colorConfig.primary[600], colorConfig.primary[300]]
@@ -44,15 +44,19 @@ const FillButton = ({color = 'primary', disabled, fullWidth, children, style, te
         style
       ]}
     >
-      <Text style={{
-        ...{
-          color: textColor
-        },
-        ...styles.textSyle,
-        ...textStyle
-      }}>
-        {children}
-      </Text>
+      {loading ? (
+        <ActivityIndicator color={textColor} />
+      ) : (
+        <Text style={{
+          ...{
+            color: textColor
+          },
+          ...styles.textSyle,
+          ...textStyle
+        }}>
+          {children}
+        </Text>
+      )}
     </TouchableOpacity>
   )
 }

@@ -33,12 +33,12 @@ const BalanceCard = () => {
           </TouchableOpacity>
           <Text style={styles.balanceActionButtonText}>Receive</Text>
         </View>
-        <View style={{alignItems: 'center', justifyContent: 'center', marginRight: 32}}>
+        {/* <View style={{alignItems: 'center', justifyContent: 'center', marginRight: 32}}>
           <TouchableOpacity style={styles.balanceActionButton}>
             <Icon name="swap" width={24} height={24} />
           </TouchableOpacity>
           <Text style={styles.balanceActionButtonText}>Swap</Text>
-        </View>
+        </View> */}
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <TouchableOpacity style={[styles.balanceActionButton, {marginRight: 0}]}>
             <Icon name="paper" width={24} height={24} />
