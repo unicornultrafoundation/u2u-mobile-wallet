@@ -9,6 +9,7 @@ import BalanceCard from './BalanceCard';
 import Tab from '../../component/Tab';
 import CryptoTab from './CryptoTab';
 import NFTTab from './NFTTab';
+import BannerSection from './BannerSection';
 
 const Separator = () => {
   const {darkMode} = usePreferenceStore()
@@ -33,6 +34,8 @@ const WalletScreen = () => {
       <WalletHeader />
       <BalanceCard />
       <Separator/>
+      <BannerSection />
+      <Separator />
       <Tab
         tabs={[
           {
@@ -47,7 +50,12 @@ const WalletScreen = () => {
         selectedTab={tab}
         onChange={(v) => setTab(v)}
         tabStyle={{
-          borderColor: 'transparent'
+          borderColor: 'transparent',
+          
+          alignItems: 'flex-start',
+          justifyContent: 'flex-start',
+          paddingLeft: 16,
+          paddingRight: 12
         }}
         containerStyle={{
           borderColor: 'transparent'

@@ -10,6 +10,9 @@ import { shortenAddress } from '../../../util/string';
 import { parseFromRaw } from '../../../util/bignum';
 import { formatDate } from '../../../util/date';
 import theme from '../../../theme';
+import Button from '../../../component/Button';
+import { usePreferenceStore } from '../../../state/preferences';
+import { darkTheme, lightTheme } from '../../../theme/color';
 
 const TokenTxHistory = () => {
   const {params} = useRoute<any>();
@@ -17,6 +20,9 @@ const TokenTxHistory = () => {
 
   const {wallet} = useWallet()
   const {loading, txList} = useTokenTxHistory(wallet.address, tokenMeta.address)
+
+  const {darkMode} = usePreferenceStore()
+  const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   if (loading) {
     return (
@@ -61,6 +67,27 @@ const TokenTxHistory = () => {
           </View>
         )
       })}
+      <View style={{paddingVertical: 20, alignItems: 'center', justifyContent: 'center'}}>
+        <Button
+          style={{
+            width: 120,
+            // height: 34,
+            borderRadius: 80,
+            paddingHorizontal: 16,
+            paddingVertical: 12,
+            backgroundColor: preferenceTheme.background.surface
+          }}
+          color='tertiary'
+          textStyle={{
+            fontSize: 12,
+            lineHeight: 16,
+            fontWeight: '500',
+            color: theme.color.neutral[500]
+          }}
+        >
+          View more
+        </Button>
+      </View>
     </ScrollView>
   )
 }

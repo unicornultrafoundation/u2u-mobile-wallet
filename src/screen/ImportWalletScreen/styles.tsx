@@ -29,7 +29,6 @@ export const styles = StyleSheet.create({
     height: 48,
     color: '#FFFFFF',
     fontSize: 24,
-    // backgroundColor: 'red',
     padding: 0,
     borderRadius: 4,
     borderWidth: 1,
