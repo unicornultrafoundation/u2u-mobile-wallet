@@ -19,5 +19,7 @@
   "receiveToken": "Receive token",
   "receiveTokenDescriptionPre": "This address can only accept assets on ",
   "chainName": "U2U Chain",
-  "receiveTokenDescriptionPost": ". Sending any other types of tokens to this address will result in permanent loss."
+  "receiveTokenDescriptionPost": ". Sending any other types of tokens to this address will result in permanent loss.",
+  "shareQRCode": "Share QR code",
+  "setAmountQRCode": "Set amount"
 }

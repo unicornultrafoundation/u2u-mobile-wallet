@@ -34,6 +34,6 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.color.primary[500],
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 60
+    borderRadius: 60,
   }
 });

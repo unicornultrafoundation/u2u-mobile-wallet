@@ -111,11 +111,11 @@ const ReceiveTokenScreen = () => {
         </View>
         <View style={styles.bottomButtonContainer}>
           <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text>123</Text>
+            <Text>{t('shareQRCode')}</Text>
           </TouchableOpacity>
           <View style={{height: '100%', width: 1, backgroundColor: '#FFF'}} />
-          <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text>456</Text>
+          <TouchableOpacity style={{flex: 1, alignItems:  'center', justifyContent: 'center'}}>
+            <Text>{t('setAmountQRCode')}</Text>
           </TouchableOpacity>
         </View>
       </View>
