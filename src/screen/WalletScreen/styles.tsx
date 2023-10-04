@@ -25,10 +25,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  separator: {
-    borderBottomWidth: 2,
-    marginVertical: 12
-  },
   addressText: {
     fontSize: 15,
     fontWeight: '500',

@@ -1,29 +1,25 @@
-import React, { useState } from 'react'
-import { Dimensions, View } from 'react-native';
-import { styles } from './styles';
+import React from 'react'
+import { Dimensions } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
-import Text from '../../../component/Text';
 import Step1 from './Step1';
-
-const TOTAL_STEP = 4
+import Step2 from './Step2';
+import Step3 from './Step3';
+import Step4 from './Step4';
 
 const BannerSection = () => {
-  const [step, setStep] = useState(1)
   const width = Dimensions.get('window').width;
 
   return (
-    <View style={{ flex: 1 }}>
-      <Carousel
-        loop
-        width={width}
-        height={147}
-        // autoPlay={true}
-        data={[Step1]}
-        scrollAnimationDuration={1000}
-        onSnapToItem={(index) => console.log('current index:', index)}
-        renderItem={({ item }) => item()}
-      />
-    </View>
+    <Carousel
+      loop
+      width={width}
+      height={147}
+      autoPlay={true}
+      data={[Step1, Step2, Step3, Step4]}
+      scrollAnimationDuration={1000}
+      // onSnapToItem={(index) => console.log('current index:', index)}
+      renderItem={({ item }) => item()}
+    />
   )
 };
 

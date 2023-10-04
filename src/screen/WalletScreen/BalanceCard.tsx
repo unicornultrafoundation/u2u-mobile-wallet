@@ -5,10 +5,13 @@ import Text from '../../component/Text';
 import Icon from '../../component/Icon';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
+import { useNavigation } from '@react-navigation/native';
 
 const BalanceCard = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+
+  const navigation = useNavigation<any>()
 
   return (
     <View style={styles.balanceCardContainer}>
@@ -28,7 +31,10 @@ const BalanceCard = () => {
           <Text style={styles.balanceActionButtonText}>Send</Text>
         </View>
         <View style={{alignItems: 'center', justifyContent: 'center', marginRight: 32}}>
-          <TouchableOpacity style={styles.balanceActionButton}>
+          <TouchableOpacity
+            style={styles.balanceActionButton}
+            onPress={() => navigation.navigate('ReceiveToken')}
+          >
             <Icon name="arrow-down" width={24} height={24} />
           </TouchableOpacity>
           <Text style={styles.balanceActionButtonText}>Receive</Text>

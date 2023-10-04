@@ -4,19 +4,25 @@ import Icon from '../Icon';
 import styles from './styles';
 import { usePreferenceStore } from '../../state/preferences';
 import { color, darkTheme, lightTheme } from '../../theme/color';
+import { useGlobalStore } from '../../state/global';
 
 const TABBAR_HEIGHT = 80
+
+const SHOW_BOTTOM_TAB_ROUTE = [
+  'Wallet',
+  'StakingDashboard'
+]
 
 export default ({ state, descriptors, navigation }: any) => {
   const {width: viewportWidth} = useWindowDimensions();
   const {darkMode} = usePreferenceStore()
 
-  const theme = useMemo(() => {
-    if (darkMode) {
-      return darkTheme
-    }
-    return lightTheme
-  }, [darkMode])
+  const { routeName } = useGlobalStore()
+  const showTabBar = useMemo(() => {
+    return SHOW_BOTTOM_TAB_ROUTE.includes(routeName)
+  }, [routeName])
+
+  if (!showTabBar) return null
 
   return (
     <View 
@@ -29,7 +35,6 @@ export default ({ state, descriptors, navigation }: any) => {
         backgroundColor: darkMode ? '#181818' : '#FFFFFF',
       }}
     >
-      {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}> */}
       {state.routes.map((route: any, index: number) => {
         const { options } = descriptors[route.key];
 

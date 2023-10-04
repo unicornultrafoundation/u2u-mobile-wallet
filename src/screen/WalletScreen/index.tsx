@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { styles } from './styles';
-import { Text, TouchableOpacity, View } from 'react-native';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import { View } from 'react-native';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import WalletHeader from './WalletHeader';
@@ -10,21 +9,24 @@ import Tab from '../../component/Tab';
 import CryptoTab from './CryptoTab';
 import NFTTab from './NFTTab';
 import BannerSection from './BannerSection';
-
-const Separator = () => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
-
-  return (
-    <View style={[styles.separator, {borderBottomColor: preferenceTheme.outline}]}/>
-  )
-}
+import Separator from '../../component/Separator';
+import { useFocusEffect, useRoute } from '@react-navigation/core';
+import { useGlobalStore } from '../../state/global';
 
 const WalletScreen = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
   
   const [tab, setTab] = useState('crypto')
+
+  const route = useRoute()
+  const {setRouteName} = useGlobalStore()
+
+  useFocusEffect(
+    useCallback(() => {
+      setRouteName(route.name)
+    }, [route])
+  )
 
   return (
     <View style={[

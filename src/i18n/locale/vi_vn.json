@@ -15,5 +15,9 @@
   "phraseDescription": "The 14 words below are your wallet's recovery phrase. This phrase lets you recover your wallet if you lose your device. Back up it to somewhere safe.",
   "seedPhraseSignIn": "Sign in with recovery phrase",
   "seedPhraseSignInDescription": "This is a 12 words phrase you were given when you created you wallet",
-  "enterSeedPhrase": "Please enter those words."
+  "enterSeedPhrase": "Please enter those words.",
+  "receiveToken": "Receive token",
+  "receiveTokenDescriptionPre": "This address can only accept assets on ",
+  "chainName": "U2U Chain",
+  "receiveTokenDescriptionPost": ". Sending any other types of tokens to this address will result in permanent loss."
 }

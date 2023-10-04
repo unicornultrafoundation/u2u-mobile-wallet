@@ -7,7 +7,7 @@
 
 import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
-import { StatusBar } from 'react-native';
+import { Dimensions, StatusBar, View } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -48,7 +48,6 @@ function App(): JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        {/* <SafeAreaView style={backgroundStyle}> */}
           <StatusBar
             barStyle={isDarkMode ? 'light-content' : 'dark-content'}
             backgroundColor={backgroundStyle.backgroundColor}
@@ -57,19 +56,20 @@ function App(): JSX.Element {
           {wallet.address === "" ? (
             <OnboardingStackScreen />
           ) : (
-            <Tab.Navigator
-              tabBar={({state, descriptors, navigation}) => <CustomBottomTab state={state} descriptors={descriptors} navigation={navigation} />}
-              screenOptions={{ headerShown: false }}
-              initialRouteName='WalletStack'
-            >
-              <Tab.Screen name="DiscoverStack" component={DiscoverStackScreen} />
-              <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
-              <Tab.Screen name="WalletStack" component={WalletStackScreen} />
-              <Tab.Screen name="StakingStack" component={StakingStackScreen} />
-              <Tab.Screen name="BrowserStack" component={BrowserStackScreen} />
-            </Tab.Navigator>
+            <View style={backgroundStyle}>
+              <Tab.Navigator
+                tabBar={({state, descriptors, navigation}) => <CustomBottomTab state={state} descriptors={descriptors} navigation={navigation} />}
+                screenOptions={{ headerShown: false }}
+                initialRouteName='WalletStack'
+              >
+                <Tab.Screen name="DiscoverStack" component={DiscoverStackScreen} />
+                <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
+                <Tab.Screen name="WalletStack" component={WalletStackScreen} />
+                <Tab.Screen name="StakingStack" component={StakingStackScreen} />
+                <Tab.Screen name="BrowserStack" component={BrowserStackScreen} />
+              </Tab.Navigator>
+            </View>
           )}
-        {/* </SafeAreaView> */}
       </NavigationContainer>
     </QueryClientProvider>
   );

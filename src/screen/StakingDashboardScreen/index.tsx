@@ -1,9 +1,20 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Text, View } from 'react-native'
 import styles from './styles'
 import Tab from '../../component/Tab'
+import { useFocusEffect, useRoute } from '@react-navigation/native'
+import { useGlobalStore } from '../../state/global'
 
 const InvestmentDashboardScreen = () => {
+  const route = useRoute()
+  const {setRouteName} = useGlobalStore()
+
+  useFocusEffect(
+    useCallback(() => {
+      setRouteName(route.name)
+    }, [route])
+  )
+
   const [selectedTab, setSelectedTab] = useState('staking')
   return (
     <View style={styles.container}>
