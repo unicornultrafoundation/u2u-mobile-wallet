@@ -1,11 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { getPhonePaddingTop } from '../../util/platform';
+import { getPhonePaddingBottom, getPhonePaddingTop } from '../../util/platform';
 import theme from '../../theme';
+import { TABBAR_HEIGHT } from '../../component/CustomBottomTab';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: getPhonePaddingTop()
+    paddingTop: getPhonePaddingTop(),
+    paddingBottom: TABBAR_HEIGHT
   },
   section: {
     paddingHorizontal: 16,

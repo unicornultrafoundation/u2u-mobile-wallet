@@ -21,5 +21,6 @@
   "chainName": "U2U Chain",
   "receiveTokenDescriptionPost": ". Sending any other types of tokens to this address will result in permanent loss.",
   "shareQRCode": "Share QR code",
-  "setAmountQRCode": "Set amount"
+  "setAmountQRCode": "Set amount",
+  "setAmountTitle": "Set amount"
 }

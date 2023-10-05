@@ -6,7 +6,7 @@ import { styles } from './styles';
 import Icon from '../../component/Icon';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTokenBalance } from '../../hook/useTokenBalance';
 import { useWallet } from '../../hook/useWallet';
 
@@ -14,6 +14,8 @@ const TokenBalanceCard = () => {
   const {wallet} = useWallet()
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+
+  const navigation = useNavigation<any>()
 
   const {params} = useRoute<any>();
   const tokenMeta = params?.tokenMeta || {}
@@ -36,7 +38,14 @@ const TokenBalanceCard = () => {
           <Text style={styles.balanceActionButtonText}>Send</Text>
         </View>
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <TouchableOpacity style={[styles.balanceActionButton, {marginRight: 0}]}>
+          <TouchableOpacity
+            style={[styles.balanceActionButton, {marginRight: 0}]}
+            onPress={() => {
+              navigation.navigate('ReceiveToken', {
+                tokenMeta
+              })
+            }}
+          >
             <Icon name="arrow-down" width={24} height={24} />
           </TouchableOpacity>
           <Text style={styles.balanceActionButtonText}>Receive</Text>

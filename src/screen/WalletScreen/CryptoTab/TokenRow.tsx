@@ -4,6 +4,7 @@ import { styles } from './styles';
 import { SvgUri } from 'react-native-svg';
 import Text from '../../../component/Text';
 import { useNavigation } from '@react-navigation/native';
+import { formatNumberString } from '../../../util/string';
 
 const TokenRow = ({tokenObj}: {
   tokenObj: any
@@ -26,7 +27,7 @@ const TokenRow = ({tokenObj}: {
         <Text>{tokenObj.symbol}</Text>
       </View>
       <View>
-        <Text>{tokenObj.balance} {tokenObj.symbol}</Text>
+        <Text>{formatNumberString(tokenObj.balance)} {tokenObj.symbol}</Text>
       </View>
     </TouchableOpacity>
   )

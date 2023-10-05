@@ -33,18 +33,22 @@ const BalanceCard = () => {
         <View style={{alignItems: 'center', justifyContent: 'center', marginRight: 32}}>
           <TouchableOpacity
             style={styles.balanceActionButton}
-            onPress={() => navigation.navigate('ReceiveToken')}
+            onPress={() => {
+              navigation.navigate('ReceiveToken', {
+                tokenMeta: {
+                  "name": "Ultra Unicorn",
+                  "symbol": "U2U",
+                  "decimals": 18,
+                  "address": "0x",
+                  "logo": "https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"
+                }
+              })
+            }}
           >
             <Icon name="arrow-down" width={24} height={24} />
           </TouchableOpacity>
           <Text style={styles.balanceActionButtonText}>Receive</Text>
         </View>
-        {/* <View style={{alignItems: 'center', justifyContent: 'center', marginRight: 32}}>
-          <TouchableOpacity style={styles.balanceActionButton}>
-            <Icon name="swap" width={24} height={24} />
-          </TouchableOpacity>
-          <Text style={styles.balanceActionButtonText}>Swap</Text>
-        </View> */}
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <TouchableOpacity style={[styles.balanceActionButton, {marginRight: 0}]}>
             <Icon name="paper" width={24} height={24} />
