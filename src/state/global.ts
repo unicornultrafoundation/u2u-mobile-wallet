@@ -8,7 +8,6 @@ interface GlobalState {
 export const useGlobalStore = create<GlobalState>((set) => ({
   routeName: '',
   setRouteName: (routeName: string) => {
-    console.log('new route name', routeName)
     set({ routeName })
   },
 }))

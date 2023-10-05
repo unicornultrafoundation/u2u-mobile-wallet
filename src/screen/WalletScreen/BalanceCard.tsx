@@ -6,12 +6,14 @@ import Icon from '../../component/Icon';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { useNavigation } from '@react-navigation/native';
+import { useTransactionStore } from '../../state/transaction';
 
 const BalanceCard = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   const navigation = useNavigation<any>()
+  const {setTokenMeta} = useTransactionStore()
 
   return (
     <View style={styles.balanceCardContainer}>
@@ -25,7 +27,19 @@ const BalanceCard = () => {
       <Text style={[styles.balanceNumberInU2U, {color: preferenceTheme.text.secondary}]}>0 U2U</Text>
       <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
         <View style={{alignItems: 'center', justifyContent: 'center', marginRight: 32}}>
-          <TouchableOpacity style={styles.balanceActionButton}>
+          <TouchableOpacity
+            style={styles.balanceActionButton}
+            onPress={() => {
+              setTokenMeta({
+                "name": "Ultra Unicorn",
+                "symbol": "U2U",
+                "decimals": 18,
+                "address": "0x",
+                "logo": "https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"
+              })
+              navigation.navigate('SendToken')
+            }}
+          >
             <Icon name="arrow-up" width={24} height={24} />
           </TouchableOpacity>
           <Text style={styles.balanceActionButtonText}>Send</Text>

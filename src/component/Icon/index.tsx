@@ -335,6 +335,16 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'error':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 18 18" fill="none">
+              <Path fillRule="evenodd" clipRule="evenodd" d="M9 2.06274C12.8318 2.06274 15.9375 5.16924 15.9375 9.00024C15.9375 12.8312 12.8318 15.9377 9 15.9377C5.169 15.9377 2.0625 12.8312 2.0625 9.00024C2.0625 5.16924 5.169 2.06274 9 2.06274Z" stroke={color || "#D21C1C"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M8.99609 6.15332V9.46757" stroke={color || "#D21C1C"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M8.99625 11.8472H9.00375" stroke={color || "#D21C1C"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
       default:
         return null
     }
