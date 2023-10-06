@@ -7,6 +7,7 @@ import { useGlobalStore } from '../../state/global';
 import { styles } from './styles';
 import AddressStep from './AddressStep';
 import AmountStep from './AmountStep';
+import ConfirmStep from './ConfirmStep';
 
 const SendTokenScreen = () => {
   const {darkMode} = usePreferenceStore()
@@ -39,6 +40,13 @@ const SendTokenScreen = () => {
           <AmountStep
             onNextStep={() => setStep('confirm')}
             onBack={() => setStep('address')}
+          />
+        )
+      case 'confirm':
+        return (
+          <ConfirmStep
+            onNextStep={() => setStep('auth')}
+            onBack={() => setStep('amount')}
           />
         )
       default:

@@ -22,5 +22,7 @@
   "receiveTokenDescriptionPost": ". Sending any other types of tokens to this address will result in permanent loss.",
   "shareQRCode": "Share QR code",
   "setAmountQRCode": "Set amount",
-  "setAmountTitle": "Set amount"
+  "setAmountTitle": "Set amount",
+  "setAmountForTransaction": "Set amount",
+  "confirmTransactionInfo": "Send"
 }

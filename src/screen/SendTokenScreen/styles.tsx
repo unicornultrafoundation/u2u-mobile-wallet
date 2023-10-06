@@ -21,4 +21,20 @@ export const styles = StyleSheet.create({
     lineHeight: 25,
     letterSpacing: 0.38
   },
+  bodyContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+    justifyContent: 'space-between'
+  },
+  cardContainer: {
+    borderRadius: 6,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    marginBottom: 8
+  },
+  cardRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 8
+  }
 });
