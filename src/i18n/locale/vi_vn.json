@@ -24,5 +24,7 @@
   "setAmountQRCode": "Set amount",
   "setAmountTitle": "Set amount",
   "setAmountForTransaction": "Set amount",
-  "confirmTransactionInfo": "Send"
+  "confirmTransactionInfo": "Send",
+  "continue": "Continue",
+  "confirm": "Confirm"
 }

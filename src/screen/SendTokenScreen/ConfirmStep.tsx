@@ -97,7 +97,7 @@ const ConfirmStep = ({onNextStep, onBack}: {
           style={{borderRadius: 60}}
           textStyle={theme.typography.label.medium}
         >
-          Confirm
+          {t('confirm')}
         </Button>
       </View>
     </View>
