@@ -19,6 +19,7 @@ const BannerSection = ({collapsed}: {collapsed: boolean}) => {
         height: getAnimatedStyle(170),
         opacity: getAnimatedStyle(1),
       }}>
+      <Separator />
       <Carousel
         loop
         width={width}
@@ -29,7 +30,6 @@ const BannerSection = ({collapsed}: {collapsed: boolean}) => {
         // onSnapToItem={(index) => console.log('current index:', index)}
         renderItem={({item}) => item()}
       />
-      <Separator />
     </Animated.View>
   );
 };

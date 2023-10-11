@@ -23,13 +23,13 @@ import {GestureResponderEvent} from 'react-native/Libraries/Types/CoreEventTypes
 const WalletScreen = () => {
   const {darkMode} = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
+  const windowWidth = Dimensions.get('window').width;
 
   const [tab, setTab] = useState('crypto');
   const [collapsed, setCollapsed] = useState(false);
   const [scrollOffset, setScrollOffset] = useState(0);
   const [firstTouch, setFirstTouch] = useState(0);
-  const windowWidth = Dimensions.get('window').width;
-  const COLLAPSED_OFFSET = 20;
+  const COLLAPSED_OFFSET = 10;
 
   const route = useRoute();
   const {setRouteName} = useGlobalStore();
@@ -37,26 +37,27 @@ const WalletScreen = () => {
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const currentOffset = event.nativeEvent.contentOffset.y;
     setScrollOffset(currentOffset);
+
     if (scrollOffset > COLLAPSED_OFFSET) {
       !collapsed && setCollapsed(true);
-    } else {
-      collapsed && setCollapsed(false);
     }
   };
 
+  // Handle Swipe event
   const handleTouchEnd = (e: GestureResponderEvent) => {
     // get touch position and screen size
     const positionY = e.nativeEvent.pageY;
-    const range = windowWidth / COLLAPSED_OFFSET;
+    const range = COLLAPSED_OFFSET;
 
     // check if position is growing positively and has reached specified range
     if (positionY - firstTouch > range) {
-      console.log('Down');
-      setCollapsed(false)
+      console.log('down')
+      collapsed && setCollapsed(false);
     }
     // check if position is growing negatively and has reached specified range
     else if (firstTouch - positionY > range) {
-      console.log('Up');
+      console.log('up')
+      // !collapsed && setCollapsed(true);
     }
   };
 
@@ -72,13 +73,13 @@ const WalletScreen = () => {
         styles.container,
         {backgroundColor: preferenceTheme.background.background},
       ]}>
-      <WalletHeader collapsed={collapsed} />
+      <WalletHeader onGoBack={() => setCollapsed(false)} collapsed={collapsed} action={tab} />
       <BalanceCard collapsed={collapsed} />
-      <Separator />
       <BannerSection collapsed={collapsed} />
+      <Separator />
       <ScrollView
-        scrollEventThrottle={16}
         onScroll={onScroll}
+        scrollEventThrottle={16}
         onTouchStart={e => setFirstTouch(e.nativeEvent.pageY)}
         onTouchEnd={e => handleTouchEnd(e)}>
         <Tab

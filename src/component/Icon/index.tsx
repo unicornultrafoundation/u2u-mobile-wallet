@@ -371,6 +371,15 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'search':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 25 25" fill="none">
+              <Circle cx="12.2867" cy="12.2664" r="8.98856" stroke="#8D8D8D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M18.5383 18.9849L22.0624 22.4997" stroke="#8D8D8D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
       default:
         return null
     }

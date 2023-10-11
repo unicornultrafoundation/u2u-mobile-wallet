@@ -1,26 +1,27 @@
 import React from 'react';
 import {Animated, TouchableOpacity, View} from 'react-native';
-import {styles} from './styles';
-import Icon from '../../component/Icon';
-import {useWallet} from '../../hook/useWallet';
-import Text from '../../component/Text';
-import {truncate} from '../../util/string';
-import {useFadeAnimation} from './useFadeAnimation';
+import {styles} from '../styles';
+import Icon from '../../../component/Icon';
+import {useWallet} from '../../../hook/useWallet';
+import Text from '../../../component/Text';
+import {truncate} from '../../../util/string';
+import HeaderSearchComponent from './HeaderSearchComponent';
 
-const WalletHeader = ({collapsed}: {collapsed: boolean}) => {
+interface Props {
+  collapsed: boolean;
+  action: string;
+  onGoBack: () => void;
+}
+
+const WalletHeader = ({collapsed, action, onGoBack}: Props) => {
   const {wallet} = useWallet();
-  const {getAnimatedStyle} = useFadeAnimation(collapsed);
+
+  if (collapsed) {
+    return <HeaderSearchComponent onGoBack={onGoBack} action={action} />;
+  }
 
   return (
-    <Animated.View
-      style={[
-        styles.headerSection,
-        {
-          height: getAnimatedStyle(50),
-          opacity: getAnimatedStyle(1),
-        },
-      ]}>
-      {/*<View style={styles.headerSection}>*/}
+    <View style={styles.headerSection}>
       <View
         style={{
           flexDirection: 'row',
@@ -52,8 +53,7 @@ const WalletHeader = ({collapsed}: {collapsed: boolean}) => {
           <Icon name="scan" width={24} height={24} />
         </TouchableOpacity>
       </View>
-      {/*</View>*/}
-    </Animated.View>
+    </View>
   );
 };
 
