@@ -4,5 +4,5 @@ export const parseFromRaw = (value: string | number, decimals: number, format = 
   const bnVal = new BigNumber(value)
 
   if (format) return bnVal.dividedBy(10 ** decimals).toFormat()
-  return bnVal.dividedBy(10 ** decimals).toString()
+  return bnVal.dividedBy(10 ** decimals).toFormat()
 }

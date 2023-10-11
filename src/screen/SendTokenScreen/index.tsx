@@ -8,6 +8,8 @@ import { styles } from './styles';
 import AddressStep from './AddressStep';
 import AmountStep from './AmountStep';
 import ConfirmStep from './ConfirmStep';
+import AuthStep from './AuthStep';
+import SendStep from './SendStep';
 
 const SendTokenScreen = () => {
   const {darkMode} = usePreferenceStore()
@@ -48,6 +50,17 @@ const SendTokenScreen = () => {
             onNextStep={() => setStep('auth')}
             onBack={() => setStep('amount')}
           />
+        )
+      case 'auth':
+        return (
+          <AuthStep
+            onNextStep={() => setStep('send')}
+            onBack={() => setStep('confirm')}
+          />
+        )
+      case 'send':
+        return (
+          <SendStep />
         )
       default:
         return null

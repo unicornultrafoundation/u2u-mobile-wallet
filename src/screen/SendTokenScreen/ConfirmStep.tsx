@@ -44,7 +44,7 @@ const ConfirmStep = ({onNextStep, onBack}: {
       return;
     }
 
-    // onNextStep()
+    onNextStep()
   }
 
   return (
@@ -62,7 +62,7 @@ const ConfirmStep = ({onNextStep, onBack}: {
       <View style={styles.bodyContainer}>
         <View>
           <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface}]}>
-            <Text style={theme.typography.caption2.regular}>Send</Text>
+            <Text style={theme.typography.caption2.regular}>{t('send')}</Text>
             <View style={{flexDirection: 'row', alignItems: 'center', paddingTop: 8}}>
               <View style={{width: 24, height: 24}}>
                 <SvgUri
@@ -76,7 +76,7 @@ const ConfirmStep = ({onNextStep, onBack}: {
               </Text>
             </View>
             <Separator />
-            <Text style={theme.typography.caption2.regular}>To</Text>
+            <Text style={theme.typography.caption2.regular}>{t('to')}</Text>
             <View style={{flexDirection: 'row', alignItems: 'center', paddingTop: 8}}>
               <Icon name="wallet-icon" width={24} height={24} />
               <Text style={[theme.typography.footnote.medium, {paddingHorizontal: 8, flex: 1}]}>
@@ -86,11 +86,11 @@ const ConfirmStep = ({onNextStep, onBack}: {
           </View>
           <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface}]}>
             <View style={styles.cardRow}>
-              <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>EST fee</Text>
+              <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('estFee')}</Text>
               <Text style={[theme.typography.footnote.regular]}>{estimatedFee} U2U</Text>
             </View>
             <View style={styles.cardRow}>
-              <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>Max fee</Text>
+              <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('maxFee')}</Text>
               <CustomGasModal
                 trigger={() => {
                   return (
@@ -105,11 +105,11 @@ const ConfirmStep = ({onNextStep, onBack}: {
           </View>
           <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface}]}>
             <View style={styles.cardRow}>
-              <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>From</Text>
+              <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('from')}</Text>
               <Text style={[theme.typography.footnote.regular]}>{shortenAddress(wallet.address, 8, 8)}</Text>
             </View>
             <View style={styles.cardRow}>
-              <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>Network</Text>
+              <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('network')}</Text>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Icon name='u2u' width={16} height={16} />
                 <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.title, paddingLeft: 4}]}>

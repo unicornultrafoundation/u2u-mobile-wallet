@@ -7,12 +7,19 @@ import { View, TouchableOpacity } from 'react-native';
 import Text from '../Text';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { usePreferenceStore } from '../../state/preferences';
+import GasPriceInput from './GasPriceInput';
+import theme from '../../theme';
+import GasLimitInput from './GasLimitInput';
+import Button from '../Button';
+import { useTranslation } from 'react-i18next';
 
 const CustomGasModal = ({trigger}: {
-  trigger: () => JSX.Element
+  trigger: () => JSX.Element,
 }) => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+
+  const { t } = useTranslation<string>()
 
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -22,8 +29,10 @@ const CustomGasModal = ({trigger}: {
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
-    console.log('here 123')
     bottomSheetModalRef.current?.present();
+  }, []);
+  const handleClose = useCallback(() => {
+    bottomSheetModalRef.current?.close();
   }, []);
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
@@ -69,7 +78,30 @@ const CustomGasModal = ({trigger}: {
             backgroundColor: preferenceTheme.background.background
           }
         ]}>
-          <Text>Customize gas fee</Text>
+          <Text style={[
+            theme.typography.headline.medium,
+            {
+              color: preferenceTheme.text.title,
+              marginBottom: 28
+            }
+          ]}>
+            {t('customizeGasFee')}
+          </Text>
+          <GasPriceInput />
+          <GasLimitInput />
+          <View
+            style={{width: '100%', flex: 1, justifyContent: 'flex-end'}}
+          >
+            <Button
+              fullWidth
+              style={{
+                borderRadius: 60
+              }}
+              onPress={handleClose}
+            >
+              {t('continue')}
+            </Button>
+          </View>
         </View>
       </BottomSheetModal>
     </>

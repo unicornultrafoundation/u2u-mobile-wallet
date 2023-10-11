@@ -143,7 +143,7 @@ const AmountStep = ({onNextStep, onBack}: {
             textStyle={theme.typography.label.medium}
             onPress={handleContinue}
           >
-            Continue
+            {t('continue')}
           </Button>
         </View>
       </View>
