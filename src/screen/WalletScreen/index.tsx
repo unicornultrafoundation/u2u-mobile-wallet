@@ -1,6 +1,12 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {styles} from './styles';
-import { NativeScrollEvent, NativeSyntheticEvent, SafeAreaView, ScrollView } from 'react-native';
+import {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  SafeAreaView,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import {usePreferenceStore} from '../../state/preferences';
 import {darkTheme, lightTheme} from '../../theme/color';
 import WalletHeader from './WalletHeader';
@@ -12,14 +18,18 @@ import BannerSection from './BannerSection';
 import Separator from '../../component/Separator';
 import {useFocusEffect, useRoute} from '@react-navigation/core';
 import {useGlobalStore} from '../../state/global';
+import {GestureResponderEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 
 const WalletScreen = () => {
   const {darkMode} = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
   const [tab, setTab] = useState('crypto');
-  const [scrollOffset, setScrollOffset] = useState(0);
   const [collapsed, setCollapsed] = useState(false);
+  const [scrollOffset, setScrollOffset] = useState(0);
+  const [firstTouch, setFirstTouch] = useState(0);
+  const windowWidth = Dimensions.get('window').width;
+  const COLLAPSED_OFFSET = 20;
 
   const route = useRoute();
   const {setRouteName} = useGlobalStore();
@@ -27,12 +37,26 @@ const WalletScreen = () => {
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const currentOffset = event.nativeEvent.contentOffset.y;
     setScrollOffset(currentOffset);
-
-    if (currentOffset > scrollOffset) {
+    if (scrollOffset > COLLAPSED_OFFSET) {
       !collapsed && setCollapsed(true);
-      return;
     } else {
-      setCollapsed(false);
+      collapsed && setCollapsed(false);
+    }
+  };
+
+  const handleTouchEnd = (e: GestureResponderEvent) => {
+    // get touch position and screen size
+    const positionY = e.nativeEvent.pageY;
+    const range = windowWidth / COLLAPSED_OFFSET;
+
+    // check if position is growing positively and has reached specified range
+    if (positionY - firstTouch > range) {
+      console.log('Down');
+      setCollapsed(false)
+    }
+    // check if position is growing negatively and has reached specified range
+    else if (firstTouch - positionY > range) {
+      console.log('Up');
     }
   };
 
@@ -48,13 +72,15 @@ const WalletScreen = () => {
         styles.container,
         {backgroundColor: preferenceTheme.background.background},
       ]}>
-      <ScrollView scrollEventThrottle={16} onScroll={onScroll}>
-        <WalletHeader collapsed={collapsed} />
-        <BalanceCard />
-        <Separator />
-        <BannerSection />
-        <Separator />
-
+      <WalletHeader collapsed={collapsed} />
+      <BalanceCard collapsed={collapsed} />
+      <Separator />
+      <BannerSection collapsed={collapsed} />
+      <ScrollView
+        scrollEventThrottle={16}
+        onScroll={onScroll}
+        onTouchStart={e => setFirstTouch(e.nativeEvent.pageY)}
+        onTouchEnd={e => handleTouchEnd(e)}>
         <Tab
           tabs={[
             {

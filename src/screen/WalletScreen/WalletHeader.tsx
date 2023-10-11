@@ -1,33 +1,15 @@
 import React, {useEffect} from 'react';
-import {Animated, Easing, TouchableOpacity, View} from 'react-native';
+import {Animated, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import Icon from '../../component/Icon';
 import {useWallet} from '../../hook/useWallet';
 import Text from '../../component/Text';
 import {truncate} from '../../util/string';
+import {useFadeAnimation} from './useFadeAnimation';
 
 const WalletHeader = ({collapsed}: {collapsed: boolean}) => {
   const {wallet} = useWallet();
-  const animatedValue = new Animated.Value(1);
-
-  const fadeOut = () => {
-    animatedValue.setValue(1);
-    Animated.timing(animatedValue, {
-      toValue: 0,
-      duration: 300,
-      easing: Easing.linear,
-      useNativeDriver: false,
-    });
-  };
-  const fadeIn = () => {
-    animatedValue.setValue(0);
-    Animated.timing(animatedValue, {
-      toValue: 1,
-      duration: 300,
-      easing: Easing.linear,
-      useNativeDriver: false,
-    });
-  };
+  const {fadeIn, fadeOut, opacityStyle, heightStyle} = useFadeAnimation();
 
   useEffect(() => {
     collapsed ? fadeOut() : fadeIn();
@@ -38,16 +20,8 @@ const WalletHeader = ({collapsed}: {collapsed: boolean}) => {
       style={[
         styles.headerSection,
         {
-          height: animatedValue.interpolate({
-            inputRange: [0, 1],
-            outputRange: [50, 0],
-            extrapolate: 'clamp',
-          }),
-          opacity: animatedValue.interpolate({
-            inputRange: [0, 1],
-            outputRange: [1, 0],
-            extrapolate: 'clamp',
-          }),
+          height: heightStyle(50),
+          opacity: opacityStyle,
         },
       ]}>
       {/*<View style={styles.headerSection}>*/}
