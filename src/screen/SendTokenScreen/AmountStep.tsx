@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
 import Icon from '../../component/Icon';
 import Text from '../../component/Text';
@@ -13,6 +13,7 @@ import { useTransactionStore } from '../../state/transaction';
 import { useTokenBalance } from '../../hook/useTokenBalance';
 import { useWallet } from '../../hook/useWallet';
 import { SvgUri } from 'react-native-svg';
+import BigNumber from 'bignumber.js';
 
 const AmountStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -27,15 +28,28 @@ const AmountStep = ({onNextStep, onBack}: {
   const {balance, loading: loadingBalance} = useTokenBalance(wallet.address, tokenMeta.address)
 
   const [internalAmount, setInternalAmount] = useState(amount)
+  const [error, setError] = useState('')
 
   const handleContinue = () => {
     // TODO: valudate amount
-    setAmount(getDigit(internalAmount))
+    setError('')
+    const amountDigit = getDigit(internalAmount)
+    const rawAmountBN = BigNumber(amountDigit)
+
+    if (rawAmountBN.gt(balance)) {
+      setError('Insufficient balance')
+      return
+    }
+
+    setAmount(amountDigit)
     onNextStep()
   }
 
   return (
-    <View style={{flex: 1}}>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={onBack}>
           <Icon name="arrow-left" width={24} height={24} />
@@ -110,6 +124,20 @@ const AmountStep = ({onNextStep, onBack}: {
               </Text>
             </TouchableOpacity>
           </View>
+          {error && (
+            <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center'}}>
+              <Icon name='error' width={18} height={18} />
+              <Text style={[
+                theme.typography.caption2.regular,
+                {
+                  color: theme.accentColor.error.normal,
+                  paddingLeft: 4
+                }
+              ]}>
+                {error}
+              </Text>
+            </View>
+          )}
           <Button
             style={{borderRadius: 60}}
             textStyle={theme.typography.label.medium}
@@ -119,7 +147,7 @@ const AmountStep = ({onNextStep, onBack}: {
           </Button>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 };
 

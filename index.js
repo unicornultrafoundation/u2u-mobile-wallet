@@ -6,6 +6,7 @@ import App from './App';
 import {name as appName} from './app.json';
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
 import BigNumber from 'bignumber.js'
+import "fast-text-encoding";
 import "./shim"
 
 BigNumber.config({ FORMAT: {

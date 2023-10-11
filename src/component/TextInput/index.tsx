@@ -11,9 +11,10 @@ import Text from '../Text';
 interface Props extends TextInputProps {
   containerStyle?: StyleProp<ViewStyle>
   error?: string
+  postIcon?: () => JSX.Element
 }
 
-const TextInput = ({style, containerStyle, error, ...rest}: Props) => {
+const TextInput = ({style, containerStyle, error, postIcon, ...rest}: Props) => {
 
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
@@ -24,7 +25,7 @@ const TextInput = ({style, containerStyle, error, ...rest}: Props) => {
     if (error) {
       return <Icon name='error' width={18} height={18} />
     }
-    return null
+    return postIcon ? postIcon() : null
   }
 
   const renderPreIcon = () => {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
 import Text from '../../component/Text';
@@ -9,11 +9,14 @@ import theme from '../../theme';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { SvgUri } from 'react-native-svg';
-import { useTransactionStore } from '../../state/transaction';
 import { formatNumberString, shortenAddress } from '../../util/string';
 import Separator from '../../component/Separator';
 import { useNetworkStore } from '../../state/network';
 import { useWallet } from '../../hook/useWallet';
+import { useTransaction } from '../../hook/useTransaction';
+import BigNumber from 'bignumber.js';
+import { useNativeBalance } from '../../hook/useNativeBalance';
+import CustomGasModal from '../../component/CustomGasModal';
 
 const ConfirmStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -23,9 +26,26 @@ const ConfirmStep = ({onNextStep, onBack}: {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
-  const {receiveAddress, tokenMeta, amount} = useTransactionStore()
+  const {receiveAddress, tokenMeta, amount, estimateGasLimit, estimatedFee, maxFee} = useTransaction()
   const {name: networkName} = useNetworkStore()
   const {wallet} = useWallet()
+  const {balance} = useNativeBalance(wallet.address)
+
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    estimateGasLimit()
+  }, [])
+
+  const handleConfirm = () => {
+    const balanceBN = BigNumber(balance)
+    if (balanceBN.minus(estimatedFee).minus(amount).lt(0)) {
+      setError('Insufficient balance')
+      return;
+    }
+
+    // onNextStep()
+  }
 
   return (
     <View style={{flex: 1}}>
@@ -67,14 +87,20 @@ const ConfirmStep = ({onNextStep, onBack}: {
           <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface}]}>
             <View style={styles.cardRow}>
               <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>EST fee</Text>
-              <Text style={[theme.typography.footnote.regular]}>12 U2U</Text>
+              <Text style={[theme.typography.footnote.regular]}>{estimatedFee} U2U</Text>
             </View>
             <View style={styles.cardRow}>
               <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>Max fee</Text>
-              <TouchableOpacity style={{flexDirection: 'row'}}>
-                <Text style={[theme.typography.footnote.regular]}>12 U2U</Text>
-                <Icon name="chevron-right" />
-              </TouchableOpacity>
+              <CustomGasModal
+                trigger={() => {
+                  return (
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={[theme.typography.footnote.regular]}>{maxFee} U2U</Text>
+                      <Icon name="chevron-right" />
+                    </View>
+                  )
+                }}
+              />
             </View>
           </View>
           <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface}]}>
@@ -96,6 +122,7 @@ const ConfirmStep = ({onNextStep, onBack}: {
         <Button
           style={{borderRadius: 60}}
           textStyle={theme.typography.label.medium}
+          onPress={handleConfirm}
         >
           {t('confirm')}
         </Button>
