@@ -1,25 +1,14 @@
 import {Animated, Easing} from 'react-native';
+import {useEffect} from 'react';
 
-export const useFadeAnimation = () => {
+export const useFadeAnimation = (showAnim: boolean) => {
   const animatedValue = new Animated.Value(1);
-
-  const opacityStyle = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, 0],
-  });
-
-  const heightStyle = (height: number) =>
-    animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [height, 0],
-      extrapolate: 'clamp',
-    });
 
   const fadeOut = () => {
     animatedValue.setValue(1);
     Animated.timing(animatedValue, {
       toValue: 0,
-      duration: 300,
+      duration: 1000,
       easing: Easing.linear,
       useNativeDriver: false,
     });
@@ -29,16 +18,28 @@ export const useFadeAnimation = () => {
     animatedValue.setValue(0);
     Animated.timing(animatedValue, {
       toValue: 1,
-      duration: 300,
+      duration: 1000,
       easing: Easing.linear,
       useNativeDriver: false,
     });
   };
 
+  const getAnimatedStyle = (
+    initialValue: number,
+    transformedValue: number = 0,
+  ) =>
+    animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [initialValue, transformedValue],
+      extrapolate: 'clamp',
+    });
+
+  useEffect(() => {
+    showAnim ? fadeOut() : fadeIn();
+  }, [showAnim]);
+
   return {
-    opacityStyle,
-    heightStyle,
-    fadeIn,
-    fadeOut,
+    animatedValue,
+    getAnimatedStyle,
   };
 };

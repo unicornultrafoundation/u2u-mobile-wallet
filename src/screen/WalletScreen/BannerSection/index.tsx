@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Dimensions, Animated} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import Step1 from './Step1';
@@ -11,16 +11,13 @@ import {useFadeAnimation} from '../useFadeAnimation';
 const BannerSection = ({collapsed}: {collapsed: boolean}) => {
   const width = Dimensions.get('window').width;
 
-  const {fadeIn, fadeOut, opacityStyle, heightStyle} = useFadeAnimation();
+  const {getAnimatedStyle} = useFadeAnimation(collapsed);
 
-  useEffect(() => {
-    collapsed ? fadeOut() : fadeIn();
-  }, [collapsed]);
   return (
     <Animated.View
       style={{
-        height: heightStyle(170),
-        opacity: opacityStyle,
+        height: getAnimatedStyle(170),
+        opacity: getAnimatedStyle(1),
       }}>
       <Carousel
         loop

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {TouchableOpacity, View, Animated} from 'react-native';
 import {styles} from './styles';
 import Text from '../../component/Text';
@@ -10,17 +10,13 @@ import {useTransactionStore} from '../../state/transaction';
 import {useFadeAnimation} from './useFadeAnimation';
 
 const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
-  const {fadeIn, fadeOut, heightStyle, opacityStyle} = useFadeAnimation();
+  const {getAnimatedStyle} = useFadeAnimation(collapsed);
 
   const {darkMode} = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
   const navigation = useNavigation<any>();
   const {setTokenMeta} = useTransactionStore();
-
-  useEffect(() => {
-    collapsed ? fadeOut() : fadeIn();
-  }, [collapsed]);
 
   return (
     <View style={styles.balanceCardContainer}>
@@ -36,8 +32,8 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
           styles.balanceNumberInU2U,
           {
             color: preferenceTheme.text.secondary,
-            // height: heightStyle(20),
-            opacity: opacityStyle,
+            height: getAnimatedStyle(20),
+            opacity: getAnimatedStyle(1),
           },
         ]}>
         0 U2U
@@ -48,8 +44,8 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          height: heightStyle(80),
-          opacity: opacityStyle,
+          height: getAnimatedStyle(80),
+          opacity: getAnimatedStyle(1),
         }}>
         <View
           style={{

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Animated, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import Icon from '../../component/Icon';
@@ -9,19 +9,15 @@ import {useFadeAnimation} from './useFadeAnimation';
 
 const WalletHeader = ({collapsed}: {collapsed: boolean}) => {
   const {wallet} = useWallet();
-  const {fadeIn, fadeOut, opacityStyle, heightStyle} = useFadeAnimation();
-
-  useEffect(() => {
-    collapsed ? fadeOut() : fadeIn();
-  }, [collapsed]);
+  const {getAnimatedStyle} = useFadeAnimation(collapsed);
 
   return (
     <Animated.View
       style={[
         styles.headerSection,
         {
-          height: heightStyle(50),
-          opacity: opacityStyle,
+          height: getAnimatedStyle(50),
+          opacity: getAnimatedStyle(1),
         },
       ]}>
       {/*<View style={styles.headerSection}>*/}
