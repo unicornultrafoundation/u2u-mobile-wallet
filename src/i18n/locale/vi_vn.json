@@ -26,5 +26,14 @@
   "setAmountForTransaction": "Set amount",
   "confirmTransactionInfo": "Send",
   "continue": "Continue",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "customizeGasFee": "Customize gas fee",
+  "send": "Send",
+  "from": "From",
+  "to": "To",
+  "estFee": "EST fee",
+  "maxFee": "Max fee",
+  "network": "Network",
+  "enterPassword": "Enter password",
+  "transactionSubmitted": "Transaction submitted"
 }

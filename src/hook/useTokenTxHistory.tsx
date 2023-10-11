@@ -1,4 +1,3 @@
-import React from 'react';
 import { useURC20TokenTxHistory } from './useURC20TokenTxHistory';
 import { useNativeTokenTxHistory } from './useNativeTokenTxHistory';
 

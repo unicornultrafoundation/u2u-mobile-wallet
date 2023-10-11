@@ -19,6 +19,14 @@ interface TransactionState {
   setGasPrice: (gasPrice: string) => void;
   gasLimit: string;
   setGasLimit: (gasLimit: string) => void;
+  estimatedGasLimit: string;
+  setEstimatedGasLimit: (estimatedGasLimit: string) => void;
+  estimatedGasPrice: string;
+  setEstimatedGasPrice: (estimatedGasPrice: string) => void;
+  txData: string;
+  setTxData: (txData: string) => void;
+  txStatus: string;
+  setTxStatus: (txStatus: string) => void;
 }
 
 export const useTransactionStore = create<TransactionState>((set) => ({
@@ -40,4 +48,12 @@ export const useTransactionStore = create<TransactionState>((set) => ({
   setGasPrice: (gasPrice: string) => set({ gasPrice }),
   gasLimit: '29000',
   setGasLimit: (gasLimit: string) => set({ gasLimit }),
+  estimatedGasLimit: '0',
+  setEstimatedGasLimit: (estimatedGasLimit: string) => set({ estimatedGasLimit }),
+  estimatedGasPrice: '0',
+  setEstimatedGasPrice: (estimatedGasPrice: string) => set({ estimatedGasPrice }),
+  txData: '',
+  setTxData: (txData: string) => set({ txData }),
+  txStatus: '',
+  setTxStatus: (txStatus: string) => set({ txStatus })
 }))

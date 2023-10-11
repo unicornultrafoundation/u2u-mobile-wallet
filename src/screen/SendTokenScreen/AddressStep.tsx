@@ -59,6 +59,14 @@ const AddressStep = ({onNextStep, onBack}: {
           value={address}
           onChangeText={(val) => setAddress(val)}
           error={errorAddress}
+          postIcon={() => {
+            return (
+              // TODO: trigger camera for QR code scan
+              <TouchableOpacity>
+                <Icon name="scan" width={18} height={18} />
+              </TouchableOpacity>
+            )
+          }}
         />
         <Button
           style={{borderRadius: 60}}

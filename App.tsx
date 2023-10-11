@@ -25,6 +25,8 @@ import { darkTheme, lightTheme } from './src/theme/color';
 import { useHydration } from './src/hook/useHydration';
 import SplashScreen from './src/screen/SplashScreen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 const Tab = createBottomTabNavigator();
 
@@ -46,30 +48,34 @@ function App(): JSX.Element {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-          <StatusBar
-            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            backgroundColor={backgroundStyle.backgroundColor}
-            // backgroundColor="transparent"
-          />
-          {wallet.address === "" ? (
-            <OnboardingStackScreen />
-          ) : (
-            <Tab.Navigator
-              tabBar={({state, descriptors, navigation}) => <CustomBottomTab state={state} descriptors={descriptors} navigation={navigation} />}
-              screenOptions={{ headerShown: false }}
-              initialRouteName='WalletStack'
-            >
-              <Tab.Screen name="DiscoverStack" component={DiscoverStackScreen} />
-              <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
-              <Tab.Screen name="WalletStack" component={WalletStackScreen} />
-              <Tab.Screen name="StakingStack" component={StakingStackScreen} />
-              <Tab.Screen name="BrowserStack" component={BrowserStackScreen} />
-            </Tab.Navigator>
-          )}
-      </NavigationContainer>
-    </QueryClientProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <QueryClientProvider client={queryClient}>
+          <NavigationContainer>
+              <StatusBar
+                barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+                backgroundColor={backgroundStyle.backgroundColor}
+                // backgroundColor="transparent"
+              />
+              {wallet.address === "" ? (
+                <OnboardingStackScreen />
+              ) : (
+                <Tab.Navigator
+                  tabBar={({state, descriptors, navigation}) => <CustomBottomTab state={state} descriptors={descriptors} navigation={navigation} />}
+                  screenOptions={{ headerShown: false }}
+                  initialRouteName='WalletStack'
+                >
+                  <Tab.Screen name="DiscoverStack" component={DiscoverStackScreen} />
+                  <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
+                  <Tab.Screen name="WalletStack" component={WalletStackScreen} />
+                  <Tab.Screen name="StakingStack" component={StakingStackScreen} />
+                  <Tab.Screen name="BrowserStack" component={BrowserStackScreen} />
+                </Tab.Navigator>
+              )}
+          </NavigationContainer>
+        </QueryClientProvider>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }
 

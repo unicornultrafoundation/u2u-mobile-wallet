@@ -371,6 +371,18 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'scan':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 18 18" fill="none">
+              <Path d="M16.9736 9.76074H1.125" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M15.5626 6.58343V5.11886C15.5626 3.747 14.4406 2.625 13.0687 2.625H11.8359" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M2.53613 6.58343V5.11571C2.53613 3.7415 3.64949 2.62736 5.0237 2.62579L6.28399 2.625" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M15.5626 9.76074V13.159C15.5626 14.53 14.4406 15.6528 13.0687 15.6528H11.8359" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M2.53613 9.76074V13.1621C2.53613 14.5363 3.64949 15.6505 5.0237 15.652L6.28399 15.6528" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
       case 'search':
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
