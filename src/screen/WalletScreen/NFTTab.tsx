@@ -2,6 +2,8 @@ import React from 'react';
 import {TouchableOpacity, View, Image} from 'react-native';
 import Text from '../../component/Text';
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
+import {usePreferenceStore} from '../../state/preferences';
+import {darkTheme, lightTheme} from '../../theme/color';
 
 interface NFTCollection {
   id: number;
@@ -10,40 +12,11 @@ interface NFTCollection {
   quantity: number;
 }
 
-const ListItem = ({name, image, quantity}: NFTCollection) => (
-  <View
-    style={{
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginVertical: 8,
-    }}>
-    <View style={{flexDirection: 'row', alignItems: 'center', gap: 12}}>
-      <Image
-        source={{uri: image}}
-        width={28}
-        height={28}
-        alt=""
-        borderRadius={14}
-      />
-      <Text style={{fontSize: 16, fontWeight: '500', letterSpacing: 0.06}}>
-        {name}
-      </Text>
-    </View>
-    <View style={{flexDirection: 'row', alignItems: 'center', gap: 8}}>
-      <Text style={{color: '#8D8D8D', fontSize: 14}}>
-        {quantity.toString()}
-      </Text>
-      <FontAwesome6Icon
-        style={{fontSize: 11, color: '#8D8D8D'}}
-        name="chevron-down"
-        solid
-      />
-    </View>
-  </View>
-);
 
 const NFTTab = () => {
+  const {darkMode} = usePreferenceStore();
+  const preferenceTheme = darkMode ? darkTheme : lightTheme;
+
   const data: NFTCollection[] = [
     {
       id: 1,
@@ -84,17 +57,49 @@ const NFTTab = () => {
             gap: 8,
             marginBottom: 16,
           }}>
-          <Text style={{color: 'white', fontSize: 14}}>All collectibles</Text>
+          <Text style={{color: preferenceTheme.text.title, fontSize: 14}}>
+            All collectibles
+          </Text>
           <FontAwesome6Icon
-            style={{fontSize: 11, color: '#8D8D8D'}}
+            style={{fontSize: 11, color: preferenceTheme.text.primary}}
             name="chevron-down"
             solid
           />
         </View>
       </TouchableOpacity>
 
-      {data.map(item => (
-        <ListItem key={item.id} {...item} />
+      {data.map(({ name, quantity, id, image }) => (
+        <View
+          key={id}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginVertical: 8,
+          }}>
+          <View style={{flexDirection: 'row', alignItems: 'center', gap: 12}}>
+            <Image
+              source={{uri: image}}
+              width={28}
+              height={28}
+              alt=""
+              borderRadius={14}
+            />
+            <Text style={{fontSize: 16, fontWeight: '500', letterSpacing: 0.06}}>
+              {name}
+            </Text>
+          </View>
+          <View style={{flexDirection: 'row', alignItems: 'center', gap: 8}}>
+            <Text style={{color: preferenceTheme.text.primary, fontSize: 14}}>
+              {quantity.toString()}
+            </Text>
+            <FontAwesome6Icon
+              style={{fontSize: 11, color: preferenceTheme.text.primary}}
+              name="chevron-down"
+              solid
+            />
+          </View>
+        </View>
       ))}
     </View>
   );
