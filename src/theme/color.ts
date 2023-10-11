@@ -85,6 +85,33 @@ export const color = {
     "700": "#01447a",
     "800": "#00335b",
     "900": "#002847"
+  },
+}
+
+export const accentColor = {
+  primary: {
+    light: "#ededfd",
+    normal: "#4c4aef",
+    dark: "#3938b3",
+    darker: "#1b1a54"
+  },
+  secondary: {
+    light: "#fff1e9",
+    normal: "#126ddc",
+    dark: "#bf571a",
+    darker: "#59290c"
+  },
+  tertiary: {
+    light: "#e7f6ed",
+    normal: "#0fa44d",
+    dark: "#0b7b3a",
+    darker: "#05391b"
+  },
+  error: {
+    light: "#fbe8e8",
+    normal: "#d21c1c",
+    dark: "#9e1515",
+    darker: "#4a0a0a"
   }
 }
 

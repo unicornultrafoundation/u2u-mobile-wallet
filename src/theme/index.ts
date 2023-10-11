@@ -1,7 +1,8 @@
-import {color} from './color'
+import {color, accentColor} from './color'
 import {typography} from './typography'
 const theme = {
   color,
+  accentColor,
   typography
 }
 

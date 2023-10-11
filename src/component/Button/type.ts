@@ -8,4 +8,5 @@ export interface BaseButtonProps extends TouchableOpacityProps {
   fullWidth?: boolean
   withIcon?: boolean
   textStyle?: TextStyle
+  loading?: boolean
 }

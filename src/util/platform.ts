@@ -22,7 +22,7 @@ export const isTablet = DeviceInfo.isTablet();
 export const isDarkMode = Appearance.getColorScheme() === 'dark';
 
 const iPhoneXPaddingBottom = 34;
-const iPhoneStatusBarHeight = 20;
+const iPhoneStatusBarHeight = 32;
 const iPhoneXStatusBarHeight = 32;
 
 export function isIphoneX() {
@@ -48,8 +48,6 @@ export function getPhonePaddingBottom(): number {
 export function getPhonePaddingTop(): number {
   return isAndroid ? 0 : getIPhoneStatusBarHeight();
 }
-
-
 
 export function isPortrait(screenData: ScaledSize) {
   return screenData.width <= screenData.height;

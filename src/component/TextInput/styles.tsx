@@ -8,5 +8,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     minWidth: 52,
     minHeight: 50,
+    alignItems: 'center',
+    flexDirection: 'row'
   },
 })

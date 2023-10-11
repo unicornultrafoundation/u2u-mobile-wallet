@@ -1,22 +1,28 @@
 import React, { useMemo } from 'react';
-import { Image, Platform, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import Icon from '../Icon';
 import styles from './styles';
 import { usePreferenceStore } from '../../state/preferences';
-import { color, darkTheme, lightTheme } from '../../theme/color';
+import { color } from '../../theme/color';
+import { useGlobalStore } from '../../state/global';
 
-const TABBAR_HEIGHT = 80
+export const TABBAR_HEIGHT = 80
+
+const SHOW_BOTTOM_TAB_ROUTE = [
+  'Wallet',
+  'StakingDashboard'
+]
 
 export default ({ state, descriptors, navigation }: any) => {
   const {width: viewportWidth} = useWindowDimensions();
   const {darkMode} = usePreferenceStore()
 
-  const theme = useMemo(() => {
-    if (darkMode) {
-      return darkTheme
-    }
-    return lightTheme
-  }, [darkMode])
+  const { routeName } = useGlobalStore()
+  const showTabBar = useMemo(() => {
+    return SHOW_BOTTOM_TAB_ROUTE.includes(routeName)
+  }, [routeName])
+
+  if (!showTabBar) return null
 
   return (
     <View 
@@ -27,9 +33,10 @@ export default ({ state, descriptors, navigation }: any) => {
         height: TABBAR_HEIGHT,
         width: viewportWidth,
         backgroundColor: darkMode ? '#181818' : '#FFFFFF',
+        position: 'absolute',
+        bottom: 0
       }}
     >
-      {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}> */}
       {state.routes.map((route: any, index: number) => {
         const { options } = descriptors[route.key];
 

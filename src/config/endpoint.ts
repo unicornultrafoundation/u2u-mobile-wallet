@@ -1,0 +1,1 @@
+export const REMOTE_CONFIG_BASE_URL = 'https://raw.githubusercontent.com/phongnhat19/explorer-assets/master'

@@ -1,8 +1,9 @@
 import React from 'react'
-import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { StyleProp, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 import styles from './styles';
-import { color } from '../../theme/color';
+import { darkTheme, lightTheme } from '../../theme/color';
 import { usePreferenceStore } from '../../state/preferences';
+import theme from '../../theme';
 
 interface TabTitle {
   label: string;
@@ -13,11 +14,14 @@ interface TabProps {
   onChange?: (newTab: string) => void;
   tabs: TabTitle[];
   tabStyle?: ViewStyle,
+  tabTextStyle?: StyleProp<TextStyle>
   containerStyle?: ViewStyle
 }
 
-const Tab = ({selectedTab, onChange, tabs, tabStyle, containerStyle}: TabProps) => {
+const Tab = ({selectedTab, onChange, tabs, tabStyle, tabTextStyle, containerStyle}: TabProps) => {
   const {darkMode} = usePreferenceStore();
+
+  const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   return (
     <View style={[styles.container, containerStyle]}>
@@ -28,15 +32,16 @@ const Tab = ({selectedTab, onChange, tabs, tabStyle, containerStyle}: TabProps) 
             key={`tab-${tabItem.value}`}
             style={[
               styles.tabContainer,
-              {borderColor: isActive ? color.primary[500] : 'transparent'},
+              {borderColor: isActive ? theme.color.primary[500] : 'transparent'},
               tabStyle
             ]}
             onPress={() => onChange && onChange(tabItem.value)}
           >
             <Text style={[
               styles.tabTitle, 
-              {color: isActive ? color.primary[500] : (darkMode ? color.neutral[100] : color.neutral[800])},
-              {fontWeight: isActive ? 'bold' : '500'}
+              {color: isActive ? preferenceTheme.text.title : theme.color.neutral[500]},
+              {fontWeight: isActive ? 'bold' : '500'},
+              tabTextStyle
             ]}>{tabItem.label}</Text>
           </TouchableOpacity>
         )

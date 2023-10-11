@@ -20,16 +20,20 @@ const Step3 = () => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   const [seed, setSeed] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setSeed('')
     const s = generateMnemonic()
-    console.log(s)
     setSeed(s || '')
   }, [])
 
   const handleSaveSeed = () => {
-    accessWallet(seed)
+    setLoading(true)
+    setTimeout(() => {
+      accessWallet(seed)
+      setLoading(false)
+    }, 100)
   };
 
   const handleCopy = () => {
@@ -109,6 +113,7 @@ const Step3 = () => {
             borderRadius: 60
           }}
           onPress={handleSaveSeed}
+          loading={loading}
         >
           Continue
         </Button>

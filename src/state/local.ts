@@ -9,7 +9,7 @@ interface LocalState {
   saveIniting: (value: boolean) => void;
 }
 
-export const useLocalStore = create(
+export const useLocalStore = create<LocalState>()(
   persist<LocalState>(
     (set) => ({
       password: "",
