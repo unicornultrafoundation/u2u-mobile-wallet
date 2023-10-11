@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  ScrollView,
-  TouchableOpacity,
-  View,
-  FlatList,
-  Image,
-  SafeAreaView,
-} from 'react-native';
+import {TouchableOpacity, View, Image} from 'react-native';
 import Text from '../../component/Text';
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 
@@ -82,35 +75,28 @@ const NFTTab = () => {
     },
   ];
   return (
-    <SafeAreaView style={{paddingHorizontal: 16}}>
-      {/*<ScrollView>*/}
-      <FlatList
-        ListHeaderComponent={() => (
-          <TouchableOpacity>
-            <View
-              style={{
-                alignItems: 'center',
-                flexDirection: 'row',
-                gap: 8,
-                marginBottom: 16,
-              }}>
-              <Text style={{color: 'white', fontSize: 14}}>
-                All collectibles
-              </Text>
-              <FontAwesome6Icon
-                style={{fontSize: 11, color: '#8D8D8D'}}
-                name="chevron-down"
-                solid
-              />
-            </View>
-          </TouchableOpacity>
-        )}
-        data={data}
-        renderItem={({item}) => <ListItem {...item} />}
-        keyExtractor={item => item.id.toString()}
-      />
-      {/*</ScrollView>*/}
-    </SafeAreaView>
+    <View style={{paddingHorizontal: 16}}>
+      <TouchableOpacity>
+        <View
+          style={{
+            alignItems: 'center',
+            flexDirection: 'row',
+            gap: 8,
+            marginBottom: 16,
+          }}>
+          <Text style={{color: 'white', fontSize: 14}}>All collectibles</Text>
+          <FontAwesome6Icon
+            style={{fontSize: 11, color: '#8D8D8D'}}
+            name="chevron-down"
+            solid
+          />
+        </View>
+      </TouchableOpacity>
+
+      {data.map(item => (
+        <ListItem key={item.id} {...item} />
+      ))}
+    </View>
   );
 };
 
