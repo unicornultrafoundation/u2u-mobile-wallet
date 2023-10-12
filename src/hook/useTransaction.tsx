@@ -4,11 +4,13 @@ import { useNetworkStore } from '../state/network'
 import { estimateGasLimitUtil, estimateGasPriceUtil } from '../util/blockchain'
 import { useWallet } from './useWallet'
 import BigNumber from 'bignumber.js'
+import { getNonce, sendSignedTransaction, signTransaction } from '../util/wallet'
+import { getDigit } from '../util/string'
 
 export const useTransaction = () => {
   const txStore = useTransactionStore()
   const {wallet} = useWallet()
-  const {rpc} = useNetworkStore()
+  const {rpc, chainId} = useNetworkStore()
   
   const estimateGasPrice = async () => {
     const rs = await estimateGasPriceUtil(rpc)
@@ -42,9 +44,28 @@ export const useTransaction = () => {
     return BigNumber(txStore.gasLimit).multipliedBy(txStore.gasPrice).dividedBy(10 ** 18).toFormat()
   }, [txStore.gasLimit, txStore.gasPrice])
 
-  const submitTx = useCallback(() => {
+  const submitTx = useCallback(async () => {
+    const rawTxObj: Record<string, any> = {
+      from: wallet.address,
+      to: txStore.receiveAddress,
+      gas: txStore.gasLimit,
+      gasPrice: txStore.gasPrice,
+      chainId,
+      nonce: await getNonce(rpc, wallet.address)
+    }
 
-  }, [wallet.privateKey])
+    if (txStore.tokenMeta.address === "0x" || txStore.tokenMeta.address === "") {
+      rawTxObj.value = getDigit(
+        BigNumber(txStore.amount).multipliedBy(10 ** 18).toFormat()
+      )
+    } else {
+      rawTxObj.value = "0"
+    }
+    const signedTx = await signTransaction(rawTxObj, wallet.privateKey, rpc)
+    console.log('rawTxObj', rawTxObj)
+    console.log('signedTx', signedTx)
+    // return sendSignedTransaction(rpc, signedTx)
+  }, [wallet.privateKey, wallet.address, rpc])
 
   return {
     ...txStore,
