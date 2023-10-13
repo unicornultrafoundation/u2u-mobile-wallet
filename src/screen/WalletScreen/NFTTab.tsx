@@ -12,6 +12,7 @@ import {usePreferenceStore} from '../../state/preferences';
 import {darkTheme, lightTheme} from '../../theme/color';
 import Collapsible from '../../component/Collapsible';
 import nftCollections from '../../mock/nft-collections.json';
+import {useNavigation} from '@react-navigation/native';
 
 interface NFTCollection {
   id: number;
@@ -25,6 +26,7 @@ interface NFTCollection {
 const NFTTab = () => {
   const {darkMode} = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
+  const navigation = useNavigation<any>();
   const data: NFTCollection[] = nftCollections as NFTCollection[];
 
   const [expandedItem, setExpandedItem] = useState<number>();
@@ -78,7 +80,8 @@ const NFTTab = () => {
               {items.map(item => (
                 <TouchableOpacity
                   key={item.id}
-                  style={{width: 111, height: 111}}>
+                  style={{width: 111, height: 111}}
+                  onPress={navigation.navigate('NFTCollection')}>
                   <Image
                     source={{uri: item.image}}
                     style={{
