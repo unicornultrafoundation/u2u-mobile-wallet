@@ -4,41 +4,42 @@ import { usePreferenceStore } from '../../state/preferences';
 import { color, darkTheme, lightTheme } from '../../theme/color';
 import Text from '../../component/Text';
 import Icon from '../../component/Icon';
+import { useNavigation } from "@react-navigation/native";
 
 const CollectionBanner = () => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
+  const navigation = useNavigation<any>()
 
   const actions = [
-    { name: 'twitter', url: '' },
-    { name: 'facebook', url: '' },
-    { name: 'telegram', url: '' },
-    { name: 'discord', url: '' },
-    { name: 'youtube', url: '' },
-    { name: 'website', url: '' },
+    { name: 'twitter', url: '', icon: 'twitter-circle' },
+    { name: 'facebook', url: '', icon: 'facebook-circle' },
+    { name: 'telegram', url: '', icon: 'telegram-circle' },
+    { name: 'discord', url: '', icon: 'discord-circle' },
+    { name: 'youtube', url: '', icon: 'youtube-circle' },
+    { name: 'website', url: '', icon: 'website' },
   ];
 
   return (
-    <View style={styles.banner}>
-      <Image
-        source={{ uri: 'https://fakeimg.pl/780x240/ff0000,128/000,255' }}
-        style={{ width: '100%', height: 120, objectFit: 'cover' }}
-      />
+    <View>
+      <View style={styles.banner}>
+        <View style={[styles.section, styles.bannerActions]}>
+          <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
+            <Icon name="arrow-left" width={24} height={24}/>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Icon name="send" width={24} height={24}/>
+          </TouchableOpacity>
+        </View>
 
-      <View
-        style={[
-          styles.section,
-          { flexDirection: 'row', alignItems: 'center', gap: 12, height: 42, overflow: 'visible', marginTop: 8 },
-        ]}>
-        <View
-          style={{
-            width: 80,
-            height: 80,
-            borderRadius: 40,
-            overflow: 'hidden',
-            borderWidth: 4,
-            borderColor: preferenceTheme.background.background,
-          }}>
+        <Image
+          source={{ uri: 'https://fakeimg.pl/780x240/ff0000,128/000,255' }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      </View>
+
+      <View style={[styles.section, styles.bannerContent]}>
+        <View style={[styles.bannerAvatar, { borderColor: preferenceTheme.background.background }]}>
           <Image
             source={{ uri: 'https://fakeimg.pl/100/' }}
             style={{
@@ -50,15 +51,7 @@ const CollectionBanner = () => {
         </View>
 
         <View>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '700',
-              letterSpacing: 0.06,
-              textTransform: 'uppercase',
-              color: color.neutral[0],
-              marginBottom: 8
-            }}>
+          <Text style={[styles.bannerText, { color: preferenceTheme.text.title }]}>
             MECH Cyper - U2 Game
           </Text>
 
@@ -66,7 +59,7 @@ const CollectionBanner = () => {
             {actions.map(action => {
               return (
                 <TouchableOpacity>
-                  <Icon name={action.name} width={16} height={16} />
+                  <Icon name={action.icon} width={16} height={16} />
                 </TouchableOpacity>
               );
             })}

@@ -81,7 +81,7 @@ const NFTTab = () => {
                 <TouchableOpacity
                   key={item.id}
                   style={{width: 111, height: 111}}
-                  onPress={navigation.navigate('NFTCollection')}>
+                  onPress={() => navigation.navigate('NFTCollection')}>
                   <Image
                     source={{uri: item.image}}
                     style={{

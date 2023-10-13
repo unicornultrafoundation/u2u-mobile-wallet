@@ -392,7 +392,7 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
-      case 'twitter':
+      case 'twitter-circle':
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg width="100%" height="100%" viewBox="0 0 14 15" fill="none">
@@ -404,7 +404,7 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
-      case 'facebook':
+      case 'facebook-circle':
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg width="100%" height="100%" viewBox="0 0 16 17" fill="none">
@@ -423,7 +423,7 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
-      case 'telegram':
+      case 'telegram-circle':
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg width="100%" height="100%" viewBox="0 0 16 17" fill="none">
@@ -435,7 +435,7 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
-      case 'discord':
+      case 'discord-circle':
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg width="100%" height="100%" viewBox="0 0 16 17" fill="none">
@@ -447,7 +447,7 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
-      case 'youtube':
+      case 'youtube-circle':
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg width="100%" height="100%" viewBox="0 0 16 17" fill="none">
@@ -466,6 +466,20 @@ const Icon = ({name, width, height, color, style}: {
               <Path
                 d="M2 8.5H5.33333M2 8.5C2 11.8137 4.68629 14.5 8 14.5M2 8.5C2 5.18629 4.68629 2.5 8 2.5M5.33333 8.5H10.6667M5.33333 8.5C5.33333 11.8137 6.52724 14.5 8 14.5M5.33333 8.5C5.33333 5.18629 6.52724 2.5 8 2.5M10.6667 8.5H14M10.6667 8.5C10.6667 5.18629 9.47276 2.5 8 2.5M10.6667 8.5C10.6667 11.8137 9.47276 14.5 8 14.5M14 8.5C14 5.18629 11.3137 2.5 8 2.5M14 8.5C14 11.8137 11.3137 14.5 8 14.5"
                 stroke={color || '#363636'}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </Svg>
+          </View>
+        )
+      case 'send':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 25" fill="none">
+              <Path
+                d="M15.8554 8.62111L10.1916 14.3227L3.56064 10.2415C2.69176 9.70657 2.86787 8.38697 3.8467 8.10287L19.5022 3.54743C20.3925 3.28978 21.2156 4.12446 20.949 5.01889L16.304 20.6582C16.013 21.6369 14.7082 21.8064 14.1809 20.9325L10.1916 14.3227"
+                stroke={color || 'white'}
+                strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
