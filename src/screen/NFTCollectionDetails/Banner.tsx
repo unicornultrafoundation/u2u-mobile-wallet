@@ -5,11 +5,14 @@ import { color, darkTheme, lightTheme } from '../../theme/color';
 import Text from '../../component/Text';
 import Icon from '../../component/Icon';
 import { useNavigation } from "@react-navigation/native";
+import FontAwesome6Icon from "react-native-vector-icons/FontAwesome6";
+import { useState } from "react";
 
 const CollectionBanner = () => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const navigation = useNavigation<any>()
+  const [showFullDesc, setShowFullDesc] = useState(false)
 
   const actions = [
     { name: 'twitter', url: '', icon: 'twitter-circle' },
@@ -19,6 +22,8 @@ const CollectionBanner = () => {
     { name: 'youtube', url: '', icon: 'youtube-circle' },
     { name: 'website', url: '', icon: 'website' },
   ];
+
+  const description = ''
 
   return (
     <View>
@@ -59,13 +64,38 @@ const CollectionBanner = () => {
             {actions.map(action => {
               return (
                 <TouchableOpacity>
-                  <Icon name={action.icon} width={16} height={16} />
+                  <Icon name={action.icon} width={16} height={16}/>
                 </TouchableOpacity>
               );
             })}
           </View>
         </View>
       </View>
+
+      <TouchableOpacity onPress={() => setShowFullDesc(!showFullDesc)}>
+        <View style={[styles.section, { width: '100%', marginTop: 40, flexDirection: 'row', gap: 8, justifyContent: 'space-between', alignItems: 'center' }]}>
+          <Text style={{ color: preferenceTheme.text.secondary, fontSize: 14 }} ellipsizeMode="tail" numberOfLines={showFullDesc ? undefined : 1}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+            standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
+            make a type specimen book. It has survived not only five centuries, but also the leap into electronic
+            typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+            sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
+            PageMaker including versions of Lorem Ipsum.
+          </Text>
+
+          {
+            !showFullDesc && <FontAwesome6Icon
+              name="chevron-down"
+              solid
+              style={{
+                color: preferenceTheme.text.secondary,
+                fontSize: 14,
+              }}
+            />
+          }
+
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
