@@ -55,7 +55,7 @@ const TextInput = ({style, containerStyle, error, postIcon, ...rest}: Props) => 
             rest.onBlur && rest.onBlur(e)
           }}
           style={[
-            theme.typography.label.regular,
+            // theme.typography.label.regular,
             {
               color: preferenceTheme.text.title,
               flex: 1

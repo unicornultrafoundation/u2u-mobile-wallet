@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import { styles } from './styles';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
@@ -13,12 +13,8 @@ const NFTCollectionDetailsScreen = () => {
   const [tab, setTab] = useState('items');
 
   return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: preferenceTheme.background.background },
-      ]}>
-      <CollectionBanner />
+    <SafeAreaView style={[styles.container, { backgroundColor: preferenceTheme.background.background }]}>
+      <CollectionBanner/>
 
       <View style={[styles.section]}>
         <Tab
@@ -35,9 +31,11 @@ const NFTCollectionDetailsScreen = () => {
             paddingRight: 12,
           }}
         />
-        {tab === 'items' && <NFTItems />}
+        <ScrollView style={{ marginTop: 16 }}>
+          {tab === 'items' && <NFTItems />}
+        </ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
