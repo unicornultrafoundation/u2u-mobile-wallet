@@ -4,21 +4,21 @@ export const typography: Record<string, any> = {
       fontSize: 34,
       lineHeight: 41,
       letterSpacing: 0.37,
-      fontWeight: 400,
+      fontWeight: "400",
       fontFamily: 'Regular'
     },
     medium: {
       fontSize: 34,
       lineHeight: 41,
       letterSpacing: 0.37,
-      fontWeight: 500,
+      fontWeight: "500",
       fontFamily: 'Regular'
     },
     bold: {
       fontSize: 34,
       lineHeight: 41,
       letterSpacing: 0.37,
-      fontWeight: 700,
+      fontWeight: "700",
       fontFamily: 'Regular'
     } 
   },
@@ -27,21 +27,21 @@ export const typography: Record<string, any> = {
       fontSize: 28,
       lineHeight: 34,
       letterSpacing: 0.36,
-      fontWeight: 400,
+      fontWeight: "400",
       fontFamily: 'Regular'
     },
     medium: {
       fontSize: 28,
       lineHeight: 34,
       letterSpacing: 0.36,
-      fontWeight: 500,
+      fontWeight: "500",
       fontFamily: 'Regular'
     },
     bold: {
       fontSize: 28,
       lineHeight: 34,
       letterSpacing: 0.36,
-      fontWeight: 700,
+      fontWeight: "700",
       fontFamily: 'Regular'
     }
   },
@@ -50,21 +50,21 @@ export const typography: Record<string, any> = {
       fontSize: 22,
       lineHeight: 28,
       letterSpacing: 0.35,
-      fontWeight: 400,
+      fontWeight: "400",
       fontFamily: 'Regular'
     },
     medium: {
       fontSize: 22,
       lineHeight: 28,
       letterSpacing: 0.35,
-      fontWeight: 500,
+      fontWeight: "500",
       fontFamily: 'Regular'
     },
     bold: {
       fontSize: 22,
       lineHeight: 28,
       letterSpacing: 0.35,
-      fontWeight: 700,
+      fontWeight: "700",
       fontFamily: 'Regular'
     }
   },
@@ -73,21 +73,21 @@ export const typography: Record<string, any> = {
       fontSize: 20,
       lineHeight: 25,
       letterSpacing: 0.38,
-      fontWeight: 400,
+      fontWeight: "400",
       fontFamily: 'Regular'
     },
     medium: {
       fontSize: 20,
       lineHeight: 25,
       letterSpacing: 0.38,
-      fontWeight: 500,
+      fontWeight: "500",
       fontFamily: 'Regular'
     },
     bold: {
       fontSize: 20,
       lineHeight: 25,
       letterSpacing: 0.38,
-      fontWeight: 700,
+      fontWeight: "700",
       fontFamily: 'Regular'
     }
   },
@@ -96,21 +96,21 @@ export const typography: Record<string, any> = {
       fontSize: 17,
       lineHeight: 22,
       letterSpacing: -0.41,
-      fontWeight: 400,
+      fontWeight: "400",
       fontFamily: 'Regular'
     },
     medium: {
       fontSize: 17,
       lineHeight: 22,
       letterSpacing: -0.41,
-      fontWeight: 500,
+      fontWeight: "500",
       fontFamily: 'Regular'
     },
     bold: {
       fontSize: 17,
       lineHeight: 22,
       letterSpacing: -0.41,
-      fontWeight: 700,
+      fontWeight: "700",
       fontFamily: 'Regular'
     }
   },
@@ -119,21 +119,21 @@ export const typography: Record<string, any> = {
       fontSize: 14,
       lineHeight: 22,
       letterSpacing: -0.41,
-      fontWeight: 400,
+      fontWeight: "400",
       fontFamily: 'Regular'
     },
     medium: {
       fontSize: 14,
       lineHeight: 22,
       letterSpacing: -0.41,
-      fontWeight: 500,
+      fontWeight: "500",
       fontFamily: 'Regular'
     },
     bold: {
       fontSize: 14,
       lineHeight: 22,
       letterSpacing: -0.41,
-      fontWeight: 700,
+      fontWeight: "700",
       fontFamily: 'Regular'
     }
   },
@@ -142,21 +142,21 @@ export const typography: Record<string, any> = {
       fontSize: 14,
       lineHeight: 21,
       letterSpacing: -0.32,
-      fontWeight: 400,
+      fontWeight: "400",
       fontFamily: 'Regular'
     },
     medium: {
       fontSize: 14,
       lineHeight: 21,
       letterSpacing: -0.32,
-      fontWeight: 500,
+      fontWeight: "500",
       fontFamily: 'Regular'
     },
     bold: {
       fontSize: 14,
       lineHeight: 21,
       letterSpacing: -0.32,
-      fontWeight: 700,
+      fontWeight: "700",
       fontFamily: 'Regular'
     }
   },
@@ -165,21 +165,21 @@ export const typography: Record<string, any> = {
       fontSize: 15,
       lineHeight: 20,
       letterSpacing: -0.5,
-      fontWeight: 400,
+      fontWeight: "400",
       fontFamily: 'Regular'
     },
     medium: {
       fontSize: 15,
       lineHeight: 20,
       letterSpacing: -0.5,
-      fontWeight: 500,
+      fontWeight: "500",
       fontFamily: 'Regular'
     },
     bold: {
       fontSize: 15,
       lineHeight: 20,
       letterSpacing: -0.5,
-      fontWeight: 700,
+      fontWeight: "700",
       fontFamily: 'Regular'
     }
   },
@@ -188,21 +188,21 @@ export const typography: Record<string, any> = {
       fontSize: 14,
       lineHeight: 18,
       letterSpacing: -0.08,
-      fontWeight: 400,
+      fontWeight: "400",
       fontFamily: 'Regular'
     },
     medium: {
       fontSize: 14,
       lineHeight: 18,
       letterSpacing: -0.08,
-      fontWeight: 500,
+      fontWeight: "500",
       fontFamily: 'Regular'
     },
     bold: {
       fontSize: 14,
       lineHeight: 18,
       letterSpacing: -0.08,
-      fontWeight: 700,
+      fontWeight: "700",
       fontFamily: 'Regular'
     }
   },
@@ -210,19 +210,19 @@ export const typography: Record<string, any> = {
     regular: {
       fontSize: 12,
       lineHeight: 16,
-      fontWeight: 400,
+      fontWeight: "400",
       fontFamily: 'Regular'
     },
     medium: {
       fontSize: 12,
       lineHeight: 16,
-      fontWeight: 500,
+      fontWeight: "500",
       fontFamily: 'Regular'
     },
     bold: {
       fontSize: 12,
       lineHeight: 16,
-      fontWeight: 700,
+      fontWeight: "700",
       fontFamily: 'Regular'
     }
   },
@@ -231,21 +231,21 @@ export const typography: Record<string, any> = {
       fontSize: 11,
       lineHeight: 13,
       letterSpacing: 0.07,
-      fontWeight: 400,
+      fontWeight: "400",
       fontFamily: 'Regular'
     },
     medium: {
       fontSize: 11,
       lineHeight: 13,
       letterSpacing: 0.07,
-      fontWeight: 500,
+      fontWeight: "500",
       fontFamily: 'Regular'
     },
     bold: {
       fontSize: 11,
       lineHeight: 13,
       letterSpacing: 0.07,
-      fontWeight: 700,
+      fontWeight: "700",
       fontFamily: 'Regular'
     }
   }
