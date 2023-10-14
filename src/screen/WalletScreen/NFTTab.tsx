@@ -13,6 +13,7 @@ import {darkTheme, lightTheme} from '../../theme/color';
 import Collapsible from '../../component/Collapsible';
 import nftCollections from '../../mock/nft-collections.json';
 import {useNavigation} from '@react-navigation/native';
+import Dropdown from "../../component/Dropdown";
 
 interface NFTCollection {
   id: number;
@@ -40,28 +41,20 @@ const NFTTab = () => {
 
   return (
     <View style={{paddingHorizontal: 16}}>
-      <TouchableOpacity>
-        <View
-          style={{
-            alignItems: 'center',
-            flexDirection: 'row',
-            gap: 8,
-            marginBottom: 16,
-          }}>
-          <Text style={{color: preferenceTheme.text.title, fontSize: 14}}>
-            All collectibles
-          </Text>
-          <FontAwesome6Icon
-            style={{fontSize: 11, color: preferenceTheme.text.primary}}
-            name="chevron-down"
-            solid
-          />
-        </View>
-      </TouchableOpacity>
+      <Dropdown
+        containerStyle={{ marginBottom: 16 }}
+        renderList={
+          <Text style={{ color: 'white' }}>List</Text>
+        }
+      >
+        <Text style={{color: preferenceTheme.text.title, fontSize: 14}}>
+          All collectibles
+        </Text>
+      </Dropdown>
 
       {data.map(({name, quantity, id, image, items}) => (
         <Collapsible
-          hideIcon
+          key={id}
           open={expandedItem === id}
           handler={() => handleExpandItem(id)}
           expandedSection={
@@ -120,11 +113,6 @@ const NFTTab = () => {
               <Text style={{color: preferenceTheme.text.primary, fontSize: 14}}>
                 {quantity.toString()}
               </Text>
-              <FontAwesome6Icon
-                style={{fontSize: 11, color: preferenceTheme.text.primary}}
-                name="chevron-down"
-                solid
-              />
             </View>
           </View>
         </Collapsible>

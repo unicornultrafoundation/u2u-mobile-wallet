@@ -44,7 +44,11 @@ const Collapsible = ({
         </TouchableOpacity>
         {!hideIcon && (
           <FontAwesome6Icon
-            style={{fontSize: 11, color: color.neutral[100]}}
+            style={{
+              fontSize: 11,
+              color: color.neutral[100],
+              transform: [{ rotate: showExpanded ? '180deg' : '0deg' }]
+            }}
             name="chevron-down"
             solid
           />
