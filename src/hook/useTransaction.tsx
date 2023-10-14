@@ -1,14 +1,16 @@
 import React, { useCallback, useMemo } from 'react'
 import { useTransactionStore } from '../state/transaction'
 import { useNetworkStore } from '../state/network'
-import { estimateGasLimitUtil, estimateGasPriceUtil } from '../util/blockchain'
+import { estimateGasLimitUtil, estimateGasPriceUtil, getTxDetail, getTxReceipt } from '../util/blockchain'
 import { useWallet } from './useWallet'
 import BigNumber from 'bignumber.js'
+import { getNonce, sendSignedTransaction, signTransaction } from '../util/wallet'
+import { getDigit } from '../util/string'
 
 export const useTransaction = () => {
   const txStore = useTransactionStore()
   const {wallet} = useWallet()
-  const {rpc} = useNetworkStore()
+  const {rpc, chainId} = useNetworkStore()
   
   const estimateGasPrice = async () => {
     const rs = await estimateGasPriceUtil(rpc)
@@ -42,9 +44,41 @@ export const useTransaction = () => {
     return BigNumber(txStore.gasLimit).multipliedBy(txStore.gasPrice).dividedBy(10 ** 18).toFormat()
   }, [txStore.gasLimit, txStore.gasPrice])
 
-  const submitTx = useCallback(() => {
+  const submitTx = useCallback(async () => {
+    if (txStore.txHash) {
+      return
+    }
+    const rawTxObj: Record<string, any> = {
+      from: wallet.address,
+      to: txStore.receiveAddress,
+      gas: txStore.gasLimit,
+      gasPrice: txStore.gasPrice,
+      chainId,
+      nonce: await getNonce(rpc, wallet.address)
+    }
 
-  }, [wallet.privateKey])
+    if (txStore.tokenMeta.address === "0x" || txStore.tokenMeta.address === "") {
+      rawTxObj.value = getDigit(
+        BigNumber(txStore.amount).multipliedBy(10 ** 18).toFormat()
+      )
+    } else {
+      rawTxObj.value = "0"
+    }
+    const signedTx = await signTransaction(rawTxObj, wallet.privateKey, rpc)
+    txStore.setTxStatus('sending')
+    const rs = await sendSignedTransaction(rpc, signedTx)
+    txStore.setTxStatus(rs.status.toString() === "1" ? 'success' : 'fail')
+    txStore.setTxHash(rs.transactionHash.toString())
+    return rs
+  }, [wallet.privateKey, wallet.address, rpc, txStore])
+
+  const fetchTxReceipt = useCallback(async (hash: string) => {
+    return getTxReceipt(hash, rpc)
+  }, [rpc])
+
+  const fetchTxDetail = useCallback(async (hash: string) => {
+    return getTxDetail(hash, rpc)
+  }, [rpc])
 
   return {
     ...txStore,
@@ -53,5 +87,7 @@ export const useTransaction = () => {
     estimateGasPrice,
     estimateGasLimit,
     submitTx,
+    fetchTxReceipt,
+    fetchTxDetail
   }
 }
