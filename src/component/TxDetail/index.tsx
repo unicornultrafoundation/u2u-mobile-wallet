@@ -73,7 +73,7 @@ const TxDetail = ({txHash, onClose}: {
     <View style={{flex: 1}}>
       <View style={styles.headerContainer}>
         <View>
-          <Icon name='success' width={24} height={24} />
+          <Icon name={txReceipt?.status.toString() === "1" ? 'success' : 'error'} width={24} height={24} />
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'flex-start', flex: 1, paddingHorizontal: 8}}>
           <Text style={[styles.headerText]}>{txReceipt?.status.toString() === "1" ? t('transactionSuccess') : t('transactionFailed')}</Text>
