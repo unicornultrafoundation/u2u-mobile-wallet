@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   TouchableOpacity,
   View,
@@ -7,13 +7,12 @@ import {
   Dimensions,
 } from 'react-native';
 import Text from '../../component/Text';
-import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
-import {usePreferenceStore} from '../../state/preferences';
-import {darkTheme, lightTheme} from '../../theme/color';
+import { usePreferenceStore } from '../../state/preferences';
+import { darkTheme, lightTheme } from '../../theme/color';
 import Collapsible from '../../component/Collapsible';
 import nftCollections from '../../mock/nft-collections.json';
-import {useNavigation} from '@react-navigation/native';
-import Dropdown from "../../component/Dropdown";
+import { useNavigation } from '@react-navigation/native';
+import Dropdown from '../../component/Dropdown';
 
 interface NFTCollection {
   id: number;
@@ -21,11 +20,11 @@ interface NFTCollection {
   name: string;
   quantity: number;
   category: string;
-  items: {id: number; name: string; image: string}[];
+  items: { id: number; name: string; image: string }[];
 }
 
 const NFTTab = () => {
-  const {darkMode} = usePreferenceStore();
+  const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const navigation = useNavigation<any>();
   const data: NFTCollection[] = nftCollections as NFTCollection[];
@@ -40,19 +39,16 @@ const NFTTab = () => {
   };
 
   return (
-    <View style={{paddingHorizontal: 16}}>
+    <View style={{ paddingHorizontal: 16 }}>
       <Dropdown
         containerStyle={{ marginBottom: 16 }}
-        renderList={
-          <Text style={{ color: 'white' }}>List</Text>
-        }
-      >
-        <Text style={{color: preferenceTheme.text.title, fontSize: 14}}>
+        renderList={<Text style={{ color: 'white' }}>List</Text>}>
+        <Text style={{ color: preferenceTheme.text.title, fontSize: 14 }}>
           All collectibles
         </Text>
       </Dropdown>
 
-      {data.map(({name, quantity, id, image, items}) => (
+      {data.map(({ name, quantity, id, image, items }) => (
         <Collapsible
           key={id}
           open={expandedItem === id}
@@ -73,10 +69,10 @@ const NFTTab = () => {
               {items.map(item => (
                 <TouchableOpacity
                   key={item.id}
-                  style={{width: 111, height: 111}}
+                  style={{ width: 111, height: 111 }}
                   onPress={() => navigation.navigate('NFTCollection')}>
                   <Image
-                    source={{uri: item.image}}
+                    source={{ uri: item.image }}
                     style={{
                       width: '100%',
                       height: '100%',
@@ -96,21 +92,21 @@ const NFTTab = () => {
               alignItems: 'center',
               marginVertical: 8,
             }}>
-            <View style={{flexDirection: 'row', alignItems: 'center', gap: 12}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
               <Image
-                source={{uri: image}}
+                source={{ uri: image }}
                 width={28}
                 height={28}
                 alt=""
                 borderRadius={14}
               />
               <Text
-                style={{fontSize: 16, fontWeight: '500', letterSpacing: 0.06}}>
+                style={{ fontSize: 14, fontWeight: '500', letterSpacing: 0.06 }}>
                 {name}
               </Text>
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center', gap: 8}}>
-              <Text style={{color: preferenceTheme.text.primary, fontSize: 14}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <Text style={{ color: preferenceTheme.text.primary, fontSize: 14 }}>
                 {quantity.toString()}
               </Text>
             </View>

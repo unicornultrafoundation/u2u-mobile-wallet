@@ -1,12 +1,13 @@
 import { Image, TouchableOpacity, View } from 'react-native';
-import { styles } from './styles';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
-import Text from '../../component/Text';
-import Icon from '../../component/Icon';
+import { styles } from '../styles';
+import { usePreferenceStore } from '../../../state/preferences';
+import { darkTheme, lightTheme } from '../../../theme/color';
+import Text from '../../../component/Text';
+import Icon from '../../../component/Icon';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import { useState } from 'react';
+import ShareModalButton from './ShareModalButton';
 
 const CollectionBanner = () => {
   const { darkMode } = usePreferenceStore();
@@ -28,32 +29,26 @@ const CollectionBanner = () => {
       <View style={styles.banner}>
         <View style={[styles.section, styles.bannerActions]}>
           <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-            <Icon name="arrow-left" width={24} height={24} />
+            <Icon name="arrow-left" width={24} height={24}/>
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Icon name="send" width={24} height={24} />
-          </TouchableOpacity>
+          <ShareModalButton/>
         </View>
 
         <Image
           source={{ uri: 'https://fakeimg.pl/780x240/ff0000,128/000,255' }}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          style={styles.bannerImage}
         />
       </View>
 
       <View style={[styles.section, styles.bannerContent]}>
         <View
           style={[
-            styles.bannerAvatar,
+            styles.bannerAvatarWrapper,
             { borderColor: preferenceTheme.background.background },
           ]}>
           <Image
             source={{ uri: 'https://fakeimg.pl/100/' }}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-            }}
+            style={styles.bannerImage}
           />
         </View>
 
@@ -67,7 +62,7 @@ const CollectionBanner = () => {
             {actions.map(action => {
               return (
                 <TouchableOpacity key={action.name}>
-                  <Icon name={action.icon} width={16} height={16} />
+                  <Icon name={action.icon} width={16} height={16}/>
                 </TouchableOpacity>
               );
             })}
@@ -76,20 +71,13 @@ const CollectionBanner = () => {
       </View>
 
       <TouchableOpacity onPress={() => setShowFullDesc(!showFullDesc)}>
-        <View
-          style={[
-            styles.section,
-            {
-              width: '100%',
-              marginTop: 40,
-              flexDirection: 'row',
-              gap: 8,
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            },
-          ]}>
+        <View style={[styles.section, styles.descriptionSection]}>
           <Text
-            style={{ color: preferenceTheme.text.secondary, fontSize: 14 }}
+            style={{
+              color: preferenceTheme.text.secondary,
+              fontSize: 14,
+              textAlign: 'justify',
+            }}
             ellipsizeMode="tail"
             numberOfLines={showFullDesc ? undefined : 1}>
             Lorem Ipsum is simply dummy text of the printing and typesetting

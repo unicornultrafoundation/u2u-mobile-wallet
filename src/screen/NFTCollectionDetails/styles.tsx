@@ -8,15 +8,15 @@ export const styles = StyleSheet.create({
     height: Dimensions.get('window').height - TABBAR_HEIGHT,
     paddingTop: getPhonePaddingTop(),
     paddingBottom: getPhonePaddingBottom(),
-    overflow: 'scroll'
+    overflow: 'scroll',
   },
   section: {
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   banner: {
     width: '100%',
     height: 120,
-    position: 'relative'
+    position: 'relative',
   },
   bannerActions: {
     flexDirection: 'row',
@@ -44,11 +44,30 @@ export const styles = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 8,
   },
-  bannerAvatar: {
+  bannerAvatarWrapper: {
     width: 80,
     height: 80,
     borderRadius: 40,
     overflow: 'hidden',
     borderWidth: 4,
-  }
-})
+  },
+  modalAvatarWrapper: {
+    position: 'absolute',
+    bottom: -44,
+    left: '50%',
+    transform: [{ translateX: -44 }],
+  },
+  bannerImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+  descriptionSection: {
+    width: '100%',
+    marginTop: 40,
+    flexDirection: 'row',
+    gap: 8,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+});
