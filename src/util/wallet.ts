@@ -36,8 +36,8 @@ export const signMessage = (message: string, privateKey: string) => {
   return signature
 }
 
-export const signTransaction = async (rawTx: Record<string, any>, privateKey: string) => {
-  const web3 = new Web3()
+export const signTransaction = async (rawTx: Record<string, any>, privateKey: string, rpc: string) => {
+  const web3 = new Web3(rpc)
 
   const signed = await web3.eth.accounts.signTransaction(rawTx, privateKey)
   return signed.rawTransaction
@@ -52,5 +52,11 @@ export const sendSignedTransaction = async (rpc: string, signedTx: string) => {
 export const getBalance = async (rpc: string, address: string) => {
   const web3 = new Web3(rpc)
   const rs = await web3.eth.getBalance(address)
+  return rs.toString()
+}
+
+export const getNonce = async (rpc: string, address: string) => {
+  const web3 = new Web3(rpc)
+  const rs = await web3.eth.getTransactionCount(address)
   return rs.toString()
 }

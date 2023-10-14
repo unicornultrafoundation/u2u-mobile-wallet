@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Image, View } from 'react-native';
 import { styles } from './styles';
 import Text from '../../component/Text';
@@ -14,13 +14,26 @@ const SendStep = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
-  const {submitTx, txStatus} = useTransaction()
+  const {submitTx, txStatus, setTxStatus} = useTransaction()
 
   const { t } = useTranslation<string>()
 
   const handleSkip = () => {
 
   }
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setTxStatus('sending')
+        const txHash = await submitTx()
+        console.log('sented', txHash)
+        setTxStatus('sent')
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+  }, [])
 
   return (
     <View style={{flex: 1}}>
