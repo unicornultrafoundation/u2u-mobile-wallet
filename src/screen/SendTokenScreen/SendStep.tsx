@@ -23,7 +23,7 @@ const SendStep = () => {
   const { t } = useTranslation<string>()
 
   const handleSkip = () => {
-
+    navigation.navigate("Wallet")
   }
 
   useEffect(() => {
