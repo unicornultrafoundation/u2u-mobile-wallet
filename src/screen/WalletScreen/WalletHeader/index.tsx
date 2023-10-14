@@ -6,6 +6,7 @@ import {useWallet} from '../../../hook/useWallet';
 import Text from '../../../component/Text';
 import {truncate} from '../../../util/string';
 import HeaderSearchComponent from './HeaderSearchComponent';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 interface Props {
   collapsed: boolean;
@@ -43,7 +44,9 @@ const WalletHeader = ({collapsed, action, onGoBack}: Props) => {
         </View>
       </View>
       <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => Clipboard.setString(wallet.address)}
+        >
           <Icon name="copy" width={24} height={24} />
         </TouchableOpacity>
         <TouchableOpacity style={{marginHorizontal: 12}}>

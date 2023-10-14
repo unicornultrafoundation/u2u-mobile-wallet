@@ -392,6 +392,23 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'success':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 25" fill="none">
+              <Path d="M15 10.5L11 14.5L9 12.5M12 21.5C7.02944 21.5 3 17.4706 3 12.5C3 7.52944 7.02944 3.5 12 3.5C16.9706 3.5 21 7.52944 21 12.5C21 17.4706 16.9706 21.5 12 21.5Z" stroke={color || "#0FA44D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'close':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 25 25" fill="none">
+              <Path d="M18.5195 6.5L6.51953 18.5" stroke={color || "#8D8D8D"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M6.51953 6.5L18.5195 18.5" stroke={color || "#8D8D8D"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
       default:
         return null
     }

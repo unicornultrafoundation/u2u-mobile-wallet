@@ -27,6 +27,8 @@ interface TransactionState {
   setTxData: (txData: string) => void;
   txStatus: string;
   setTxStatus: (txStatus: string) => void;
+  txHash: string;
+  setTxHash: (txHash: string) => void;
 }
 
 export const useTransactionStore = create<TransactionState>((set) => ({
@@ -55,5 +57,7 @@ export const useTransactionStore = create<TransactionState>((set) => ({
   txData: '',
   setTxData: (txData: string) => set({ txData }),
   txStatus: '',
-  setTxStatus: (txStatus: string) => set({ txStatus })
+  setTxStatus: (txStatus: string) => set({ txStatus }),
+  txHash: '',
+  setTxHash: (txHash: string) => set({ txHash })
 }))

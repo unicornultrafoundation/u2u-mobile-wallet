@@ -35,5 +35,7 @@
   "maxFee": "Max fee",
   "network": "Network",
   "enterPassword": "Enter password",
-  "transactionSubmitted": "Transaction submitted"
+  "transactionSubmitted": "Transaction submitted",
+  "transactionSuccess": "Transaction success",
+  "transactionFailed": "Transaction failed"
 }
