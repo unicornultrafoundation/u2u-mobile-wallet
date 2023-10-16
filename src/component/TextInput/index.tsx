@@ -33,15 +33,21 @@ const TextInput = ({style, containerStyle, error, postIcon, ...rest}: Props) => 
   }
 
   return (
-    <View>
+    <View style={[
+      containerStyle,
+      {
+        alignItems: 'center',
+        justifyContent: 'center'
+      }
+    ]}>
       <View
         style={[
           styles.container,
           {
             backgroundColor: preferenceTheme.background.surface,
             borderColor: focused ? theme.accentColor.primary.normal : '',
+            width: "100%"
           },
-          containerStyle
         ]}
       >
         <RNTextInput
@@ -66,18 +72,20 @@ const TextInput = ({style, containerStyle, error, postIcon, ...rest}: Props) => 
         />
         {renderPostIcon()}
       </View>
-      <Text
-        style={[
-          theme.typography.caption2.regular,
-          {
-            color: theme.accentColor.error.normal,
-            marginTop: 6,
-            marginLeft: 1
-          }
-        ]}
-      >
-        {error}
-      </Text>
+      {error && (
+        <Text
+          style={[
+            theme.typography.caption2.regular,
+            {
+              color: theme.accentColor.error.normal,
+              marginTop: 6,
+              marginLeft: 1
+            }
+          ]}
+        >
+          {error}
+        </Text>
+      )}
     </View>
   )
 };
