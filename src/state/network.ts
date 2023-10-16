@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NetworkConfig } from '../config/chain';
 
 interface NetworkState {
   name: string;
@@ -12,6 +13,7 @@ interface NetworkState {
   circulatingSupply: string;
   fetchCirculatingSupply: () => void;
   resetToDefault: () => void;
+  switchNetwork: (config: NetworkConfig) => void;
 }
 
 export const useNetworkStore = create<NetworkState>()(
@@ -32,6 +34,14 @@ export const useNetworkStore = create<NetworkState>()(
         blockExplorer: "https://testnet.u2uscan.xyz",
         totalStakedAmount: "0",
         circulatingSupply: "0",
+      }),
+      switchNetwork: (config) => set({
+        name: config.name,
+        rpc: config.rpc,
+        chainId: config.chainID,
+        blockExplorer: config.explorerURL,
+        totalStakedAmount: "0",
+        circulatingSupply: "0"
       })
     }),
     {
