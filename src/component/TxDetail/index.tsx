@@ -18,6 +18,9 @@ import { shortenAddress } from '../../util/string';
 import TX_DETAIL from '../../asset/images/tx_detail.png'
 import Clipboard from '@react-native-clipboard/clipboard';
 import { SvgUri } from 'react-native-svg';
+import NormalTxMetaSection from './NormalTxMetaSection';
+import { useSupportedTokens } from '../../hook/useSupportedTokens';
+import ERC20TxMetaSection from './ERC20TxMetaSection';
 
 const TxDetail = ({txHash, onClose}: {
   txHash: string;
@@ -30,6 +33,8 @@ const TxDetail = ({txHash, onClose}: {
   const { t } = useTranslation<string>()
   const { fetchTxReceipt, fetchTxDetail } = useTransaction()
   const { fetchBlock } = useNetwork()
+
+  const {supportedTokens} = useSupportedTokens()
 
   const [txReceipt, setTxReceipt] = useState<TransactionReceipt>()
   const [txDetail, setTxDetail] = useState<Transaction>()
@@ -69,6 +74,17 @@ const TxDetail = ({txHash, onClose}: {
     return txDetail && txDetail.value ? BigNumber(txDetail.value.toString()).dividedBy(10 ** 18).toFixed() : '0'
   }, [txDetail])
 
+  const renderTxMeta = () => {
+    if (!txReceipt || !txDetail) return null
+
+    const tokenMetaItem = supportedTokens.find((i: Record<string, any>) => i.address.toLowerCase() === txReceipt.to.toLowerCase())
+
+    if (tokenMetaItem) {
+      return <ERC20TxMetaSection tokenMeta={tokenMetaItem} txDetail={txDetail} />
+    } 
+    return <NormalTxMetaSection txValue={txValue} />
+  }
+
   return (
     <View style={{flex: 1}}>
       <View style={styles.headerContainer}>
@@ -84,26 +100,7 @@ const TxDetail = ({txHash, onClose}: {
       </View>
 
       <Separator />
-      <View style={{flexDirection: 'row', padding: 16, alignItems: 'center'}}>
-        <View style={{width: 28, height: 28}}>
-          <SvgUri
-            uri={"https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"}
-            width="100%"
-            height="100%"
-          />
-        </View>
-        <Text
-            style={[
-              theme.typography.title3.medium,
-              {
-                marginLeft: 6,
-                color: preferenceTheme.text.title
-              }
-            ]}
-        >
-          -{' '}{txValue} U2U
-        </Text>
-      </View>
+      {renderTxMeta()}
       <Separator />
       <View style={{padding: 16}}>
         <View style={{paddingBottom: 12}}>
