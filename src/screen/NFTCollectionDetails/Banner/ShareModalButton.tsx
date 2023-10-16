@@ -19,7 +19,7 @@ const ShareModalButton = () => {
   return (
     <>
       <TouchableOpacity onPress={() => setModalVisible(true)}>
-        <Icon name="send" width={24} height={24}/>
+        <Icon name="share" width={24} height={24}/>
       </TouchableOpacity>
 
       <Modal

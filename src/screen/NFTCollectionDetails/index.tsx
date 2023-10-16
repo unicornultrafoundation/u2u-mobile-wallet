@@ -6,6 +6,7 @@ import { darkTheme, lightTheme } from '../../theme/color';
 import CollectionBanner from './Banner';
 import NFTItems from './NFTItems';
 import Tab from '../../component/Tab';
+import NFTCollectionActivities from './Activities';
 
 const NFTCollectionDetailsScreen = () => {
   const { darkMode } = usePreferenceStore();
@@ -13,14 +14,18 @@ const NFTCollectionDetailsScreen = () => {
   const [tab, setTab] = useState('items');
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: preferenceTheme.background.background }]}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        { backgroundColor: preferenceTheme.background.background },
+      ]}>
       <CollectionBanner/>
 
       <View style={[styles.section]}>
         <Tab
           tabs={[
             { label: 'Items', value: 'items' },
-            { label: 'History', value: 'history' },
+            { label: 'Activities', value: 'activities' },
           ]}
           selectedTab={tab}
           onChange={v => setTab(v)}
@@ -32,7 +37,8 @@ const NFTCollectionDetailsScreen = () => {
           }}
         />
         <ScrollView style={{ marginTop: 16 }}>
-          {tab === 'items' && <NFTItems />}
+          {tab === 'items' && <NFTItems/>}
+          {tab === 'activities' && <NFTCollectionActivities/>}
         </ScrollView>
       </View>
     </SafeAreaView>
