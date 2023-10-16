@@ -37,5 +37,6 @@
   "enterPassword": "Enter password",
   "transactionSubmitted": "Transaction submitted",
   "transactionSuccess": "Transaction success",
-  "transactionFailed": "Transaction failed"
+  "transactionFailed": "Transaction failed",
+  "selectNetwork": "Select network"
 }

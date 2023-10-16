@@ -6,7 +6,7 @@ import Text from '../Text';
 import theme from '../../theme';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
-import { decodeTxData } from '../../util/contract';
+import { ERC20_ABI, decodeTxData, findABIFragment } from '../../util/contract';
 import BigNumber from 'bignumber.js';
 
 const TRANSFER_INPUT_ABI = [
@@ -36,7 +36,9 @@ const ERC20TxMetaSection = ({tokenMeta, txDetail}: {
     (async () => {
       if (!txDetail || !txDetail.input) return
       try {
-        const rs = decodeTxData(TRANSFER_INPUT_ABI, txDetail.input.toString())
+        const fragment = findABIFragment("function", "transfer", ERC20_ABI)
+        if (!fragment) return;
+        const rs = decodeTxData(fragment.inputs as any, txDetail.input.toString())
         const _amount = (rs.amount as any).toString() || "0"
 
         setAmount(BigNumber(_amount as string).dividedBy(10 ** tokenMeta.decimals).toFormat())
