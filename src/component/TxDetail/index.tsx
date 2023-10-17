@@ -76,7 +76,6 @@ const TxDetail = ({txHash, onClose}: {
 
   const renderTxMeta = () => {
     if (!txReceipt || !txDetail) return null
-
     const tokenMetaItem = supportedTokens.find((i: Record<string, any>) => i.address.toLowerCase() === txReceipt.to.toLowerCase())
 
     if (tokenMetaItem) {

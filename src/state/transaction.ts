@@ -29,6 +29,7 @@ interface TransactionState {
   setTxStatus: (txStatus: string) => void;
   txHash: string;
   setTxHash: (txHash: string) => void;
+  resetTxState: () => void;
 }
 
 export const useTransactionStore = create<TransactionState>((set) => ({
@@ -59,5 +60,23 @@ export const useTransactionStore = create<TransactionState>((set) => ({
   txStatus: '',
   setTxStatus: (txStatus: string) => set({ txStatus }),
   txHash: '',
-  setTxHash: (txHash: string) => set({ txHash })
+  setTxHash: (txHash: string) => set({ txHash }),
+  resetTxState: () => {
+    set({
+      receiveAddress: "",
+      tokenMeta: {
+        name: "",
+        symbol: "",
+        decimals: 0,
+        address: "",
+        logo: ""
+      },
+      amount: '0',
+      estimatedGasLimit: '0',
+      estimatedGasPrice: '0',
+      txData: '',
+      txStatus: '',
+      txHash: '',
+    })
+  }
 }))

@@ -6,6 +6,7 @@ import { useWallet } from './useWallet'
 import BigNumber from 'bignumber.js'
 import { getNonce, sendSignedTransaction, signTransaction } from '../util/wallet'
 import { getDigit } from '../util/string'
+import { ERC20_ABI, encodeTxData } from '../util/contract'
 
 export const useTransaction = () => {
   const txStore = useTransactionStore()
@@ -48,6 +49,8 @@ export const useTransaction = () => {
     if (txStore.txHash) {
       return
     }
+    const isNativeTx = txStore.tokenMeta.address.toLowerCase() === "0x" || txStore.tokenMeta.address.toLowerCase() === ""
+
     const rawTxObj: Record<string, any> = {
       from: wallet.address,
       to: txStore.receiveAddress,
@@ -57,12 +60,23 @@ export const useTransaction = () => {
       nonce: await getNonce(rpc, wallet.address)
     }
 
-    if (txStore.tokenMeta.address === "0x" || txStore.tokenMeta.address === "") {
+    if (isNativeTx) {
       rawTxObj.value = getDigit(
         BigNumber(txStore.amount).multipliedBy(10 ** 18).toFormat()
       )
     } else {
       rawTxObj.value = "0"
+      rawTxObj.to = txStore.tokenMeta.address
+      rawTxObj.data = await encodeTxData(
+        {contractAddress: txStore.tokenMeta.address, abi: ERC20_ABI},
+        "transfer",
+        [
+          txStore.receiveAddress,
+          getDigit(
+            BigNumber(txStore.amount).multipliedBy(10 ** txStore.tokenMeta.decimals).toFormat()
+          )
+        ]
+      )
     }
     const signedTx = await signTransaction(rawTxObj, wallet.privateKey, rpc)
     txStore.setTxStatus('sending')

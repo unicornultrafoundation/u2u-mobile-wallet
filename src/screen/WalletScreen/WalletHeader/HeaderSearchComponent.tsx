@@ -10,6 +10,7 @@ import TextInput from '../../../component/TextInput';
 import theme from '../../../theme';
 import { useNetwork } from '../../../hook/useNetwork';
 import SelectNetworkModal from '../../../component/SelectNetworkModal';
+import { useGlobalStore } from '../../../state/global';
 
 interface Props {
   action: string;
@@ -21,11 +22,12 @@ const HeaderSearchComponent = ({action, onGoBack}: Props) => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
   const {name} = useNetwork()
+  const {searchKeyword, setSearchKeyword} = useGlobalStore()
 
   const [showInput, setShowInput] = useState(false);
-  const [searchString, setSearchString] = useState('');
 
   const handleGoBack = () => {
+    setSearchKeyword("")
     setShowInput(false);
     onGoBack();
   };
@@ -38,11 +40,11 @@ const HeaderSearchComponent = ({action, onGoBack}: Props) => {
 
       {showInput ? (
         <TextInput
-          onChangeText={val => setSearchString(val)}
-          value={searchString}
+          onChangeText={val => setSearchKeyword(val)}
+          value={searchKeyword}
           containerStyle={{flex: 1, marginLeft: 8, height: 24}}
           style={[
-            theme.typography.largeTitle.medium,
+            theme.typography.label.regular,
             {
               flex: 1,
               width: '100%',

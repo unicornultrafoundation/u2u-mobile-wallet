@@ -18,7 +18,7 @@ const SendStep = () => {
 
   const navigation = useNavigation<any>()
 
-  const {submitTx, txStatus, txHash} = useTransaction()
+  const {submitTx, txStatus, txHash, resetTxState} = useTransaction()
 
   const { t } = useTranslation<string>()
 
@@ -41,7 +41,10 @@ const SendStep = () => {
     return (
       <TxDetail
         txHash={txHash}
-        onClose={() => {navigation.navigate("Wallet")}}
+        onClose={() => {
+          resetTxState()
+          navigation.navigate("Wallet")
+        }}
       />
     )
   }
