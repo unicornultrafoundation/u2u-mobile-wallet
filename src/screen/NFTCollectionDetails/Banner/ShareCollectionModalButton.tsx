@@ -9,9 +9,9 @@ import Icon from '../../../component/Icon';
 import Modal from '../../../component/Modal';
 import Text from '../../../component/Text';
 import GradientText from '../../../component/Text/Gradient';
-import U2UBrandWhite from './U2UBrandWhite';
 
-const ShareModalButton = () => {
+
+const ShareCollectionModalButton = () => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const [modalVisible, setModalVisible] = useState(false);
@@ -132,7 +132,7 @@ const ShareModalButton = () => {
                   U2U Wallet
                 </Text>
 
-                <U2UBrandWhite/>
+                <Icon name='u2u-brand' width={101} height={22}/>
               </View>
 
               <QRCode
@@ -148,4 +148,4 @@ const ShareModalButton = () => {
   );
 };
 
-export default ShareModalButton;
+export default ShareCollectionModalButton;

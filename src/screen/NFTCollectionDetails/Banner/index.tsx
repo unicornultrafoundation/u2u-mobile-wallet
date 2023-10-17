@@ -7,7 +7,7 @@ import Icon from '../../../component/Icon';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import { useState } from 'react';
-import ShareModalButton from './ShareModalButton';
+import ShareCollectionModalButton from './ShareCollectionModalButton';
 
 const CollectionBanner = () => {
   const { darkMode } = usePreferenceStore();
@@ -31,7 +31,7 @@ const CollectionBanner = () => {
           <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
             <Icon name="arrow-left" width={24} height={24}/>
           </TouchableOpacity>
-          <ShareModalButton/>
+          <ShareCollectionModalButton/>
         </View>
 
         <Image

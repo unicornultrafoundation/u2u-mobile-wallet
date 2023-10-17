@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Image, View } from 'react-native';
-import TextInput from "../../component/TextInput";
-import { styles } from './styles';
+import { Image, TouchableOpacity, View } from 'react-native';
+import TextInput from '../../component/TextInput';
 import Text from '../../component/Text';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import Dropdown from '../../component/Dropdown';
 import U2ULogo from '../../asset/icon/u2u_wallet_icon.png';
+import { useNavigation } from '@react-navigation/native';
 
 const NFTItems = () => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const [searchString, setSearchString] = useState('');
+  const navigation = useNavigation<any>()
 
   const data = [
     {
@@ -85,45 +86,47 @@ const NFTItems = () => {
         }}>
         {data.map(item => (
           <View key={item.id} style={{ width: '45%' }}>
-            <View
-              style={{
-                width: '100%',
-                borderRadius: 12,
-                overflow: 'hidden',
-                marginBottom: 4,
-              }}>
-              <Image
-                source={{ uri: item.image }}
-                style={{ width: '100%', height: 171 }}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
+            <TouchableOpacity onPress={() => navigation.navigate('NFTDetails')}>
+              <View
+                style={{
+                  width: '100%',
+                  borderRadius: 12,
+                  overflow: 'hidden',
+                  marginBottom: 4,
+                }}>
+                <Image
+                  source={{ uri: item.image }}
+                  style={{ width: '100%', height: 171 }}
+                />
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: preferenceTheme.text.title,
+                    fontSize: 14,
+                    fontWeight: '700',
+                    letterSpacing: 0.07,
+                  }}>
+                  {item.name}
+                </Text>
+                <Image style={{ width: 12, height: 12, objectFit: 'contain' }} source={U2ULogo} />
+              </View>
+
               <Text
                 style={{
-                  color: preferenceTheme.text.title,
-                  fontSize: 14,
-                  fontWeight: '700',
+                  color: preferenceTheme.text.primary,
+                  fontSize: 12,
+                  fontWeight: '500',
                   letterSpacing: 0.07,
                 }}>
-                {item.name}
+                MECH Cyper - U2 Game
               </Text>
-              <Image style={{ width: 12, height: 12, objectFit: 'contain' }} source={U2ULogo} />
-            </View>
-
-            <Text
-              style={{
-                color: preferenceTheme.text.primary,
-                fontSize: 12,
-                fontWeight: '500',
-                letterSpacing: 0.07,
-              }}>
-              MECH Cyper - U2 Game
-            </Text>
+            </TouchableOpacity>
           </View>
         ))}
       </View>

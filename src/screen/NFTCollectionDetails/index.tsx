@@ -19,7 +19,7 @@ const NFTCollectionDetailsScreen = () => {
         styles.container,
         { backgroundColor: preferenceTheme.background.background },
       ]}>
-      <CollectionBanner/>
+      <CollectionBanner />
 
       <View style={[styles.section]}>
         <Tab
