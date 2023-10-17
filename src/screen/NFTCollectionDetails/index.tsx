@@ -36,11 +36,12 @@ const NFTCollectionDetailsScreen = () => {
             paddingRight: 12,
           }}
         />
-        <ScrollView style={{ marginTop: 16 }}>
-          {tab === 'items' && <NFTItems/>}
-          {tab === 'activities' && <NFTCollectionActivities/>}
-        </ScrollView>
       </View>
+
+      <ScrollView style={[styles.section, { marginTop: 16 }]}>
+        {tab === 'items' && <NFTItems/>}
+        {tab === 'activities' && <NFTCollectionActivities/>}
+      </ScrollView>
     </SafeAreaView>
   );
 };

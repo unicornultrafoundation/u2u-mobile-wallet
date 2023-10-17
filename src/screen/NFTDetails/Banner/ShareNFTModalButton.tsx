@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
-import { styles } from '../styles';
 import Icon from '../../../component/Icon';
 import Modal from '../../../component/Modal';
 import Text from '../../../component/Text';
