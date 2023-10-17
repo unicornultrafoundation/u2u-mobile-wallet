@@ -38,7 +38,7 @@ const NFTScreenBanner = () => {
       </View>
 
       <Image
-        source={{ uri: 'https://fakeimg.pl/780x240/ff0000,128/000,255' }}
+        source={{ uri: 'https://fakeimg.pl/400/ff0000,128/000,255' }}
         style={{
           width: '100%',
           height: Dimensions.get('window').width - 32,

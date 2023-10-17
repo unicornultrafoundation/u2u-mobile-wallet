@@ -1,8 +1,9 @@
 import Text from '../../../component/Text';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { styles } from '../styles';
 import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
+import { color, darkTheme, lightTheme } from '../../../theme/color';
+import Icon from "../../../component/Icon";
 
 const NFTBasicInfo = () => {
   const { darkMode } = usePreferenceStore();
@@ -30,7 +31,12 @@ const NFTBasicInfo = () => {
             }}>
             Contract address
           </Text>
-          <Text style={{ fontSize: 12 }}>0xa1234...9217021</Text>
+          <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+            <Text style={{ fontSize: 12 }}>0xa1234...9217021</Text>
+            <TouchableOpacity>
+              <Icon name='copy' width={16} height={16} color={color.neutral[500]} />
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View style={{ width: '50%' }}>
