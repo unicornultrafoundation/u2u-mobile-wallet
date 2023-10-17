@@ -575,6 +575,40 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'chevron-down-circle':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 20 20" fill="none">
+              <Path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M2.29199 10.4998C2.29199 14.7565 5.74283 18.2082 10.0003 18.2082C14.257 18.2082 17.7087 14.7565 17.7087 10.4998C17.7087 6.24317 14.257 2.7915 10.0003 2.7915C5.74283 2.7915 2.29199 6.24317 2.29199 10.4998Z"
+                stroke={color || '#8D8D8D'}
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <Path d="M7.10742 9.29785L9.99992 12.2029L12.8924 9.29785" stroke={color || '#8D8D8D'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'chevron-up-circle':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 20 20" fill="none">
+              <Path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M17.708 10.5002C17.708 6.2435 14.2572 2.79183 9.99967 2.79183C5.74301 2.79183 2.29134 6.2435 2.29134 10.5002C2.29134 14.7568 5.74301 18.2085 9.99967 18.2085C14.2572 18.2085 17.708 14.7568 17.708 10.5002Z"
+                stroke={color || '#8D8D8D'}
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <Path d="M12.8926 11.7021L10.0001 8.79715L7.10758 11.7021" stroke={color || '#8D8D8D'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
       default:
         return null
     }

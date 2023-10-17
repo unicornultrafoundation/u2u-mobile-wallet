@@ -6,6 +6,7 @@ import { darkTheme, lightTheme } from '../../theme/color';
 import NFTScreenBanner from './Banner';
 import Tab from '../../component/Tab';
 import NFTDetails from './NFTDetails';
+import NFTHistory from "./History";
 
 const NFTDetailsScreen = () => {
   const { darkMode } = usePreferenceStore();
@@ -40,7 +41,7 @@ const NFTDetailsScreen = () => {
 
         <View style={[styles.section, { marginTop: 16 }]}>
           {tab === 'details' && <NFTDetails/>}
-          {tab === 'history' && <NFTDetails/>}
+          {tab === 'history' && <NFTHistory/>}
         </View>
       </ScrollView>
     </SafeAreaView>
