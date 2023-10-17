@@ -6,6 +6,9 @@ import {useWallet} from '../../../hook/useWallet';
 import Text from '../../../component/Text';
 import {truncate} from '../../../util/string';
 import HeaderSearchComponent from './HeaderSearchComponent';
+import Clipboard from '@react-native-clipboard/clipboard';
+import SelectNetworkModal from '../../../component/SelectNetworkModal';
+import { useNetwork } from '../../../hook/useNetwork';
 
 interface Props {
   collapsed: boolean;
@@ -15,6 +18,7 @@ interface Props {
 
 const WalletHeader = ({collapsed, action, onGoBack}: Props) => {
   const {wallet} = useWallet();
+  const {name} = useNetwork()
 
   if (collapsed) {
     return <HeaderSearchComponent onGoBack={onGoBack} action={action} />;
@@ -31,19 +35,22 @@ const WalletHeader = ({collapsed, action, onGoBack}: Props) => {
         <Icon name="u2u" width={28} height={28} />
         <View style={{marginLeft: 8}}>
           <Text style={styles.addressText}>{truncate(wallet.address, 14)}</Text>
-          <TouchableOpacity
-            style={{
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              flexDirection: 'row',
-            }}>
-            <Text style={styles.networkText}>Testnet</Text>
-            <Icon name="chevron-down" width={10} height={10} />
-          </TouchableOpacity>
+          <SelectNetworkModal
+            trigger={() => {
+              return (
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
+                  <Text style={styles.networkText}>{name}</Text>
+                  <Icon name="chevron-down" width={10} height={10} />
+                </View>
+              )
+            }}
+          />
         </View>
       </View>
       <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => Clipboard.setString(wallet.address)}
+        >
           <Icon name="copy" width={24} height={24} />
         </TouchableOpacity>
         <TouchableOpacity style={{marginHorizontal: 12}}>

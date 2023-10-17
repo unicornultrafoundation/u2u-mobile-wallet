@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 import { useTransactionStore } from '../state/transaction'
 import { useNetworkStore } from '../state/network'
-import { estimateGasLimitUtil, estimateGasPriceUtil } from '../util/blockchain'
+import { estimateGasLimitUtil, estimateGasPriceUtil, getTxDetail, getTxReceipt } from '../util/blockchain'
 import { useWallet } from './useWallet'
 import BigNumber from 'bignumber.js'
 import { getNonce, sendSignedTransaction, signTransaction } from '../util/wallet'
@@ -45,6 +45,9 @@ export const useTransaction = () => {
   }, [txStore.gasLimit, txStore.gasPrice])
 
   const submitTx = useCallback(async () => {
+    if (txStore.txHash) {
+      return
+    }
     const rawTxObj: Record<string, any> = {
       from: wallet.address,
       to: txStore.receiveAddress,
@@ -62,10 +65,20 @@ export const useTransaction = () => {
       rawTxObj.value = "0"
     }
     const signedTx = await signTransaction(rawTxObj, wallet.privateKey, rpc)
-    console.log('rawTxObj', rawTxObj)
-    console.log('signedTx', signedTx)
-    // return sendSignedTransaction(rpc, signedTx)
-  }, [wallet.privateKey, wallet.address, rpc])
+    txStore.setTxStatus('sending')
+    const rs = await sendSignedTransaction(rpc, signedTx)
+    txStore.setTxStatus(rs.status.toString() === "1" ? 'success' : 'fail')
+    txStore.setTxHash(rs.transactionHash.toString())
+    return rs
+  }, [wallet.privateKey, wallet.address, rpc, txStore])
+
+  const fetchTxReceipt = useCallback(async (hash: string) => {
+    return getTxReceipt(hash, rpc)
+  }, [rpc])
+
+  const fetchTxDetail = useCallback(async (hash: string) => {
+    return getTxDetail(hash, rpc)
+  }, [rpc])
 
   return {
     ...txStore,
@@ -74,5 +87,7 @@ export const useTransaction = () => {
     estimateGasPrice,
     estimateGasLimit,
     submitTx,
+    fetchTxReceipt,
+    fetchTxDetail
   }
 }

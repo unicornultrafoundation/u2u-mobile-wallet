@@ -11,8 +11,6 @@ export function useWalletAssets() {
   const {loading: loadingOwnedToken, ownedToken} = useOwnedToken(wallet.address)
   const {loading: loadingNativeBalance, balance} = useNativeBalance(wallet.address)
   const assets = useMemo(() => {
-    console.log('supportedTokens', supportedTokens)
-    console.log('ownedToken', ownedToken)
     if (supportedTokens.length === 0) return []
     const rs: any[] = []
     supportedTokens.forEach((token: any) => {

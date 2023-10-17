@@ -9,31 +9,42 @@ import { darkTheme, lightTheme } from '../../theme/color';
 import SEND_ILLUS from '../../asset/images/send_tx.png'
 import Button from '../../component/Button';
 import { useTransaction } from '../../hook/useTransaction';
+import TxDetail from '../../component/TxDetail';
+import { useNavigation } from '@react-navigation/native';
 
 const SendStep = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
-  const {submitTx, txStatus, setTxStatus} = useTransaction()
+  const navigation = useNavigation<any>()
+
+  const {submitTx, txStatus, txHash} = useTransaction()
 
   const { t } = useTranslation<string>()
 
   const handleSkip = () => {
-
+    navigation.navigate("Wallet")
   }
 
   useEffect(() => {
     (async () => {
       try {
-        setTxStatus('sending')
         const txHash = await submitTx()
         console.log('sented', txHash)
-        setTxStatus('sent')
       } catch (error) {
         console.log(error)
       }
     })()
   }, [])
+
+  if (txHash) {
+    return (
+      <TxDetail
+        txHash={txHash}
+        onClose={() => {navigation.navigate("Wallet")}}
+      />
+    )
+  }
 
   return (
     <View style={{flex: 1}}>

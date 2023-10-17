@@ -1,6 +1,6 @@
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react'
-import { ActivityIndicator, ScrollView, View } from 'react-native';
+import { ActivityIndicator, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useTokenTxHistory } from '../../../hook/useTokenTxHistory';
 import { useWallet } from '../../../hook/useWallet';
 import { styles } from './styles';
@@ -17,6 +17,8 @@ import { darkTheme, lightTheme } from '../../../theme/color';
 const TokenTxHistory = () => {
   const {params} = useRoute<any>();
   const tokenMeta = params?.tokenMeta || {}
+
+  const navigation = useNavigation<any>()
 
   const {wallet} = useWallet()
   const {loading, txList} = useTokenTxHistory(wallet.address, tokenMeta.address)
@@ -37,7 +39,11 @@ const TokenTxHistory = () => {
       {txList.map((txItem: Record<string, any>) => {
         const isSend = wallet.address.toLowerCase() === txItem.from.toLowerCase()
         return (
-          <View style={styles.txRowContainer} key={`token-tx-${txItem.hash}`}>
+          <TouchableOpacity
+            style={styles.txRowContainer}
+            key={`token-tx-${txItem.hash}`}
+            onPress={() => navigation.navigate("TransactionDetail", {transactionHash: txItem.hash})}
+          >
             <Icon
               name={isSend ? 'arrow-up-circle' : 'arrow-down-circle'}
               color={isSend ? theme.accentColor.error.normal : theme.accentColor.tertiary.normal}
@@ -64,7 +70,7 @@ const TokenTxHistory = () => {
                 {formatDate(Number(txItem.timeStamp) * 1000, 'yyyy-MM-dd')}
               </Text>
             </View>
-          </View>
+          </TouchableOpacity>
         )
       })}
       <View style={{paddingVertical: 20, alignItems: 'center', justifyContent: 'center'}}>
