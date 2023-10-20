@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import { styles } from './styles';
 import { usePreferenceStore } from '../../state/preferences';
@@ -6,12 +6,25 @@ import { darkTheme, lightTheme } from '../../theme/color';
 import NFTScreenBanner from './Banner';
 import Tab from '../../component/Tab';
 import NFTDetails from './NFTDetails';
-import NFTHistory from "./History";
+import NFTHistory from './History';
+import Button from '../../component/Button';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
+import { useGlobalStore } from '../../state/global';
 
 const NFTDetailsScreen = () => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const [tab, setTab] = useState('details');
+  const navigation = useNavigation<any>()
+
+  const route = useRoute();
+  const { setRouteName } = useGlobalStore();
+
+  useFocusEffect(
+    useCallback(() => {
+      setRouteName(route.name);
+    }, [route]),
+  );
 
   return (
     <SafeAreaView
@@ -19,7 +32,7 @@ const NFTDetailsScreen = () => {
         styles.container,
         { backgroundColor: preferenceTheme.background.background },
       ]}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
         <NFTScreenBanner/>
 
         <View style={[styles.section]}>
@@ -44,6 +57,12 @@ const NFTDetailsScreen = () => {
           {tab === 'history' && <NFTHistory/>}
         </View>
       </ScrollView>
+
+      <View style={{ position: 'absolute', bottom: 0, width: '100%', zIndex: 99 }}>
+        <Button type="fill" fullWidth onPress={() => navigation.navigate('SendNFT')}>
+          Transfer
+        </Button>
+      </View>
     </SafeAreaView>
   );
 };
