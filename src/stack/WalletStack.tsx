@@ -4,8 +4,8 @@ import TokenDetailScreen from '../screen/TokenDetailScreen';
 import ReceiveTokenScreen from '../screen/ReceiveTokenScreen';
 import SendTokenScreen from '../screen/SendTokenScreen';
 import TransactionDetailScreen from '../screen/TransactionDetailScreen';
-import NFTCollectionDetailsScreen from '../screen/NFTCollectionDetails';
-import NFTDetailsScreen from '../screen/NFTDetails';
+import NFTCollectionDetailsScreen from '../screen/NFTCollectionDetailsScreen';
+import NFTDetailsScreen from '../screen/NFTDetailsScreen';
 
 const WalletStack = createNativeStackNavigator();
 
@@ -20,7 +20,7 @@ const WalletStackScreen = () => {
       <WalletStack.Screen name="ReceiveToken" component={ReceiveTokenScreen} />
       <WalletStack.Screen name="SendToken" component={SendTokenScreen} />
       <WalletStack.Screen name="TransactionDetail" component={TransactionDetailScreen} />
-      <WalletStack.Screen name="NFTCollections" component={NFTCollectionDetailsScreen} />
+      <WalletStack.Screen name="NFTCollection" component={NFTCollectionDetailsScreen} />
       <WalletStack.Screen name="NFTDetails" component={NFTDetailsScreen} />
     </WalletStack.Navigator>
   );
