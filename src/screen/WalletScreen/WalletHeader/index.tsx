@@ -35,16 +35,6 @@ const WalletHeader = ({collapsed, action, onGoBack}: Props) => {
         <Icon name="u2u" width={28} height={28} />
         <View style={{marginLeft: 8}}>
           <Text style={styles.addressText}>{truncate(wallet.address, 14)}</Text>
-          <SelectNetworkModal
-            trigger={() => {
-              return (
-                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
-                  <Text style={styles.networkText}>{name}</Text>
-                  <Icon name="chevron-down" width={10} height={10} />
-                </View>
-              )
-            }}
-          />
         </View>
       </View>
       <View style={{flexDirection: 'row'}}>
@@ -53,12 +43,22 @@ const WalletHeader = ({collapsed, action, onGoBack}: Props) => {
         >
           <Icon name="copy" width={24} height={24} />
         </TouchableOpacity>
-        <TouchableOpacity style={{marginHorizontal: 12}}>
+        <SelectNetworkModal
+          trigger={() => {
+            return (
+              <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
+                <Text style={styles.networkText}>{name}</Text>
+                <Icon name="chevron-down" width={10} height={10} />
+              </View>
+            )
+          }}
+        />
+        {/* <TouchableOpacity style={{marginHorizontal: 12}}>
           <Icon name="notification" width={24} height={24} />
-        </TouchableOpacity>
-        <TouchableOpacity>
+        </TouchableOpacity> */}
+        {/* <TouchableOpacity>
           <Icon name="scan" width={24} height={24} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );

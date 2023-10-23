@@ -27,6 +27,7 @@ import SplashScreen from './src/screen/SplashScreen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import MoreStackScreen from './src/stack/MoreStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -69,7 +70,8 @@ function App(): JSX.Element {
                 <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
                 <Tab.Screen name="WalletStack" component={WalletStackScreen} />
                 <Tab.Screen name="StakingStack" component={StakingStackScreen} />
-                <Tab.Screen name="BrowserStack" component={BrowserStackScreen} />
+                {/* <Tab.Screen name="BrowserStack" component={BrowserStackScreen} /> */}
+                <Tab.Screen name="MoreStack" component={MoreStackScreen} />
               </Tab.Navigator>
             )}
           </NavigationContainer>
