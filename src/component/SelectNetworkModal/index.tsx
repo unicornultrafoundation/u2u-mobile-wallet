@@ -96,6 +96,7 @@ const SelectNetworkModal = ({trigger}: {
             const selected = chainId === item.chainID
             return (
               <TouchableOpacity
+                key={`network-${item.chainID}`}
                 style={{
                   flexDirection: 'row',
                   width: "100%",

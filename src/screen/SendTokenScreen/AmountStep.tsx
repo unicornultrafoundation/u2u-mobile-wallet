@@ -8,12 +8,13 @@ import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
 import Button from '../../component/Button';
-import { getDigit, parseFormatedNumberInput } from '../../util/string';
+import { formatNumberString, getDigit, parseFormatedNumberInput } from '../../util/string';
 import { useTransactionStore } from '../../state/transaction';
 import { useTokenBalance } from '../../hook/useTokenBalance';
 import { useWallet } from '../../hook/useWallet';
 import { SvgUri } from 'react-native-svg';
 import BigNumber from 'bignumber.js';
+import { ERC20_ABI, encodeTxData } from '../../util/contract';
 
 const AmountStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -23,15 +24,15 @@ const AmountStep = ({onNextStep, onBack}: {
   const preferenceTheme = darkMode ? darkTheme : lightTheme
   const {t} = useTranslation<string>()
 
-  const {setAmount, tokenMeta, amount} = useTransactionStore()
+  const {setAmount, tokenMeta, amount, receiveAddress, setTxData} = useTransactionStore()
   const {wallet} = useWallet()
   const {balance, loading: loadingBalance} = useTokenBalance(wallet.address, tokenMeta.address)
 
   const [internalAmount, setInternalAmount] = useState(amount)
   const [error, setError] = useState('')
 
-  const handleContinue = () => {
-    // TODO: valudate amount
+  const handleContinue = async () => {
+    // TODO: validate amount
     setError('')
     const amountDigit = getDigit(internalAmount)
     const rawAmountBN = BigNumber(amountDigit)
@@ -42,6 +43,26 @@ const AmountStep = ({onNextStep, onBack}: {
     }
 
     setAmount(amountDigit)
+    const isNativeTx = tokenMeta.address.toLowerCase() === "0x" || tokenMeta.address.toLowerCase() === ""
+    if (!isNativeTx) {
+      try {
+        const data = await encodeTxData(
+          {contractAddress: tokenMeta.address, abi: ERC20_ABI},
+          "transfer",
+          [
+            receiveAddress.toLowerCase(),
+            getDigit(
+              BigNumber(amountDigit).multipliedBy(10 ** tokenMeta.decimals).toFormat()
+            )
+          ]
+        )
+        console.log("data", data)
+        setTxData(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     onNextStep()
   }
 
@@ -98,7 +119,7 @@ const AmountStep = ({onNextStep, onBack}: {
             </View>
             <View style={{flex: 1, paddingHorizontal: 11}}>
               <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.primary}]}>Balance</Text>
-              <Text style={theme.typography.footnote.regular}>{balance} {tokenMeta.symbol}</Text>
+              <Text style={theme.typography.footnote.regular}>{formatNumberString(balance)} {tokenMeta.symbol}</Text>
             </View>
             <TouchableOpacity
               style={{

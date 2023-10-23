@@ -18,7 +18,7 @@ export const encodeTxData = async (options: ContractOptions, method: string, par
   const web3 = new Web3();
   const contractInstance = new web3.eth.Contract(options.abi as any, options.contractAddress);
 
-  return (contractInstance.methods[method] as any)(params).encodeABI()
+  return (contractInstance.methods[method] as any)(...params).encodeABI()
 }
 
 export const decodeTxData = (abi: AbiInput[], bytes: HexString) => {

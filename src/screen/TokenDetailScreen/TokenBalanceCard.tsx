@@ -9,12 +9,15 @@ import { darkTheme, lightTheme } from '../../theme/color';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTokenBalance } from '../../hook/useTokenBalance';
 import { useWallet } from '../../hook/useWallet';
+import { useTransaction } from '../../hook/useTransaction';
+import { formatNumberString } from '../../util/string';
 
 const TokenBalanceCard = () => {
   const {wallet} = useWallet()
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
+  const {setTokenMeta} = useTransaction();
   const navigation = useNavigation<any>()
 
   const {params} = useRoute<any>();
@@ -26,13 +29,19 @@ const TokenBalanceCard = () => {
     <View style={styles.balanceCardContainer}>
       <View style={styles.balanceContainer}>
         <Text style={[styles.balanceNumberInToken, {color: preferenceTheme.text.primary}]}>
-          {balanceLoading ? '-' : balance} {tokenMeta.symbol}
+          {balanceLoading ? '-' : formatNumberString(balance)} {tokenMeta.symbol}
         </Text>
         {/* <Text style={styles.balanceNumberInFiatText}>$0</Text> */}
       </View>
       <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
         <View style={{alignItems: 'center', justifyContent: 'center', marginRight: 32}}>
-          <TouchableOpacity style={styles.balanceActionButton}>
+          <TouchableOpacity
+            style={styles.balanceActionButton}
+            onPress={() => {
+              setTokenMeta(tokenMeta);
+              navigation.navigate('SendToken');
+            }}
+          >
             <Icon name="arrow-up" width={24} height={24} />
           </TouchableOpacity>
           <Text style={styles.balanceActionButtonText}>Send</Text>

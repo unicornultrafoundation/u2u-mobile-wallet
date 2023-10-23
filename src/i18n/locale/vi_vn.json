@@ -38,5 +38,6 @@
   "transactionSubmitted": "Transaction submitted",
   "transactionSuccess": "Transaction success",
   "transactionFailed": "Transaction failed",
-  "selectNetwork": "Select network"
+  "selectNetwork": "Select network",
+  "recipientAddress": "Recipient address"
 }

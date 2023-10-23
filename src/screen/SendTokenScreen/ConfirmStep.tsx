@@ -38,9 +38,12 @@ const ConfirmStep = ({onNextStep, onBack}: {
   }, [])
 
   const handleConfirm = () => {
+    setError("")
+    const isNativeTx = tokenMeta.address.toLowerCase() === "0x" || tokenMeta.address.toLowerCase() === ""
     const balanceBN = BigNumber(balance)
-    if (balanceBN.minus(estimatedFee).minus(amount).lt(0)) {
-      setError('Insufficient balance')
+    const rawAmount = isNativeTx ? amount : "0"
+    if (balanceBN.minus(estimatedFee).minus(rawAmount).lt(0)) {
+      setError('Insufficient balance for transaction fee')
       return;
     }
 
@@ -103,6 +106,20 @@ const ConfirmStep = ({onNextStep, onBack}: {
               />
             </View>
           </View>
+          {error && (
+            <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center'}}>
+              <Icon name='error' width={18} height={18} />
+              <Text style={[
+                theme.typography.caption2.regular,
+                {
+                  color: theme.accentColor.error.normal,
+                  paddingLeft: 4
+                }
+              ]}>
+                {error}
+              </Text>
+            </View>
+          )}
           <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface}]}>
             <View style={styles.cardRow}>
               <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('from')}</Text>
