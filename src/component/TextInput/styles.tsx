@@ -7,7 +7,7 @@ export default StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     minWidth: 52,
-    minHeight: 50,
+    minHeight: 48,
     alignItems: 'center',
     flexDirection: 'row'
   },
