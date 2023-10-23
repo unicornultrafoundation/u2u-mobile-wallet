@@ -5,7 +5,6 @@ import {
   NativeSyntheticEvent,
   SafeAreaView,
   ScrollView,
-  Dimensions,
 } from 'react-native';
 import {usePreferenceStore} from '../../state/preferences';
 import {darkTheme, lightTheme} from '../../theme/color';
@@ -23,7 +22,6 @@ import {GestureResponderEvent} from 'react-native/Libraries/Types/CoreEventTypes
 const WalletScreen = () => {
   const {darkMode} = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
-  const windowWidth = Dimensions.get('window').width;
 
   const [tab, setTab] = useState('crypto');
   const [collapsed, setCollapsed] = useState(false);

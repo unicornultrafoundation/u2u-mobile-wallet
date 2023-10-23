@@ -52,26 +52,26 @@ function App(): JSX.Element {
       <BottomSheetModalProvider>
         <QueryClientProvider client={queryClient}>
           <NavigationContainer>
-              <StatusBar
-                barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-                backgroundColor={backgroundStyle.backgroundColor}
-                // backgroundColor="transparent"
-              />
-              {wallet.address === "" ? (
-                <OnboardingStackScreen />
-              ) : (
-                <Tab.Navigator
-                  tabBar={({state, descriptors, navigation}) => <CustomBottomTab state={state} descriptors={descriptors} navigation={navigation} />}
-                  screenOptions={{ headerShown: false }}
-                  initialRouteName='WalletStack'
-                >
-                  <Tab.Screen name="DiscoverStack" component={DiscoverStackScreen} />
-                  <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
-                  <Tab.Screen name="WalletStack" component={WalletStackScreen} />
-                  <Tab.Screen name="StakingStack" component={StakingStackScreen} />
-                  <Tab.Screen name="BrowserStack" component={BrowserStackScreen} />
-                </Tab.Navigator>
-              )}
+            <StatusBar
+              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+              backgroundColor={backgroundStyle.backgroundColor}
+              // backgroundColor="transparent"
+            />
+            {wallet.address === "" ? (
+              <OnboardingStackScreen />
+            ) : (
+              <Tab.Navigator
+                tabBar={({state, descriptors, navigation}) => <CustomBottomTab state={state} descriptors={descriptors} navigation={navigation} />}
+                screenOptions={{ headerShown: false }}
+                initialRouteName='WalletStack'
+              >
+                <Tab.Screen name="DiscoverStack" component={DiscoverStackScreen} />
+                <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
+                <Tab.Screen name="WalletStack" component={WalletStackScreen} />
+                <Tab.Screen name="StakingStack" component={StakingStackScreen} />
+                <Tab.Screen name="BrowserStack" component={BrowserStackScreen} />
+              </Tab.Navigator>
+            )}
           </NavigationContainer>
         </QueryClientProvider>
       </BottomSheetModalProvider>
