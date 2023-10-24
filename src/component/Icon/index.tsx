@@ -172,6 +172,20 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'arrow-right':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg
+              width="100%"
+              height="100%"
+              viewBox={`0 0 24 24`}
+              fill="none"
+            >
+              <Path d="M19.75 11.7256L4.75 11.7256" stroke={color || '#8D8D8D'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M13.7002 5.701L19.7502 11.725L13.7002 17.75" stroke={color || '#8D8D8D'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
       case 'chevron-down':
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
