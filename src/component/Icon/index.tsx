@@ -652,6 +652,17 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'category':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 25 24" fill="none">
+              <Path fillRule="evenodd" clipRule="evenodd" d="M16.7856 2H20.0522C21.4037 2 22.5001 3.1059 22.5001 4.47018V7.7641C22.5001 9.12735 21.4037 10.2343 20.0522 10.2343H16.7856C15.433 10.2343 14.3367 9.12735 14.3367 7.7641V4.47018C14.3367 3.1059 15.433 2 16.7856 2Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path fillRule="evenodd" clipRule="evenodd" d="M4.94892 2H8.21449C9.56703 2 10.6634 3.1059 10.6634 4.47018V7.7641C10.6634 9.12735 9.56703 10.2343 8.21449 10.2343H4.94892C3.59638 10.2343 2.5 9.12735 2.5 7.7641V4.47018C2.5 3.1059 3.59638 2 4.94892 2Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path fillRule="evenodd" clipRule="evenodd" d="M4.94892 13.7656H8.21449C9.56703 13.7656 10.6634 14.8715 10.6634 16.2368V19.5297C10.6634 20.894 9.56703 21.9999 8.21449 21.9999H4.94892C3.59638 21.9999 2.5 20.894 2.5 19.5297V16.2368C2.5 14.8715 3.59638 13.7656 4.94892 13.7656Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path fillRule="evenodd" clipRule="evenodd" d="M16.7856 13.7656H20.0522C21.4037 13.7656 22.5001 14.8715 22.5001 16.2368V19.5297C22.5001 20.894 21.4037 21.9999 20.0522 21.9999H16.7856C15.433 21.9999 14.3367 20.894 14.3367 19.5297V16.2368C14.3367 14.8715 15.433 13.7656 16.7856 13.7656Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
       default:
         return null
     }

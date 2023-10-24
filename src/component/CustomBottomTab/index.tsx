@@ -109,11 +109,11 @@ export default ({ state, descriptors, navigation }: any) => {
           } else if (route.name === 'StakingStack') {
             iconName = focused ? 'staking-active' : 'staking'
           } else if (route.name === 'MoreStack') {
-            iconName = focused ? 'browser-active' : 'browser'
+            iconName = 'category'
           }
 
           // You can return any component that you like here!
-          return <Icon name={iconName} width={size} height={size} />;
+          return <Icon name={iconName} width={size} height={size} color={focused ? color.primary[500] : color.neutral[500]} />;
         }
 
         return (
