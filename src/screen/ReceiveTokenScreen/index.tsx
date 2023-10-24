@@ -35,7 +35,8 @@ const ReceiveTokenScreen = () => {
     if (amount === '0') return wallet.address
     return JSON.stringify({
       address: wallet.address,
-      amount
+      amount,
+      tokenMeta
     })
   }, [wallet, amount])
   
@@ -57,6 +58,7 @@ const ReceiveTokenScreen = () => {
           else setAmount(newValue)
         }}
         amount={amount}
+        tokenMeta={tokenMeta}
       />
     )
   }
@@ -77,7 +79,7 @@ const ReceiveTokenScreen = () => {
             }
           ]}
         >
-          {t('receiveTokenDescriptionPre')}
+          {amount === '0' ? t('receiveTokenDescriptionPre') : t('qrWithAmountWarningPre')}
           <Text
             style={[
               theme.typography.caption2.bold,
@@ -86,9 +88,9 @@ const ReceiveTokenScreen = () => {
               }
             ]}
           >
-            {t('chainName')}
+            {amount === '0' ? t('chainName') : t('appName')}
           </Text>
-          {t('receiveTokenDescriptionPost')}
+          {amount === '0' ? t('receiveTokenDescriptionPost') : t('qrWithAmountWarningPost')}
         </Text>
       </View>
       <View style={{paddingTop: 24, paddingHorizontal: 16, flex: 1, justifyContent: 'space-between'}}>

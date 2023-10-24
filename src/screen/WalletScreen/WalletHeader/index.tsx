@@ -1,5 +1,6 @@
 import React from 'react';
-import {Animated, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
+import Jazzicon from 'react-native-jazzicon'
 import {styles} from '../styles';
 import Icon from '../../../component/Icon';
 import {useWallet} from '../../../hook/useWallet';
@@ -11,6 +12,7 @@ import SelectNetworkModal from '../../../component/SelectNetworkModal';
 import { useNetwork } from '../../../hook/useNetwork';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
+import SelectWalletModal from '../../../component/SelectWalletModal';
 
 interface Props {
   collapsed: boolean;
@@ -37,7 +39,13 @@ const WalletHeader = ({collapsed, action, onGoBack}: Props) => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <Icon name="u2u" width={28} height={28} />
+        <SelectWalletModal
+          trigger={() => {
+            return (
+              <Jazzicon size={28} address={wallet.address} />
+            )
+          }}
+        />
         <View style={{marginHorizontal: 8}}>
           <Text style={styles.addressText}>{shortenAddress(wallet.address, 6, 6)}</Text>
         </View>

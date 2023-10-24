@@ -31,10 +31,10 @@ const TextButton = ({color, fullWidth, children, style, textStyle, ...rest}: Bas
         style
       ]}
     >
-      <Text style={{
-        ...{color: textColor},
-        ...textStyle
-      }}>
+      <Text style={[
+        {color: textColor},
+        textStyle
+      ]}>
         {children}
       </Text>
     </TouchableOpacity>

@@ -1,6 +1,13 @@
 import { useWalletStore } from "../state/wallet";
 
 export function useWallet() {
-  const { accessWallet, wallet } = useWalletStore()
-  return {wallet, accessWallet}
+  const { accessWallet, wallet, generatedPath, seedPhrase, generateNewPath, savePathIndex } = useWalletStore()
+  return {
+    wallet,
+    accessWallet,
+    generatedPath,
+    seedPhrase,
+    generateNewPath,
+    savePathIndex
+  }
 }

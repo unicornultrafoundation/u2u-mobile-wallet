@@ -626,6 +626,32 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'plus':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 18 18" fill="none">
+              <G clipPath="url(#clip0_898_2855)">
+                <Path d="M9.00052 3V14.9855" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <Path d="M14.9975 8.99288H3.00055" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </G>
+              <Defs>
+                <ClipPath id="clip0_898_2855">
+                  <Rect width="18" height="18" fill="white"/>
+                </ClipPath>
+              </Defs>
+            </Svg>
+          </View>
+        )
+      case 'vertical-dot':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path d="M11 18C11 18.5523 11.4477 19 12 19C12.5523 19 13 18.5523 13 18C13 17.4477 12.5523 17 12 17C11.4477 17 11 17.4477 11 18Z" stroke={color || "#8D8D8D"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z" stroke={color || "#8D8D8D"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M11 6C11 6.55228 11.4477 7 12 7C12.5523 7 13 6.55228 13 6C13 5.44772 12.5523 5 12 5C11.4477 5 11 5.44772 11 6Z" stroke={color || "#8D8D8D"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
       default:
         return null
     }
