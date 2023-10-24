@@ -6,8 +6,9 @@ import Text from '../Text';
 import theme from '../../theme';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
-import { ERC20_ABI, decodeTxData, findABIFragment } from '../../util/contract';
+import { decodeTxData, findABIFragment } from '../../util/contract';
 import BigNumber from 'bignumber.js';
+import { ERC20_ABI } from '../../util/abis/erc20';
 
 const TRANSFER_INPUT_ABI = [
   {

@@ -6,7 +6,8 @@ import { useWallet } from './useWallet'
 import BigNumber from 'bignumber.js'
 import { getNonce, sendSignedTransaction, signTransaction } from '../util/wallet'
 import { getDigit } from '../util/string'
-import { ERC20_ABI, encodeTxData } from '../util/contract'
+import { encodeTxData } from '../util/contract'
+import { ERC20_ABI } from '../util/abis/erc20'
 
 export const useTransaction = () => {
   const txStore = useTransactionStore()
@@ -86,6 +87,32 @@ export const useTransaction = () => {
     return rs
   }, [wallet.privateKey, wallet.address, rpc, txStore])
 
+  const submitRawTx = useCallback(async () => {
+    if (txStore.txHash) {
+      return
+    }
+
+    const rawTxObj: Record<string, any> = {
+      from: wallet.address,
+      to: txStore.receiveAddress,
+      gas: txStore.gasLimit,
+      gasPrice: txStore.gasPrice,
+      chainId,
+      nonce: await getNonce(rpc, wallet.address),
+      data: txStore.txData,
+      value: getDigit(
+        BigNumber(txStore.amount).multipliedBy(10 ** 18).toFormat()
+      )
+    }
+
+    const signedTx = await signTransaction(rawTxObj, wallet.privateKey, rpc)
+    txStore.setTxStatus('sending')
+    const rs = await sendSignedTransaction(rpc, signedTx)
+    txStore.setTxStatus(rs.status.toString() === "1" ? 'success' : 'fail')
+    txStore.setTxHash(rs.transactionHash.toString())
+    return rs
+  }, [wallet.privateKey, wallet.address, rpc, txStore])
+
   const fetchTxReceipt = useCallback(async (hash: string) => {
     return getTxReceipt(hash, rpc)
   }, [rpc])
@@ -101,6 +128,7 @@ export const useTransaction = () => {
     estimateGasPrice,
     estimateGasLimit,
     submitTx,
+    submitRawTx,
     fetchTxReceipt,
     fetchTxDetail
   }

@@ -14,7 +14,8 @@ import { useTokenBalance } from '../../hook/useTokenBalance';
 import { useWallet } from '../../hook/useWallet';
 import { SvgUri } from 'react-native-svg';
 import BigNumber from 'bignumber.js';
-import { ERC20_ABI, encodeTxData } from '../../util/contract';
+import { encodeTxData } from '../../util/contract';
+import { ERC20_ABI } from '../../util/abis/erc20';
 
 const AmountStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
