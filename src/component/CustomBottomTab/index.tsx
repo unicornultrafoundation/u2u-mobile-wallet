@@ -89,10 +89,10 @@ export default ({ state, descriptors, navigation }: any) => {
                 Staking
               </Text>
             )
-          } else if (route.name === 'BrowserStack') {
+          } else if (route.name === 'MoreStack') {
             return (
               <Text style={[styles.tabTitle, {color: focused ? color.primary[500] : color.neutral[500]}]}>
-                Browser
+                More
               </Text>
             )
           }
@@ -108,7 +108,7 @@ export default ({ state, descriptors, navigation }: any) => {
             iconName = focused ? 'wallet-active' : 'wallet'
           } else if (route.name === 'StakingStack') {
             iconName = focused ? 'staking-active' : 'staking'
-          } else if (route.name === 'BrowserStack') {
+          } else if (route.name === 'MoreStack') {
             iconName = focused ? 'browser-active' : 'browser'
           }
 
