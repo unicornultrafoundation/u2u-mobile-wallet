@@ -91,5 +91,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 4
-  }
+  },
+  networkContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    borderRadius: 80,
+    paddingHorizontal: 10,
+    paddingVertical: 6
+  },
 });

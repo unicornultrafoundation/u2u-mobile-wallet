@@ -14,6 +14,8 @@ const ComingSoonScreen = () => {
       style={{
         flex: 1,
         backgroundColor: preferenceTheme.background.background,
+        alignItems: 'center',
+        justifyContent: 'center'
       }}
     >
       <Text>Coming soon</Text>
