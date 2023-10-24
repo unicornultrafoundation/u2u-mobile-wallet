@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { useCallback, useMemo } from "react"
 import { useNetworkStore } from "../state/network"
 import { getBlockDetail } from "../util/blockchain"
 import { SUPPORTED_CHAINS } from "../config/chain"
@@ -17,10 +17,15 @@ export const useNetwork = () => {
     if (!networkItem) return;
     networkStore.switchNetwork(networkItem)
   }, [])
+
+  const networkConfig = useMemo(() => {
+    return SUPPORTED_CHAINS.find((i) => i.chainID === chainId)
+  }, [chainId])
   
   return {
     ...networkStore,
     fetchBlock,
-    switchNetwork
+    switchNetwork,
+    networkConfig
   }
 }

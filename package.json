@@ -11,6 +11,7 @@
     "postinstall": "rn-nodeify --install 'crypto,process,stream,events' --hack"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.6",
     "@ethersproject/shims": "^5.7.0",
     "@gorhom/bottom-sheet": "^4.5.1",
     "@react-native-async-storage/async-storage": "^1.19.3",
@@ -26,6 +27,7 @@
     "ethers": "^6.7.1",
     "events": "^3.3.0",
     "fast-text-encoding": "^1.0.6",
+    "graphql": "^16.8.1",
     "i18next": "^23.5.1",
     "intl-pluralrules": "^2.0.1",
     "process": "^0.11.10",
