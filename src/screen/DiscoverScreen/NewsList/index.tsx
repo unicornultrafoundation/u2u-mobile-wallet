@@ -9,16 +9,17 @@ interface Props {
   news: any[];
 }
 
-const NewsSection = ({ news }: Props) => {
+const NewsList = ({ news }: Props) => {
   const styles = useStyles();
+  const [topNews, ...rest] = news
 
   return (
     <View>
-      <TopNews data={news[0]}/>
+      <TopNews data={topNews}/>
       <Separator style={{ borderBottomWidth: 1, marginVertical: 16 }}/>
 
       <View style={{ gap: 12 }}>
-        {news.slice(1, 4).map(item => {
+        {rest.slice(1, 4).map(item => {
           return (
             <TouchableOpacity key={item.id}>
               <View
@@ -68,4 +69,4 @@ const NewsSection = ({ news }: Props) => {
   );
 };
 
-export default NewsSection;
+export default NewsList;

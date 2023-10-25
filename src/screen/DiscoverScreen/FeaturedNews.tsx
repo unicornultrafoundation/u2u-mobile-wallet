@@ -1,13 +1,17 @@
 import { TouchableOpacity, View } from 'react-native';
-import NewsSection from './NewsSection';
-import news from '../../../mock/news.json';
-import { useStyles } from '../styles';
-import Text from '../../../component/Text';
-import Icon from '../../../component/Icon';
-import { color } from '../../../theme/color';
+import NewsList from './NewsList';
+import news from '../../mock/news.json';
+import { useStyles } from './styles';
+import Text from '../../component/Text';
+import Icon from '../../component/Icon';
+import { color } from '../../theme/color';
 import { useMemo } from 'react';
 
-const FeaturedNews = () => {
+interface Props {
+  onViewCategory: (categoryName: string) => void
+}
+
+const FeaturedNews = ({ onViewCategory }: Props) => {
   const styles = useStyles();
   const categories = useMemo(() => {
     return news.reduce((a, b) => {
@@ -24,11 +28,11 @@ const FeaturedNews = () => {
     }, [] as any[]);
   }, [news]);
 
-  const featuredNews = news.slice(0, 4);
+  const featuredNews = news.slice(0, 5);
 
   return (
     <View style={{ gap: 24 }}>
-      <NewsSection news={featuredNews}/>
+      <NewsList news={featuredNews} />
 
       {categories.map(category => {
         return (
@@ -38,7 +42,7 @@ const FeaturedNews = () => {
                 {category.name}
               </Text>
 
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => onViewCategory(category.name)}>
                 <Icon
                   name="arrow-right"
                   width={24}
@@ -48,7 +52,7 @@ const FeaturedNews = () => {
               </TouchableOpacity>
             </View>
 
-            <NewsSection news={category.items}/>
+            <NewsList news={category.items.slice(0, 5)} />
           </View>
         );
       })}

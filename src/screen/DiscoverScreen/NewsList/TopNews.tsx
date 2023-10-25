@@ -9,6 +9,11 @@ interface Props {
 
 const TopNews = ({ data }: Props) => {
   const styles = useStyles();
+
+  if (!data) {
+    return null
+  }
+
   return (
     <View style={{ gap: 8 }}>
       <Image
