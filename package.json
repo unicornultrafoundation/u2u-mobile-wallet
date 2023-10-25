@@ -11,6 +11,7 @@
     "postinstall": "rn-nodeify --install 'crypto,process,stream,events' --hack"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.6",
     "@ethersproject/shims": "^5.7.0",
     "@gorhom/bottom-sheet": "^4.5.1",
     "@react-native-async-storage/async-storage": "^1.19.3",
@@ -26,8 +27,10 @@
     "ethers": "^6.7.1",
     "events": "^3.3.0",
     "fast-text-encoding": "^1.0.6",
+    "graphql": "^16.8.1",
     "i18next": "^23.5.1",
     "intl-pluralrules": "^2.0.1",
+    "jazzicon": "^1.5.0",
     "process": "^0.11.10",
     "react": "18.2.0",
     "react-i18next": "^13.2.2",
@@ -35,6 +38,7 @@
     "react-native-crypto": "^2.2.0",
     "react-native-device-info": "^10.11.0",
     "react-native-gesture-handler": "^2.13.1",
+    "react-native-jazzicon": "^0.1.2",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-otp-inputs": "^7.4.0",
     "react-native-qrcode-svg": "^6.2.0",

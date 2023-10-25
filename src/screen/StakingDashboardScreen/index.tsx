@@ -4,8 +4,9 @@ import styles from './styles'
 import Tab from '../../component/Tab'
 import { useFocusEffect, useRoute } from '@react-navigation/native'
 import { useGlobalStore } from '../../state/global'
+import StakingTab from './StakingTab'
 
-const InvestmentDashboardScreen = () => {
+const StakingDashboardScreen = () => {
   const route = useRoute()
   const {setRouteName} = useGlobalStore()
 
@@ -18,7 +19,6 @@ const InvestmentDashboardScreen = () => {
   const [selectedTab, setSelectedTab] = useState('staking')
   return (
     <View style={styles.container}>
-      <Text>Investment dashboard screen</Text>
       <Tab
         tabs={[
           {
@@ -41,8 +41,9 @@ const InvestmentDashboardScreen = () => {
           paddingRight: 48
         }}
       />
+      {selectedTab === 'staking' && <StakingTab />}
     </View>
   )
 }
 
-export default InvestmentDashboardScreen
+export default StakingDashboardScreen

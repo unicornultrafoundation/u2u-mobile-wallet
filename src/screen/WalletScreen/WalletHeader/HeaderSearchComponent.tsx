@@ -11,6 +11,7 @@ import theme from '../../../theme';
 import { useNetwork } from '../../../hook/useNetwork';
 import SelectNetworkModal from '../../../component/SelectNetworkModal';
 import { useGlobalStore } from '../../../state/global';
+import Button from '../../../component/Button';
 
 interface Props {
   action: string;
@@ -34,31 +35,47 @@ const HeaderSearchComponent = ({action, onGoBack}: Props) => {
 
   return (
     <View style={[styles.headerSection]}>
-      <TouchableOpacity onPress={handleGoBack}>
-        <Icon name="arrow-left" width={24} height={24} />
-      </TouchableOpacity>
+      {!showInput && (
+        <TouchableOpacity onPress={handleGoBack}>
+          <Icon name="arrow-left" width={24} height={24} />
+        </TouchableOpacity>
+      )}
 
       {showInput ? (
-        <TextInput
-          onChangeText={val => setSearchKeyword(val)}
-          value={searchKeyword}
-          containerStyle={{flex: 1, marginLeft: 8, height: 24}}
-          style={[
-            theme.typography.label.regular,
-            {
-              flex: 1,
-              width: '100%',
-              color: preferenceTheme.text.title,
-            },
-          ]}
-          postIcon={() => {
-            return (
-              <TouchableOpacity onPress={() => setShowInput(false)}>
-                <Icon name="close" width={18} height={18} />
-              </TouchableOpacity>
-            )
-          }}
-        />
+        <View style={{flexDirection: 'row', gap: 8}}>
+          <TextInput
+            onChangeText={val => setSearchKeyword(val)}
+            value={searchKeyword}
+            containerStyle={{flex: 1, marginLeft: 8, height: 24}}
+            style={[
+              theme.typography.label.regular,
+              {
+                flex: 1,
+                width: '100%',
+                color: preferenceTheme.text.title,
+              },
+            ]}
+            postIcon={() => {
+              return (
+                <TouchableOpacity onPress={() => setSearchKeyword('')}>
+                  <Icon name="close" width={18} height={18} />
+                </TouchableOpacity>
+              )
+            }}
+          />
+          <Button
+            type='text'
+            onPress={() => setShowInput(false)}
+            textStyle={[
+              theme.typography.subheadline.medium,
+              {
+                color: preferenceTheme.text.primary
+              },
+            ]}
+          >
+            Cancel
+          </Button>
+        </View>
       ) : (
         <>
           <SelectNetworkModal

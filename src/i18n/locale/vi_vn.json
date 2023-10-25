@@ -39,5 +39,8 @@
   "transactionSuccess": "Transaction success",
   "transactionFailed": "Transaction failed",
   "selectNetwork": "Select network",
-  "recipientAddress": "Recipient address"
+  "recipientAddress": "Recipient address",
+  "qrWithAmountWarningPre": "QR code with amount can only use by ",
+  "qrWithAmountWarningPost": " and can't be used by any other types of wallet.",
+  "manageWallet": "Manage wallet"
 }

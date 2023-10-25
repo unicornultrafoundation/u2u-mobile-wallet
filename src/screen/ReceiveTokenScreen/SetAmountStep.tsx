@@ -9,10 +9,11 @@ import theme from '../../theme';
 import Button from '../../component/Button';
 import { getDigit, parseFormatedNumberInput } from '../../util/string';
 
-const SetAmountStep = ({handleBack, setAmount, amount}: {
+const SetAmountStep = ({handleBack, setAmount, amount, tokenMeta}: {
   handleBack: () => void
   amount: string
   setAmount: (newAmount: string) => void
+  tokenMeta: Record<string, any>
 }) => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
@@ -41,7 +42,7 @@ const SetAmountStep = ({handleBack, setAmount, amount}: {
               }
             ]}
           />
-          <Text style={theme.typography.largeTitle.medium}>U2U</Text>
+          <Text style={theme.typography.largeTitle.medium}>{tokenMeta.symbol}</Text>
         </View>
         <Button
           style={{borderRadius: 60}}
