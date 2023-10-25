@@ -12,13 +12,15 @@ import { color, darkTheme, lightTheme } from '../../theme/color';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DiscoverStackParamList } from '../../stack/DiscoverStack';
 import news from '../../mock/news.json';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import Separator from '../../component/Separator';
 import U2UIcon from '../../asset/icon/u2u_wallet_icon.png';
 import RenderHtml, { MixedStyleDeclaration } from 'react-native-render-html';
 import { usePreferenceStore } from '../../state/preferences';
 import Icon from '../../component/Icon';
 import NewsList from '../../component/NewsList';
+import { useFocusEffect } from "@react-navigation/native";
+import { useGlobalStore } from "../../state/global";
 
 type Props = NativeStackScreenProps<DiscoverStackParamList, 'NewsDetails'>;
 
@@ -44,6 +46,7 @@ const source = {
 };
 
 const NewsDetailScreen = ({ route, navigation }: Props) => {
+  const { setRouteName } = useGlobalStore();
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const styles = useStyles();
@@ -77,6 +80,12 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
       alignSelf: 'center'
     },
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      setRouteName(route.name);
+    }, [route]),
+  );
 
   if (!article) {
     return (
