@@ -68,6 +68,10 @@ export const fetchTotalSupply = (options: ContractOptions, rpc: string) => {
   return contractCall(options, rpc, "totalSupply", [])
 }
 
+export const fetchPendingRewards = (options: ContractOptions, delegatorAddress: string, validatorID: number, rpc: string) => {
+  return contractCall(options, rpc, "pendingRewards", [delegatorAddress, validatorID])
+}
+
 export const queryValidators = () => apolloClient.query({
   query: Schema().VALIDATORS,
   fetchPolicy: "no-cache"

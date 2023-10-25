@@ -11,6 +11,7 @@ import { usePreferenceStore } from '../../state/preferences'
 import { darkTheme, lightTheme } from '../../theme/color'
 import Separator from '../../component/Separator'
 import InvestmentTotalCard from './InvestmentTotalCard'
+import ValidatorsList from './ValidatorsList'
 
 const StakingDashboardScreen = () => {
   const route = useRoute()
@@ -42,6 +43,7 @@ const StakingDashboardScreen = () => {
       <InvestmentTotalCard />
       <Separator />
       <StakingDataCard />
+      <ValidatorsList />
     </View>
   )
 }
