@@ -14,6 +14,7 @@ export interface BlurredImageItemProps {
   title: string;
   description: string;
   logoImg: string;
+  gradientColor: string[];
   index?: number;
 }
 
@@ -23,6 +24,7 @@ const BlurredImageItem = ({
   description,
   logoImg,
   index,
+  gradientColor
 }: BlurredImageItemProps) => {
   const width = Dimensions.get('window').width;
 
@@ -50,7 +52,7 @@ const BlurredImageItem = ({
       <Image source={{uri: backgroundImg}} style={styles.backgroundImage} />
       <View style={styles.upcomingOverlayContainer}>
         <LinearGradient
-          colors={['#4c669f', '#3b5998', '#192f6a']}
+          colors={gradientColor}
           style={styles.blurredSection}>
           <Image source={{uri: logoImg}} style={styles.smallImage} />
           <View style={styles.textContainer}>

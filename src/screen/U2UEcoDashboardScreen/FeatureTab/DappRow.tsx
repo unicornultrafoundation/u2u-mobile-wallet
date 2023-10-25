@@ -1,25 +1,30 @@
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Image, View} from 'react-native';
 import {styles} from './styles';
-import {SvgUri} from 'react-native-svg';
 import Text from '../../../component/Text';
-import {useNavigation} from '@react-navigation/native';
 import Button from '../../../component/Button';
 
 const DappRow = ({tokenObj}: {tokenObj: any}) => {
-  const navigation = useNavigation<any>();
-  const handlePressDetail = () => {
-    navigation.navigate('TokenDetail', {tokenMeta: tokenObj});
-  };
+  // const navigation = useNavigation<any>();
+  // const handlePressDetail = () => {
+  //   navigation.navigate('TokenDetail', {tokenMeta: tokenObj});
+  // };
 
   return (
-    <TouchableOpacity style={styles.tokenContainer} onPress={handlePressDetail}>
+    <View style={styles.tokenContainer}>
       <View style={{width: 40, height: 40}}>
-        <SvgUri uri={tokenObj.logo} width="100%" height="100%" />
+        <Image
+          source={{uri: 'https://fakeimg.pl/300/'}}
+          style={{
+            width: '100%',
+            height: '100%',
+            borderRadius: 8,
+          }}
+        />
       </View>
       <View style={{flex: 1, paddingHorizontal: 8}}>
-        <Text>{tokenObj.symbol}</Text>
-        <Text>Description</Text>
+        <Text>{tokenObj.title}</Text>
+        <Text>{tokenObj.description}</Text>
       </View>
       <View>
         <Button
@@ -37,7 +42,7 @@ const DappRow = ({tokenObj}: {tokenObj: any}) => {
           Open
         </Button>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 

@@ -1,43 +1,57 @@
 import React from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, View, Button} from 'react-native';
 import Header from '../Header';
-import {useWalletAssets} from '../../../hook/useWalletAssets';
-import {useGlobalStore} from '../../../state/global';
+import SelectDappModal from '../../../component/SelectDappModal';
+import Test from '../../../asset/icon/arrow-right.png';
 import DappRow from './DappRow';
-// import Text from '../../../component/Text';
-const Trading = () => {
-  const {assets} = useWalletAssets();
-  const {searchKeyword} = useGlobalStore();
+import Jazzicon from 'react-native-jazzicon';
+import Text from '../../../component/Text';
 
+const TopDapp = () => {
+  const DATA = [
+    {
+      title: 'Ultra X',
+      description: 'Description',
+      logoImg: 'https://fakeimg.pl/300/',
+    },
+    {
+      title: 'U2 Swap',
+      description: 'Description',
+      logoImg: 'https://fakeimg.pl/300/',
+    },
+    {
+      title: 'U2 OTC',
+      description: 'Description',
+      logoImg: 'https://fakeimg.pl/300/',
+    },
+  ];
   return (
     <View>
       <Header text="Trading" />
       <ScrollView>
-        {assets
-          .filter(i => {
-            return (
-              (i.address as string)
-                .toLowerCase()
-                .includes(searchKeyword.toLowerCase()) ||
-              (i.symbol as string)
-                .toLowerCase()
-                .includes(searchKeyword.toLowerCase()) ||
-              (i.name as string)
-                .toLowerCase()
-                .includes(searchKeyword.toLowerCase())
-            );
-          })
-          .map((tokenObj: any) => {
-            return (
-              <DappRow
-                tokenObj={tokenObj}
-                key={`token-asset-${tokenObj.symbol}`}
-              />
-            );
-          })}
+        {DATA.map((tokenObj: any, index) => {
+          return (
+            <SelectDappModal
+              trigger={() => {
+                return <DappRow tokenObj={tokenObj} key={`dapp-${index}`} />;
+              }}
+              title={tokenObj.title}
+              description={tokenObj.description}
+              logoImg={tokenObj.logoImg}
+            />
+          );
+        })}
+        {/* <SelectDappModal
+          trigger={() => {
+            // return <Text>ok</Text>
+            // return <Image source={Test} />
+            // return <Jazzicon size={28} />;
+            return <Button title='ok'>ok</Button>;
+          }}
+        /> */}
       </ScrollView>
     </View>
   );
 };
 
-export default Trading;
+export default TopDapp;
