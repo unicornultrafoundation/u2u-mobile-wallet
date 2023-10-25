@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { useStaking } from '../../../hook/useStaking';
 import ValidatorItem from './ValidatorItem';
 
@@ -7,7 +7,13 @@ const ValidatorsList = () => {
   const {validators} = useStaking()
   return (
     <View>
-      {validators.map((v, index) => <ValidatorItem key={`validator-${index}`} validator={v} />)}
+      <FlatList
+        data={validators}
+        renderItem={({item}) => {
+          return <ValidatorItem validator={item} />
+        }}
+        ItemSeparatorComponent={() => <View style={{height: 12}} />}
+      />
     </View>
   )
 };
