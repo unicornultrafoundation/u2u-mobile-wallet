@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useMemo, useState, useEffect} from 'react';
+import React, {useCallback, useRef, useMemo} from 'react';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import styles from './styles';
 import {View, TouchableOpacity, Image, ScrollView} from 'react-native';
@@ -13,7 +13,7 @@ import Discord from '../../asset/icon/social-media/Discord.png';
 import Youtube from '../../asset/icon/social-media/Youtube.png';
 import Globe from '../../asset/icon/social-media/Globe.png';
 import StarButton from '../FavoriteButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useFavoriteItems from '../../hook/useFavorite';
 
 const SelectDappModal = ({
   trigger,
@@ -28,9 +28,6 @@ const SelectDappModal = ({
 }) => {
   const {darkMode} = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
-  const [items, setItems] = useState<FavoriteItem[]>([]);
-
-  const INITIAL_DATA = [{title: '', isFavorite: false}];
 
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -46,49 +43,7 @@ const SelectDappModal = ({
   //   bottomSheetModalRef.current?.close();
   // }, []);
 
-  useEffect(() => {
-    const loadItemsFromStorage = async () => {
-      try {
-        const storedItems = await AsyncStorage.getItem('favoriteItems');
-        const parsedItems = JSON.parse(storedItems);
-        if (parsedItems !== null && parsedItems.length > 0) {
-          setItems(JSON.parse(storedItems));
-        } else {
-          setItems(INITIAL_DATA);
-        }
-      } catch (err) {
-        console.error('Failed: ', err);
-      }
-    };
-    loadItemsFromStorage();
-  }, []);
-
-  const toggleFavorite = async (title: string) => {
-    let updatedItems;
-
-    // Check if the item with the given title already exists in the items array
-    const existingItem = items.find(item => item.title === title);
-
-    if (existingItem) {
-      // If it exists, toggle its favorite status
-      updatedItems = items.map(item => {
-        if (item.title === title) {
-          return {...item, isFavorite: !item.isFavorite};
-        }
-        return item;
-      });
-    } else {
-      // If it doesn't exist, add it to the items array and set it as favorite
-      updatedItems = [...items, {title, isFavorite: true}];
-    }
-
-    try {
-      await AsyncStorage.setItem('favoriteItems', JSON.stringify(updatedItems));
-      setItems(updatedItems);
-    } catch (error) {
-      console.error('Failed to save items:', error);
-    }
-  };
+  const {items, toggleFavorite} = useFavoriteItems();
 
   return (
     <>

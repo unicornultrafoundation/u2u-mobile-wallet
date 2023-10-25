@@ -1,12 +1,8 @@
 import React from 'react';
-import {ScrollView, View, Button} from 'react-native';
+import {ScrollView, View, Dimensions} from 'react-native';
 import Header from '../Header';
 import SelectDappModal from '../../../component/SelectDappModal';
-import Test from '../../../asset/icon/arrow-right.png'
 import DappRow from './DappRow';
-import Jazzicon from 'react-native-jazzicon';
-import Text from '../../../component/Text';
-
 const TopDapp = () => {
   const DATA = [
     {
@@ -24,12 +20,21 @@ const TopDapp = () => {
       description: 'Description',
       logoImg: 'https://fakeimg.pl/300/',
     },
+    {
+      title: 'U2 OTCAC',
+      description: 'Description',
+      logoImg: 'https://fakeimg.pl/300/',
+    },
   ];
+  const groupData: any[][] = [];
+  for (let i = 0; i < DATA.length; i += 3) {
+    groupData.push(DATA.slice(i, i + 3));
+  }
   return (
     <View>
       <Header text="Top DApps" />
-      <ScrollView>
-        {DATA.map((tokenObj: any, index) => {
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        {/* {DATA.map((tokenObj: any, index) => {
           return (
             <SelectDappModal
               trigger={() => {
@@ -40,15 +45,25 @@ const TopDapp = () => {
               logoImg={tokenObj.logoImg}
             />
           );
-        })}
-        {/* <SelectDappModal
-          trigger={() => {
-            // return <Text>ok</Text>
-            // return <Image source={Test} />
-            // return <Jazzicon size={28} />;
-            return <Button title='ok'>ok</Button>;
-          }}
-        /> */}
+        })} */}
+        {groupData.map((group, groupIndex) => (
+          <View
+            key={groupIndex}
+            style={{
+              width: Dimensions.get('window').width * 0.85,
+            }}>
+            {group.map((item, index) => (
+              <SelectDappModal
+                trigger={() => {
+                  return <DappRow tokenObj={item} key={`dapp-${index}`} />;
+                }}
+                title={item.title}
+                description={item.description}
+                logoImg={item.logoImg}
+              />
+            ))}
+          </View>
+        ))}
       </ScrollView>
     </View>
   );

@@ -6,6 +6,7 @@ import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {useGlobalStore} from '../../state/global';
 import ExploreTab from './ExploreTab';
 import FeatureTab from './FeatureTab';
+import FavoriteTab from './FavoritesTab';
 
 const U2UEcoDashboardScreen = () => {
   const route = useRoute();
@@ -17,7 +18,7 @@ const U2UEcoDashboardScreen = () => {
         return <FeatureTab />;
       case 'favorites':
         return (
-          <Text style={{color: 'white'}}>This is the Favorites scene</Text>
+          <FavoriteTab />
         );
       case 'explore':
         return <ExploreTab />;

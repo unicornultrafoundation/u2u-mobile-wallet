@@ -1,9 +1,9 @@
 import React, {useCallback, useState} from 'react';
 import {ScrollView} from 'react-native';
-import Trading from './ExploreTab/Trading';
+import ExploreSection from './ExploreTab/ExploreSection';
 import Tab from '../../component/Tab';
-import { useFocusEffect, useRoute } from '@react-navigation/native';
-import { useGlobalStore } from '../../state/global';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
+import {useGlobalStore} from '../../state/global';
 
 const ExploreTab = () => {
   const [selectedTab, setSelectedTab] = useState('trading');
@@ -14,7 +14,13 @@ const ExploreTab = () => {
   const renderScene = () => {
     switch (selectedTab) {
       case 'trading':
-        return <Trading />;
+        return <ExploreSection filter="trading" />;
+      case 'gamefi':
+        return <ExploreSection filter="gamefi" />;
+      case 'dex':
+        return <ExploreSection filter="dex" />;
+      case 'defi':
+        return <ExploreSection filter="defi" />;
       default:
         return null;
     }
