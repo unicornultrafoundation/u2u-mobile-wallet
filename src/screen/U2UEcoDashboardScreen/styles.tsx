@@ -13,7 +13,7 @@ export default StyleSheet.create({
     height: 40,  // You can adjust the height as needed
     borderColor: '#000',  // You can adjust the color as needed
     borderWidth: 1,
-    borderRadius: 20, // Rounded border
+    borderRadius: 10, // Rounded border
     paddingLeft: 15,  // Left padding
     color: '#000',    // Text color
     fontSize: 16,     // Font size

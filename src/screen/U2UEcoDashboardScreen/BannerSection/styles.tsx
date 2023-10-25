@@ -45,10 +45,10 @@ export const styles = StyleSheet.create({
     bottom: 0,
   },
   smallImage: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     resizeMode: 'cover',
-    margin: 10,
+    margin: 8,
   },
   textContainer: {
     flex: 1,

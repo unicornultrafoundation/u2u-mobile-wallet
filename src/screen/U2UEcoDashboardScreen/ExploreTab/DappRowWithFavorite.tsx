@@ -5,6 +5,7 @@ import Text from '../../../component/Text';
 import Button from '../../../component/Button';
 import StarButton from '../../../component/FavoriteButton';
 import useFavoriteItems from '../../../hook/useFavorite';
+import theme from '../../../theme';
 
 const DappRow = ({tokenObj}: {tokenObj: any}) => {
   const {items, toggleFavorite} = useFavoriteItems();
@@ -22,13 +23,15 @@ const DappRow = ({tokenObj}: {tokenObj: any}) => {
         />
       </View>
       <View style={{flex: 1, paddingHorizontal: 8}}>
-        <Text>{tokenObj.title}</Text>
-        <Text>{tokenObj.description}</Text>
+        <Text style={[theme.typography.label.bold]}>{tokenObj.title}</Text>
+        <Text style={[theme.typography.caption1.regular]}>
+          {tokenObj.description}
+        </Text>
       </View>
       <View style={styles.actionContainer}>
         <Button
           type="text"
-          textStyle={{fontSize: 12, textAlign: 'center', color: '#B4B4B4'}}
+          textStyle={{fontSize: 14, textAlign: 'center', color: '#B4B4B4'}}
           style={styles.openButton}>
           Open
         </Button>

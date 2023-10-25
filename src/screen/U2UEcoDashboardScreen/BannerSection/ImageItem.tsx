@@ -5,6 +5,7 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import Text from '../../../component/Text';
+import theme from '../../../theme';
 interface ItemProps {
   index: number;
   title: string;
@@ -38,10 +39,11 @@ const ImageItem = ({index, title, description}: ItemProps) => {
       left: 0,
       right: 0,
       bottom: 0, // Position it at the bottom of your item container
-      height: '20%', // 20% of the item container's height
-      backgroundColor: 'rgba(0,0,0,0.5)', // Example: black with 50% opacity
+      height: '25%', // 20% of the item container's height
+      backgroundColor: 'rgba(0,0,0,0.1)', // Example: black with 50% opacity
       justifyContent: 'flex-start', // Align content to the top
       alignItems: 'flex-start',
+      paddingHorizontal: 16,
     },
   });
 
@@ -60,8 +62,8 @@ const ImageItem = ({index, title, description}: ItemProps) => {
         style={{width: '100%', height: '100%'}}
       />
       <View style={styles.overlay}>
-        <Text>{title}</Text>
-        <Text>{description}</Text>
+        <Text style={[theme.typography.label.bold]}>{title}</Text>
+        <Text style={[theme.typography.caption1.regular]}>{description}</Text>
       </View>
     </Animated.View>
   );

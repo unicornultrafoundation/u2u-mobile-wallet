@@ -8,6 +8,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
+import theme from '../../../theme';
 
 export interface BlurredImageItemProps {
   backgroundImg: string;
@@ -56,21 +57,21 @@ const BlurredImageItem = ({
           style={styles.blurredSection}>
           <Image source={{uri: logoImg}} style={styles.smallImage} />
           <View style={styles.textContainer}>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.description}>{description}</Text>
+            <Text style={[theme.typography.label.bold]}>{title}</Text>
+            <Text style={[theme.typography.caption1.regular]}>{description}</Text>
           </View>
           <Button
             type="text"
             textStyle={{
-              fontSize: 16,
+              fontSize: 14,
               textAlign: 'center',
               color: '#363636',
             }}
             style={{
               backgroundColor: 'white',
               borderRadius: 20,
-              height: 40,
-              width: 80,
+              height: 25,
+              width: 50,
               justifyContent: 'center',
               display: 'flex',
               alignItems: 'center',

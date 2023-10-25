@@ -3,6 +3,7 @@ import {Image, View} from 'react-native';
 import {styles} from './styles';
 import Text from '../../../component/Text';
 import Button from '../../../component/Button';
+import theme from '../../../theme';
 
 const DappRow = ({tokenObj}: {tokenObj: any}) => {
   // const navigation = useNavigation<any>();
@@ -23,13 +24,15 @@ const DappRow = ({tokenObj}: {tokenObj: any}) => {
         />
       </View>
       <View style={{flex: 1, paddingHorizontal: 8}}>
-        <Text>{tokenObj.title}</Text>
-        <Text>{tokenObj.description}</Text>
+        <Text style={[theme.typography.label.bold]}>{tokenObj.title}</Text>
+        <Text style={[theme.typography.caption1.regular]}>
+          {tokenObj.description}
+        </Text>
       </View>
       <View>
         <Button
           type="text"
-          textStyle={{fontSize: 12, textAlign: 'center', color: '#B4B4B4'}}
+          textStyle={{fontSize: 14, textAlign: 'center', color: '#B4B4B4'}}
           style={styles.openButton}>
           Open
         </Button>

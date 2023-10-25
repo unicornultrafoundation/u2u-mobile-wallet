@@ -9,7 +9,8 @@ export default StyleSheet.create({
     paddingBottom: getPhonePaddingBottom(),
   },
   title: {
-    marginVertical: 8,
+    marginTop: 12,
+    marginBottom: 4,
   },
   headerContainer: {
     flexDirection: 'row',

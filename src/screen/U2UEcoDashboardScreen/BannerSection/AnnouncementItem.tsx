@@ -46,7 +46,7 @@ const AnnouncementItem = ({
       <View style={{paddingRight: 60, flex: 1}}>
         <Text
           style={[
-            theme.typography.footnote.bold,
+            theme.typography.label.bold,
             {
               color: theme.color.neutral[0],
               marginBottom: 3,
@@ -57,7 +57,7 @@ const AnnouncementItem = ({
         </Text>
         <Text
           style={[
-            theme.typography.body.regular,
+            theme.typography.caption1.regular,
             {
               color: preferenceTheme.text.primary,
               marginBottom: 23,

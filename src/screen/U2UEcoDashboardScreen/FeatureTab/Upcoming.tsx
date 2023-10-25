@@ -11,15 +11,15 @@ const Upcoming = () => {
     {
       description: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
       title: 'First Item',
-      logoImg: 'https://fakeimg.pl/300/',
-      backgroundImg: 'https://fakeimg.pl/300/ff0000,128/000,255',
+      logoImg: 'https://fakeimg.pl/100/',
+      backgroundImg: 'https://fakeimg.pl/100/ff0000,128/000,255',
       gradientColor: ['#4c669f', '#3b5998', '#192f6a'],
     },
     {
       description: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
       title: 'First Item',
-      logoImg: 'https://fakeimg.pl/300/',
-      backgroundImg: 'https://fakeimg.pl/300/ff0000,128/000,255',
+      logoImg: 'https://fakeimg.pl/100/',
+      backgroundImg: 'https://fakeimg.pl/100/ff0000,128/000,255',
       gradientColor: ['#4c669f', '#3b5998', '#192f6a'],
     },
   ];

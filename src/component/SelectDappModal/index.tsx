@@ -95,8 +95,8 @@ const SelectDappModal = ({
               />
             </View>
             <View style={{flex: 1, paddingHorizontal: 8}}>
-              <Text style={[theme.typography.title3.bold]}>{title}</Text>
-              <Text>Filter</Text>
+              <Text style={[theme.typography.label.bold]}>{title}</Text>
+              <Text style={[theme.typography.caption1.regular]}>Filter</Text>
             </View>
             <View>
               {/* <Button
@@ -131,11 +131,11 @@ const SelectDappModal = ({
               flexDirection: 'column',
               paddingHorizontal: 16,
             }}>
-            <Text style={[theme.typography.title3.bold, styles.title]}>
+            <Text style={[theme.typography.label.bold, styles.title]}>
               Description
             </Text>
-            <Text>{description}</Text>
-            <Text style={[theme.typography.title3.bold, styles.title]}>
+            <Text style={[theme.typography.caption1.regular]}>{description}</Text>
+            <Text style={[theme.typography.label.bold, styles.title]}>
               Social media
             </Text>
             <View style={{display: 'flex', flexDirection: 'row'}}>
