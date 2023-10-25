@@ -30,15 +30,7 @@ const DappRow = ({tokenObj}: {tokenObj: any}) => {
         <Button
           type="text"
           textStyle={{fontSize: 12, textAlign: 'center', color: '#B4B4B4'}}
-          style={{
-            backgroundColor: '#1F2225',
-            borderRadius: 20,
-            height: 40,
-            width: 80,
-            justifyContent: 'center',
-            display: 'flex',
-            alignItems: 'center',
-          }}>
+          style={styles.openButton}>
           Open
         </Button>
       </View>

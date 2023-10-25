@@ -30,7 +30,7 @@ const SelectDappModal = ({
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const [items, setItems] = useState<FavoriteItem[]>([]);
 
-  const INITIAL_DATA = [{title: 'ultra x', isFavorite: false}];
+  const INITIAL_DATA = [{title: '', isFavorite: false}];
 
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -64,19 +64,32 @@ const SelectDappModal = ({
   }, []);
 
   const toggleFavorite = async (title: string) => {
-    const updatedItems = items.map(item => {
-      if (item.title === title) {
-        return {...item, isFavorite: !item.isFavorite};
-      }
-      return {title, isFavorite: true};
-    });
+    let updatedItems;
+
+    // Check if the item with the given title already exists in the items array
+    const existingItem = items.find(item => item.title === title);
+
+    if (existingItem) {
+      // If it exists, toggle its favorite status
+      updatedItems = items.map(item => {
+        if (item.title === title) {
+          return {...item, isFavorite: !item.isFavorite};
+        }
+        return item;
+      });
+    } else {
+      // If it doesn't exist, add it to the items array and set it as favorite
+      updatedItems = [...items, {title, isFavorite: true}];
+    }
+
     try {
       await AsyncStorage.setItem('favoriteItems', JSON.stringify(updatedItems));
       setItems(updatedItems);
-    } catch (err) {
-      console.error('Failed: ', err);
+    } catch (error) {
+      console.error('Failed to save items:', error);
     }
   };
+
   return (
     <>
       <TouchableOpacity onPress={handlePresentModalPress}>

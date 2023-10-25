@@ -8,6 +8,12 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
+  actionContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   openButton: {
     backgroundColor: '#1F2225',
     borderRadius: 20,

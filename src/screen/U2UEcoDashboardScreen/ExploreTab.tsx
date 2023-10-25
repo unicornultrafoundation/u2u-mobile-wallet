@@ -1,34 +1,68 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {ScrollView} from 'react-native';
-import BannerSection from './BannerSection';
-import ImageItem from './BannerSection/ImageItem';
-import AnnouncementItem from './BannerSection/AnnouncementItem';
-import TopDapp from './FeatureTab/TopDapp';
-import Upcoming from './FeatureTab/Upcoming';
-import Trading from './FeatureTab/Trading';
+import Trading from './ExploreTab/Trading';
+import Tab from '../../component/Tab';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
+import { useGlobalStore } from '../../state/global';
 
 const ExploreTab = () => {
-  const DATA = [
-    {
-      description: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      description: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      description: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-  ];
+  const [selectedTab, setSelectedTab] = useState('trading');
+  const route = useRoute();
+
+  const {setRouteName} = useGlobalStore();
+
+  const renderScene = () => {
+    switch (selectedTab) {
+      case 'trading':
+        return <Trading />;
+      default:
+        return null;
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      setRouteName(route.name);
+    }, [route]),
+  );
   return (
     <ScrollView>
-      <BannerSection renderItemComponent={ImageItem} data={DATA} />
-      <BannerSection renderItemComponent={AnnouncementItem} data={DATA} />
-      <TopDapp />
-      <Upcoming />
-      <Trading />
+      <Tab
+        containerStyle={{paddingLeft: 16}}
+        tabs={[
+          {
+            label: 'Trading',
+            value: 'trading',
+          },
+          {
+            label: 'DeFi',
+            value: 'defi',
+          },
+          {
+            label: 'GameFi',
+            value: 'gamefi',
+          },
+          {
+            label: 'Dex',
+            value: 'dex',
+          },
+          {
+            label: 'Tool',
+            value: 'tool',
+          },
+          {
+            label: 'Filter',
+            value: 'filter',
+          },
+        ]}
+        selectedTab={selectedTab}
+        onChange={v => setSelectedTab(v)}
+        tabStyle={{
+          paddingHorizontal: 0,
+          paddingRight: 16,
+        }}
+      />
+      {renderScene()}
     </ScrollView>
   );
 };

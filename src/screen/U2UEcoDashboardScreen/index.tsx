@@ -5,6 +5,7 @@ import Tab from '../../component/Tab';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {useGlobalStore} from '../../state/global';
 import ExploreTab from './ExploreTab';
+import FeatureTab from './FeatureTab';
 
 const U2UEcoDashboardScreen = () => {
   const route = useRoute();
@@ -13,13 +14,13 @@ const U2UEcoDashboardScreen = () => {
   const renderScene = () => {
     switch (selectedTab) {
       case 'feature':
-        return <ExploreTab />;
+        return <FeatureTab />;
       case 'favorites':
         return (
           <Text style={{color: 'white'}}>This is the Favorites scene</Text>
         );
       case 'explore':
-        return <Text style={{color: 'white'}}>This is the Explore scene</Text>;
+        return <ExploreTab />;
       default:
         return null;
     }
@@ -45,16 +46,16 @@ const U2UEcoDashboardScreen = () => {
       <Tab
         tabs={[
           {
-            label: 'Feature',
+            label: 'Featured',
             value: 'feature',
-          },
-          {
-            label: 'Favorites',
-            value: 'favorites',
           },
           {
             label: 'Explore',
             value: 'explore',
+          },
+          {
+            label: 'Favorites',
+            value: 'favorites',
           },
         ]}
         selectedTab={selectedTab}
