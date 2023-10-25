@@ -12,6 +12,7 @@ import { darkTheme, lightTheme } from '../../theme/color'
 import Separator from '../../component/Separator'
 import InvestmentTotalCard from './InvestmentTotalCard'
 import ValidatorsList from './ValidatorsList'
+import Tab from '../../component/Tab'
 
 const StakingDashboardScreen = () => {
   const route = useRoute()
@@ -26,6 +27,16 @@ const StakingDashboardScreen = () => {
   const {t} = useTranslation<string>()
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+
+  const [tab, setTab] = useState('validators');
+  const tabs = [
+    { label: 'Validators', value: 'validators' },
+    { label: 'Delegation', value: 'delegation' },
+  ];
+
+  const handleChangeTab = (t: string) => {
+    setTab(t);
+  };
 
   return (
     <View style={styles.container}>
@@ -43,6 +54,22 @@ const StakingDashboardScreen = () => {
       <InvestmentTotalCard />
       <Separator />
       <StakingDataCard />
+      <Tab
+        tabs={tabs}
+        selectedTab={tab}
+        onChange={handleChangeTab}
+        tabStyle={{
+          borderColor: 'transparent',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-start',
+          paddingLeft: 0,
+          paddingRight: 12,
+        }}
+        containerStyle={{
+          borderColor: 'transparent',
+          // marginTop: 8,
+        }}
+      />
       <ValidatorsList />
     </View>
   )

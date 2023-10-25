@@ -9,10 +9,13 @@ import { formatNumberString } from '../../../util/string';
 import theme from '../../../theme';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
+import { useNavigation } from '@react-navigation/native';
 
 const ValidatorItem = ({validator}: {
   validator: Validator
 }) => {
+  const navigation = useNavigation<any>()
+
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
@@ -20,8 +23,14 @@ const ValidatorItem = ({validator}: {
     return formatNumberString(validator.totalStakedAmount.dividedBy(10 ** 18).toFixed(), 2)
   }, [validator])
 
+  const handleSelectValidator = (validator: Validator) => {
+    navigation.navigate("ValidatorDetail", {
+      validator
+    })
+  }
+
   return (
-    <TouchableOpacity style={styles.validatorItem}>
+    <TouchableOpacity style={styles.validatorItem} onPress={() => handleSelectValidator(validator)}>
       <View style={{width: 34, height: 34, paddingRight: 6}}>
         <SvgUri
           uri="https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"
