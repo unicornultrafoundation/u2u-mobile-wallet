@@ -1,15 +1,19 @@
 import { SafeAreaView, ScrollView } from 'react-native';
 import { useStyles } from './styles';
 import TextInput from '../../component/TextInput';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Tab from '../../component/Tab';
 import FeaturedNews from './FeaturedNews';
 import LatestNews from './LatestNews';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { DiscoverStackParamList } from '../../stack/DiscoverStack';
 
-const DiscoverScreen = () => {
+type Props = NativeStackScreenProps<DiscoverStackParamList, 'Home'>;
+
+const DiscoverScreen = ({ route }: Props) => {
   const styles = useStyles();
   const [queryString, setQueryString] = useState('');
-  const [currentCategory, setCurrentCategory] = useState<string | undefined>()
+  const [currentCategory, setCurrentCategory] = useState<string | undefined>();
 
   const [tab, setTab] = useState('featured');
   const tabs = [
@@ -18,14 +22,20 @@ const DiscoverScreen = () => {
   ];
 
   const handleViewCategory = (category: string) => {
-    setTab('latest')
-    setCurrentCategory(category)
-  }
+    setTab('latest');
+    setCurrentCategory(category);
+  };
 
   const handleChangeTab = (t: string) => {
-    setTab(t)
-    setCurrentCategory(undefined)
-  }
+    setTab(t);
+    setCurrentCategory(undefined);
+  };
+
+  useEffect(() => {
+    if (route.params?.defaultTab) {
+      setTab(route.params.defaultTab)
+    }
+  }, [route.params])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -52,8 +62,10 @@ const DiscoverScreen = () => {
             marginTop: 8,
           }}
         />
-        {tab === 'featured' && <FeaturedNews onViewCategory={handleViewCategory} />}
-        {tab === 'latest' && <LatestNews initialTab={currentCategory} />}
+        {tab === 'featured' && (
+          <FeaturedNews onViewCategory={handleViewCategory}/>
+        )}
+        {tab === 'latest' && <LatestNews initialTab={currentCategory}/>}
       </ScrollView>
     </SafeAreaView>
   );

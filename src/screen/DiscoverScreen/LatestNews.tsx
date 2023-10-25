@@ -2,7 +2,7 @@ import { ScrollView, View } from 'react-native';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import news from '../../mock/news.json';
 import Tab from '../../component/Tab';
-import NewsList from './NewsList';
+import NewsList from '../../component/NewsList';
 
 interface Props {
   initialTab?: string

@@ -1,5 +1,5 @@
 import { TouchableOpacity, View } from 'react-native';
-import NewsList from './NewsList';
+import NewsList from '../../component/NewsList';
 import news from '../../mock/news.json';
 import { useStyles } from './styles';
 import Text from '../../component/Text';
@@ -28,7 +28,7 @@ const FeaturedNews = ({ onViewCategory }: Props) => {
     }, [] as any[]);
   }, [news]);
 
-  const featuredNews = news.slice(0, 5);
+  const featuredNews = news.slice(0, 4);
 
   return (
     <View style={{ gap: 24 }}>
@@ -52,7 +52,7 @@ const FeaturedNews = ({ onViewCategory }: Props) => {
               </TouchableOpacity>
             </View>
 
-            <NewsList news={category.items.slice(0, 5)} />
+            <NewsList news={category.items.slice(0, 4)} />
           </View>
         );
       })}

@@ -1,27 +1,48 @@
 import { Image, TouchableOpacity, View } from 'react-native';
 import TopNews from './TopNews';
-import Separator from '../../../component/Separator';
-import { useStyles } from '../styles';
-import Text from '../../../component/Text';
-import { color } from '../../../theme/color';
+import Separator from '../Separator';
+import { useStyles } from './styles';
+import Text from '../Text';
+import { color } from '../../theme/color';
+import { useNavigation } from '@react-navigation/native';
+import { useMemo } from 'react';
 
 interface Props {
   news: any[];
+  hideTopNews?: boolean;
 }
 
-const NewsList = ({ news }: Props) => {
+const NewsList = ({ news, hideTopNews = false }: Props) => {
   const styles = useStyles();
-  const [topNews, ...rest] = news
+  const [topNews, ...rest] = news;
+  const navigation = useNavigation<any>();
+
+  const newsList = useMemo(() => {
+    return hideTopNews ? news : rest;
+  }, [news, rest]);
+
+  const handleViewArticle = (id: number) => {
+    navigation.navigate('NewsDetails', { id });
+  };
 
   return (
     <View>
-      <TopNews data={topNews}/>
-      <Separator style={{ borderBottomWidth: 1, marginVertical: 16 }}/>
+      {!hideTopNews && (
+        <>
+          <TopNews
+            data={topNews}
+            onView={() => handleViewArticle(topNews.id)}
+          />
+          <Separator style={{ borderBottomWidth: 1, marginVertical: 16 }}/>
+        </>
+      )}
 
       <View style={{ gap: 12 }}>
-        {rest.slice(1, 4).map(item => {
+        {newsList.map(item => {
           return (
-            <TouchableOpacity key={item.id}>
+            <TouchableOpacity
+              key={item.id}
+              onPress={() => handleViewArticle(item.id)}>
               <View
                 style={{
                   flexDirection: 'row',
