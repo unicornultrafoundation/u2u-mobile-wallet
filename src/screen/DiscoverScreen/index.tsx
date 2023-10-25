@@ -39,7 +39,7 @@ const DiscoverScreen = ({ route }: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={{ padding: 16 }} nestedScrollEnabled>
+      <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 120 }} nestedScrollEnabled>
         <TextInput
           containerStyle={{ height: 40 }}
           value={queryString}

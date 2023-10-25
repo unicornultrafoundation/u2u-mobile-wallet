@@ -47,7 +47,12 @@ const LatestNews = ({ initialTab }: Props) => {
 
   return (
     <View>
-      <ScrollView horizontal contentContainerStyle={{ marginBottom: 16 }} ref={scrollView}>
+      <ScrollView
+        pagingEnabled
+        horizontal
+        contentContainerStyle={{ marginBottom: 16 }}
+        ref={scrollView}
+      >
         <Tab
           tabs={tabs}
           selectedTab={tab}
