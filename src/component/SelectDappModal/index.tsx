@@ -13,7 +13,7 @@ import Discord from '../../asset/icon/social-media/Discord.png';
 import Youtube from '../../asset/icon/social-media/Youtube.png';
 import Globe from '../../asset/icon/social-media/Globe.png';
 import StarButton from '../FavoriteButton';
-import useFavoriteItems from '../../hook/useFavorite';
+import {useFavoriteStore} from '../../state/favorite';
 
 const SelectDappModal = ({
   trigger,
@@ -43,7 +43,7 @@ const SelectDappModal = ({
   //   bottomSheetModalRef.current?.close();
   // }, []);
 
-  const {items, toggleFavorite} = useFavoriteItems();
+  const {items, toggleFavorite} = useFavoriteStore();
 
   return (
     <>

@@ -4,11 +4,11 @@ import {styles} from './styles';
 import Text from '../../../component/Text';
 import Button from '../../../component/Button';
 import StarButton from '../../../component/FavoriteButton';
-import useFavoriteItems from '../../../hook/useFavorite';
 import theme from '../../../theme';
+import {useFavoriteStore} from '../../../state/favorite';
 
 const DappRow = ({tokenObj}: {tokenObj: any}) => {
-  const {items, toggleFavorite} = useFavoriteItems();
+  const {items, toggleFavorite} = useFavoriteStore();
 
   return (
     <View style={styles.tokenContainer}>

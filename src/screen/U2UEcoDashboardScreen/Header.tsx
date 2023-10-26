@@ -1,6 +1,6 @@
-import {Image, View} from 'react-native';
+import {View} from 'react-native';
 import Text from '../../component/Text';
-import Arrow from '../../asset/icon/arrow-right.png';
+import Icon from '../../component/Icon';
 const Header = ({text}: {text: string}) => {
   return (
     <View
@@ -12,7 +12,7 @@ const Header = ({text}: {text: string}) => {
         paddingVertical: 16,
       }}>
       <Text style={{fontSize: 16, fontWeight: 700}}>{text}</Text>
-      <Image source={Arrow} />
+      <Icon name="arrow-right" />
     </View>
   );
 };

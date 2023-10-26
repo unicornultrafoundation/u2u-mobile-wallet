@@ -1,42 +1,34 @@
-import {useEffect, useState} from 'react';
+import {useQuery} from '@tanstack/react-query';
 
 interface FetchResult<T> {
   data: T | null;
   loading: boolean;
-  error: Error | null;
+  error?: Error | null;
 }
 
 function useFetchDappList<T>(
   url: string,
   options: RequestInit = {},
 ): FetchResult<T> {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url, options);
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
-        }
-
-        const jsonData = await response.json();
-
-        setData(jsonData);
-        setLoading(false);
-      } catch (err) {
-        setError(err as Error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [url, options]);
-
-  return {data, loading, error};
+  const fetchData = async (url: string, options: RequestInit): Promise<T> => {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  };
+  const {
+    data,
+    isLoading: loading,
+    error,
+  } = useQuery({
+    queryKey: ['dapp-list'],
+    queryFn: () => fetchData(url, options),
+  });
+  if (error) {
+    throw new Error(`Failed: ${error}`);
+  }
+  return {data: data || null, loading};
 }
 
 export default useFetchDappList;
