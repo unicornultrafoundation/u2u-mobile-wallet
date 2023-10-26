@@ -9,31 +9,31 @@ const ExploreSection = ({filter}: {filter: string}) => {
       title: 'Ultra X',
       description: 'Description',
       logoImg: 'https://fakeimg.pl/300/',
-      filter: 'trading',
+      category: ['trading', 'dex'],
     },
     {
       title: 'U2 Swap',
       description: 'Description',
       logoImg: 'https://fakeimg.pl/300/',
-      filter: 'trading',
+      category: ['trading', 'gamefi'],
     },
     {
       title: 'U2 OTC',
       description: 'Description',
       logoImg: 'https://fakeimg.pl/300/',
-      filter: 'gamefi',
+      category: ['gamefi', 'defi'],
     },
     {
       title: 'U2 OTCAC',
       description: 'Description',
       logoImg: 'https://fakeimg.pl/300/',
-      filter: 'dex',
+      category: ['dex'],
     },
   ];
   return (
     <View>
       <ScrollView>
-        {DATA.filter(obj => obj.filter === filter).map(
+        {DATA.filter(obj => obj.category.includes(filter)).map(
           (tokenObj: any, index) => {
             return (
               <SelectDappModal

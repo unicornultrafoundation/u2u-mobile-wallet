@@ -17,9 +17,7 @@ const U2UEcoDashboardScreen = () => {
       case 'feature':
         return <FeatureTab />;
       case 'favorites':
-        return (
-          <FavoriteTab />
-        );
+        return <FavoriteTab />;
       case 'explore':
         return <ExploreTab />;
       default:

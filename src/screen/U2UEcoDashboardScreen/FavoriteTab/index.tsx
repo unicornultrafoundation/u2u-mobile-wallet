@@ -10,25 +10,25 @@ const FavoriteSection = ({filter}: {filter: string}) => {
       title: 'Ultra X',
       description: 'Description',
       logoImg: 'https://fakeimg.pl/300/',
-      filter: 'trading',
+      category: ['trading', 'dex'],
     },
     {
       title: 'U2 Swap',
       description: 'Description',
       logoImg: 'https://fakeimg.pl/300/',
-      filter: 'trading',
+      category: ['trading', 'gamefi'],
     },
     {
       title: 'U2 OTC',
       description: 'Description',
       logoImg: 'https://fakeimg.pl/300/',
-      filter: 'gamefi',
+      category: ['gamefi', 'defi'],
     },
     {
       title: 'U2 OTCAC',
       description: 'Description',
       logoImg: 'https://fakeimg.pl/300/',
-      filter: 'dex',
+      category: ['dex'],
     },
   ];
 
@@ -55,7 +55,7 @@ const FavoriteSection = ({filter}: {filter: string}) => {
             return (
               item.title === obj.title &&
               item.isFavorite === true &&
-              obj.filter === filter
+              obj.category.includes(filter)
             );
           });
         }).map((tokenObj: any, index) => {
