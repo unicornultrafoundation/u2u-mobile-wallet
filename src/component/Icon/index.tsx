@@ -677,6 +677,26 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'edit':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path fillRule="evenodd" clipRule="evenodd" d="M4.58924 14.4878L14.5221 4.55495C15.5364 3.5406 17.1818 3.5406 18.1962 4.55495L19.5229 5.88166C20.5372 6.89601 20.5372 8.54142 19.5229 9.55578L9.55089 19.5278C9.10724 19.9714 8.50583 20.2202 7.87795 20.2202H3.79407L3.89677 16.1004C3.91266 15.4947 4.16042 14.9166 4.58924 14.4878Z" stroke="#8D8D8D" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M13.2837 5.81348L18.2612 10.7899" stroke={color || '#8D8D8D'} strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M13.8518 20.2203H20.894" stroke={color || '#8D8D8D'} strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'trash':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path d="M19.3249 9.46826C19.3249 9.46826 18.7819 16.2033 18.4669 19.0403C18.3169 20.3953 17.4799 21.1893 16.1089 21.2143C13.4999 21.2613 10.8879 21.2643 8.27991 21.2093C6.96091 21.1823 6.13791 20.3783 5.99091 19.0473C5.67391 16.1853 5.13391 9.46826 5.13391 9.46826" stroke={color || '#D21C1C'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M20.7082 6.23975H3.75024" stroke={color || '#D21C1C'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M17.4407 6.23973C16.6557 6.23973 15.9797 5.68473 15.8257 4.91573L15.5827 3.69973C15.4327 3.13873 14.9247 2.75073 14.3457 2.75073H10.1127C9.5337 2.75073 9.0257 3.13873 8.8757 3.69973L8.6327 4.91573C8.4787 5.68473 7.8027 6.23973 7.0177 6.23973" stroke={color || '#D21C1C'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
       default:
         return null
     }
