@@ -52,5 +52,8 @@
   "investedBalance": "Invested balance",
   "available": "Available",
   "staked": "Staked",
-  "pendingRewards": "Pending rewards"
+  "pendingRewards": "Pending rewards",
+  "address": "Address",
+  "epoch": "Epoch",
+  "reward": "Reward"
 }

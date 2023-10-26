@@ -12,6 +12,9 @@ import { Validator } from '../../service/staking';
 import theme from '../../theme';
 import { formatNumberString } from '../../util/string';
 import Tab from '../../component/Tab';
+import InfoTab from './InfoTab';
+import DelegatorTab from './DelegatorTab';
+import RewardTab from './RewardTab';
 
 const ValidatorDetailScreen = () => {
   const navigation = useNavigation<any>()
@@ -127,6 +130,9 @@ const ValidatorDetailScreen = () => {
           marginTop: 20,
         }}
       />
+      {tab === 'info' && <InfoTab validator={validator} />}
+      {tab === 'delegator' && <DelegatorTab validator={validator} />}
+      {tab === 'reward' && <RewardTab validator={validator} />}
     </View>
   )
 };
