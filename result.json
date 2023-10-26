@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "title": "Ultra X",
+      "description": "Description",
+      "logoImg": "https://fakeimg.pl/300/",
+      "category": ["trading", "dex"]
+    },
+    {
+      "title": "U2 Swap",
+      "description": "Description",
+      "logoImg": "https://fakeimg.pl/300/",
+      "category": ["trading", "gamefi"]
+    },
+    {
+      "title": "U2 OTC",
+      "description": "Description",
+      "logoImg": "https://fakeimg.pl/300/",
+      "category": ["gamefi", "defi"]
+    },
+    {
+      "title": "U2 OTCAC",
+      "description": "Description",
+      "logoImg": "https://fakeimg.pl/300/",
+      "category": ["dex"]
+    }
+  ]
+}

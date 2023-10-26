@@ -99,24 +99,6 @@ const SelectDappModal = ({
               <Text style={[theme.typography.caption1.regular]}>Filter</Text>
             </View>
             <View>
-              {/* <Button
-                type="text"
-                textStyle={{
-                  fontSize: 12,
-                  textAlign: 'center',
-                  color: '#B4B4B4',
-                }}
-                style={{
-                  backgroundColor: '#1F2225',
-                  borderRadius: 20,
-                  height: 40,
-                  width: 80,
-                  justifyContent: 'center',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}>
-                Open
-              </Button> */}
               <StarButton
                 isFavorite={
                   items.find(item => item.title === title)?.isFavorite
@@ -134,7 +116,9 @@ const SelectDappModal = ({
             <Text style={[theme.typography.label.bold, styles.title]}>
               Description
             </Text>
-            <Text style={[theme.typography.caption1.regular]}>{description}</Text>
+            <Text style={[theme.typography.caption1.regular]}>
+              {description}
+            </Text>
             <Text style={[theme.typography.label.bold, styles.title]}>
               Social media
             </Text>
