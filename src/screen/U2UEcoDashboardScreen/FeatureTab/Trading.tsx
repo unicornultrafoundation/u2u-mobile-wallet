@@ -4,6 +4,7 @@ import Header from '../Header';
 import SelectDappModal from '../../../component/SelectDappModal';
 import DappRow from './DappRow';
 import useFetchDappList from '../../../hook/useFetchDappList';
+import {DappResult} from '../base-type';
 
 const TopDapp = () => {
   const {data: DATA, loading} = useFetchDappList<DappResult[]>(

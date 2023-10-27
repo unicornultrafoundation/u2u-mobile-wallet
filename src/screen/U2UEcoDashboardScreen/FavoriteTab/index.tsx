@@ -4,6 +4,7 @@ import SelectDappModal from '../../../component/SelectDappModal';
 import DappRow from '../ExploreTab/DappRowWithFavorite';
 import useFetchDappList from '../../../hook/useFetchDappList';
 import {useFavoriteStore} from '../../../state/favorite';
+import {DappResult} from '../base-type';
 
 const FavoriteSection = ({filter}: {filter: string}) => {
   const {data: DATA, loading} = useFetchDappList<DappResult[]>(

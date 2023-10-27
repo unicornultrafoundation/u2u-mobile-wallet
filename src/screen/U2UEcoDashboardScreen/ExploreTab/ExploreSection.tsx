@@ -3,7 +3,7 @@ import {ActivityIndicator, ScrollView, View} from 'react-native';
 import SelectDappModal from '../../../component/SelectDappModal';
 import DappRow from './DappRowWithFavorite';
 import useFetchDappList from '../../../hook/useFetchDappList';
-
+import {DappResult} from '../base-type';
 const ExploreSection = ({filter}: {filter: string}) => {
   const {data: DATA, loading} = useFetchDappList<DappResult[]>(
     'https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/mobile_config/dapp.json',

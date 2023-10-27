@@ -1,4 +1,4 @@
-type DappResult = {
+export interface DappResult = {
   description: string;
   title: string;
   logoImg?: string;
