@@ -9,7 +9,7 @@ export const contractCall = async (options: ContractOptions, rpc: string, method
   const web3 = new Web3(new Web3.providers.HttpProvider(rpc));
   const contractInstance = new web3.eth.Contract(options.abi, options.contractAddress);
 
-  return (contractInstance.methods[method] as any)(params).call()
+  return Array.isArray(params) ? (contractInstance.methods[method] as any)(...params).call() : (contractInstance.methods[method] as any)(params).call()
 }
 
 export const encodeTxData = async (options: ContractOptions, method: string, params: any) => {

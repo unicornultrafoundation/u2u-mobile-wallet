@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js"
-import { Delegation, Validator } from "../service/staking"
+import { Delegation, Validator, ValidatorEpochInfo } from "../service/staking"
 
 export const delegationDataProcessor = (data: any): Delegation => {
   if (!data) return {} as Delegation
@@ -34,5 +34,15 @@ export const validatorDataProcessor = (data: any, totalStaked: BigNumber, apr: n
     delegations: data.delegations && data.delegations.length > 0 ? data.delegations.map((d: any) => delegationDataProcessor(d)) : [],
     totalDelegator: Number(data.totalDelegator),
     apr: apr
+  }
+}
+
+export const epochOfvalidator  = (data: any): ValidatorEpochInfo => {
+  if (!data) return {} as ValidatorEpochInfo
+  return {
+    epochId: Number(data.epoch.id),
+    validatorId: Number(data.validatorId),
+    epochRewards: BigNumber(data.epochRewards),
+    endTime: Number(data.epoch.endTime) * 1000
   }
 }

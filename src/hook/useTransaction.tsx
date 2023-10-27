@@ -33,9 +33,15 @@ export const useTransaction = () => {
       ...txObject
     }
 
-    const gasLimit = await estimateGasLimitUtil(mergedTxObject, rpc)
-    txStore.setEstimatedGasLimit(gasLimit.toString())
-    return gasLimit.toString()
+    try {
+      const gasLimit = await estimateGasLimitUtil(mergedTxObject, rpc)
+      txStore.setEstimatedGasLimit(gasLimit.toString())
+      return gasLimit.toString()
+    } catch (error) {
+      console.log('mergedTxObject', mergedTxObject)
+      console.log('estimate gas limit error', error)
+      return "0"
+    }
   }
 
   const estimatedFee = useMemo(() => {

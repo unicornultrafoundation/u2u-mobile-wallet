@@ -1,7 +1,8 @@
 import BigNumber from "bignumber.js";
 import { ContractOptions, contractCall } from "../util/contract";
-import { apolloClient, apolloStakingClient } from "./graph/client";
+import { apolloClient, apolloStakingClient, apolloU2UNetworkClient } from "./graph/client";
 import { Schema } from "./graph/schema";
+import { TABLE_LIMIT } from "../config/constant";
 
 export interface Validation {
   id: string
@@ -48,6 +49,13 @@ export interface Validator {
   apr: number
 }
 
+export interface ValidatorEpochInfo {
+  epochId: number
+  validatorId: number
+  epochRewards: BigNumber
+  endTime: number
+}
+
 export const fetchStakedAmount = (options: ContractOptions, address: string, rpc: string) => {
   return "123"
 }
@@ -68,6 +76,10 @@ export const fetchTotalSupply = (options: ContractOptions, rpc: string) => {
   return contractCall(options, rpc, "totalSupply", [])
 }
 
+export const fetchPendingRewards = (options: ContractOptions, delegatorAddress: string, validatorID: number, rpc: string) => {
+  return contractCall(options, rpc, "pendingRewards", [delegatorAddress, validatorID])
+}
+
 export const queryValidators = () => apolloClient.query({
   query: Schema().VALIDATORS,
   fetchPolicy: "no-cache"
@@ -80,5 +92,16 @@ export const queryStakingStats = () => apolloClient.query({
 
 export const queryValidatorsApr = (vals: number[]) => apolloStakingClient.query({
   query: Schema().VALIDATORS_APR(vals),
+  fetchPolicy: "no-cache"
+})
+
+export const queryEpochOfValidator = (valId: number, valIdHex: string, skip: number) => apolloU2UNetworkClient.query({
+  query: Schema().EPOCH_OF_VALIDATOR,
+  variables: {
+    validatorId: valId,
+    validatorIdHexString: valIdHex,
+    skip: skip*TABLE_LIMIT,
+    limit: TABLE_LIMIT
+  },
   fetchPolicy: "no-cache"
 })

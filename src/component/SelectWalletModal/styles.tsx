@@ -7,6 +7,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingBottom: getPhonePaddingBottom(),
+    position: 'relative'
   },
   walletRowContainer: {
     flexDirection: 'row',
