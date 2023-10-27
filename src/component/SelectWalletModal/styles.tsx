@@ -1,19 +1,18 @@
-import { StyleSheet } from "react-native";
-import { getPhonePaddingBottom } from "../../util/platform";
+import { StyleSheet } from 'react-native';
+import { getPhonePaddingBottom } from '../../util/platform';
 
 export default StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingBottom: getPhonePaddingBottom()
+    paddingBottom: getPhonePaddingBottom(),
   },
   walletRowContainer: {
     flexDirection: 'row',
-    width: "100%",
+    width: '100%',
     alignItems: 'center',
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     paddingVertical: 8,
-    position: 'relative'
-  }
-})
+  },
+});

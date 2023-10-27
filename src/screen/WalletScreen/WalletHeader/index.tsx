@@ -1,11 +1,11 @@
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import Jazzicon from 'react-native-jazzicon'
-import {styles} from '../styles';
+import { styles } from '../styles';
 import Icon from '../../../component/Icon';
-import {useWallet} from '../../../hook/useWallet';
+import { useWallet } from '../../../hook/useWallet';
 import Text from '../../../component/Text';
-import {shortenAddress, truncate} from '../../../util/string';
+import { shortenAddress, truncate } from '../../../util/string';
 import HeaderSearchComponent from './HeaderSearchComponent';
 import Clipboard from '@react-native-clipboard/clipboard';
 import SelectNetworkModal from '../../../component/SelectNetworkModal';
@@ -20,15 +20,15 @@ interface Props {
   onGoBack: () => void;
 }
 
-const WalletHeader = ({collapsed, action, onGoBack}: Props) => {
-  const {darkMode} = usePreferenceStore();
+const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
+  const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
-  const {wallet} = useWallet();
-  const {name} = useNetwork()
+  const { wallet, getWalletMetadata } = useWallet();
+  const { name } = useNetwork()
 
   if (collapsed) {
-    return <HeaderSearchComponent onGoBack={onGoBack} action={action} />;
+    return <HeaderSearchComponent onGoBack={onGoBack} action={action}/>;
   }
 
   return (
@@ -38,30 +38,36 @@ const WalletHeader = ({collapsed, action, onGoBack}: Props) => {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
+          gap: 8
         }}>
         <SelectWalletModal
           trigger={() => {
             return (
-              <Jazzicon size={28} address={wallet.address} />
+              <Jazzicon size={28} address={wallet.address}/>
             )
           }}
         />
-        <View style={{marginHorizontal: 8}}>
-          <Text style={styles.addressText}>{shortenAddress(wallet.address, 6, 6)}</Text>
+        <View>
+          <Text type="subheadline-medium" color="title">
+            {getWalletMetadata(wallet).name || `Address ${wallet.path[wallet.path.length - 1]}` }
+          </Text>
+          {/*<Text type="caption1-regular" color="primary">*/}
+          {/*  {shortenAddress(wallet.address, 4, 4)}*/}
+          {/*</Text>*/}
         </View>
         <TouchableOpacity
           onPress={() => Clipboard.setString(wallet.address)}
         >
-          <Icon name="copy" width={24} height={24} />
+          <Icon name="copy" width={16} height={16}/>
         </TouchableOpacity>
       </View>
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         <SelectNetworkModal
           trigger={() => {
             return (
-              <View style={[styles.networkContainer, {backgroundColor: preferenceTheme.background.surface}]}>
+              <View style={[styles.networkContainer, { backgroundColor: preferenceTheme.background.surface }]}>
                 <Text style={styles.networkText}>{name}</Text>
-                <Icon name="chevron-down" width={10} height={10} />
+                <Icon name="chevron-down" width={10} height={10}/>
               </View>
             )
           }}

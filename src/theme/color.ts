@@ -126,7 +126,8 @@ export const lightTheme: Record<string, any> = {
     title: "#191B1E",
     primary: "#272727",
     secondary: "#363636",
-    placeholder: "#c6c6c6"
+    placeholder: "#c6c6c6",
+    disabled: "#8D8D8D"
   },
   divider: "#d8d8d8",
   outline: "#e3e3e3",
@@ -144,7 +145,8 @@ export const darkTheme: Record<string, any> = {
     title: "#FFFFFF",
     primary: "#d8d8d8",
     secondary: "#b4b4b4",
-    placeholder: "#363636"
+    placeholder: "#363636",
+    disabled: "#8D8D8D"
   },
   divider: "#272727",
   outline: "#363636",

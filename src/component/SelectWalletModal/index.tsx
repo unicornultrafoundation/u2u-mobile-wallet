@@ -1,33 +1,36 @@
-import React, { useCallback, useRef, useMemo, useState } from 'react'
-import {
-  BottomSheetModal,
-} from '@gorhom/bottom-sheet';
-import Jazzicon from 'react-native-jazzicon'
+import React, { useCallback, useRef, useMemo, useState } from 'react';
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import styles from './styles';
 import { View, TouchableOpacity } from 'react-native';
 import Text from '../Text';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { usePreferenceStore } from '../../state/preferences';
-import theme from '../../theme';
 import { useTranslation } from 'react-i18next';
 import Icon from '../Icon';
 import Separator from '../Separator';
 import { useWallet } from '../../hook/useWallet';
 import { getWalletFromMnemonic } from '../../util/wallet';
-import { shortenAddress } from '../../util/string';
 import WalletRow from './WalletRow';
+import EditWalletModal from '../EditWalletModal';
+import { Wallet } from '../../state/wallet';
 
-const SelectWalletModal = ({trigger}: {
-  trigger: () => JSX.Element,
-}) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
+  const { darkMode } = usePreferenceStore();
+  const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
-  const { t } = useTranslation<string>()
+  const [editWalletModalVisible, setEditWalletModalVisible] = useState(false);
+  const { t } = useTranslation<string>();
 
-  const { generatedPath, seedPhrase, wallet, generateNewPath, savePathIndex } = useWallet()
-  const [loading, setLoading] = useState(false)
-  const [toggleMenuPath, setToggleMenuPath] = useState(0)
+  const {
+    generatedPath,
+    seedPhrase,
+    wallet,
+    generateNewPath,
+    savePathIndex,
+    setEditingWallet,
+    deleteWallet
+  } = useWallet();
+  const [loading, setLoading] = useState(false);
 
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -48,24 +51,35 @@ const SelectWalletModal = ({trigger}: {
 
   const walletList = useMemo(() => {
     // console.log("generatedPath", generatedPath)
-    return generatedPath.map((path) => {
-      return getWalletFromMnemonic(seedPhrase, path)
-    })
-  }, [generatedPath])
+    return generatedPath.map(path => {
+      return getWalletFromMnemonic(seedPhrase, path);
+    });
+  }, [generatedPath]);
 
   const handleCreateWallet = () => {
-    setLoading(true)
+    setLoading(true);
     setTimeout(() => {
-      generateNewPath()
-      setLoading(false)
-    }, 100)
-  }
+      generateNewPath();
+      setLoading(false);
+    }, 100);
+  };
+
+  const handleEditWallet = (w: Wallet) => {
+    bottomSheetModalRef.current?.close();
+    setEditingWallet(w)
+    setTimeout(() => {
+      setEditWalletModalVisible(true);
+    }, 10)
+  };
+
+  const handleDeleteWallet = (w: Wallet) => {
+    deleteWallet(w)
+    bottomSheetModalRef.current?.close();
+  };
 
   return (
     <>
-      <TouchableOpacity
-        onPress={handlePresentModalPress}
-      >
+      <TouchableOpacity onPress={handlePresentModalPress}>
         {trigger()}
       </TouchableOpacity>
       <BottomSheetModal
@@ -76,10 +90,10 @@ const SelectWalletModal = ({trigger}: {
         handleStyle={{
           backgroundColor: preferenceTheme.background.background,
           borderTopLeftRadius: 16,
-          borderTopRightRadius: 16
+          borderTopRightRadius: 16,
         }}
         handleIndicatorStyle={{
-          backgroundColor: '#F6F6F6'
+          backgroundColor: '#F6F6F6',
         }}
         backdropComponent={({ style }) => {
           return (
@@ -89,80 +103,81 @@ const SelectWalletModal = ({trigger}: {
                 {
                   backgroundColor: '#181818',
                   opacity: 0.9,
-                }
+                },
               ]}
             />
-          )
-        }}
-      >
-        <View style={[
-          styles.contentContainer,
-          {
-            backgroundColor: preferenceTheme.background.background
-          }
-        ]}>
-          <Text style={[
-            theme.typography.headline.medium,
+          );
+        }}>
+        <View
+          style={[
+            styles.contentContainer,
             {
-              color: preferenceTheme.text.title,
-              // marginBottom: 28
-            }
+              backgroundColor: preferenceTheme.background.background,
+            },
           ]}>
+          <Text type="headline-medium" color="title">
             {t('manageWallet')}
           </Text>
-          <Separator style={{width: '100%'}} />
-          <View style={{flex: 1, width: "100%"}}>
-            {walletList.map((item) => {
-              const selected = wallet.address === item.address
+
+          <Separator style={{ width: '100%' }}/>
+
+          <BottomSheetScrollView style={{ flex: 1 }}>
+            {walletList.map(item => {
+              const selected = wallet.address === item.address;
               return (
-                <TouchableOpacity
+                <WalletRow
                   key={`network-${item.address}`}
-                  style={styles.walletRowContainer}
+                  item={item}
                   disabled={loading}
-                  onPress={() => {
-                    setLoading(true)
+                  selected={selected}
+                  onEdit={() => handleEditWallet(item)}
+                  onDelete={() => handleDeleteWallet(item)}
+                  onSelect={() => {
+                    setLoading(true);
                     setTimeout(() => {
-                      savePathIndex(Number(item.path[item.path.length - 1]))
-                      handleClose()
-                      setLoading(false)
-                    }, 100)
+                      savePathIndex(Number(item.path[item.path.length - 1]));
+                      handleClose();
+                      setLoading(false);
+                    }, 100);
                   }}
-                >
-                  <WalletRow
-                    item={item}
-                    selected={selected}
-                    showMenu={toggleMenuPath === Number(item.path[item.path.length - 1])}
-                    toggleMenu={() => {
-                      setToggleMenuPath(Number(item.path[item.path.length - 1]))
-                    }}
-                  />
-                </TouchableOpacity>
-              )
+                />
+              );
             })}
-          </View>
-          <Separator style={{width: '100%'}} />
+          </BottomSheetScrollView>
+
+          <Separator style={{ width: '100%' }}/>
+
           <TouchableOpacity
-            style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 12}}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingBottom: 12,
+              gap: 8,
+            }}
             onPress={handleCreateWallet}
-            disabled={loading}
-          >
-            <Icon name="plus" width={18} height={18} />
-            <Text
-              style={[
-                theme.typography.label.medium,
-                {
-                  color: preferenceTheme.text.title,
-                  marginLeft: 4
-                }
-              ]}
-            >
-              Create new wallet
+            disabled={loading}>
+            <Icon name="plus" width={18} height={18}/>
+
+            <Text type="label-medium" color="title">
+              {t('createNewWallet')}
             </Text>
           </TouchableOpacity>
         </View>
       </BottomSheetModal>
+
+      <EditWalletModal
+        visible={editWalletModalVisible}
+        onRequestClose={() => {
+          setEditWalletModalVisible(false)
+          setEditingWallet()
+        }}
+        onCancelEdit={() => {
+          bottomSheetModalRef.current?.present()
+          setEditingWallet()
+        }}
+      />
     </>
-  )
+  );
 };
 
 export default SelectWalletModal;

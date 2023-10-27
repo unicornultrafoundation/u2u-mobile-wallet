@@ -42,5 +42,7 @@
   "recipientAddress": "Recipient address",
   "qrWithAmountWarningPre": "QR code with amount can only use by ",
   "qrWithAmountWarningPost": " and can't be used by any other types of wallet.",
-  "manageWallet": "Manage wallet"
+  "manageWallet": "Manage wallet",
+  "editWallet": "Edit wallet",
+  "removeAddress": "Remove address"
 }
