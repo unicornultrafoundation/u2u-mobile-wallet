@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useMemo, useState } from 'react';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import styles from './styles';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Text from '../Text';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { usePreferenceStore } from '../../state/preferences';
@@ -73,8 +73,12 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
   };
 
   const handleDeleteWallet = (w: Wallet) => {
-    deleteWallet(w)
-    bottomSheetModalRef.current?.close();
+    setLoading(true)
+    setTimeout(() => {
+      deleteWallet(w)
+      bottomSheetModalRef.current?.close();
+      setLoading(false)
+    }, 100)
   };
 
   return (
@@ -115,6 +119,26 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
               backgroundColor: preferenceTheme.background.background,
             },
           ]}>
+          {loading && (
+            <View
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                flex: 1,
+                zIndex: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'row'
+              }}
+            >
+              <ActivityIndicator style={{marginRight: 8}} />
+              <Text>Loading...</Text>
+            </View>
+          )}
           <Text type="headline-medium" color="title">
             {t('manageWallet')}
           </Text>

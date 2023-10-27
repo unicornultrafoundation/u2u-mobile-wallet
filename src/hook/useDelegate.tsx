@@ -13,7 +13,7 @@ export const useDelegate = (stakingContractOptions?: ContractOptions) => {
   const {setReceiveAddress, setGasLimit, estimateGasPrice, setTxData, setAmount, submitRawTx} = useTransaction()
   const {networkConfig} = useNetwork()
 
-  const delegate = useCallback(async (params: DelegateParams) => {
+  const parseDelegate = useCallback(async (params: DelegateParams) => {
     if (!stakingContractOptions || !networkConfig) return
     
     const txData = await encodeTxData(
@@ -27,13 +27,16 @@ export const useDelegate = (stakingContractOptions?: ContractOptions) => {
     setTxData(txData)
     setAmount(params.amount)
     await estimateGasPrice()
+  }, [stakingContractOptions, networkConfig])
 
+  const submitDelegate = useCallback(async () => {
     const tx = await submitRawTx()
     console.log('sented', tx?.transactionHash)
     return tx
-  }, [stakingContractOptions, networkConfig])
+  }, [])
 
   return {
-    delegate
+    parseDelegate,
+    submitDelegate
   }
 }

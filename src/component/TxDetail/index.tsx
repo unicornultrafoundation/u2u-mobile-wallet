@@ -102,10 +102,10 @@ const TxDetail = ({txHash, onClose}: {
       {renderTxMeta()}
       <Separator />
       <View style={{padding: 16}}>
-        <View style={{paddingBottom: 12}}>
+        <View style={{paddingBottom: 0}}>
           <Text style={[{paddingVertical: 8, color: preferenceTheme.text.secondary}, theme.typography.caption2.regular]}>From</Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text>{txReceipt?.from}</Text>
+            {txReceipt && <Text>{shortenAddress(txReceipt.from, 10, 10) }</Text>}
             <TouchableOpacity
               onPress={() => txReceipt && Clipboard.setString(txReceipt.from)}
             >
@@ -116,7 +116,7 @@ const TxDetail = ({txHash, onClose}: {
         <View style={{paddingBottom: 12}}>
         <Text style={[{paddingVertical: 8, color: preferenceTheme.text.secondary}, theme.typography.caption2.regular]}>To</Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text>{txReceipt?.to}</Text>
+            {txReceipt && <Text>{shortenAddress(txReceipt.to, 10, 10) }</Text>}
             <TouchableOpacity
               onPress={() => txReceipt && Clipboard.setString(txReceipt.to)}
             >

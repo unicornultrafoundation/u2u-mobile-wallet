@@ -9,6 +9,7 @@ import { useAPR } from "./useAPR";
 import { useTotalSupply } from "./useTotalSupply";
 import { useEpochRewards } from "./useEpochRewards";
 import { useFetchAllValidator } from "./useFetchAllValidator";
+import { useDelegate } from "./useDelegate";
 
 export function useStaking() {
   const [allPendingRewards, setAllPendingRewards] = useState("0")
@@ -40,6 +41,7 @@ export function useStaking() {
   const { supply } = useTotalSupply(stakingContractOptions)
   const { rewardsPerEpoch } = useEpochRewards(stakingContractOptions)
   const { validators } = useFetchAllValidator()
+  const { parseDelegate, submitDelegate } = useDelegate(stakingContractOptions)
 
   useEffect(() => {
     (async () => {
@@ -56,7 +58,7 @@ export function useStaking() {
         const allDelegations: Delegation[] = []
         validators.forEach(({delegations}) => {
           delegations?.forEach((i) => {
-            if (i.delegatorAddress === wallet.address) {
+            if (i.delegatorAddress.toLowerCase() === wallet.address.toLowerCase()) {
               allDelegations.push(i)
             }
           })
@@ -64,7 +66,9 @@ export function useStaking() {
         const staked = allDelegations.reduce((pre, cur) => {
           return BigNumber(pre).plus(cur.stakedAmount).toFixed()
         }, "0")
-        setTotalStakedAmount(staked)
+        setTotalStakedAmount(
+          BigNumber(staked).dividedBy(10 ** 18).toFixed()
+        )
       } catch (error) {
         console.log("get all pending rewards fail", error)
       }
@@ -78,6 +82,8 @@ export function useStaking() {
     rewardsPerEpoch,
     validators,
     allPendingRewards,
-    totalStakedAmount
+    totalStakedAmount,
+    parseDelegate,
+    submitDelegate
   }
 }

@@ -141,6 +141,9 @@ const ValidatorDetailScreen = () => {
         style={{
           borderRadius: 60
         }}
+        onPress={() => {
+          navigation.navigate('Delegate', {validator})
+        }}
       >
         Delegate
       </Button>
