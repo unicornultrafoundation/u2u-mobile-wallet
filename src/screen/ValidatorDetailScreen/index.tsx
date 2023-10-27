@@ -15,6 +15,7 @@ import Tab from '../../component/Tab';
 import InfoTab from './InfoTab';
 import DelegatorTab from './DelegatorTab';
 import RewardTab from './RewardTab';
+import Button from '../../component/Button';
 
 const ValidatorDetailScreen = () => {
   const navigation = useNavigation<any>()
@@ -130,9 +131,19 @@ const ValidatorDetailScreen = () => {
           marginTop: 20,
         }}
       />
-      {tab === 'info' && <InfoTab validator={validator} />}
-      {tab === 'delegator' && <DelegatorTab validator={validator} />}
-      {tab === 'reward' && <RewardTab validator={validator} />}
+      <View style={{flex: 1}}>
+        {tab === 'info' && <InfoTab validator={validator} />}
+        {tab === 'delegator' && <DelegatorTab validator={validator} />}
+        {tab === 'reward' && <RewardTab validator={validator} />}
+      </View>
+      <Button
+        color='primary'
+        style={{
+          borderRadius: 60
+        }}
+      >
+        Delegate
+      </Button>
     </View>
   )
 };

@@ -9,7 +9,7 @@ export const useFetchEpochOfValidator = (valId: number, skip: number = 0) => {
   const fetchEpochOfValidator = async () => {
     if (!valId) return
     const vaIdlHex = `0x${valId.toString(16)}`
-    console.log('here ', vaIdlHex)
+
     const { data } = await queryEpochOfValidator(valId, vaIdlHex, skip)
 
     if (data && data.validators.length > 0) {
