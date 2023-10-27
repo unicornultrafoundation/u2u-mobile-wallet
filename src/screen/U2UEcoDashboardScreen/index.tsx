@@ -7,6 +7,7 @@ import {useGlobalStore} from '../../state/global';
 import ExploreTab from './ExploreTab';
 import FeatureTab from './FeatureTab';
 import FavoriteTab from './FavoritesTab';
+import SearchComponent from '../../component/SearchComponent';
 
 const U2UEcoDashboardScreen = () => {
   const route = useRoute();
@@ -35,13 +36,14 @@ const U2UEcoDashboardScreen = () => {
   return (
     <View style={styles.container}>
       <Text>Investment dashboard screen</Text>
-      <TextInput
+      {/* <TextInput
         style={styles.input}
         placeholder="Search for DApps or enter a URL"
         placeholderTextColor={'#363636'}
         // onChangeText={onChangeText}
         // value={text}
-      />
+      /> */}
+      <SearchComponent />
       <Tab
         tabs={[
           {
