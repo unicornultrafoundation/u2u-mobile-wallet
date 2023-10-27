@@ -10,7 +10,8 @@ export const TABBAR_HEIGHT = 80
 
 const SHOW_BOTTOM_TAB_ROUTE = [
   'Wallet',
-  'StakingDashboard'
+  'StakingDashboard',
+  'U2UEcoDashboard'
 ]
 
 export default ({ state, descriptors, navigation }: any) => {

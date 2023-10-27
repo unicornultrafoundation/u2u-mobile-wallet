@@ -7,7 +7,7 @@ import {darkTheme, lightTheme} from '../../theme/color';
 interface Props extends TextProps {
   type?: string;
   style?: StyleProp<TextStyle>;
-  color?: 'title' | 'primary' | 'secondary' | 'placeholder';
+  color?: 'title' | 'primary' | 'secondary' | 'placeholder' | 'disabled';
   fontSize?: TextStyle['fontSize'];
   fontWeight?: TextStyle['fontWeight'];
   letterSpacing?: TextStyle['letterSpacing'];
@@ -19,9 +19,9 @@ const Text = ({
   style,
   type = 'label-regular',
   color = 'title',
-  fontSize = 12,
-  letterSpacing = 0,
-  fontWeight = '400',
+  fontSize,
+  letterSpacing,
+  fontWeight,
   textAlign = 'left',
   ...rest
 }: Props) => {

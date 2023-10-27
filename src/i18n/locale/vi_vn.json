@@ -55,5 +55,7 @@
   "pendingRewards": "Pending rewards",
   "address": "Address",
   "epoch": "Epoch",
-  "reward": "Reward"
+  "reward": "Reward",
+  "editWallet": "Edit wallet",
+  "removeAddress": "Remove address"
 }

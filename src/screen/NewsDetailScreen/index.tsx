@@ -12,7 +12,7 @@ import { color, darkTheme, lightTheme } from '../../theme/color';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DiscoverStackParamList } from '../../stack/DiscoverStack';
 import news from '../../mock/news.json';
-import { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Separator from '../../component/Separator';
 import U2UIcon from '../../asset/icon/u2u_wallet_icon.png';
 import RenderHtml, { MixedStyleDeclaration } from 'react-native-render-html';
@@ -100,6 +100,9 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={{ padding: 16, paddingBottom: 120 }}>
           <View style={{ gap: 8 }}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Icon name="arrow-left" width={24} height={24} />
+            </TouchableOpacity>
             <Image
               resizeMode="cover"
               style={styles.newsImage}
