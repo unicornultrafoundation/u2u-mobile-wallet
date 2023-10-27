@@ -1,4 +1,5 @@
 import {useQuery} from '@tanstack/react-query';
+import fetchData from '../service/fetchData';
 
 interface FetchResult<T> {
   data: T | null;
@@ -10,20 +11,13 @@ function useFetchDappList<T>(
   url: string,
   options: RequestInit = {},
 ): FetchResult<T> {
-  const fetchData = async (url: string, options: RequestInit): Promise<T> => {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  };
   const {
     data,
     isLoading: loading,
     error,
   } = useQuery({
     queryKey: ['dapp-list'],
-    queryFn: () => fetchData(url, options),
+    queryFn: () => fetchData<T>(url, options),
   });
   if (error) {
     throw new Error(`Failed: ${error}`);
