@@ -5,12 +5,6 @@ import { Svg, Path, Rect, Stop, LinearGradient, Defs, G, ClipPath, Circle } from
 
 const DiscoverInactive = require('../../asset/icon/discover.png')
 const DiscoverActive = require('../../asset/icon/discover-active.png')
-const EcosystemInactive = require('../../asset/icon/ecosystem.png')
-const EcosystemActive = require('../../asset/icon/ecosystem-active.png')
-const BrowserInactive = require('../../asset/icon/browser.png')
-const BrowserActive = require('../../asset/icon/browser-active.png')
-const StakingInactive = require('../../asset/icon/staking.png')
-const StakingActive = require('../../asset/icon/staking-active.png')
 const WalletInactive = require('../../asset/icon/wallet.png')
 const WalletActive = require('../../asset/icon/wallet-active.png')
 
@@ -43,84 +37,6 @@ const Icon = ({name, width, height, color, style}: {
         return (
           <Image
             source={DiscoverActive}
-            style={[
-              style,
-              {
-                width: w,
-                height: h
-              }
-            ]}
-          />
-        )
-      case 'ecosystem': 
-        return (
-          <Image
-            source={EcosystemInactive}
-            style={[
-              style,
-              {
-                width: w,
-                height: h
-              }
-            ]}
-          />
-        )
-      case 'ecosystem-active':
-        return (
-          <Image
-            source={EcosystemActive}
-            style={[
-              style,
-              {
-                width: w,
-                height: h
-              }
-            ]}
-          />
-        )
-      case 'browser': 
-        return (
-          <Image
-            source={BrowserInactive}
-            style={[
-              style,
-              {
-                width: w,
-                height: h
-              }
-            ]}
-          />
-        )
-      case 'browser-active':
-        return (
-          <Image
-            source={BrowserActive}
-            style={[
-              style,
-              {
-                width: w,
-                height: h
-              }
-            ]}
-          />
-        )
-      case 'staking': 
-        return (
-          <Image
-            source={StakingInactive}
-            style={[
-              style,
-              {
-                width: w,
-                height: h
-              }
-            ]}
-          />
-        )
-      case 'staking-active': 
-        return (
-          <Image
-            source={StakingActive}
             style={[
               style,
               {
@@ -694,6 +610,22 @@ const Icon = ({name, width, height, color, style}: {
               <Path d="M19.3249 9.46826C19.3249 9.46826 18.7819 16.2033 18.4669 19.0403C18.3169 20.3953 17.4799 21.1893 16.1089 21.2143C13.4999 21.2613 10.8879 21.2643 8.27991 21.2093C6.96091 21.1823 6.13791 20.3783 5.99091 19.0473C5.67391 16.1853 5.13391 9.46826 5.13391 9.46826" stroke={color || '#D21C1C'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               <Path d="M20.7082 6.23975H3.75024" stroke={color || '#D21C1C'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               <Path d="M17.4407 6.23973C16.6557 6.23973 15.9797 5.68473 15.8257 4.91573L15.5827 3.69973C15.4327 3.13873 14.9247 2.75073 14.3457 2.75073H10.1127C9.5337 2.75073 9.0257 3.13873 8.8757 3.69973L8.6327 4.91573C8.4787 5.68473 7.8027 6.23973 7.0177 6.23973" stroke={color || '#D21C1C'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'coin':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 25 24" fill="none">
+              <Path d="M16.75 4C16.75 5.10457 14.0637 6 10.75 6C7.43629 6 4.75 5.10457 4.75 4M16.75 4C16.75 2.89543 14.0637 2 10.75 2C7.43629 2 4.75 2.89543 4.75 4M16.75 4V8M4.75 4V8C4.75 9.10457 7.43629 10 10.75 10C14.0637 10 16.75 9.10457 16.75 8M20.75 9.8862C20.75 10.9908 18.0637 11.8862 14.75 11.8862C11.4363 11.8862 8.75 10.9908 8.75 9.8862V13.8862M20.75 9.8862C20.75 9.01538 19.0804 8.27456 16.75 8M20.75 9.8862V13.8862C20.75 14.9908 18.0637 15.8862 14.75 15.8862C11.4363 15.8862 8.75 14.9908 8.75 13.8862M4.75 15.7724C4.75 16.877 7.43629 17.7724 10.75 17.7724C14.0637 17.7724 16.75 16.877 16.75 15.7724V19.7725C16.75 20.877 14.0637 21.7725 10.75 21.7725C7.43629 21.7725 4.75 20.877 4.75 19.7725V15.7724ZM4.75 15.7724C4.75 14.9016 6.41962 14.1608 8.75 13.8862" stroke={color || "#8D8D8D"} strokeWidth="1.5"/>
+            </Svg>
+          </View>
+        )
+      case 'box':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 25 24" fill="none">
+              <Path d="M12.25 19.0001L8.28 21.3801C7.96894 21.567 7.61289 21.6657 7.25 21.6657C6.88711 21.6657 6.53106 21.567 6.22 21.3801L3.22 19.5801C2.92476 19.4027 2.68033 19.1521 2.51039 18.8525C2.34045 18.5529 2.25075 18.2145 2.25 17.8701V14.6301C2.25075 14.2857 2.34045 13.9473 2.51039 13.6477C2.68033 13.3481 2.92476 13.0975 3.22 12.9201L7.25 10.5001M12.25 19.0001V13.5001M12.25 19.0001L16.22 21.3801C16.5311 21.567 16.8871 21.6657 17.25 21.6657C17.6129 21.6657 17.9689 21.567 18.28 21.3801L21.28 19.5801C21.5752 19.4027 21.8197 19.1521 21.9896 18.8525C22.1596 18.5529 22.2492 18.2145 22.25 17.8701V14.6301C22.2492 14.2857 22.1596 13.9473 21.9896 13.6477C21.8197 13.3481 21.5752 13.0975 21.28 12.9201L17.25 10.5001M12.25 13.5001L7.25 10.5001M12.25 13.5001L7.24977 16.5001M12.25 13.5001L17.25 10.5001M12.25 13.5001L17.25 16.5001M12.25 13.5001L12.2498 8.00009M7.25 10.5001V6.13009C7.25075 5.78566 7.34045 5.44727 7.51039 5.14768C7.68033 4.84809 7.92476 4.59747 8.22 4.42009L11.22 2.62009C11.5311 2.43321 11.8871 2.33447 12.25 2.33447C12.6129 2.33447 12.9689 2.43321 13.28 2.62009L16.28 4.42009C16.5752 4.59747 16.8197 4.84809 16.9896 5.14768C17.1596 5.44727 17.2492 5.78566 17.25 6.13009V10.5001M7.24977 16.5001L2.50977 13.6501M7.24977 16.5001L7.25 21.6701M17.25 16.5001L21.99 13.6501M17.25 16.5001V21.6701M12.2498 8.00009L7.50977 5.15009M12.2498 8.00009L16.99 5.15009" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </Svg>
           </View>
         )
