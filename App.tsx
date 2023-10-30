@@ -6,8 +6,8 @@
  */
 
 import 'react-native-gesture-handler';
-import React, { useEffect, useMemo } from 'react';
-import { Dimensions, Linking, StatusBar, TouchableOpacity, View } from 'react-native';
+import React, { useMemo } from 'react';
+import { Linking, StatusBar, TouchableOpacity, View } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -33,12 +33,15 @@ import theme from './src/theme';
 import Text from './src/component/Text';
 import Icon from './src/component/Icon';
 import { useNetwork } from './src/hook/useNetwork';
+import { useGlobalStore } from './src/state/global';
+import AuthScreen from './src/screen/AuthScreen';
 
 const Tab = createBottomTabNavigator();
 
 const queryClient = new QueryClient()
 
 function App(): JSX.Element {
+  const {unlocked} = useGlobalStore()
   const {darkMode: isDarkMode} = usePreferenceStore()
   const preferenceTheme = isDarkMode ? darkTheme : lightTheme
 
@@ -157,6 +160,12 @@ function App(): JSX.Element {
     return <SplashScreen />
   }
 
+  if (!unlocked) {
+    return (
+      <AuthScreen />
+    )
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <MenuProvider>
@@ -180,7 +189,6 @@ function App(): JSX.Element {
                   <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
                   <Tab.Screen name="WalletStack" component={WalletStackScreen} />
                   <Tab.Screen name="StakingStack" component={StakingStackScreen} />
-                  {/* <Tab.Screen name="BrowserStack" component={BrowserStackScreen} /> */}
                   <Tab.Screen name="MoreStack" component={MoreStackScreen} />
                 </Tab.Navigator>
               )}
