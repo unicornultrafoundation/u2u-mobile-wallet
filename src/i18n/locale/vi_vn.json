@@ -58,5 +58,7 @@
   "reward": "Reward",
   "editWallet": "Edit wallet",
   "removeAddress": "Remove address",
-  "votingPower": "Voting power"
+  "votingPower": "Voting power",
+  "comingSoon": "Coming soon",
+  "featureBeingCompleted": "This feature is being completed"
 }

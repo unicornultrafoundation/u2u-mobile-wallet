@@ -8,8 +8,8 @@ export const useFetchDelegator = (delAddress: string) => {
 
   const fetchDelegator = async (address: string) => {
     if(!address) return
-  
     const {data} = await queryDelegatorDetail(address.toLowerCase())
+
     const {data: stakingStats} = await queryStakingStats()
     const totalNetworkStaked = stakingStats && stakingStats.stakings ? BigNumber(stakingStats.stakings[0].totalStaked || 0) : BigNumber(0)
     if (data && data?.delegators) {

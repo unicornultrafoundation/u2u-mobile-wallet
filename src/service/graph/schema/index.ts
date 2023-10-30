@@ -1,57 +1,57 @@
 import { gql } from "@apollo/client"
 
 const DELEGATIONS_GQL = `
-          id
-          validatorId
-          delegator {
-            id
-            address
-          }
-          stakedAmount  
-          totalClaimedRewards
-      `;
+  id
+  validatorId
+  delegator {
+    id
+    address
+  }
+  stakedAmount  
+  totalClaimedRewards
+`;
 const VALIDATOR_GQL = `
-          id
-          validatorId
-          hash
-          auth
-          selfStaked
-          delegatedAmount
-          totalStakedAmount
-          createdTime
-          createdEpoch
-          active
-          online
-          downTime
-          lockedUntil
-          lockDays
-          totalClaimedRewards
-          delegations {${DELEGATIONS_GQL}}
-          totalDelegator
+  id
+  validatorId
+  hash
+  auth
+  selfStaked
+  delegatedAmount
+  totalStakedAmount
+  createdTime
+  createdEpoch
+  active
+  online
+  downTime
+  lockedUntil
+  lockDays
+  totalClaimedRewards
+  delegations {${DELEGATIONS_GQL}}
+  totalDelegator
 `
 
 const VALIDATIONS_GQL = `
-        id
-        validator {${VALIDATOR_GQL}}
-        stakedAmount
+  id
+  validator {${VALIDATOR_GQL}}
+  stakedAmount
 `
 
 const EPOCH_OF_VAL_GQL = `
-          id
-          receivedStake
-          accumulatedRewardPerToken
-          epoch {
-            id
-            block
-            endTime
-            totalTxReward
-            epochFee
-            epochRewards
-            totalRewards
-          }
-          validatorId
-          epochRewards
-          totalRewards
+  id
+  receivedStake
+  accumulatedRewardPerToken
+  epoch {
+    id
+    block
+    endTime
+    totalTxReward
+    epochFee
+    epochRewards
+    totalRewards
+  }
+  validatorId
+  epochRewards
+  totalRewards
 `
 
 
@@ -84,16 +84,16 @@ export const Schema = () => {
     `,
     DELEGATOR_DETAIL: gql`
       query DelegatorDetail($delegatorAddress: String!) {
-            delegators(where:{
-            address: $delegatorAddress
-            }) {
-              id
-              address
-              stakedAmount
-              createdOn
-              totalClaimedRewards
-              validations {${VALIDATIONS_GQL}}
-            }
+        delegators(where:{
+        address: $delegatorAddress
+        }) {
+          id
+          address
+          stakedAmount
+          createdOn
+          totalClaimedRewards
+          validations {${VALIDATIONS_GQL}}
+        }
       }
     `,
     WITHDRAWALREQUEST: gql`
