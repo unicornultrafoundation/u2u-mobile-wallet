@@ -9,7 +9,7 @@ import Trading from './FeatureTab/Trading';
 import useFetchDappList from '../../hook/useFetchDappList';
 
 const FeatureTab = () => {
-  const {data: DATA, loading} = useFetchDappList(
+  const {data: DATA, loading} = useFetchDappList<any>(
     'https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/mobile_config/dapp.json',
   );
   return (

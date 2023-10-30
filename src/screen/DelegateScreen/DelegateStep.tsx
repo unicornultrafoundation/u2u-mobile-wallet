@@ -12,7 +12,9 @@ import { useTransaction } from '../../hook/useTransaction';
 import TxDetail from '../../component/TxDetail';
 import { useNavigation } from '@react-navigation/native';
 
-const DelegateStep = () => {
+const DelegateStep = ({onSkip}: {
+  onSkip: () => void
+}) => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
@@ -23,7 +25,8 @@ const DelegateStep = () => {
   const { t } = useTranslation<string>()
 
   const handleSkip = () => {
-    navigation.navigate("Wallet")
+    resetTxState()
+    onSkip()
   }
 
   useEffect(() => {

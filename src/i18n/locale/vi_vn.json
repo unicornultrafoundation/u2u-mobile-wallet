@@ -57,5 +57,6 @@
   "epoch": "Epoch",
   "reward": "Reward",
   "editWallet": "Edit wallet",
-  "removeAddress": "Remove address"
+  "removeAddress": "Remove address",
+  "votingPower": "Voting power"
 }

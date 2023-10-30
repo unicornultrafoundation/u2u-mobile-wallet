@@ -8,6 +8,9 @@ const ValidatorsList = () => {
   return (
     <View>
       <FlatList
+        contentContainerStyle={{
+          paddingBottom: 400
+        }}
         data={validators}
         renderItem={({item}) => {
           return <ValidatorItem validator={item} />

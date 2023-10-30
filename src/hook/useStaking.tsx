@@ -10,6 +10,8 @@ import { useTotalSupply } from "./useTotalSupply";
 import { useEpochRewards } from "./useEpochRewards";
 import { useFetchAllValidator } from "./useFetchAllValidator";
 import { useDelegate } from "./useDelegate";
+import { usePendingReward } from "./usePendingReward";
+import { useClaimRewards } from "./useClaimRewards";
 
 export function useStaking() {
   const [allPendingRewards, setAllPendingRewards] = useState("0")
@@ -42,6 +44,7 @@ export function useStaking() {
   const { rewardsPerEpoch } = useEpochRewards(stakingContractOptions)
   const { validators } = useFetchAllValidator()
   const { parseDelegate, submitDelegate } = useDelegate(stakingContractOptions)
+  const { parseClaim, claimRewards } = useClaimRewards(stakingContractOptions)
 
   useEffect(() => {
     (async () => {
@@ -84,6 +87,8 @@ export function useStaking() {
     allPendingRewards,
     totalStakedAmount,
     parseDelegate,
-    submitDelegate
+    submitDelegate,
+    parseClaim,
+    claimRewards
   }
 }

@@ -14,13 +14,13 @@ export const useTransaction = () => {
   const {wallet} = useWallet()
   const {rpc, chainId} = useNetworkStore()
   
-  const estimateGasPrice = async () => {
+  const estimateGasPrice = useCallback(async () => {
     const rs = await estimateGasPriceUtil(rpc)
     txStore.setEstimatedGasPrice(rs.toString())
     return rs.toString()
-  }
+  }, [txStore])
 
-  const estimateGasLimit = async (txObject?: Record<string, any>) => {
+  const estimateGasLimit = useCallback(async (txObject?: Record<string, any>) => {
     const internalTx = {
       from: wallet.address,
       to: txStore.receiveAddress,
@@ -42,7 +42,7 @@ export const useTransaction = () => {
       console.log('estimate gas limit error', error)
       return "0"
     }
-  }
+  }, [txStore])
 
   const estimatedFee = useMemo(() => {
     return BigNumber(txStore.estimatedGasLimit).multipliedBy(txStore.estimatedGasPrice).dividedBy(10 ** 18).toFormat()
@@ -88,32 +88,34 @@ export const useTransaction = () => {
     const signedTx = await signTransaction(rawTxObj, wallet.privateKey, rpc)
     txStore.setTxStatus('sending')
     const rs = await sendSignedTransaction(rpc, signedTx)
+    txStore.resetTxState()
     txStore.setTxStatus(rs.status.toString() === "1" ? 'success' : 'fail')
     txStore.setTxHash(rs.transactionHash.toString())
     return rs
   }, [wallet.privateKey, wallet.address, rpc, txStore])
 
-  const submitRawTx = useCallback(async () => {
+  const submitRawTx = useCallback(async (overrideTx: Record<string, any> = {}) => {
     if (txStore.txHash) {
       return
     }
 
     const rawTxObj: Record<string, any> = {
       from: wallet.address,
-      to: txStore.receiveAddress,
-      gas: txStore.gasLimit,
-      gasPrice: txStore.gasPrice,
+      to: overrideTx.receiveAddress || txStore.receiveAddress,
+      gas: overrideTx.gasLimit || txStore.gasLimit,
+      gasPrice: overrideTx.gasPrice || txStore.gasPrice,
       chainId,
       nonce: await getNonce(rpc, wallet.address),
-      data: txStore.txData,
+      data: overrideTx.txData || txStore.txData,
       value: getDigit(
-        BigNumber(txStore.amount).multipliedBy(10 ** 18).toFormat()
+        BigNumber(overrideTx.amount || txStore.amount).multipliedBy(10 ** 18).toFormat()
       )
     }
 
     const signedTx = await signTransaction(rawTxObj, wallet.privateKey, rpc)
     txStore.setTxStatus('sending')
     const rs = await sendSignedTransaction(rpc, signedTx)
+    txStore.resetTxState()
     txStore.setTxStatus(rs.status.toString() === "1" ? 'success' : 'fail')
     txStore.setTxHash(rs.transactionHash.toString())
     return rs

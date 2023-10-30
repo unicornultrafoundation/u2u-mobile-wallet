@@ -13,6 +13,7 @@ import Separator from '../../component/Separator'
 import InvestmentTotalCard from './InvestmentTotalCard'
 import ValidatorsList from './ValidatorsList'
 import Tab from '../../component/Tab'
+import DelegationList from './DelegationList'
 
 const StakingDashboardScreen = () => {
   const route = useRoute()
@@ -70,7 +71,8 @@ const StakingDashboardScreen = () => {
           // marginTop: 8,
         }}
       />
-      <ValidatorsList />
+      {tab === 'validators' && (<ValidatorsList />)}
+      {tab === 'delegation' && (<DelegationList />)}
     </View>
   )
 }

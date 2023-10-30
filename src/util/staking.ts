@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js"
-import { Delegation, Validator, ValidatorEpochInfo } from "../service/staking"
+import { Delegation, Delegator, Validation, Validator, ValidatorEpochInfo } from "../service/staking"
 
 export const delegationDataProcessor = (data: any): Delegation => {
   if (!data) return {} as Delegation
@@ -9,6 +9,27 @@ export const delegationDataProcessor = (data: any): Delegation => {
     delegator: data.delegator.id,
     delegatorAddress: data.delegator.address,
     stakedAmount: BigNumber(data.stakedAmount),
+    totalClaimedRewards: BigNumber(data.totalClaimedRewards)
+  }
+}
+
+export const validationDataProcessor = (data: any, totalStaked: BigNumber, apr: number = 0): Validation => {  
+  if (!data) return {} as Validation
+  return {
+    id: data.id,
+    stakedAmount: BigNumber(data.stakedAmount),
+    validator: validatorDataProcessor(data.validator, totalStaked, apr)
+  }
+}
+
+export const delegatorDataProcessor = (data: any, totalStaked: BigNumber): Delegator => {  
+  if (!data) return {} as Delegator
+  return {
+    id: data.id,
+    address: data.address,
+    stakedAmount: BigNumber(data.stakedAmount),
+    createdOn: Number(data.createdOn),
+    validations: data.validations && data.validations.length > 0 ? data.validations.map((i: any) => validationDataProcessor(i, totalStaked)) : [],
     totalClaimedRewards: BigNumber(data.totalClaimedRewards)
   }
 }
