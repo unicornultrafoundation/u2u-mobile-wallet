@@ -160,12 +160,6 @@ function App(): JSX.Element {
     return <SplashScreen />
   }
 
-  if (!unlocked) {
-    return (
-      <AuthScreen />
-    )
-  }
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <MenuProvider>
@@ -180,17 +174,20 @@ function App(): JSX.Element {
               {wallet.address === "" ? (
                 <OnboardingStackScreen />
               ) : (
-                <Tab.Navigator
-                  tabBar={({state, descriptors, navigation}) => <CustomBottomTab state={state} descriptors={descriptors} navigation={navigation} />}
-                  screenOptions={{ headerShown: false }}
-                  initialRouteName='WalletStack'
-                >
-                  <Tab.Screen name="DiscoverStack" component={DiscoverStackScreen} />
-                  <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
-                  <Tab.Screen name="WalletStack" component={WalletStackScreen} />
-                  <Tab.Screen name="StakingStack" component={StakingStackScreen} />
-                  <Tab.Screen name="MoreStack" component={MoreStackScreen} />
-                </Tab.Navigator>
+                <>
+                  <Tab.Navigator
+                    tabBar={({state, descriptors, navigation}) => <CustomBottomTab state={state} descriptors={descriptors} navigation={navigation} />}
+                    screenOptions={{ headerShown: false }}
+                    initialRouteName='WalletStack'
+                  >
+                    <Tab.Screen name="DiscoverStack" component={DiscoverStackScreen} />
+                    <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
+                    <Tab.Screen name="WalletStack" component={WalletStackScreen} />
+                    <Tab.Screen name="StakingStack" component={StakingStackScreen} />
+                    <Tab.Screen name="MoreStack" component={MoreStackScreen} />
+                  </Tab.Navigator>
+                  {!unlocked && (<AuthScreen />)}
+                </>
               )}
             </NavigationContainer>
           </QueryClientProvider>

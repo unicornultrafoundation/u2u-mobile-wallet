@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import { View } from 'react-native';
+import React, { useEffect, useState } from 'react'
+import { ImageBackground, View } from 'react-native';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { styles } from './styles';
 import { useLocalStore } from '../../state/local';
+import BACKGROUND from '../../asset/images/create_wallet_bg.png'
 import OtpInputs from 'react-native-otp-inputs';
 import Icon from '../../component/Icon';
 import Text from '../../component/Text';
@@ -39,15 +40,41 @@ const AuthScreen = () => {
     }, 100)
   }
 
+  useEffect(() => {
+    if (internalPassword.length === 6) {
+      handleContinue()
+    }
+  }, [internalPassword])
+
   return (
-    <View
+    <ImageBackground
+      source={BACKGROUND}
+      resizeMode="cover"
       style={[
         styles.container,
-        {
-          backgroundColor: preferenceTheme.background.background
-        }
       ]}
     >
+      <Text
+        style={[
+          theme.typography.title3.bold,
+          {
+            color: preferenceTheme.text.title
+          }
+        ]}
+      >
+        {t('welcomeBack')}!
+      </Text>
+      <Text
+        style={[
+          theme.typography.subheadline.regular,
+          {
+            color: preferenceTheme.text.secondary,
+            marginBottom: 22
+          }
+        ]}
+      >
+        {t('unlockWithPassword')}
+      </Text>
       <OtpInputs
         autofillFromClipboard={false}
         handleChange={setInternalPassword}
@@ -72,17 +99,7 @@ const AuthScreen = () => {
           </Text>
         </View>
       )}
-
-      <Button
-        loading={loading}
-        disabled={loading}
-        style={{borderRadius: 60}}
-        textStyle={theme.typography.label.medium}
-        onPress={handleContinue}
-      >
-        {t('continue')}
-      </Button>
-    </View>
+    </ImageBackground>
   )
 };
 

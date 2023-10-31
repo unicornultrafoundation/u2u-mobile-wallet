@@ -1,11 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import theme from '../../theme';
 
 export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1
+    flex: 1,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    width: "100%",
+    height: Dimensions.get("window").height
   },
   otpContainer: {
     flexDirection: 'row',

@@ -60,5 +60,7 @@
   "removeAddress": "Remove address",
   "votingPower": "Voting power",
   "comingSoon": "Coming soon",
-  "featureBeingCompleted": "This feature is being completed"
+  "featureBeingCompleted": "This feature is being completed",
+  "welcomeBack": "Welcome back",
+  "unlockWithPassword": "Unlock U2U Wallet with password"
 }
