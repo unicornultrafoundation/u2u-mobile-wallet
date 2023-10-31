@@ -106,7 +106,7 @@ export default ({ state, descriptors, navigation }: any) => {
           } else if (route.name === 'EcosystemStack') {
             iconName = 'box'
           } else if (route.name === 'WalletStack') {
-            iconName = focused ? 'wallet-active' : 'wallet'
+            iconName = 'wallet'
           } else if (route.name === 'StakingStack') {
             iconName = 'coin'
           } else if (route.name === 'MoreStack') {
