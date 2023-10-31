@@ -71,6 +71,7 @@ const AmountStep = ({onNextStep, onBack}: {
     <KeyboardAvoidingView
       style={{flex: 1}}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={24}
     >
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={onBack}>
@@ -85,6 +86,7 @@ const AmountStep = ({onNextStep, onBack}: {
       <View style={styles.bodyContainer}>
         <View style={{paddingVertical: 16, marginTop: 36, alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
           <TextInput
+            autoFocus
             onChangeText={(val) => {
               setInternalAmount(parseFormatedNumberInput(val))
             }}
