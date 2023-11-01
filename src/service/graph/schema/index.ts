@@ -121,6 +121,30 @@ export const Schema = () => {
         }
       }
     `,
+    ALLWITHDRAWALREQUEST: gql`
+      query WithdrawalRequest($delegatorAddress: String!) {
+        withdrawalRequests (where:{
+          delegatorAddress: $delegatorAddress
+        }
+        orderBy: time
+        orderDirection: desc
+        ) { 
+          id
+          hash
+          delegatorAddress
+          validatorId
+          delegatorAddress
+          validatorId
+          wrID
+          time
+          unbondingAmount
+          withdrawHash
+          hash
+          withdrawalAmount
+          withdrawTime
+        }
+      }
+    `,
     LOCKE_STAKE: gql`
       query LockedUp($delegatorAddress: String!, $valId: String!) {
         lockedUps (where:{

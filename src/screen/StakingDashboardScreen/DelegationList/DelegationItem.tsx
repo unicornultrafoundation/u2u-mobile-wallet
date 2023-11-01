@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { styles } from './styles';
-import { TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, TouchableOpacity, View } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
@@ -16,6 +16,9 @@ import { useTranslation } from 'react-i18next';
 import { useClaimRewards } from '../../../hook/useClaimRewards';
 import Toast from 'react-native-toast-message';
 import { useTransaction } from '../../../hook/useTransaction';
+import UnstakeSection from './UnstakeSection';
+import { useFetchLockedStake } from '../../../hook/useFetchLockedStake';
+import BigNumber from 'bignumber.js';
 
 const DelegationItem = ({item}: {
   item: Validation
@@ -30,8 +33,22 @@ const DelegationItem = ({item}: {
   const { pendingRewards } = usePendingReward({delegatorAddress: wallet.address, stakingContractOptions, validatorId: Number(item.validator.valId)})
   const { claimRewards } = useClaimRewards(stakingContractOptions)
   const {resetTxState} = useTransaction()
+  const { lockedStake } = useFetchLockedStake(wallet.address, Number(item.validator.valId))
+  const { lockedAmount, endTime, isLockedUp, penalty } = lockedStake
 
   const [claiming, setClaiming] = useState(false)
+  const [showUnstake, setShowUnstake] = useState(false)
+
+  const actualStakedAmount = useMemo(() => {
+    if (item.stakedAmount && !item.stakedAmount.isZero()) {
+      let _amount = item.stakedAmount.minus(BigNumber(lockedAmount || 0))
+      if (penalty) {
+        _amount = _amount.minus(penalty)
+      }
+      return _amount
+    }
+    return BigNumber(0)
+  }, [item, lockedAmount, penalty])
 
   const handleClaim = async () => {
     try {
@@ -69,6 +86,7 @@ const DelegationItem = ({item}: {
         }
       })
     } catch (error) {
+      setClaiming(false)
       console.log(error)
       Toast.show({
         type: 'error',
@@ -98,7 +116,7 @@ const DelegationItem = ({item}: {
   }
 
   const handleUnstake = async () => {
-
+    setShowUnstake(true)
   }
 
   return (
@@ -155,7 +173,7 @@ const DelegationItem = ({item}: {
             style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}
           >
             {formatNumberString(
-              item.stakedAmount.dividedBy(10 ** 18).toFixed()
+              actualStakedAmount.dividedBy(10 ** 18).toFixed()
             )} U2U
           </Text>
         </View>
@@ -188,44 +206,51 @@ const DelegationItem = ({item}: {
           </Text>
         </View>
       </View>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 12}}>
-        <Button
-          onPress={handleClaim}
-          loading={claiming}
-          disabled={claiming}
-          color='primary'
-          style={{
-            borderRadius: 60,
-            flex: 1,
-            paddingVertical: 8
-          }}
-          textStyle={[
-            theme.typography.label.medium,
-            {
-              color: preferenceTheme.text.title
-            }
-          ]}
-        >
-          Claim reward
-        </Button>
-        <Button
-          onPress={handleUnstake}
-          style={{
-            borderRadius: 60,
-            flex: 1,
-            paddingVertical: 8,
-            backgroundColor: preferenceTheme.background.surface
-          }}
-          textStyle={[
-            theme.typography.label.medium,
-            {
-              color: preferenceTheme.text.disabled
-            }
-          ]}
-        >
-          Unstake
-        </Button>
-      </View>
+      {showUnstake ? (
+        <UnstakeSection
+          item={item}
+          onCancel={() => setShowUnstake(false)}
+        />
+      ) : (
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 12}}>
+          <Button
+            onPress={handleClaim}
+            loading={claiming}
+            disabled={claiming}
+            color='primary'
+            style={{
+              borderRadius: 60,
+              flex: 1,
+              paddingVertical: 8
+            }}
+            textStyle={[
+              theme.typography.label.medium,
+              {
+                color: preferenceTheme.text.title
+              }
+            ]}
+          >
+            Claim reward
+          </Button>
+          <Button
+            onPress={handleUnstake}
+            style={{
+              borderRadius: 60,
+              flex: 1,
+              paddingVertical: 8,
+              backgroundColor: preferenceTheme.background.surface
+            }}
+            textStyle={[
+              theme.typography.label.medium,
+              {
+                color: preferenceTheme.text.disabled
+              }
+            ]}
+          >
+            Unstake
+          </Button>
+        </View>
+      )}
     </TouchableOpacity>
   )
 }

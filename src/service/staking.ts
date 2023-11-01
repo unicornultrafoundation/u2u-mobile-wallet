@@ -65,10 +65,6 @@ export interface Delegator {
   totalClaimedRewards: BigNumber
 }
 
-export const fetchStakedAmount = (options: ContractOptions, address: string, rpc: string) => {
-  return "123"
-}
-
 export const fetchCurrentEpoch = (options: ContractOptions, rpc: string) => {
   return contractCall(options, rpc, "currentEpoch", [])
 }
@@ -119,6 +115,32 @@ export const queryDelegatorDetail = (address: string) => apolloClient.query({
   query: Schema().DELEGATOR_DETAIL,
   variables: {
     delegatorAddress: address
+  },
+  fetchPolicy: "no-cache"
+})
+
+export const queryLockedStake = (delegator: string, valIdHex: string) => apolloClient.query({
+  query: Schema().LOCKE_STAKE,
+  variables: {
+    delegatorAddress: delegator,
+    valId: valIdHex
+  },
+  fetchPolicy: "no-cache"
+})
+
+export const queryWithdrawalRequest = (delegator: string, validatorId: number) => apolloClient.query({
+  query: Schema().WITHDRAWALREQUEST,
+  variables: {
+    delegatorAddress: delegator,
+    validatorId: validatorId
+  },
+  fetchPolicy: "no-cache"
+})
+
+export const queryAllWithdrawalRequest = (delegator: string) => apolloClient.query({
+  query: Schema().ALLWITHDRAWALREQUEST,
+  variables: {
+    delegatorAddress: delegator
   },
   fetchPolicy: "no-cache"
 })

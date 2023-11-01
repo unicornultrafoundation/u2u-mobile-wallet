@@ -1,6 +1,7 @@
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 
-const httpLink = new HttpLink({ uri: "https://subgraph.uniultra.xyz/subgraphs/name/u2u/sfc-subgraph" })
+// TODO: update to main link
+const httpLink = new HttpLink({ uri: "https://42a4-171-242-12-202.ngrok-free.app/subgraphs/name/u2u/sfc-subgraph" })
 export const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
   link: httpLink,

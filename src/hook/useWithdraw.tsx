@@ -1,29 +1,25 @@
 import { useCallback } from "react";
-import { GAS_LIMIT_HARD } from "../config/constant";
-import BigNumber from "bignumber.js";
 import { ContractOptions, encodeTxData } from "../util/contract";
-import { useTransaction } from "./useTransaction";
 import { useNetwork } from "./useNetwork";
+import { useTransaction } from "./useTransaction";
+import { GAS_LIMIT_HARD } from "../config/constant";
 
-export interface UnDelegateParams {
+export interface WithdrawParams {
   toValidatorID: number
-  amount: number
+  wrID: number
 }
 
-export const useUndelegate = (stakingContractOptions?: ContractOptions) => {
+export const useWithdraw = (stakingContractOptions?: ContractOptions) => {
   const {estimateGasPrice, submitRawTx} = useTransaction()
   const {networkConfig} = useNetwork()
 
-  const undegegate = useCallback(async (params: UnDelegateParams) => {
+  const withdraw = useCallback(async (params: WithdrawParams) => {
     if (!stakingContractOptions || !networkConfig) return
 
-    const amountDec = BigNumber(params.amount.toString()).multipliedBy(10 ** 18).toFixed();
-    // Random wrID
-    const _wrID = Math.floor(Math.random() * 100000)
     const txData = await encodeTxData(
       stakingContractOptions,
-      "undelegate",
-      [params.toValidatorID, _wrID, amountDec]
+      "withdraw",
+      [params.toValidatorID, params.wrID]
     )
 
     const gasPrice = await estimateGasPrice()
@@ -41,6 +37,6 @@ export const useUndelegate = (stakingContractOptions?: ContractOptions) => {
   }, [stakingContractOptions])
 
   return {
-    undegegate
+    withdraw
   }
 }

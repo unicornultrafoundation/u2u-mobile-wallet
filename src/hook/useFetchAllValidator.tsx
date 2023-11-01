@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react"
 import BigNumber from "bignumber.js"
 import { queryValidators, queryStakingStats, queryValidatorsApr, Validator } from "../service/staking"
 import { validatorDataProcessor } from "../util/staking"
+import { useQuery } from "@tanstack/react-query"
 
 export const useFetchAllValidator = () => {
-  const [validators, setValidators] = useState<Validator[]>([])
-
   const fetchValidators = async () => {
     try {
       const { data } = await queryValidators()
@@ -19,26 +17,27 @@ export const useFetchAllValidator = () => {
           dataApr = data
         } catch (error) {
           console.log("queryValidatorsApr fail")
+          return []
         }
-        setValidators(data.validators.map((v: any) => {
+        return data.validators.map((v: any) => {
           let apr = dataApr[`apr${v.validatorId}`] || 0
           return validatorDataProcessor(v, totalNetworkStaked, Number(apr))
-        }))
+        })
       }
+      return []
     } catch (error) {
       console.log("fetch validators fail")
+      return []
     }
   }
 
-  useEffect(() => {
-    fetchValidators()
-    const interval = setInterval(async () => {
-      fetchValidators()
-    }, 20000)
+  const { data: validators } = useQuery<Validator[]>({
+    queryKey: ['fetchValidators'],
+    queryFn: fetchValidators,
+    refetchInterval: 20000,
+  })
 
-    return () => clearInterval(interval)
-  }, [])
   return {
-    validators
+    validators: validators || []
   }
 }

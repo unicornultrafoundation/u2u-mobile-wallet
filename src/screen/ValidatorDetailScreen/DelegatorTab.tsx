@@ -44,6 +44,9 @@ const DelegatorTab = ({validator}: {
 
       <FlatList
         data={validator.delegations}
+        contentContainerStyle={{
+          paddingBottom: 40
+        }}
         renderItem={({item}) => {
           return (
             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>

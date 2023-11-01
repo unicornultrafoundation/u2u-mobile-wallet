@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { View } from 'react-native'
+import { KeyboardAvoidingView, View } from 'react-native'
 import styles from './styles'
 import { useFocusEffect, useRoute } from '@react-navigation/native'
 import { useGlobalStore } from '../../state/global'
@@ -14,6 +14,7 @@ import InvestmentTotalCard from './InvestmentTotalCard'
 import ValidatorsList from './ValidatorsList'
 import Tab from '../../component/Tab'
 import DelegationList from './DelegationList'
+import WithdrawalRequestList from './WithdrawalRequestList'
 
 const StakingDashboardScreen = () => {
   const route = useRoute()
@@ -33,6 +34,7 @@ const StakingDashboardScreen = () => {
   const tabs = [
     { label: 'Validators', value: 'validators' },
     { label: 'Delegation', value: 'delegation' },
+    { label: 'Withdrawal Request', value: 'wr' },
   ];
 
   const handleChangeTab = (t: string) => {
@@ -40,39 +42,49 @@ const StakingDashboardScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text
-        style={[
-          theme.typography.title3.bold, 
-          {
-            color: preferenceTheme.text.primary,
-            textAlign: 'center',
-            paddingVertical: 10
-          }]}
+    
+    <View
+      style={styles.container}
+    >
+      <KeyboardAvoidingView
+        behavior='position'
+        keyboardVerticalOffset={24}
+        style={{flex: 1}}
       >
-        {t("myInvestment")}
-      </Text>
-      <InvestmentTotalCard />
-      <Separator />
-      <StakingDataCard />
-      <Tab
-        tabs={tabs}
-        selectedTab={tab}
-        onChange={handleChangeTab}
-        tabStyle={{
-          borderColor: 'transparent',
-          alignItems: 'flex-start',
-          justifyContent: 'flex-start',
-          paddingLeft: 0,
-          paddingRight: 12,
-        }}
-        containerStyle={{
-          borderColor: 'transparent',
-          // marginTop: 8,
-        }}
-      />
-      {tab === 'validators' && (<ValidatorsList />)}
-      {tab === 'delegation' && (<DelegationList />)}
+        <Text
+          style={[
+            theme.typography.title3.bold, 
+            {
+              color: preferenceTheme.text.primary,
+              textAlign: 'center',
+              paddingVertical: 10
+            }]}
+        >
+          {t("myInvestment")}
+        </Text>
+        <InvestmentTotalCard />
+        <Separator />
+        <StakingDataCard />
+        <Tab
+          tabs={tabs}
+          selectedTab={tab}
+          onChange={handleChangeTab}
+          tabStyle={{
+            borderColor: 'transparent',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
+            paddingLeft: 0,
+            paddingRight: 12,
+          }}
+          containerStyle={{
+            borderColor: 'transparent',
+            // marginTop: 8,
+          }}
+        />
+        {tab === 'validators' && (<ValidatorsList />)}
+        {tab === 'delegation' && (<DelegationList />)}
+        {tab === 'wr' && (<WithdrawalRequestList />)}
+      </KeyboardAvoidingView>
     </View>
   )
 }
