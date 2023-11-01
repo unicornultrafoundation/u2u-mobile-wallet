@@ -28,9 +28,12 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
         <Icon name="eye" width={16} height={16} />
       </TouchableOpacity>
 
-      <Text style={styles.balanceNumberInFiatText}>$0</Text>
+      <Text style={styles.balanceNumberInFiatText}>
+        {/* $0 */}
+        {formatNumberString(balance, 4)} U2U
+      </Text>
 
-      {!collapsed && (
+      {/* {!collapsed && (
         <Text
           style={[
             styles.balanceNumberInU2U,
@@ -38,7 +41,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
           ]}>
           {formatNumberString(balance, 4)} U2U
         </Text>
-      )}
+      )} */}
 
       {!collapsed && (
         <View
@@ -94,7 +97,11 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
           </View>
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <TouchableOpacity
-              style={[styles.balanceActionButton, {marginRight: 0}]}>
+              style={[styles.balanceActionButton, {marginRight: 0}]}
+              onPress={() => {
+                navigation.navigate('TxHistory')
+              }}
+            >
               <Icon name="paper" width={24} height={24} />
             </TouchableOpacity>
             <Text style={styles.balanceActionButtonText}>History</Text>

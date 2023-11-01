@@ -38,7 +38,7 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     remote_config_endpoint: "https://raw.githubusercontent.com/phongnhat19/explorer-assets/master",
     stakingAddress: "0xfc00face00000000000000000000000000000000",
     // sfcSubgraph: "https://subgraph.uniultra.xyz/subgraphs/name/u2u/sfc-subgraph",
-    sfcSubgraph: "https://42a4-171-242-12-202.ngrok-free.app/subgraphs/name/u2u/sfc-subgraph",
+    sfcSubgraph: "https://58ef-171-242-12-202.ngrok-free.app/subgraphs/name/u2u/sfc-subgraph",
     u2uNetworkSubgraph: "https://subgraph.uniultra.xyz/subgraphs/name/u2u/sfc-network",
     stakingGraphql: "https://testnet-staking-graphql.uniultra.xyz/graphql",
     withdrawPeriodTime: 604800,
