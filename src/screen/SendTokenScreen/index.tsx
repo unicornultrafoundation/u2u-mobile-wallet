@@ -15,7 +15,7 @@ const SendTokenScreen = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
 
   const route = useRoute()
   const {setRouteName} = useGlobalStore()
@@ -60,7 +60,12 @@ const SendTokenScreen = () => {
         )
       case 'send':
         return (
-          <SendStep />
+          <SendStep
+            onSkip={() => {
+              setStep('amount')
+              navigation.navigate("Wallet")
+            }}
+          />
         )
       default:
         return null

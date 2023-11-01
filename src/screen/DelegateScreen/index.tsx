@@ -23,7 +23,6 @@ const DelegateScreen = () => {
   const [step, setStep] = useState('amount')
 
   const renderStep = () => {
-    console.log('step', step)
     switch (step) {
       case 'amount':
         return (
@@ -49,7 +48,12 @@ const DelegateScreen = () => {
         )
       case 'delegate':
         return (
-          <DelegateStep />
+          <DelegateStep
+            onSkip={() => {
+              setStep('amount')
+              navigation.navigate("StakingDashboard")
+            }}
+          />
         )
       default:
         return null

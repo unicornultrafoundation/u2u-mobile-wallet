@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Web3 from 'web3'
-import { Delegation, fetchCurrentEpoch, fetchEpochAccumulatedRewardPerToken, fetchPendingRewards, fetchStakedAmount } from "../service/staking";
+import { Delegation, fetchPendingRewards } from "../service/staking";
 import { useNetwork } from "./useNetwork";
 import { useWallet } from "./useWallet";
 import { U2U_STAKING_ABI } from "../util/abis/staking";
@@ -10,6 +10,9 @@ import { useTotalSupply } from "./useTotalSupply";
 import { useEpochRewards } from "./useEpochRewards";
 import { useFetchAllValidator } from "./useFetchAllValidator";
 import { useDelegate } from "./useDelegate";
+import { usePendingReward } from "./usePendingReward";
+import { useClaimRewards } from "./useClaimRewards";
+import { useUndelegate } from "./useUndelegate";
 
 export function useStaking() {
   const [allPendingRewards, setAllPendingRewards] = useState("0")
@@ -42,6 +45,8 @@ export function useStaking() {
   const { rewardsPerEpoch } = useEpochRewards(stakingContractOptions)
   const { validators } = useFetchAllValidator()
   const { parseDelegate, submitDelegate } = useDelegate(stakingContractOptions)
+  const { claimRewards } = useClaimRewards(stakingContractOptions)
+  const { undegegate } = useUndelegate(stakingContractOptions)
 
   useEffect(() => {
     (async () => {
@@ -84,6 +89,8 @@ export function useStaking() {
     allPendingRewards,
     totalStakedAmount,
     parseDelegate,
-    submitDelegate
+    submitDelegate,
+    claimRewards,
+    undegegate
   }
 }

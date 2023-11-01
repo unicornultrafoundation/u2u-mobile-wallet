@@ -47,13 +47,13 @@ const FillButton = ({color = 'primary', disabled, fullWidth, children, style, te
       {loading ? (
         <ActivityIndicator color={textColor} />
       ) : (
-        <Text style={{
-          ...{
+        <Text style={[
+          {
             color: textColor
           },
-          ...styles.textSyle,
-          ...textStyle
-        }}>
+          styles.textSyle,
+          textStyle
+        ]}>
           {children}
         </Text>
       )}

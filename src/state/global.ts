@@ -17,7 +17,7 @@ export const useGlobalStore = create<GlobalState>((set, get) => ({
   setSearchKeyword: (searchKeyword: string) => {
     set({ searchKeyword })
   },
-  unlocked: true,
+  unlocked: false,
   toggleUnlocked: () => {
     set({ unlocked: !get().unlocked})
   }

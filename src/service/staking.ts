@@ -56,8 +56,13 @@ export interface ValidatorEpochInfo {
   endTime: number
 }
 
-export const fetchStakedAmount = (options: ContractOptions, address: string, rpc: string) => {
-  return "123"
+export interface Delegator {
+  id: string
+  address: string
+  stakedAmount: BigNumber
+  createdOn: number
+  validations?: Validation[]
+  totalClaimedRewards: BigNumber
 }
 
 export const fetchCurrentEpoch = (options: ContractOptions, rpc: string) => {
@@ -102,6 +107,40 @@ export const queryEpochOfValidator = (valId: number, valIdHex: string, skip: num
     validatorIdHexString: valIdHex,
     skip: skip*TABLE_LIMIT,
     limit: TABLE_LIMIT
+  },
+  fetchPolicy: "no-cache"
+})
+
+export const queryDelegatorDetail = (address: string) => apolloClient.query({
+  query: Schema().DELEGATOR_DETAIL,
+  variables: {
+    delegatorAddress: address
+  },
+  fetchPolicy: "no-cache"
+})
+
+export const queryLockedStake = (delegator: string, valIdHex: string) => apolloClient.query({
+  query: Schema().LOCKE_STAKE,
+  variables: {
+    delegatorAddress: delegator,
+    valId: valIdHex
+  },
+  fetchPolicy: "no-cache"
+})
+
+export const queryWithdrawalRequest = (delegator: string, validatorId: number) => apolloClient.query({
+  query: Schema().WITHDRAWALREQUEST,
+  variables: {
+    delegatorAddress: delegator,
+    validatorId: validatorId
+  },
+  fetchPolicy: "no-cache"
+})
+
+export const queryAllWithdrawalRequest = (delegator: string) => apolloClient.query({
+  query: Schema().ALLWITHDRAWALREQUEST,
+  variables: {
+    delegatorAddress: delegator
   },
   fetchPolicy: "no-cache"
 })

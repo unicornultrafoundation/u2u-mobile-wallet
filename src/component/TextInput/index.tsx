@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput as RNTextInput, StyleProp, View, ViewStyle } from 'react-native'
+import { KeyboardAvoidingView, Platform, TextInput as RNTextInput, StyleProp, View, ViewStyle } from 'react-native'
 import { TextInputProps } from 'react-native'
 import styles from './styles';
 import { usePreferenceStore } from '../../state/preferences';
@@ -33,13 +33,15 @@ const TextInput = ({style, containerStyle, error, postIcon, ...rest}: Props) => 
   }
 
   return (
-    <View style={[
-      containerStyle,
-      {
-        alignItems: 'center',
-        justifyContent: 'center'
-      }
-    ]}>
+    <View 
+      style={[
+        containerStyle,
+        {
+          alignItems: 'center',
+          justifyContent: 'center'
+        }
+      ]}
+    >
       <View
         style={[
           styles.container,

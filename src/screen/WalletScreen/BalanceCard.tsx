@@ -7,6 +7,9 @@ import {usePreferenceStore} from '../../state/preferences';
 import {darkTheme, lightTheme} from '../../theme/color';
 import {useNavigation} from '@react-navigation/native';
 import {useTransactionStore} from '../../state/transaction';
+import { useWallet } from '../../hook/useWallet';
+import { useNativeBalance } from '../../hook/useNativeBalance';
+import { formatNumberString } from '../../util/string';
 
 const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
   const {darkMode} = usePreferenceStore();
@@ -14,6 +17,9 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
 
   const navigation = useNavigation<any>();
   const {setTokenMeta} = useTransactionStore();
+
+  const {wallet} = useWallet()
+  const {balance} = useNativeBalance(wallet.address)
 
   return (
     <View style={styles.balanceCardContainer}>
@@ -30,7 +36,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
             styles.balanceNumberInU2U,
             {color: preferenceTheme.text.secondary},
           ]}>
-          0 U2U
+          {formatNumberString(balance, 4)} U2U
         </Text>
       )}
 

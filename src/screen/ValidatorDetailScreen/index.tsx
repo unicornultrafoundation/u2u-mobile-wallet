@@ -37,7 +37,7 @@ const ValidatorDetailScreen = () => {
   const tabs = [
     { label: 'Info', value: 'info' },
     { label: 'Delegator', value: 'delegator' },
-    { label: 'Reward', value: 'reward' },
+    { label: 'Latest Reward', value: 'reward' },
   ];
 
   const handleChangeTab = (t: string) => {
@@ -136,17 +136,22 @@ const ValidatorDetailScreen = () => {
         {tab === 'delegator' && <DelegatorTab validator={validator} />}
         {tab === 'reward' && <RewardTab validator={validator} />}
       </View>
-      <Button
-        color='primary'
-        style={{
-          borderRadius: 60
-        }}
-        onPress={() => {
-          navigation.navigate('Delegate', {validator})
-        }}
-      >
-        Delegate
-      </Button>
+      <View style={{
+        backgroundColor: preferenceTheme.background.background,
+        paddingTop: 24
+      }}>
+        <Button
+          color='primary'
+          style={{
+            borderRadius: 60
+          }}
+          onPress={() => {
+            navigation.navigate('Delegate', {validator})
+          }}
+        >
+          Delegate
+        </Button>
+      </View>
     </View>
   )
 };

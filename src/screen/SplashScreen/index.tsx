@@ -1,24 +1,25 @@
 import React from 'react';
-import { ActivityIndicator, View } from 'react-native';
-import Text from '../../component/Text';
+import { ImageBackground } from 'react-native';
 import { styles } from './styles';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
+import SPLASH_BG from '../../asset/images/splash_screen.png'
+import LottieView from "lottie-react-native";
 
 const SplashScreen = () => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   return (
-    <View style={[
-      styles.container,
-      {
-        backgroundColor: preferenceTheme.background.background
-      }
-    ]}>
-      <ActivityIndicator />
-      <Text>Loading</Text>
-    </View>
+    <ImageBackground
+      source={SPLASH_BG}
+      style={[
+        styles.container,
+      ]}
+    >
+      <LottieView
+        style={{ height:250, width: 400}}
+        source={require("./loading.json")}
+        autoPlay
+        loop
+      />
+    </ImageBackground>
   )
 };
 

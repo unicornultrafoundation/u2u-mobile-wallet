@@ -56,12 +56,11 @@ const BannerSection: React.FC<BannerSectionProps> = ({
         snapToAlignment={'center'}
         data={data}
         horizontal={true}
-        renderItem={({item, index}) => {
+        renderItem={({item, index}: {item: any, index: number}) => {
           const RenderItemComponent = renderItemComponent;
           return <RenderItemComponent {...item} index={index} />;
         }}
-        //@ts-ignore
-        keyExtractor={item => item.id}
+        keyExtractor={(item: any) => item.id}
       />
     </Animated.View>
   );
