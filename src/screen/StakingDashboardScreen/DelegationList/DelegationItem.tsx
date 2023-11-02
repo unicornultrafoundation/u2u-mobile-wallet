@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { styles } from './styles';
-import { KeyboardAvoidingView, Platform, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
@@ -61,6 +61,7 @@ const DelegationItem = ({item}: {
         return
       }
 
+      setShowUnstake(false)
       Toast.show({
         type: 'success',
         text1: 'Claim rewards success',

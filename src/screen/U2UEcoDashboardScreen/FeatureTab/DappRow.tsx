@@ -4,12 +4,13 @@ import {styles} from './styles';
 import Text from '../../../component/Text';
 import Button from '../../../component/Button';
 import theme from '../../../theme';
+import { useNavigation } from '@react-navigation/native';
 
 const DappRow = ({tokenObj}: {tokenObj: any}) => {
-  // const navigation = useNavigation<any>();
-  // const handlePressDetail = () => {
-  //   navigation.navigate('TokenDetail', {tokenMeta: tokenObj});
-  // };
+  const navigation = useNavigation<any>();
+  const handlePressDetail = () => {
+    navigation.navigate('DAppWebView');
+  };
 
   return (
     <View style={styles.tokenContainer}>
@@ -33,7 +34,9 @@ const DappRow = ({tokenObj}: {tokenObj: any}) => {
         <Button
           type="text"
           textStyle={{fontSize: 14, textAlign: 'center', color: '#B4B4B4'}}
-          style={styles.openButton}>
+          style={styles.openButton}
+          onPress={handlePressDetail}
+        >
           Open
         </Button>
       </View>

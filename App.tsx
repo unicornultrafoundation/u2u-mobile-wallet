@@ -28,7 +28,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import MoreStackScreen from './src/stack/MoreStack';
 import { MenuProvider } from 'react-native-popup-menu';
-import Toast, { BaseToast } from 'react-native-toast-message';
+import Toast from 'react-native-toast-message';
 import theme from './src/theme';
 import Text from './src/component/Text';
 import Icon from './src/component/Icon';

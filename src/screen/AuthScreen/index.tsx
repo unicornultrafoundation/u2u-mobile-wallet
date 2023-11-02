@@ -20,12 +20,10 @@ const AuthScreen = () => {
   const {t} = useTranslation<string>()
 
   const {password} = useLocalStore()
-  const {toggleUnlocked} = useGlobalStore()
+  const {setUnlocked} = useGlobalStore()
 
   const [internalPassword, setInternalPassword] = useState('')
   const [error, setError] = useState('')
-
-  const [loading, setLoading] = useState(false)
 
   const handleContinue = () => {
     setError('')
@@ -33,10 +31,9 @@ const AuthScreen = () => {
       setError('Incorrect password')
       return
     }
-    setLoading(true)
+
     setTimeout(() => {
-      toggleUnlocked()
-      setLoading(false)
+      setUnlocked(true)
     }, 100)
   }
 

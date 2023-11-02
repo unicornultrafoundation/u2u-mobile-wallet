@@ -34,7 +34,14 @@ const TxHistoryScreen = () => {
 
   if (loading) {
     return (
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: preferenceTheme.background.background
+          }
+        ]}
+      >
         <ActivityIndicator />
       </View>
     )
@@ -49,9 +56,11 @@ const TxHistoryScreen = () => {
         }
       ]}
     >
-      <TouchableOpacity onPress={navigation.goBack}>
-        <Icon name="arrow-left" width={24} height={24} />
-      </TouchableOpacity>
+      <View style={{padding: 16}}>
+        <TouchableOpacity onPress={navigation.goBack}>
+          <Icon name="arrow-left" width={24} height={24} />
+        </TouchableOpacity>
+      </View>
       <ScrollView style={{marginTop: 24}}>
         {txList.map((txItem: Record<string, any>) => {
           const isSend = wallet.address.toLowerCase() === txItem.from.toLowerCase()
