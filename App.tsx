@@ -6,6 +6,7 @@
  */
 
 import 'react-native-gesture-handler';
+import '@ethersproject/shims';
 import React, { useMemo } from 'react';
 import { Linking, StatusBar, TouchableOpacity, View } from 'react-native';
 

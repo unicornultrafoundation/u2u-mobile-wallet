@@ -1,5 +1,5 @@
 import Web3 from 'web3'
-import '@ethersproject/shims';
+// import '@ethersproject/shims';
 import { ethers } from 'ethers';
 import { estimateGasPriceUtil } from './blockchain';
 
