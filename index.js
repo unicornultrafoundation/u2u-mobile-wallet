@@ -8,6 +8,17 @@ import { fetch as fetchPolyfill } from 'whatwg-fetch'
 import BigNumber from 'bignumber.js'
 import "fast-text-encoding";
 import "./shim"
+import 'react-native-get-random-values'
+
+if (typeof globalThis.crypto !== 'object') {
+  globalThis.crypto = {}
+}
+
+if (typeof globalThis.crypto.getRandomValues !== 'function') {
+  globalThis.crypto.getRandomValues = getRandomValues
+} else {
+  console.log('123123123', globalThis.crypto.getRandomValues)
+}
 
 BigNumber.config({ FORMAT: {
   prefix: '',

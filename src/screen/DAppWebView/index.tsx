@@ -12,7 +12,6 @@ import Icon from '../../component/Icon';
 import Text from '../../component/Text';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
-import BottomSheet from '@gorhom/bottom-sheet';
 import ConfirmTxModal from './ConfirmTxModal';
 import { useGlobalStore } from '../../state/global';
 
@@ -20,8 +19,6 @@ const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `
 
 const DAppWebView = () => {
-  // ref
-  const bottomSheetRef = useRef<BottomSheet>(null);
 
   const { setRouteName } = useGlobalStore();
   const {darkMode} = usePreferenceStore()
@@ -33,7 +30,7 @@ const DAppWebView = () => {
   const [loading, setLoading] = useState(true)
   const [requestIdForCallback, setRequestIdForCallback] = useState(0)
   const [txObj, setTxObj] = useState<Record<string, any>>({})
-  const [confirmModalVisible, setConfirmModalVisible] = useState(false)
+  const [confirmModalVisible, setConfirmModalVisible] = useState(true)
   const [loadingURL, setLoadingURL] = useState(false)
   const [error, setError] = useState('')
 
@@ -112,15 +109,16 @@ const DAppWebView = () => {
     )
   }, [wallet, networkConfig])
 
-  useEffect(() => {
-    if (!bottomSheetRef || !bottomSheetRef.current) return
-    console.log('eeee', confirmModalVisible)
-    if (confirmModalVisible) {
-      bottomSheetRef.current?.expand()
-    } else {
-      bottomSheetRef.current?.forceClose()
-    }
-  }, [confirmModalVisible, bottomSheetRef])
+  // useEffect(() => {
+  //   console.log('in use effect')
+  //   if (!bottomSheetRef || !bottomSheetRef.current) return
+  //   console.log('eeee', confirmModalVisible)
+  //   if (confirmModalVisible) {
+  //     bottomSheetRef.current?.expand()
+  //   } else {
+  //     bottomSheetRef.current?.forceClose()
+  //   }
+  // }, [confirmModalVisible, bottomSheetRef])
 
   const handleConfirmTx = (txHash: string) => {
     const codeToRun = parseRun(requestIdForCallback, txHash)
@@ -161,8 +159,10 @@ const DAppWebView = () => {
         break;
       case 'eth_sendTransaction':
       case 'signTransaction':
+        console.log('show here 1')
         setTxObj(JSON.parse(JSON.stringify(params)))
         setConfirmModalVisible(true);
+        // bottomSheetRef.current?.expand()
         break;
       default:
         throw `Invalid method name ${method}`
@@ -266,9 +266,9 @@ const DAppWebView = () => {
         /> 
       </View>
       <ConfirmTxModal
-        ref={bottomSheetRef}
+        showModal={confirmModalVisible}
+        txObj={txObj}
         onCloseModal={() => {
-          console.log('here')
           setConfirmModalVisible(false)
           handleRejectTx()
         }}

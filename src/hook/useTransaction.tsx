@@ -15,9 +15,17 @@ export const useTransaction = () => {
   const {rpc, chainId} = useNetworkStore()
   
   const estimateGasPrice = useCallback(async () => {
-    const rs = await estimateGasPriceUtil(rpc)
-    txStore.setEstimatedGasPrice(rs.toString())
-    return rs.toString()
+    try {
+      //@ts-ignore
+      // console.log('123123123', global.crypto.getRandomValues)
+
+      const rs = await estimateGasPriceUtil(rpc)
+      txStore.setEstimatedGasPrice(rs.toString())
+      return rs.toString() 
+    } catch (error) {
+      console.log('estimateGasPrice fail')
+      return "0"
+    }
   }, [txStore])
 
   const estimateGasLimit = useCallback(async (txObject?: Record<string, any>) => {
