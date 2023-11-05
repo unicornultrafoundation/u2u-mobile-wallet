@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 const DappRow = ({tokenObj}: {tokenObj: any}) => {
   const navigation = useNavigation<any>();
   const handlePressDetail = () => {
-    navigation.navigate('DAppWebView');
+    // navigation.navigate('DAppWebView');
   };
 
   return (

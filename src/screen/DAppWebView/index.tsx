@@ -30,7 +30,7 @@ const DAppWebView = () => {
   const [loading, setLoading] = useState(true)
   const [requestIdForCallback, setRequestIdForCallback] = useState(0)
   const [txObj, setTxObj] = useState<Record<string, any>>({})
-  const [confirmModalVisible, setConfirmModalVisible] = useState(true)
+  const [confirmModalVisible, setConfirmModalVisible] = useState(false)
   const [loadingURL, setLoadingURL] = useState(false)
   const [error, setError] = useState('')
 

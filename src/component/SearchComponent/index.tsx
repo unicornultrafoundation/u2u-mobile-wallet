@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {View, TextInput, FlatList, BackHandler} from 'react-native';
+import {View, FlatList, BackHandler, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import {useDebounce} from '../../hook/useDebounce';
 import DappRow from '../../screen/U2UEcoDashboardScreen/FeatureTab/DappRow';
+import TextInput from '../TextInput';
+import Icon from '../Icon';
 // Define the types
 type SearchResult = {
   // id: number;
@@ -37,7 +39,7 @@ const SearchComponent: React.FC = () => {
             'https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/mobile_config/dapp.json',
           );
           const data: APIResponse = await response.json();
-          setResults(data);
+          setResults(data.results);
         } catch (error) {
           console.error('Error fetching search results:', error);
         }
@@ -79,12 +81,19 @@ const SearchComponent: React.FC = () => {
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
       /> */}
       <TextInput
-        style={styles.input}
+        // containerStyle={styles.input}
         placeholder="Search for DApps or enter a URL"
         placeholderTextColor={'#363636'}
         onTouchStart={() => setIsLayerVisible(true)}
         onChangeText={text => setSearchQuery(text)}
         value={searchQuery}
+        postIcon={() => {
+          return (
+            <TouchableOpacity onPress={() => setIsLayerVisible(false)}>
+              <Icon name='close' width={24} height={24} />
+            </TouchableOpacity>
+          )
+        }}
       />
       {isLayerVisible && (
         <View

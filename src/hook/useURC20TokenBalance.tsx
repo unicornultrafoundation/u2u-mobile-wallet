@@ -6,7 +6,7 @@ export const useURC20TokenBalance = (address: string, tokenAddress: string) => {
   const {blockExplorer} = useNetworkStore()
 
   const query = useQuery({
-    queryKey: ['urc20-balance', address, tokenAddress],
+    queryKey: ['urc20-balance', blockExplorer, address, tokenAddress],
     queryFn: () => fetchURC20Balance(blockExplorer, address, tokenAddress),
   })
   
