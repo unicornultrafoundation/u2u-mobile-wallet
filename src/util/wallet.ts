@@ -1,12 +1,5 @@
-import Web3 from 'web3'
 // import '@ethersproject/shims';
 import { ethers } from 'ethers';
-import { estimateGasPriceUtil } from './blockchain';
-
-export const generateNewWallet = () => {
-  const web3 = new Web3()
-  return web3.eth.accounts.create();
-}
 
 export const getWalletFromMnemonic = (
   mnemonic: string,
@@ -30,33 +23,34 @@ export const generateMnemonic = () => {
   return wallet.mnemonic?.phrase;
 };
 
-export const signMessage = (message: string, privateKey: string) => {
-  const web3 = new Web3()
-  const {signature} = web3.eth.accounts.sign(message, privateKey)
+export const signMessage = async (message: string, privateKey: string) => {
+  const signer = new ethers.Wallet(privateKey)
+  const signature = await signer.signMessage(message);
+
   return signature
 }
 
 export const signTransaction = async (rawTx: Record<string, any>, privateKey: string, rpc: string) => {
-  const web3 = new Web3(rpc)
-
-  const signed = await web3.eth.accounts.signTransaction(rawTx, privateKey)
-  return signed.rawTransaction
+  const signer = new ethers.Wallet(privateKey)
+  const signedTx = await signer.signTransaction(rawTx);
+  return signedTx
 }
 
 export const sendSignedTransaction = async (rpc: string, signedTx: string) => {
-  const web3 = new Web3(rpc)
-  const tx = await web3.eth.sendSignedTransaction(signedTx)
+  const provider = new ethers.JsonRpcProvider(rpc)
+  const tx = await provider.broadcastTransaction(signedTx)
+
   return tx
 }
 
 export const getBalance = async (rpc: string, address: string) => {
-  const web3 = new Web3(rpc)
-  const rs = await web3.eth.getBalance(address)
+  const provider = new ethers.JsonRpcProvider(rpc)
+  const rs = await provider.getBalance(address)
   return rs.toString()
 }
 
 export const getNonce = async (rpc: string, address: string) => {
-  const web3 = new Web3(rpc)
-  const rs = await web3.eth.getTransactionCount(address)
+  const provider = new ethers.JsonRpcProvider(rpc)
+  const rs = await provider.getTransactionCount(address)
   return rs.toString()
 }

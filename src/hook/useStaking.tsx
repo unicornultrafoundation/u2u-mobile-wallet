@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Web3 from 'web3'
 import { Delegation, fetchPendingRewards } from "../service/staking";
 import { useNetwork } from "./useNetwork";
 import { useWallet } from "./useWallet";

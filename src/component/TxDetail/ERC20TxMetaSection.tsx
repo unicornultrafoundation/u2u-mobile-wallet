@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { View } from 'react-native';
 import { SvgUri } from 'react-native-svg';
-import { Transaction } from 'web3';
+import { TransactionResponse } from 'ethers';
 import Text from '../Text';
 import theme from '../../theme';
 import { usePreferenceStore } from '../../state/preferences';
@@ -25,7 +25,7 @@ const TRANSFER_INPUT_ABI = [
 
 const ERC20TxMetaSection = ({tokenMeta, txDetail}: {
   tokenMeta: Record<string, any>;
-  txDetail: Transaction
+  txDetail: TransactionResponse
 }) => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
@@ -35,11 +35,11 @@ const ERC20TxMetaSection = ({tokenMeta, txDetail}: {
 
   useEffect(() => {
     (async () => {
-      if (!txDetail || !txDetail.input) return
+      if (!txDetail || !txDetail.data) return
       try {
         const fragment = findABIFragment("function", "transfer", ERC20_ABI)
         if (!fragment) return;
-        const rs = decodeTxData(fragment.inputs as any, txDetail.input.toString())
+        const rs = decodeTxData(fragment.inputs as any, txDetail.data.toString())
         const _amount = (rs.amount as any).toString() || "0"
 
         setAmount(BigNumber(_amount as string).dividedBy(10 ** tokenMeta.decimals).toFormat())

@@ -95,8 +95,8 @@ export const useTransaction = () => {
     txStore.setTxStatus('sending')
     const rs = await sendSignedTransaction(rpc, signedTx)
     txStore.resetTxState()
-    txStore.setTxStatus(rs.status.toString() === "1" ? 'success' : 'fail')
-    txStore.setTxHash(rs.transactionHash.toString())
+    txStore.setTxStatus(rs.isMined() ? 'success' : 'fail')
+    txStore.setTxHash(rs.hash.toString())
     return rs
   }, [wallet.privateKey, wallet.address, rpc, txStore])
 
@@ -122,8 +122,8 @@ export const useTransaction = () => {
     txStore.setTxStatus('sending')
     const rs = await sendSignedTransaction(rpc, signedTx)
     txStore.resetTxState()
-    txStore.setTxStatus(rs.status.toString() === "1" ? 'success' : 'fail')
-    txStore.setTxHash(rs.transactionHash.toString())
+    txStore.setTxStatus(rs.isMined() ? 'success' : 'fail')
+    txStore.setTxHash(rs.hash.toString())
     return rs
   }, [wallet.privateKey, wallet.address, rpc, txStore])
 

@@ -7,13 +7,13 @@ import { useFocusEffect, useIsFocused, useNavigation, useRoute } from '@react-na
 import { useNetwork } from '../../hook/useNetwork';
 import loadLocalResource from 'react-native-local-resource';
 import { parseError, parseRun } from '../../util/dapp';
-import Web3 from 'web3';
 import Icon from '../../component/Icon';
 import Text from '../../component/Text';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import ConfirmTxModal from './ConfirmTxModal';
 import { useGlobalStore } from '../../state/global';
+import { Wallet } from 'ethers';
 
 const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `
@@ -144,8 +144,11 @@ const DAppWebView = () => {
     if (!method) return
     switch (method) {
       case 'signPersonalMessage':
-        const web3 = new Web3(networkConfig?.rpc)
-        const {signature} = web3.eth.accounts.sign(params.data, wallet.privateKey!)
+        if (!wallet.privateKey) return;
+
+        const signer = new Wallet(wallet.privateKey)
+        const signature = await signer.signMessage(params.data);
+
         const rs = parseRun(requestId, signature)
         if (webRef && webRef.current) {
           webRef.current.injectJavaScript(rs);
@@ -159,10 +162,8 @@ const DAppWebView = () => {
         break;
       case 'eth_sendTransaction':
       case 'signTransaction':
-        console.log('show here 1')
         setTxObj(JSON.parse(JSON.stringify(params)))
         setConfirmModalVisible(true);
-        // bottomSheetRef.current?.expand()
         break;
       default:
         throw `Invalid method name ${method}`
