@@ -7,6 +7,7 @@
 
 import 'react-native-gesture-handler';
 import '@ethersproject/shims';
+import 'event-target-polyfill'
 import React, { useMemo } from 'react';
 import { Linking, StatusBar, TouchableOpacity, View } from 'react-native';
 
@@ -36,6 +37,9 @@ import Icon from './src/component/Icon';
 import { useNetwork } from './src/hook/useNetwork';
 import { useGlobalStore } from './src/state/global';
 import AuthScreen from './src/screen/AuthScreen';
+
+//@ts-ignore
+global.CustomEvent = global.Event
 
 const Tab = createBottomTabNavigator();
 

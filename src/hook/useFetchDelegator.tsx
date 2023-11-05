@@ -26,9 +26,10 @@ export const useFetchDelegator = (delAddress: string) => {
   const { data: delegator } = useQuery<Delegator>({
     queryKey: ['fetchDelegator', delAddress],
     queryFn: () => fetchDelegator(delAddress),
+    placeholderData: {} as Delegator
   })
 
   return {
-    delegator
+    delegator: delegator || {} as Delegator
   }
 }

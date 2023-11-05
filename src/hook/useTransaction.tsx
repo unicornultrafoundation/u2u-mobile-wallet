@@ -16,14 +16,12 @@ export const useTransaction = () => {
   
   const estimateGasPrice = useCallback(async () => {
     try {
-      //@ts-ignore
-      // console.log('123123123', global.crypto.getRandomValues)
 
       const rs = await estimateGasPriceUtil(rpc)
       txStore.setEstimatedGasPrice(rs.toString())
       return rs.toString() 
     } catch (error) {
-      console.log('estimateGasPrice fail')
+      console.log('estimateGasPrice fail', error)
       return "0"
     }
   }, [txStore])
