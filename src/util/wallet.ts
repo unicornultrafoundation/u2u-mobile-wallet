@@ -36,11 +36,16 @@ export const signTransaction = async (rawTx: Record<string, any>, privateKey: st
   return signedTx
 }
 
-export const sendSignedTransaction = async (rpc: string, signedTx: string) => {
+export const sendSignedTransaction = async (rpc: string, signedTx: string, wait = true) => {
   const provider = new ethers.JsonRpcProvider(rpc)
   const tx = await provider.broadcastTransaction(signedTx)
 
-  return tx
+  if (wait) {
+    const receipt = await provider.waitForTransaction(tx.hash)
+    return receipt
+  }
+
+  return null
 }
 
 export const getBalance = async (rpc: string, address: string) => {
