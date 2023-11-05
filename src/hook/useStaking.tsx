@@ -35,7 +35,7 @@ export function useStaking() {
       const _rewards = await fetchPendingRewards(stakingContractOptions, delegatorAddress, validatorId, rpc)
       return BigNumber(_rewards).dividedBy(10 ** 18).toFixed()
     } catch (error) {
-      console.log("get pending rewards fail", error)
+      console.log("get pending rewards fail")
       return "0"
     }
   }, [stakingContractOptions])

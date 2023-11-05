@@ -18,7 +18,7 @@ export const useTotalSupply = (stakingContractOptions?: ContractOptions) => {
         BigNumber(_rewards).dividedBy(10 ** 18).toFixed()
       )
     } catch (error) {
-      console.log("fetch total supply fail")
+      console.log("fetch total supply fail", error)
     }
   }, [stakingContractOptions, rpc])
 

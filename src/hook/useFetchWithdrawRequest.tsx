@@ -36,6 +36,7 @@ export const useFetchWithdrawRequest = (delegatorAddr: string) => {
     queryKey: ['fetchAllWithdrawalRequest', delegatorAddr],
     queryFn: fetchAllWithdrawalRequest,
     refetchInterval: 60000,
+    placeholderData: [] as WithdrawalRequest[]
   })
 
   return {

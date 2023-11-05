@@ -25,7 +25,6 @@ export const fetchURC20Balance = async (explorerURL: string, address: string, to
   const rsJSON = await rs.json()
 
   if (rsJSON.result) {
-    console.log(rsJSON)
     return parseFromRaw(rsJSON.result, 18)
   }
 
