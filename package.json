@@ -8,7 +8,9 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "postinstall": "rn-nodeify --install 'crypto,process,stream,events' --hack"
+    "postinstall": "rn-nodeify --install 'crypto,process,stream,events' --hack",
+    "bundle-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
+    "build-apk": "cd android && ./gradlew assembleDebug"
   },
   "dependencies": {
     "@apollo/client": "^3.8.6",
