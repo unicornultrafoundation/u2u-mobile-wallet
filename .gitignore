@@ -21,6 +21,9 @@ DerivedData
 *.ipa
 *.xcuserstate
 ios/.xcode.env.local
+ios/build/
+ios/builds/
+ios/fastlane/.env.default
 
 # Android/IntelliJ
 #
