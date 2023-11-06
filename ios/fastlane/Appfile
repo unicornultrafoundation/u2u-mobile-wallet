@@ -1,0 +1,8 @@
+app_identifier("org.uniultra.superapp") # The bundle identifier of your app
+apple_id("phongnhat19@gmail.com") # Your Apple Developer Portal username
+
+itc_team_id("126151602") # App Store Connect Team ID
+team_id("668U627Y5V") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
