@@ -11,6 +11,8 @@ export interface NetworkConfig {
   u2uNetworkSubgraph: string;
   stakingGraphql: string;
   withdrawPeriodTime: number;
+  dappURL: string;
+  ecosystemSettingURL: string;
 }
 
 export const SUPPORTED_CHAINS: NetworkConfig[] = [
@@ -27,6 +29,8 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     u2uNetworkSubgraph: "https://graph.uniultra.xyz/subgraphs/name/u2u/sfc-network",
     stakingGraphql: "https://staking-graphql.uniultra.xyz/graphql",
     withdrawPeriodTime: 604800,
+    dappURL: "https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/mobile_config/dapp_mainnet.json",
+    ecosystemSettingURL: "https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/mobile_config/ecosystem_setting_mainnet.json"
   },
   {
     chainID: "2484",
@@ -42,5 +46,7 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     u2uNetworkSubgraph: "https://subgraph.uniultra.xyz/subgraphs/name/u2u/sfc-network",
     stakingGraphql: "https://testnet-staking-graphql.uniultra.xyz/graphql",
     withdrawPeriodTime: 604800,
+    dappURL: "https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/mobile_config/dapp.json",
+    ecosystemSettingURL: "https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/mobile_config/ecosystem_setting.json"
   }
 ]

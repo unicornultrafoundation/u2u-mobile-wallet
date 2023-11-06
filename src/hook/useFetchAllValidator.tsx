@@ -26,7 +26,7 @@ export const useFetchAllValidator = () => {
       }
       return []
     } catch (error) {
-      console.log("fetch validators fail")
+      console.log("fetch validators fail", error)
       return []
     }
   }

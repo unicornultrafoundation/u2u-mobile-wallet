@@ -11,7 +11,7 @@ const Header = ({text}: {text: string}) => {
         paddingHorizontal: 16,
         paddingVertical: 16,
       }}>
-      <Text style={{fontSize: 16, fontWeight: 700}}>{text}</Text>
+      <Text style={{fontSize: 16, fontWeight: "700"}}>{text}</Text>
       <Icon name="arrow-right" />
     </View>
   );
