@@ -26,7 +26,7 @@ interface Props extends ViewProps {
 }
 
 const WalletRow = ({ item, selected, disabled, onSelect, onEdit, onDelete, ...rest }: Props) => {
-  const { getWalletMetadata } = useWallet()
+  const { getWalletMetadata, generatedPath } = useWallet()
   const { t } = useTranslation<string>();
 
   const optionStyles = {
@@ -95,7 +95,7 @@ const WalletRow = ({ item, selected, disabled, onSelect, onEdit, onDelete, ...re
               <Icon name="edit" width={24} height={24}/>
             </View>
           </MenuOption>
-          <MenuOption value={2}>
+          <MenuOption value={2} disableTouchable={generatedPath.length === 1}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
               <Text style={{ color: 'red' }}>
                 {t('removeAddress')}
