@@ -44,7 +44,7 @@ const UnstakeSection = ({onCancel, item} : {
         text1: 'Unstake success',
         onHide: resetTxState,
         props: {
-          txHash: tx.transactionHash,
+          txHash: tx.hash,
           renderTrailing: () => {
             return (
               <Text

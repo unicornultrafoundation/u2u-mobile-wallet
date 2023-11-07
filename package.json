@@ -39,6 +39,7 @@
     "react": "18.2.0",
     "react-i18next": "^13.2.2",
     "react-native": "0.72.4",
+    "react-native-camera": "^4.2.1",
     "react-native-crypto": "^2.2.0",
     "react-native-device-info": "^10.11.0",
     "react-native-gesture-handler": "^2.13.1",
@@ -46,7 +47,9 @@
     "react-native-linear-gradient": "^2.8.3",
     "react-native-local-resource": "^0.1.6",
     "react-native-otp-inputs": "^7.4.0",
+    "react-native-permissions": "^3.10.1",
     "react-native-popup-menu": "^0.16.1",
+    "react-native-qrcode-scanner": "^1.5.5",
     "react-native-qrcode-svg": "^6.2.0",
     "react-native-randombytes": "^3.6.1",
     "react-native-reanimated": "^3.5.4",
@@ -107,5 +110,13 @@
     "_stream_duplex": "readable-stream/duplex",
     "_stream_passthrough": "readable-stream/passthrough",
     "stream": "stream-browserify"
+  },
+  "resolutions": {
+    "react-native-permissions": "^3.10.1"
+  },
+  "overrides": {
+    "react-native-qrcode-scanner": {
+      "react-native-permissions": "^3.10.1"
+    }
   }
 }

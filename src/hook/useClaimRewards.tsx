@@ -30,7 +30,7 @@ export const useClaimRewards = (stakingContractOptions?: ContractOptions) => {
       txData: txData,
       gasPrice: gasPrice
     })
-    console.log('sented', tx?.transactionHash)
+    console.log('sented', tx?.hash)
 
     return tx
   }, [stakingContractOptions, networkConfig])

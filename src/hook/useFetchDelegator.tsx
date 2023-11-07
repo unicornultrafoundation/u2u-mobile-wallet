@@ -4,8 +4,6 @@ import { delegatorDataProcessor } from "../util/staking"
 import { useQuery } from "@tanstack/react-query"
 
 export const useFetchDelegator = (delAddress: string) => {
-  // const [delegator, setDelegator] = useState<Delegator>({} as Delegator)
-
   const fetchDelegator = async (address: string) => {
     if(!address) return {} as Delegator
     try {
@@ -26,7 +24,8 @@ export const useFetchDelegator = (delAddress: string) => {
   const { data: delegator } = useQuery<Delegator>({
     queryKey: ['fetchDelegator', delAddress],
     queryFn: () => fetchDelegator(delAddress),
-    placeholderData: {} as Delegator
+    placeholderData: {} as Delegator,
+    refetchInterval: 30000
   })
 
   return {

@@ -67,7 +67,7 @@ const DelegationItem = ({item}: {
         text1: 'Claim rewards success',
         onHide: resetTxState,
         props: {
-          txHash: tx.transactionHash,
+          txHash: tx.hash,
           renderTrailing: () => {
             return (
               <Text
