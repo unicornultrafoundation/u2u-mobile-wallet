@@ -489,8 +489,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "30e4bc15-34a2-4ad1-96f7-eb1a19f43bbe";
-				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore";
+				PROVISIONING_PROFILE = "9c99cee3-8e1a-484a-b382-03bf46fdd54f";
+				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore 1699344867";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/U2UMobileWallet.app/U2UMobileWallet";
 			};
 			name = Release;
@@ -503,7 +503,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = U2UMobileWallet/Info.plist;
@@ -511,7 +511,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -535,14 +535,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				INFOPLIST_FILE = U2UMobileWallet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -551,8 +551,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.uniultra.superapp.--PRODUCT-NAME-rfc1034identifier-";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.uniultra.superapp;
 				PRODUCT_NAME = U2UMobileWallet;
-				PROVISIONING_PROFILE = "30e4bc15-34a2-4ad1-96f7-eb1a19f43bbe";
-				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore";
+				PROVISIONING_PROFILE = "9c99cee3-8e1a-484a-b382-03bf46fdd54f";
+				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore 1699344867";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
