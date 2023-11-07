@@ -114,7 +114,7 @@ const SearchComponent: React.FC = () => {
             data={results}
             keyExtractor={item => item.title}
             renderItem={({item, index}) => (
-              <DappRow tokenObj={item} key={`dapp-${index}`} />
+              <DappRow dappMeta={item} key={`dapp-${index}`} />
             )}
           />
         </View>

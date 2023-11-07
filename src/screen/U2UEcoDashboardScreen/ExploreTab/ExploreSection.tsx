@@ -15,17 +15,17 @@ const ExploreSection = ({filter}: {filter: string}) => {
         ) : (
           DATA!
             .filter(obj => obj.category!.includes(filter))
-            .map((tokenObj: any, index) => {
+            .map((dappMeta: any, index) => {
               return (
                 <SelectDappModal
                   trigger={() => {
                     return (
-                      <DappRow tokenObj={tokenObj} key={`dapp-${index}`} />
+                      <DappRow dappMeta={dappMeta} key={`dapp-${index}`} />
                     );
                   }}
-                  title={tokenObj.title}
-                  description={tokenObj.description}
-                  logoImg={tokenObj.logoImg}
+                  title={dappMeta.title}
+                  description={dappMeta.description}
+                  logoImg={dappMeta.logoImg}
                 />
               );
             })

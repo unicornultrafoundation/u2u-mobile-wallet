@@ -35,7 +35,7 @@ const TopDapp = () => {
               {group.map((item, index) => (
                 <SelectDappModal
                   trigger={() => {
-                    return <DappRow tokenObj={item} key={`dapp-${index}`} />;
+                    return <DappRow dappMeta={item} key={`dapp-${index}`} />;
                   }}
                   title={item.title}
                   description={item.description}

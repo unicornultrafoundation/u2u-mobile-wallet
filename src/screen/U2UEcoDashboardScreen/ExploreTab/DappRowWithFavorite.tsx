@@ -7,7 +7,7 @@ import StarButton from '../../../component/FavoriteButton';
 import theme from '../../../theme';
 import {useFavoriteStore} from '../../../state/favorite';
 
-const DappRow = ({tokenObj}: {tokenObj: any}) => {
+const DappRow = ({dappMeta}: {dappMeta: any}) => {
   const {items, toggleFavorite} = useFavoriteStore();
 
   return (
@@ -23,9 +23,9 @@ const DappRow = ({tokenObj}: {tokenObj: any}) => {
         />
       </View>
       <View style={{flex: 1, paddingHorizontal: 8}}>
-        <Text style={[theme.typography.label.bold]}>{tokenObj.title}</Text>
+        <Text style={[theme.typography.label.bold]}>{dappMeta.title}</Text>
         <Text style={[theme.typography.caption1.regular]}>
-          {tokenObj.description}
+          {dappMeta.description}
         </Text>
       </View>
       <View style={styles.actionContainer}>
@@ -37,9 +37,9 @@ const DappRow = ({tokenObj}: {tokenObj: any}) => {
         </Button>
         <StarButton
           isFavorite={
-            items.find(item => item.title === tokenObj.title)?.isFavorite
+            items.find(item => item.title === dappMeta.title)?.isFavorite
           }
-          onPress={() => toggleFavorite(tokenObj.title)}
+          onPress={() => toggleFavorite(dappMeta.title)}
         />
       </View>
     </View>
