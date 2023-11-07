@@ -35,9 +35,9 @@ const Scanner = ({onSuccess, onCancel}: {
             onPress={onCancel}
             style={{
               borderRadius: 60,
-              flex: 1,
-              paddingVertical: 8,
-              marginHorizontal: 24,
+              paddingVertical: 12,
+              paddingHorizontal: 40,
+              marginHorizontal: 48,
               backgroundColor: preferenceTheme.background.surface
             }}
             textStyle={[
