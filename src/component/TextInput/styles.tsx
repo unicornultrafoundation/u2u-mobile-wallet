@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     paddingHorizontal: 14,
-    paddingVertical: 10,
+    // paddingVertical: 10,
     borderRadius: 12,
     borderWidth: 1,
     minWidth: 52,

@@ -5,6 +5,9 @@ import {useDebounce} from '../../hook/useDebounce';
 import DappRow from '../../screen/U2UEcoDashboardScreen/FeatureTab/DappRow';
 import TextInput from '../TextInput';
 import Icon from '../Icon';
+import { getPhonePaddingTop } from '../../util/platform';
+import { usePreferenceStore } from '../../state/preferences';
+import { darkTheme, lightTheme } from '../../theme/color';
 // Define the types
 type SearchResult = {
   // id: number;
@@ -29,6 +32,9 @@ const SearchComponent: React.FC = () => {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLayerVisible, setIsLayerVisible] = useState<boolean>(false);
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
+  const {darkMode} = usePreferenceStore()
+  const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   useEffect(() => {
     if (debouncedSearchQuery.length > 0) {
@@ -73,19 +79,13 @@ const SearchComponent: React.FC = () => {
   // };
   return (
     <>
-      {/* <TextInput
-        placeholder="Search..."
-        onFocus={() => setIsLayerVisible(true)}
-        onChangeText={text => setSearchQuery(text)}
-        value={searchQuery}
-        style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-      /> */}
       <TextInput
-        // containerStyle={styles.input}
+        containerStyle={{height: 48}}
         placeholder="Search for DApps or enter a URL"
         placeholderTextColor={'#363636'}
         onTouchStart={() => setIsLayerVisible(true)}
         onChangeText={text => setSearchQuery(text)}
+        onBlur={() => setIsLayerVisible(false)}
         value={searchQuery}
         postIcon={() => {
           return (
@@ -100,11 +100,11 @@ const SearchComponent: React.FC = () => {
           style={{
             position: 'absolute',
             paddingTop: 20,
-            top: 100,
+            top: getPhonePaddingTop() + 28 + 48,
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'black',
+            backgroundColor: preferenceTheme.background.background,
             zIndex: 99,
           }}>
           {/* <TouchableOpacity onPress={() => setIsLayerVisible(false)}>
