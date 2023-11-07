@@ -77,8 +77,9 @@ const AuthScreen = () => {
         handleChange={setInternalPassword}
         numberOfInputs={6}
         autoFocus={true}
-        keyboardType="phone-pad"
+        keyboardType={"numeric" as any}
         secureTextEntry={true}
+        autoCapitalize="none"
         style={styles.otpContainer}
         inputStyles={styles.otpInput}
       />
