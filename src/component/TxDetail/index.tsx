@@ -55,6 +55,7 @@ const TxDetail = ({txHash, onClose}: {
     (async () => {
       if (!txReceipt) return
       const block = await fetchBlock(txReceipt.blockHash.toString())
+      if (!block) return
       setTimestamp(
         Number(block.timestamp.toString())
       )

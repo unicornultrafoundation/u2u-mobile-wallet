@@ -17,6 +17,7 @@ import { useGlobalStore } from '../../state/global';
 import SetAmountStep from './SetAmountStep';
 import { formatNumberString } from '../../util/string';
 import { SvgUri } from 'react-native-svg';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const ReceiveTokenScreen = () => {
   const {darkMode} = usePreferenceStore()
@@ -115,7 +116,7 @@ const ReceiveTokenScreen = () => {
                 {wallet.address}
               </Text>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => Clipboard.setString(wallet.address)}>
               <Icon name='copy' width={16} height={16} color="#8D8D8D" />
             </TouchableOpacity>
           </View>
