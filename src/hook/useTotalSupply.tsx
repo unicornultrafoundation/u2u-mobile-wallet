@@ -3,33 +3,31 @@ import { ContractOptions } from "../util/contract";
 import { useNetwork } from "./useNetwork";
 import { fetchTotalSupply } from "../service/staking";
 import BigNumber from "bignumber.js";
+import { useQuery } from "@tanstack/react-query";
 
 export const useTotalSupply = (stakingContractOptions?: ContractOptions) => {
   const {rpc} = useNetwork()
-  const [supply, setSupply] = useState("")
 
   const getTotalSupply = useCallback(async () => {
     if (!stakingContractOptions) {
-      throw new Error("invalid staking contract options")
+      console.log("invalid staking contract options")
+      return "0"
     }
     try {
       const _rewards = await fetchTotalSupply(stakingContractOptions, rpc)
-      setSupply(
-        BigNumber(_rewards).dividedBy(10 ** 18).toFixed()
-      )
+      return BigNumber(_rewards).dividedBy(10 ** 18).toFixed()
     } catch (error) {
       console.log("fetch total supply fail", error)
+      return "0"
     }
   }, [stakingContractOptions, rpc])
 
-  useEffect(() => {
-    getTotalSupply()
-    const interval = setInterval(async () => {
-      getTotalSupply()
-    }, 20000)
-
-    return () => clearInterval(interval)
-  }, [stakingContractOptions, getTotalSupply]);
+  const {data: supply} = useQuery({
+    queryKey: ['getTotalSupply', stakingContractOptions, rpc],
+    queryFn: getTotalSupply,
+    refetchInterval: 60000,
+    placeholderData: "0"
+  })
 
   return {
     supply

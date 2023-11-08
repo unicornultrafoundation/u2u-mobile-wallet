@@ -1,35 +1,33 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { ContractOptions } from "../util/contract";
 import { useNetwork } from "./useNetwork";
 import { fetchCurrentEpoch } from "../service/staking";
 import BigNumber from "bignumber.js";
+import { useQuery } from "@tanstack/react-query";
 
 export const useCurrentEpoch = (stakingContractOptions?: ContractOptions) => {
   const {rpc} = useNetwork()
-  const [epoch, setEpoch] = useState<number>(0)
 
   const getCurrentEpoch = useCallback(async () => {
     if (!stakingContractOptions) {
-      throw new Error("invalid staking contract options")
+      console.log("invalid staking contract options")
+      return 0
     }
     try {
       const rs = await fetchCurrentEpoch(stakingContractOptions, rpc)
-      setEpoch(
-        BigNumber(rs).toNumber()
-      )
+      return BigNumber(rs).toNumber()
     } catch (error) {
       console.log("fetch current epoch fail")
+      return 0
     }
-  }, [stakingContractOptions])
+  }, [stakingContractOptions, rpc])
 
-  useEffect(() => {
-    getCurrentEpoch()
-    const interval = setInterval(async () => {
-      getCurrentEpoch()
-    }, 60000)
-
-    return () => clearInterval(interval)
-  }, [stakingContractOptions]);
+  const {data: epoch} = useQuery({
+    queryKey: ['getCurrentEpoch', stakingContractOptions, rpc],
+    queryFn: getCurrentEpoch,
+    refetchInterval: 60000,
+    placeholderData: 0
+  })
 
   return {
     epoch

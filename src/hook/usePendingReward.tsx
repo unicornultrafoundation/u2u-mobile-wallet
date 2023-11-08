@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback } from "react"
 import { ContractOptions } from "../util/contract"
 import BigNumber from "bignumber.js";
 import { fetchPendingRewards } from "../service/staking";
 import { useNetwork } from "./useNetwork";
+import { useQuery } from "@tanstack/react-query";
 
 interface Props {
   stakingContractOptions?: ContractOptions,
@@ -12,28 +13,25 @@ interface Props {
 
 export const usePendingReward = ({stakingContractOptions, delegatorAddress, validatorId}: Props) => {
   const {rpc} = useNetwork()
-  const [pendingRewards, setPendingRewards] = useState("")
 
   const getPendingRewards = useCallback(async() => {
-    if (!delegatorAddress || !validatorId || !stakingContractOptions) return;
+    if (!delegatorAddress || !validatorId || !stakingContractOptions) return "0";
     try {
       const _rewards = await fetchPendingRewards(stakingContractOptions, delegatorAddress, validatorId, rpc)
-      setPendingRewards(
-        BigNumber(_rewards).dividedBy(10 ** 18).toFixed()
-      )
+      return BigNumber(_rewards).dividedBy(10 ** 18).toFixed()
     } catch (error) {
       console.log("get pending rewards fail")
+      return "0"
     }
-  }, [delegatorAddress, validatorId, stakingContractOptions])
+  }, [delegatorAddress, validatorId, stakingContractOptions, rpc])
 
-  useEffect(() => {
-    getPendingRewards()
-    const interval = setInterval(async () => {
-      getPendingRewards()
-    }, 5000)
+  const {data: pendingRewards} = useQuery({
+    queryKey: ['getPendingRewards', delegatorAddress, validatorId, stakingContractOptions, rpc],
+    queryFn: getPendingRewards,
+    refetchInterval: 5000,
+    placeholderData: "0"
+  })
 
-    return () => clearInterval(interval)
-  }, [delegatorAddress, stakingContractOptions, validatorId]);
   return {
     pendingRewards
   }
