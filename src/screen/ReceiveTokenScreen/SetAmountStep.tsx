@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, TextInput, View } from 'react-native';
 import { styles } from './styles';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
@@ -21,10 +21,14 @@ const SetAmountStep = ({handleBack, setAmount, amount, tokenMeta}: {
   const [internalAmount, setInternalAmount] = useState(parseFormatedNumberInput(amount))
 
   return (
-    <View style={[
-      styles.container,
-      {backgroundColor: preferenceTheme.background.background}
-    ]}>
+    <KeyboardAvoidingView 
+      style={[
+        styles.container,
+        {backgroundColor: preferenceTheme.background.background}
+      ]}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={24}
+    >
       <SetAmountStepHeader handleBack={handleBack} />
       <View style={{flex: 1, paddingHorizontal: 16, justifyContent: 'space-between'}}>
         <View style={{paddingVertical: 16, marginTop: 36, alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
@@ -55,7 +59,7 @@ const SetAmountStep = ({handleBack, setAmount, amount, tokenMeta}: {
           Confirm
         </Button>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 };
 

@@ -12,11 +12,11 @@ const WithdrawalRequestList = () => {
 
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
-  // console.log('wr', wr.length)
+
   return (
     <View style={{marginBottom: 400}}>
       <FlatList
-        data={wr}
+        data={wr.filter((i) => !i.withdrawal)}
         contentContainerStyle={{
           paddingBottom: 400,
         }}
