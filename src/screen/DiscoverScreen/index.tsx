@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView } from 'react-native';
+import {ActivityIndicator, SafeAreaView, ScrollView, View} from 'react-native';
 import { useStyles } from './styles';
 import TextInput from '../../component/TextInput';
 import React, { useEffect, useState } from 'react';
@@ -10,10 +10,21 @@ import { DiscoverStackParamList } from '../../stack/DiscoverStack';
 
 type Props = NativeStackScreenProps<DiscoverStackParamList, 'Home'>;
 
+export interface Article {
+  id: number,
+  title: string
+  description: string
+  date: string
+  category: string
+  thumbnail: string
+}
+
 const DiscoverScreen = ({ route }: Props) => {
   const styles = useStyles();
   const [queryString, setQueryString] = useState('');
   const [currentCategory, setCurrentCategory] = useState<string | undefined>();
+  const [loading, setLoading] = useState(true)
+  const [news, setNews] = useState<Article[]>([])
 
   const [tab, setTab] = useState('featured');
   const tabs = [
@@ -36,6 +47,34 @@ const DiscoverScreen = ({ route }: Props) => {
       setTab(route.params.defaultTab)
     }
   }, [route.params])
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('https://raw.githubusercontent.com/unicornultrafoundation/static-news/main/news.json', {
+          method: 'GET',
+          redirect: 'follow'
+        })
+        const data = await res.json()
+        setNews(data)
+      } catch (e) {
+        console.log(e)
+        setNews([])
+      } finally {
+        setLoading(false)
+      }
+    })()
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator/>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,9 +102,9 @@ const DiscoverScreen = ({ route }: Props) => {
           }}
         />
         {tab === 'featured' && (
-          <FeaturedNews onViewCategory={handleViewCategory}/>
+          <FeaturedNews news={news} onViewCategory={handleViewCategory}/>
         )}
-        {tab === 'latest' && <LatestNews initialTab={currentCategory}/>}
+        {tab === 'latest' && <LatestNews news={news} initialTab={currentCategory}/>}
       </ScrollView>
     </SafeAreaView>
   );

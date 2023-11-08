@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Dimensions,
   Image,
   SafeAreaView,
@@ -11,8 +12,7 @@ import Text from '../../component/Text';
 import { color, darkTheme, lightTheme } from '../../theme/color';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DiscoverStackParamList } from '../../stack/DiscoverStack';
-import news from '../../mock/news.json';
-import React, { useCallback, useMemo } from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import Separator from '../../component/Separator';
 import U2UIcon from '../../asset/icon/u2u_wallet_icon.png';
 import RenderHtml, { MixedStyleDeclaration } from 'react-native-render-html';
@@ -21,6 +21,7 @@ import Icon from '../../component/Icon';
 import NewsList from '../../component/NewsList';
 import { useFocusEffect } from "@react-navigation/native";
 import { useGlobalStore } from "../../state/global";
+import {Article} from "../DiscoverScreen";
 
 type Props = NativeStackScreenProps<DiscoverStackParamList, 'NewsDetails'>;
 
@@ -50,6 +51,9 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const styles = useStyles();
+  const [loading, setLoading] = useState(true)
+  const [news, setNews] = useState<Article[]>([])
+
 
   const actions = [
     { name: 'twitter', url: '', icon: 'twitter-circle' },
@@ -62,7 +66,7 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
 
   const article = useMemo(() => {
     return news.find(item => item.id === route.params?.id);
-  }, [route.params]);
+  }, [route.params, news]);
 
   const mixedStyle: Record<string, MixedStyleDeclaration> = useMemo(() => {
     return {
@@ -87,10 +91,37 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
     }, [route]),
   );
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('https://raw.githubusercontent.com/unicornultrafoundation/static-news/main/news.json')
+        const data = await res.json()
+        setNews(data)
+      } catch (e) {
+        setNews([])
+      } finally {
+        setLoading(false)
+      }
+    })()
+  }, []);
+
+  if (loading) {
+    return (
+        <View style={[styles.container, { padding: 16 }]}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator />
+          </View>
+        </View>
+    )
+  }
+
   if (!article) {
     return (
       <View style={[styles.container, { padding: 16 }]}>
-        <Text style={styles.title}>Article not found!</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="arrow-left" width={24} height={24} />
+        </TouchableOpacity>
+        <Text style={[styles.title, { textAlign: 'center' }]}>Article not found!</Text>
       </View>
     );
   }

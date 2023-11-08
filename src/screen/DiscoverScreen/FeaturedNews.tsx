@@ -1,17 +1,18 @@
 import { TouchableOpacity, View } from 'react-native';
 import NewsList from '../../component/NewsList';
-import news from '../../mock/news.json';
 import { useStyles } from './styles';
 import Text from '../../component/Text';
 import Icon from '../../component/Icon';
 import { color } from '../../theme/color';
 import { useMemo } from 'react';
+import {Article} from "./index";
 
 interface Props {
+  news: Article[]
   onViewCategory: (categoryName: string) => void
 }
 
-const FeaturedNews = ({ onViewCategory }: Props) => {
+const FeaturedNews = ({ onViewCategory, news }: Props) => {
   const styles = useStyles();
   const categories = useMemo(() => {
     return news.reduce((a, b) => {
