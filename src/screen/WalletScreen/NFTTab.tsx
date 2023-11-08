@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import Dropdown from '../../component/Dropdown';
 import { useSupportedNFT } from '../../hook/useSupportedNFT';
 import NFTRow from './NFTRow';
+import theme from '../../theme';
 
 const NFTTab = () => {
   const { darkMode } = usePreferenceStore();
@@ -22,6 +23,8 @@ const NFTTab = () => {
   // const data: NFTCollection[] = nftCollections as NFTCollection[];
 
   const {supportedNFT: data} = useSupportedNFT()
+
+  console.log(data)
 
   const [expandedItem, setExpandedItem] = useState("");
   const handleExpandItem = (id: string) => {
@@ -42,8 +45,16 @@ const NFTTab = () => {
         </Text>
       </Dropdown> */}
 
+      {data.length === 0 && (
+        <Text
+          style={[theme.typography.caption2.medium]}
+        >
+          No data
+        </Text>
+      )}
+
       {data.map((item) => (
-        <NFTRow nftCollection={item} open={expandedItem === item.id} handleExpandItem={handleExpandItem} />
+        <NFTRow key={`nft-${item.id}`} nftCollection={item} open={expandedItem === item.id} handleExpandItem={handleExpandItem} />
       ))}
     </View>
   );

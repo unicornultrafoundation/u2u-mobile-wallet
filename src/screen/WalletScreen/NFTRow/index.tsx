@@ -6,6 +6,9 @@ import { Image } from 'react-native';
 import Text from '../../../component/Text';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
+import { useURC20TokenBalance } from '../../../hook/useURC20TokenBalance';
+import { useWallet } from '../../../hook/useWallet';
+import { formatNumberString } from '../../../util/string';
 
 const NFTRow = ({nftCollection, open, handleExpandItem}: {
   nftCollection: NFTCollectionMeta
@@ -14,6 +17,10 @@ const NFTRow = ({nftCollection, open, handleExpandItem}: {
 }) => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
+
+  const {wallet} = useWallet()
+
+  const {balance} = useURC20TokenBalance(wallet.address, nftCollection.id, 0)
 
   return (
     <Collapsible
@@ -75,7 +82,7 @@ const NFTRow = ({nftCollection, open, handleExpandItem}: {
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
           <Text style={{ color: preferenceTheme.text.primary, fontSize: 14 }}>
-            1
+            {formatNumberString(balance)}
           </Text>
         </View>
       </View>

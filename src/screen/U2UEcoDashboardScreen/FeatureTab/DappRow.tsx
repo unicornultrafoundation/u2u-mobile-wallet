@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 const DappRow = ({dappMeta}: {dappMeta: any}) => {
   const navigation = useNavigation<any>();
   const handlePressDetail = () => {
-    // navigation.navigate('DAppWebView', {url: dappMeta.url});
+    navigation.navigate('DAppWebView', {url: dappMeta.url});
   };
 
   return (

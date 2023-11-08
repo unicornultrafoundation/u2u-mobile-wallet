@@ -32,7 +32,7 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     withdrawPeriodTime: 604800,
     dappURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/dapp_mainnet.json",
     ecosystemSettingURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/ecosystem_setting_mainnet.json",
-    suppoted_nfts_endpoint: "https://raw.githubusercontent.com/unicornultrafoundation/phongnhat19/master/mobile_config/supported_nfts_mainnet.json"
+    suppoted_nfts_endpoint: "https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/mobile_config/supported_nfts_mainnet.json"
   },
   {
     chainID: "2484",
@@ -50,6 +50,6 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     withdrawPeriodTime: 604800,
     dappURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/dapp.json",
     ecosystemSettingURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/ecosystem_setting.json",
-    suppoted_nfts_endpoint: "https://raw.githubusercontent.com/unicornultrafoundation/phongnhat19/master/mobile_config/supported_nfts.json"
+    suppoted_nfts_endpoint: "https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/mobile_config/supported_nfts.json"
   }
 ]

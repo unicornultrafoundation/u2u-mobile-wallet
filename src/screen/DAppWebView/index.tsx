@@ -273,6 +273,10 @@ const DAppWebView = () => {
           setConfirmModalVisible(false)
           handleRejectTx()
         }}
+        onConfirm={(txHash: string) => {
+          handleConfirmTx(txHash)
+          setConfirmModalVisible(false)
+        }}
       />
     </View>
   )

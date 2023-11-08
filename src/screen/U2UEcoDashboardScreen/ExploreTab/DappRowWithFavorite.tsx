@@ -6,9 +6,15 @@ import Button from '../../../component/Button';
 import StarButton from '../../../component/FavoriteButton';
 import theme from '../../../theme';
 import {useFavoriteStore} from '../../../state/favorite';
+import { useNavigation } from '@react-navigation/native';
 
 const DappRow = ({dappMeta}: {dappMeta: any}) => {
   const {items, toggleFavorite} = useFavoriteStore();
+
+  const navigation = useNavigation<any>();
+  const handlePressDetail = () => {
+    navigation.navigate('DAppWebView', {url: dappMeta.url});
+  };
 
   return (
     <View style={styles.tokenContainer}>
@@ -32,7 +38,9 @@ const DappRow = ({dappMeta}: {dappMeta: any}) => {
         <Button
           type="text"
           textStyle={{fontSize: 14, textAlign: 'center', color: '#B4B4B4'}}
-          style={styles.openButton}>
+          style={styles.openButton}
+          onPress={handlePressDetail}
+        >
           Open
         </Button>
         <StarButton
