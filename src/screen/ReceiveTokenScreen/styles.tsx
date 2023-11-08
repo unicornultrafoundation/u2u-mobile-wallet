@@ -4,8 +4,7 @@ import theme from '../../theme';
 
 export const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: Dimensions.get('window').height,
+    flex: 1,
     paddingTop: getPhonePaddingTop(),
     paddingBottom: getPhonePaddingBottom(),
   },

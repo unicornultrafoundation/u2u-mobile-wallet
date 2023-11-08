@@ -157,6 +157,57 @@ function App(): JSX.Element {
             {props.renderTrailing && props.renderTrailing()}
           </View>
         )
+      },
+      simpleNoti: ({text1, text2, props}: any) => {
+        return (
+          <View
+            style={{
+              height: 40,
+              width: '45%',
+              padding: 8,
+              borderRadius: 12,
+              backgroundColor: preferenceTheme.background.surface,
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 16
+            }}
+          >
+            <View style={{flex: 1, paddingHorizontal: 12}}>
+              <Text
+                style={[
+                  theme.typography.body.bold,
+                  {
+                    color: preferenceTheme.text.title,
+                    textAlign: 'center'
+                  }
+                ]}
+              >
+                {text1}
+              </Text>
+              {props.txHash && (
+                <TouchableOpacity
+                  style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}
+                  onPress={() => {
+                    Linking.openURL(`${blockExplorer}/tx/${props.txHash.toLowerCase()}`)
+                  }}
+                >
+                  <Text
+                    style={[
+                      theme.typography.body.medium,
+                      {
+                        color: preferenceTheme.text.disabled
+                      }
+                    ]}
+                  >
+                    Detail
+                  </Text>
+                  <Icon name="chevron-right" width={18} height={18} />
+                </TouchableOpacity>
+              )}
+            </View>
+            {props.renderTrailing && props.renderTrailing()}
+          </View>
+        )
       }
     }
   }, [preferenceTheme])

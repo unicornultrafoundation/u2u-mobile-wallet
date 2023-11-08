@@ -33,6 +33,6 @@ export const usePendingReward = ({stakingContractOptions, delegatorAddress, vali
   })
 
   return {
-    pendingRewards
+    pendingRewards: pendingRewards || "0"
   }
 }

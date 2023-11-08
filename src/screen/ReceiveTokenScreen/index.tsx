@@ -18,6 +18,7 @@ import SetAmountStep from './SetAmountStep';
 import { formatNumberString } from '../../util/string';
 import { SvgUri } from 'react-native-svg';
 import Clipboard from '@react-native-clipboard/clipboard';
+import Toast from 'react-native-toast-message';
 
 const ReceiveTokenScreen = () => {
   const {darkMode} = usePreferenceStore()
@@ -116,7 +117,15 @@ const ReceiveTokenScreen = () => {
                 {wallet.address}
               </Text>
             </View>
-            <TouchableOpacity onPress={() => Clipboard.setString(wallet.address)}>
+            <TouchableOpacity
+              onPress={() => {
+                Clipboard.setString(wallet.address)
+                Toast.show({
+                  type: "simpleNoti",
+                  text1: "Copied to clipboard"
+                })
+              }}
+            >
               <Icon name='copy' width={16} height={16} color="#8D8D8D" />
             </TouchableOpacity>
           </View>

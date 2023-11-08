@@ -11,6 +11,7 @@ import Button from '../../component/Button'
 import { useWallet } from '../../hook/useWallet'
 import Icon from '../../component/Icon'
 import theme from '../../theme'
+import Toast from 'react-native-toast-message';
 
 const Step3 = () => {
   const { t } = useTranslation<string>()
@@ -38,6 +39,10 @@ const Step3 = () => {
 
   const handleCopy = () => {
     Clipboard.setString(seed);
+    Toast.show({
+      type: "simpleNoti",
+      text1: "Copied to clipboard"
+    })
   }
 
   return (

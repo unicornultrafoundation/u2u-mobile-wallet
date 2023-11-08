@@ -20,6 +20,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import NormalTxMetaSection from './NormalTxMetaSection';
 import { useSupportedTokens } from '../../hook/useSupportedTokens';
 import ERC20TxMetaSection from './ERC20TxMetaSection';
+import Toast from 'react-native-toast-message';
 
 const TxDetail = ({txHash, onClose}: {
   txHash: string;
@@ -118,7 +119,14 @@ const TxDetail = ({txHash, onClose}: {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             {txReceipt && <Text>{shortenAddress(txReceipt.to!, 10, 10) }</Text>}
             <TouchableOpacity
-              onPress={() => txReceipt && Clipboard.setString(txReceipt.to!)}
+              onPress={() => {
+                if (!txReceipt) return
+                Clipboard.setString(txReceipt.to!)
+                Toast.show({
+                  type: "simpleNoti",
+                  text1: "Copied to clipboard"
+                })
+              }}
             >
               <Icon name='copy' width={16} height={16} color={"#8D8D8D"} />
             </TouchableOpacity>
