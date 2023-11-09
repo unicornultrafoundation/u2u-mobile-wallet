@@ -40,7 +40,7 @@ const StakingDataCard = () => {
         </View>
         <View style={{flexDirection: 'row'}}>
           <StakingInfoItem title={t('rewardsPerEpoch')} value={formatNumberString(rewardsPerEpoch, 4)} />
-          <StakingInfoItem title={t('circulatingSupply')} value={formatNumberString(supply)} />
+          <StakingInfoItem title={t('circulatingSupply')} value={supply ? formatNumberString(supply) : "0"} />
         </View>
       </View>
     </View>

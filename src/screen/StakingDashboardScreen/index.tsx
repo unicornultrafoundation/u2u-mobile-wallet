@@ -15,6 +15,8 @@ import ValidatorsList from './ValidatorsList'
 import Tab from '../../component/Tab'
 import DelegationList from './DelegationList'
 import WithdrawalRequestList from './WithdrawalRequestList'
+import { ScrollView } from 'react-native'
+import LockedStakeList from './LockedStakeList'
 
 const StakingDashboardScreen = () => {
   const route = useRoute()
@@ -35,6 +37,7 @@ const StakingDashboardScreen = () => {
     { label: 'Validators', value: 'validators' },
     { label: 'Delegation', value: 'delegation' },
     { label: 'Withdrawal Request', value: 'wr' },
+    { label: 'Locked stake', value: 'locked' },
   ];
 
   const handleChangeTab = (t: string) => {
@@ -65,25 +68,32 @@ const StakingDashboardScreen = () => {
         <InvestmentTotalCard />
         <Separator />
         <StakingDataCard />
-        <Tab
-          tabs={tabs}
-          selectedTab={tab}
-          onChange={handleChangeTab}
-          tabStyle={{
-            borderColor: 'transparent',
-            alignItems: 'flex-start',
-            justifyContent: 'flex-start',
-            paddingLeft: 0,
-            paddingRight: 12,
-          }}
-          containerStyle={{
-            borderColor: 'transparent',
-            // marginTop: 8,
-          }}
-        />
+        <View>
+          <ScrollView
+            horizontal
+          >
+            <Tab
+              tabs={tabs}
+              selectedTab={tab}
+              onChange={handleChangeTab}
+              tabStyle={{
+                borderColor: 'transparent',
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start',
+                paddingLeft: 0,
+                paddingRight: 12,
+              }}
+              containerStyle={{
+                borderColor: 'transparent',
+                // marginTop: 8,
+              }}
+            />
+          </ScrollView>
+        </View>
         {tab === 'validators' && (<ValidatorsList />)}
         {tab === 'delegation' && (<DelegationList />)}
         {tab === 'wr' && (<WithdrawalRequestList />)}
+        {tab === 'locked' && <LockedStakeList />}
       </KeyboardAvoidingView>
     </View>
   )

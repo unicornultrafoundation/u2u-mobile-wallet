@@ -120,10 +120,18 @@ export const queryDelegatorDetail = (address: string) => apolloClient.query({
 })
 
 export const queryLockedStake = (delegator: string, valIdHex: string) => apolloClient.query({
-  query: Schema().LOCKE_STAKE,
+  query: Schema().LOCKED_STAKE,
   variables: {
     delegatorAddress: delegator,
     valId: valIdHex
+  },
+  fetchPolicy: "no-cache"
+})
+
+export const queryAllLockedStake = (delegator: string) => apolloClient.query({
+  query: Schema().ALL_LOCKED_STAKE,
+  variables: {
+    delegatorAddress: delegator,
   },
   fetchPolicy: "no-cache"
 })

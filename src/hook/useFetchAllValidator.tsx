@@ -6,9 +6,13 @@ import { useQuery } from "@tanstack/react-query"
 export const useFetchAllValidator = () => {
   const fetchValidators = async () => {
     try {
+      console.log('here all validator 0')
       const { data } = await queryValidators()
+      console.log('1')
       const { data: stakingStats } = await queryStakingStats()
+      console.log('2')
       const totalNetworkStaked = stakingStats && stakingStats.stakings ? BigNumber(stakingStats.stakings[0].totalStaked || 0) : BigNumber(0)
+      console.log('dddddd')
       if (data && data.validators.length > 0) {
         let valIds: number[] = data.validators.map((v: any) => Number(v.validatorId))
         let dataApr: Record<string, any> = {}

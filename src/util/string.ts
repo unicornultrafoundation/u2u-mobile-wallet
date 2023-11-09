@@ -1,5 +1,4 @@
 import BigNumber from "bignumber.js";
-import { keccak256 } from 'js-sha3';
 
 export const truncate = (str: string, len: number) => {
   return `${str.substring(0, Math.min(len, str.length))}...`

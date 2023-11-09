@@ -6,7 +6,9 @@ export const getWalletFromMnemonic = (
   index = 1
 ) => {
   const path = `m/44'/60'/0'/0/${index}`
-  const wallet = ethers.HDNodeWallet.fromPhrase(mnemonic.trim(), path);
+  const _mnemonic = ethers.Mnemonic.fromPhrase(mnemonic.trim());
+  const wallet = ethers.HDNodeWallet.fromMnemonic(_mnemonic, path);
+  // const wallet = ethers.HDNodeWallet.fromPhrase(mnemonic.trim(), path)
   const privateKey = wallet.privateKey;
   const addressStr = wallet.address;
 

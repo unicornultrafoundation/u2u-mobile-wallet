@@ -15,21 +15,24 @@ export interface LockedStake {
 }
 
 export const useFetchLockedStake = (delAddress: string, valId: number) => {
-
   const fetchLockedStake = useCallback(async () => {
     if(!delAddress) return {} as LockedStake
-    const vaIdlHex = `0x${valId.toString(16)}`
+    try {
+      const vaIdlHex = `0x${valId.toString(16)}`
       const {data} = await queryLockedStake(delAddress.toLowerCase(), vaIdlHex)
-    if (data && data?.lockedUps) {
-      return lockedStakeDataProcessor(data?.lockedUps[0])
+      if (data && data?.lockedUps) {
+        return lockedStakeDataProcessor(data?.lockedUps[0])
+      }
+      return {} as LockedStake
+    } catch (error) {
+      return {} as LockedStake
     }
-    return {} as LockedStake
   }, [delAddress, valId])
 
   const { data: lockedStake } = useQuery<LockedStake>({
-    queryKey: ['fetchLockedStake'],
+    queryKey: ['fetchLockedStake', delAddress, valId],
     queryFn: fetchLockedStake,
-    refetchInterval: 5000,
+    refetchInterval: 10000,
     placeholderData: {} as LockedStake
   })
 

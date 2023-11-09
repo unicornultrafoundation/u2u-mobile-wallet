@@ -12,7 +12,7 @@ export const apolloStakingClient = new ApolloClient({
   link: httpStakingLink,
 })
 
-const httpU2UNetworkLink = new HttpLink({ uri: "https://subgraph.uniultra.xyz/subgraphs/name/u2u/sfc-network" })
+const httpU2UNetworkLink = new HttpLink({ uri: "https://testnet-subgraph.uniultra.xyz/subgraphs/name/u2u/sfc-network" })
 export const apolloU2UNetworkClient = new ApolloClient({
   cache: new InMemoryCache(),
   link: httpU2UNetworkLink,

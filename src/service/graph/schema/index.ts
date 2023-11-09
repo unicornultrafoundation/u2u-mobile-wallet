@@ -145,7 +145,7 @@ export const Schema = () => {
         }
       }
     `,
-    LOCKE_STAKE: gql`
+    LOCKED_STAKE: gql`
       query LockedUp($delegatorAddress: String!, $valId: String!) {
         lockedUps (where:{
             delegator: $delegatorAddress
@@ -163,6 +163,25 @@ export const Schema = () => {
             penalty
             endTime
           }
+      }
+    `,
+    ALL_LOCKED_STAKE: gql`
+      query AllLockedUp($delegatorAddress: String!) {
+        lockedUps (where:{
+          delegator: $delegatorAddress
+        }) {
+          delegator {
+            id
+          }
+          validator {
+            id
+          }
+          duration
+          lockedAmount
+          unlockedAmount
+          penalty
+          endTime
+        }
       }
     `,
     DELEGATIONS_PAGINATION: gql`
