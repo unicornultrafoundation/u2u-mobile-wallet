@@ -3,6 +3,7 @@ import { ContractOptions, contractCall } from "../util/contract";
 import { apolloClient, apolloStakingClient, apolloU2UNetworkClient } from "./graph/client";
 import { Schema } from "./graph/schema";
 import { TABLE_LIMIT } from "../config/constant";
+import { LockedStake } from "../hook/useFetchLockedStake";
 
 export interface Validation {
   id: string
@@ -47,6 +48,7 @@ export interface Validator {
   votingPower?: number
   totalDelegator: number
   apr: number
+  authLockInfo?: LockedStake,
 }
 
 export interface ValidatorEpochInfo {

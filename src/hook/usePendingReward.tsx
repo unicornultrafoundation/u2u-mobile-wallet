@@ -28,7 +28,7 @@ export const usePendingReward = ({stakingContractOptions, delegatorAddress, vali
   const {data: pendingRewards} = useQuery({
     queryKey: ['getPendingRewards', delegatorAddress, validatorId, stakingContractOptions, rpc],
     queryFn: getPendingRewards,
-    refetchInterval: 5000,
+    refetchInterval: 30000,
     placeholderData: "0"
   })
 

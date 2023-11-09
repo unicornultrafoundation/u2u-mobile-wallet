@@ -32,7 +32,7 @@ export const useFetchLockedStake = (delAddress: string, valId: number) => {
   const { data: lockedStake } = useQuery<LockedStake>({
     queryKey: ['fetchLockedStake', delAddress, valId],
     queryFn: fetchLockedStake,
-    refetchInterval: 10000,
+    // refetchInterval: 10000,
     placeholderData: {} as LockedStake
   })
 

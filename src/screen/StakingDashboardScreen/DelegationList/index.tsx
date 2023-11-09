@@ -1,6 +1,5 @@
 import React from 'react'
-import { styles } from './styles'
-import { FlatList, KeyboardAvoidingView, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { useFetchDelegator } from '../../../hook/useFetchDelegator';
 import { useWallet } from '../../../hook/useWallet';
 import { usePreferenceStore } from '../../../state/preferences';

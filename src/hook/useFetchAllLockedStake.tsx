@@ -3,16 +3,7 @@ import BigNumber from "bignumber.js"
 import { queryAllLockedStake, queryLockedStake } from "../service/staking"
 import { lockedStakeDataProcessor } from "../util/staking"
 import { useQuery } from "@tanstack/react-query"
-
-export interface LockedStake {
-  delegator: string
-  validatorId: string
-  duration: number
-  endTime: number
-  lockedAmount: BigNumber
-  penalty: BigNumber
-  isLockedUp: boolean
-}
+import { LockedStake } from './useFetchLockedStake'
 
 export const useFetchAllLockedStake = (delAddress: string) => {
   const fetchAllLockedStake = useCallback(async () => {
