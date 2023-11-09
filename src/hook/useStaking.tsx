@@ -42,7 +42,7 @@ export function useStaking() {
   const { accumulateRewardPerEpoch } = useAPR(stakingContractOptions)
   const { supply } = useTotalSupply(stakingContractOptions)
   const { rewardsPerEpoch } = useEpochRewards(stakingContractOptions)
-  const { validators } = useFetchAllValidator()
+  const { validators, fetch: fetchAllValidators } = useFetchAllValidator()
   const { parseDelegate, submitDelegate } = useDelegate(stakingContractOptions)
   const { claimRewards } = useClaimRewards(stakingContractOptions)
   const { undegegate } = useUndelegate(stakingContractOptions)
@@ -85,6 +85,7 @@ export function useStaking() {
     supply,
     rewardsPerEpoch,
     validators,
+    fetchAllValidators,
     allPendingRewards,
     totalStakedAmount,
     parseDelegate,
