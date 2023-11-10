@@ -7,6 +7,7 @@ import { LockedStake } from './useFetchLockedStake'
 
 export const useFetchAllLockedStake = (delAddress: string) => {
   const fetchAllLockedStake = useCallback(async () => {
+    console.log('fetchAllLockedStake')
     if(!delAddress) return [] as LockedStake[]
     try {
       const {data} = await queryAllLockedStake(delAddress.toLowerCase())
@@ -25,7 +26,7 @@ export const useFetchAllLockedStake = (delAddress: string) => {
   const { data: lockedStake } = useQuery<LockedStake[]>({
     queryKey: ['fetchAllLockedStake', delAddress],
     queryFn: fetchAllLockedStake,
-    refetchInterval: 10000,
+    refetchInterval: 60000,
     placeholderData: [] as LockedStake[]
   })
 

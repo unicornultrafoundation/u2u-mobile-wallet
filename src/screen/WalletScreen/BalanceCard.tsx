@@ -20,17 +20,18 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
 
   const {wallet} = useWallet()
   const {balance} = useNativeBalance(wallet.address)
+  const {toggleShowBalance, showBalance} = usePreferenceStore()
 
   return (
     <View style={styles.balanceCardContainer}>
-      <TouchableOpacity style={styles.balanceCardVisibleButton}>
+      <TouchableOpacity style={styles.balanceCardVisibleButton} onPress={toggleShowBalance}>
         <Text style={styles.balanceText}>Total balance</Text>
         <Icon name="eye" width={16} height={16} />
       </TouchableOpacity>
 
       <Text style={styles.balanceNumberInFiatText}>
         {/* $0 */}
-        {formatNumberString(balance, 4)} U2U
+        {showBalance ? formatNumberString(balance, 4) : "******"} U2U
       </Text>
 
       {/* {!collapsed && (

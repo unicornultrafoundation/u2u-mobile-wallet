@@ -8,7 +8,7 @@
 import 'react-native-gesture-handler';
 import '@ethersproject/shims';
 import 'event-target-polyfill'
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Linking, StatusBar, TouchableOpacity, View } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -37,6 +37,8 @@ import Icon from './src/component/Icon';
 import { useNetwork } from './src/hook/useNetwork';
 import { useGlobalStore } from './src/state/global';
 import AuthScreen from './src/screen/AuthScreen';
+import { useNetworkStore } from './src/state/network';
+import { SUPPORTED_CHAINS } from './src/config/chain';
 
 //@ts-ignore
 global.CustomEvent = global.Event
@@ -50,7 +52,8 @@ function App(): JSX.Element {
   const {darkMode: isDarkMode} = usePreferenceStore()
   const preferenceTheme = isDarkMode ? darkTheme : lightTheme
 
-  const {blockExplorer} = useNetwork()
+  const {blockExplorer, chainId} = useNetwork()
+  const networkStore = useNetworkStore()
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? darkTheme.background.background : lightTheme.background.background,
@@ -211,6 +214,14 @@ function App(): JSX.Element {
       }
     }
   }, [preferenceTheme])
+
+  useEffect(() => {
+    if (!loaded) return 
+    const networkItem = SUPPORTED_CHAINS.find((i) => i.chainID === chainId)
+    if (!networkItem) return;
+    networkStore.switchNetwork(networkItem)
+    
+  }, [loaded, chainId])
 
   if (!loaded) {
     return <SplashScreen />

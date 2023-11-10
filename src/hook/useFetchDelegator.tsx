@@ -26,7 +26,6 @@ export const useFetchDelegator = (delAddress: string) => {
     queryKey: ['fetchDelegator', delAddress],
     queryFn: () => fetchDelegator(delAddress),
     placeholderData: {} as Delegator,
-    // refetchInterval: 30000
     enabled: false
   })
 

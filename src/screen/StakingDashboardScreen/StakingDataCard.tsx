@@ -44,6 +44,7 @@ const StakingDataCard = () => {
   }, [])
 
   useEffect(() => {
+    if (!epoch) return
     fetchRewardsPerEpoch()
   }, [epoch])
 

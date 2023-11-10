@@ -109,17 +109,6 @@ const DAppWebView = () => {
     )
   }, [wallet, networkConfig])
 
-  // useEffect(() => {
-  //   console.log('in use effect')
-  //   if (!bottomSheetRef || !bottomSheetRef.current) return
-  //   console.log('eeee', confirmModalVisible)
-  //   if (confirmModalVisible) {
-  //     bottomSheetRef.current?.expand()
-  //   } else {
-  //     bottomSheetRef.current?.forceClose()
-  //   }
-  // }, [confirmModalVisible, bottomSheetRef])
-
   const handleConfirmTx = (txHash: string) => {
     const codeToRun = parseRun(requestIdForCallback, txHash)
     if (webRef && webRef.current) {

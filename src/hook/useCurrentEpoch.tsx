@@ -3,7 +3,6 @@ import { useNetwork } from "./useNetwork";
 import { fetchCurrentEpoch } from "../service/staking";
 import BigNumber from "bignumber.js";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 
 const getCurrentEpoch = async (rpc: string, stakingContractOptions?: ContractOptions) => {
   if (!stakingContractOptions) {
@@ -25,7 +24,6 @@ export const useCurrentEpoch = (stakingContractOptions?: ContractOptions) => {
   const {data: epoch, refetch} = useQuery({
     queryKey: ['getCurrentEpoch', stakingContractOptions, rpc],
     queryFn: () => getCurrentEpoch(rpc, stakingContractOptions),
-    // refetchInterval: 60000,
     initialData: 0,
     enabled: false
   })

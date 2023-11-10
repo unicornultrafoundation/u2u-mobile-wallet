@@ -14,30 +14,32 @@ export interface LockedStake {
   isLockedUp: boolean
 }
 
-export const useFetchLockedStake = (delAddress: string, valId: number) => {
-  const fetchLockedStake = useCallback(async () => {
-    console.log('fetchLockedStake')
-    if(!delAddress) return {} as LockedStake
-    try {
-      const vaIdlHex = `0x${valId.toString(16)}`
-      const {data} = await queryLockedStake(delAddress.toLowerCase(), vaIdlHex)
-      if (data && data?.lockedUps) {
-        return lockedStakeDataProcessor(data?.lockedUps[0])
-      }
-      return {} as LockedStake
-    } catch (error) {
-      return {} as LockedStake
+const fetchLockedStake = async (delAddress: string, valId: number) => {
+  if(!delAddress) return {} as LockedStake
+  try {
+    const vaIdlHex = `0x${valId.toString(16)}`
+    const {data} = await queryLockedStake(delAddress.toLowerCase(), vaIdlHex)
+    if (data && data?.lockedUps) {
+      return lockedStakeDataProcessor(data?.lockedUps[0])
     }
-  }, [delAddress, valId])
+    return {} as LockedStake
+  } catch (error) {
+    return {} as LockedStake
+  }
+}
 
-  const { data: lockedStake } = useQuery<LockedStake>({
+export const useFetchLockedStake = (delAddress: string, valId: number) => {
+
+  const { data: lockedStake, refetch } = useQuery<LockedStake>({
     queryKey: ['fetchLockedStake', delAddress, valId],
-    queryFn: fetchLockedStake,
-    // refetchInterval: 10000,
-    placeholderData: {} as LockedStake
+    queryFn: () => fetchLockedStake(delAddress, valId),
+    refetchInterval: 60000,
+    initialData: {} as LockedStake,
+    // enabled: false
   })
 
   return {
-    lockedStake: lockedStake || {} as LockedStake
+    lockedStake: lockedStake || {} as LockedStake,
+    fetchLockedStake: refetch
   }
 }

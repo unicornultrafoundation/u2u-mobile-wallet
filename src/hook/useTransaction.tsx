@@ -19,6 +19,7 @@ export const useTransaction = () => {
 
       const rs = await estimateGasPriceUtil(rpc)
       txStore.setEstimatedGasPrice(rs.toString())
+      txStore.setGasPrice(rs.toString())
       return rs.toString() 
     } catch (error) {
       console.log('estimateGasPrice fail', error)
