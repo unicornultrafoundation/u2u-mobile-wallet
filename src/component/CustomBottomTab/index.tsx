@@ -9,6 +9,7 @@ import { useGlobalStore } from '../../state/global';
 export const TABBAR_HEIGHT = 80
 
 const SHOW_BOTTOM_TAB_ROUTE = [
+  'Home',
   'Wallet',
   'StakingDashboard',
   'U2UEcoDashboard'

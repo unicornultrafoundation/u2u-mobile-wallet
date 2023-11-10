@@ -1,12 +1,14 @@
 import {ActivityIndicator, SafeAreaView, ScrollView, View} from 'react-native';
 import { useStyles } from './styles';
 import TextInput from '../../component/TextInput';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Tab from '../../component/Tab';
 import FeaturedNews from './FeaturedNews';
 import LatestNews from './LatestNews';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DiscoverStackParamList } from '../../stack/DiscoverStack';
+import { useGlobalStore } from '../../state/global';
+import { useFocusEffect } from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<DiscoverStackParamList, 'Home'>;
 
@@ -22,6 +24,7 @@ export interface Article {
 
 const DiscoverScreen = ({ route }: Props) => {
   const styles = useStyles();
+  const { setRouteName } = useGlobalStore();
   const [queryString, setQueryString] = useState('');
   const [currentCategory, setCurrentCategory] = useState<string | undefined>();
   const [loading, setLoading] = useState(true)
@@ -48,6 +51,12 @@ const DiscoverScreen = ({ route }: Props) => {
       setTab(route.params.defaultTab)
     }
   }, [route.params])
+
+  useFocusEffect(
+    useCallback(() => {
+      setRouteName(route.name);
+    }, [route]),
+  );
 
   useEffect(() => {
     (async () => {
@@ -80,11 +89,11 @@ const DiscoverScreen = ({ route }: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 120 }} nestedScrollEnabled>
-        <TextInput
+        {/* <TextInput
           containerStyle={{ height: 40 }}
           value={queryString}
           onChangeText={text => setQueryString(text)}
-        />
+        /> */}
 
         <Tab
           tabs={tabs}
