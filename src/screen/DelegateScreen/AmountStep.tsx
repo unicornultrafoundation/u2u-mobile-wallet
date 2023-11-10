@@ -22,6 +22,7 @@ import { useStaking } from '../../hook/useStaking';
 import { Validator } from '../../service/staking';
 import { GAS_LIMIT_HARD } from '../../config/constant';
 import { useDelegate } from '../../hook/useDelegate';
+import { getPhonePaddingBottom } from '../../util/platform';
 
 const AmountStep = ({onNextStep, onBack, validator}: {
   onNextStep: () => void;
@@ -62,7 +63,7 @@ const AmountStep = ({onNextStep, onBack, validator}: {
 
   return (
     <KeyboardAvoidingView
-      style={{flex: 1}}
+      style={{flex: 1, paddingBottom: getPhonePaddingBottom()}}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={24}
     >

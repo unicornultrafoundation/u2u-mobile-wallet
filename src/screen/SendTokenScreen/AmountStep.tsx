@@ -16,6 +16,7 @@ import { SvgUri } from 'react-native-svg';
 import BigNumber from 'bignumber.js';
 import { encodeTxData } from '../../util/contract';
 import { ERC20_ABI } from '../../util/abis/erc20';
+import { getPhonePaddingBottom } from '../../util/platform';
 
 const AmountStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -69,7 +70,7 @@ const AmountStep = ({onNextStep, onBack}: {
 
   return (
     <KeyboardAvoidingView
-      style={{flex: 1}}
+      style={{flex: 1, paddingBottom: getPhonePaddingBottom()}}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={24}
     >
