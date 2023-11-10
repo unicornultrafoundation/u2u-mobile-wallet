@@ -17,6 +17,7 @@ export interface Article {
   date: string
   category: string
   thumbnail: string
+  content: string
 }
 
 const DiscoverScreen = ({ route }: Props) => {
