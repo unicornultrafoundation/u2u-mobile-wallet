@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FlatList, View } from 'react-native';
 import { useFetchDelegator } from '../../../hook/useFetchDelegator';
 import { useWallet } from '../../../hook/useWallet';
@@ -8,11 +8,15 @@ import DelegationItem from './DelegationItem';
 
 const DelegationList = () => {
   const {wallet} = useWallet()
-  const {delegator} = useFetchDelegator(wallet.address)
+  const {delegator, fetchDelegator} = useFetchDelegator(wallet.address)
   const { validations, address: delegatorAddr } = delegator
 
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+
+  useEffect(() => {
+    fetchDelegator()
+  }, [])
 
   return (
     <View style={{marginBottom: 400}}>

@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query"
 
 export const useFetchDelegator = (delAddress: string) => {
   const fetchDelegator = async (address: string) => {
+    console.log('fetchDelegator')
     if(!address) return {} as Delegator
     try {
       const {data} = await queryDelegatorDetail(address.toLowerCase())
@@ -21,14 +22,16 @@ export const useFetchDelegator = (delAddress: string) => {
     }
   }
 
-  const { data: delegator } = useQuery<Delegator>({
+  const { data: delegator, refetch } = useQuery<Delegator>({
     queryKey: ['fetchDelegator', delAddress],
     queryFn: () => fetchDelegator(delAddress),
     placeholderData: {} as Delegator,
-    refetchInterval: 30000
+    // refetchInterval: 30000
+    enabled: false
   })
 
   return {
-    delegator: delegator || {} as Delegator
+    delegator: delegator || {} as Delegator,
+    fetchDelegator: refetch
   }
 }

@@ -9,7 +9,6 @@ import { useTotalSupply } from "./useTotalSupply";
 import { useEpochRewards } from "./useEpochRewards";
 import { useFetchAllValidator } from "./useFetchAllValidator";
 import { useDelegate } from "./useDelegate";
-import { usePendingReward } from "./usePendingReward";
 import { useClaimRewards } from "./useClaimRewards";
 import { useUndelegate } from "./useUndelegate";
 
@@ -39,13 +38,7 @@ export function useStaking() {
     }
   }, [stakingContractOptions])
 
-  const { accumulateRewardPerEpoch } = useAPR(stakingContractOptions)
-  const { supply } = useTotalSupply(stakingContractOptions)
-  const { rewardsPerEpoch } = useEpochRewards(stakingContractOptions)
-  const { validators, fetch: fetchAllValidators } = useFetchAllValidator()
-  const { parseDelegate, submitDelegate } = useDelegate(stakingContractOptions)
-  const { claimRewards } = useClaimRewards(stakingContractOptions)
-  const { undegegate } = useUndelegate(stakingContractOptions)
+  const { validators } = useFetchAllValidator()
 
   useEffect(() => {
     (async () => {
@@ -81,16 +74,7 @@ export function useStaking() {
 
   return {
     stakingContractOptions,
-    accumulateRewardPerEpoch,
-    supply,
-    rewardsPerEpoch,
-    validators,
-    fetchAllValidators,
     allPendingRewards,
     totalStakedAmount,
-    parseDelegate,
-    submitDelegate,
-    claimRewards,
-    undegegate
   }
 }

@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query"
 export const useFetchAllValidator = () => {
   const fetchValidators = async () => {
     try {
-      console.log('fetch all validator')
+      console.log('fetchValidators')
       const { data } = await queryValidators()
       const { data: stakingStats } = await queryStakingStats()
       const totalNetworkStaked = stakingStats && stakingStats.stakings ? BigNumber(stakingStats.stakings[0].totalStaked || 0) : BigNumber(0)

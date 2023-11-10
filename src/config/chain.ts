@@ -21,7 +21,7 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     chainID: "39",
     name: "Mainnet",
     rpc: "https://rpc-mainnet.uniultra.xyz",
-    explorerURL: "https://u2uscan.xyz/",
+    explorerURL: "https://u2uscan.xyz",
     currency: "U2U",
     suppoted_tokens_endpoint: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/supported_tokens_mainnet.json",
     remote_config_endpoint: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master",

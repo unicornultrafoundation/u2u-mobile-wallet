@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { KeyboardAvoidingView, View } from 'react-native'
 import styles from './styles'
 import { useFocusEffect, useRoute } from '@react-navigation/native'
@@ -17,6 +17,7 @@ import DelegationList from './DelegationList'
 import WithdrawalRequestList from './WithdrawalRequestList'
 import { ScrollView } from 'react-native'
 import LockedStakeList from './LockedStakeList'
+import { useFetchAllValidator } from '../../hook/useFetchAllValidator'
 
 const StakingDashboardScreen = () => {
   const route = useRoute()
@@ -31,6 +32,12 @@ const StakingDashboardScreen = () => {
   const {t} = useTranslation<string>()
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+
+  const { fetch: fetchAllValidators } = useFetchAllValidator()
+
+  useEffect(() => {
+    fetchAllValidators()
+  }, [])
 
   const [tab, setTab] = useState('validators');
   const tabs = [

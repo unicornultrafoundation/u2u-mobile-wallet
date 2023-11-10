@@ -89,17 +89,17 @@ export const fetchPendingRewards = (options: ContractOptions, delegatorAddress: 
 
 export const queryValidators = () => apolloClient.query({
   query: Schema().VALIDATORS,
-  fetchPolicy: "no-cache"
+  // fetchPolicy: "no-cache"
 })
 
 export const queryStakingStats = () => apolloClient.query({
   query: Schema().STAKING_STATS,
-  fetchPolicy: "no-cache"
+  // fetchPolicy: "no-cache"
 })
 
 export const queryValidatorsApr = (vals: number[]) => apolloStakingClient.query({
   query: Schema().VALIDATORS_APR(vals),
-  fetchPolicy: "no-cache"
+  // fetchPolicy: "no-cache"
 })
 
 export const queryEpochOfValidator = (valId: number, valIdHex: string, skip: number) => apolloU2UNetworkClient.query({

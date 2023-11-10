@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { useStaking } from '../../hook/useStaking';
@@ -8,6 +8,10 @@ import styles from './styles';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
+import { useTotalSupply } from '../../hook/useTotalSupply';
+import { useEpochRewards } from '../../hook/useEpochRewards';
+import { useFetchAllValidator } from '../../hook/useFetchAllValidator';
+import { useCurrentEpoch } from '../../hook/useCurrentEpoch';
 
 const StakingInfoItem = ({title, value}: {
   title: string;
@@ -26,10 +30,22 @@ const StakingInfoItem = ({title, value}: {
 
 const StakingDataCard = () => {
   const { t } = useTranslation<string>()
-  const {supply, rewardsPerEpoch, validators} = useStaking()
+  const { stakingContractOptions } = useStaking()
+  const { validators } = useFetchAllValidator()
+  const { supply } = useTotalSupply(stakingContractOptions)
+  const { epoch, fetchEpoch } = useCurrentEpoch(stakingContractOptions)
+  const { rewardsPerEpoch, fetch: fetchRewardsPerEpoch } = useEpochRewards(epoch, stakingContractOptions)
 
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+
+  useEffect(() => {
+    fetchEpoch()
+  }, [])
+
+  useEffect(() => {
+    fetchRewardsPerEpoch()
+  }, [epoch])
 
   return (
     <View style={[styles.stakingDataContainer, {backgroundColor: preferenceTheme.background.surface}]}>
@@ -40,7 +56,7 @@ const StakingDataCard = () => {
         </View>
         <View style={{flexDirection: 'row'}}>
           <StakingInfoItem title={t('rewardsPerEpoch')} value={formatNumberString(rewardsPerEpoch, 4)} />
-          <StakingInfoItem title={t('circulatingSupply')} value={supply ? formatNumberString(supply) : "0"} />
+          <StakingInfoItem title={t('circulatingSupply')} value={supply ? formatNumberString(supply, 0) : "0"} />
         </View>
       </View>
     </View>

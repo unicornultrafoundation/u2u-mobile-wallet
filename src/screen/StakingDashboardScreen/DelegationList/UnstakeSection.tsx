@@ -13,6 +13,7 @@ import Toast from 'react-native-toast-message';
 import { useTransaction } from '../../../hook/useTransaction';
 import Text from '../../../component/Text';
 import { Validation } from '../../../service/staking';
+import { useUndelegate } from '../../../hook/useUndelegate';
 
 const UnstakeSection = ({onCancel, item} : {
   onCancel: () => void
@@ -25,7 +26,8 @@ const UnstakeSection = ({onCancel, item} : {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
-  const {undegegate} = useStaking()
+  const {stakingContractOptions} = useStaking()
+  const { undegegate } = useUndelegate(stakingContractOptions)
   const {resetTxState} = useTransaction()
 
   const handleUnstake = async () => {

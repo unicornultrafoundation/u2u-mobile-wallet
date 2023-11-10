@@ -48,7 +48,7 @@ export const formatNumberString = (numberString: string, fragtionsCount?: number
     suffix: ''
   }
   BigNumber.config({ FORMAT: fmt })
-  if (fragtionsCount) return (new BigNumber(numberString)).toFormat(fragtionsCount, roundMode)
+  if (fragtionsCount || fragtionsCount === 0) return (new BigNumber(numberString)).toFormat(fragtionsCount, roundMode)
   return (new BigNumber(numberString)).toFormat()
 }
 

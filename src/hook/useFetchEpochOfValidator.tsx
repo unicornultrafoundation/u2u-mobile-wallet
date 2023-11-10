@@ -10,6 +10,7 @@ interface EpochOfValidatorResult {
 export const useFetchEpochOfValidator = (valId: number, skip: number = 0) => {
 
   const fetchEpochOfValidator = async (): Promise<EpochOfValidatorResult> => {
+    console.log('fetchEpochOfValidator')
     if (!valId) {
       return {
         epoches: [] as ValidatorEpochInfo[],

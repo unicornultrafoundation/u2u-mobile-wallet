@@ -16,6 +16,7 @@ export interface LockedStake {
 
 export const useFetchLockedStake = (delAddress: string, valId: number) => {
   const fetchLockedStake = useCallback(async () => {
+    console.log('fetchLockedStake')
     if(!delAddress) return {} as LockedStake
     try {
       const vaIdlHex = `0x${valId.toString(16)}`
