@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { useStaking } from '../../hook/useStaking';
@@ -33,20 +33,22 @@ const StakingDataCard = () => {
   const { stakingContractOptions } = useStaking()
   const { validators } = useFetchAllValidator()
   const { supply } = useTotalSupply(stakingContractOptions)
-  const { epoch, fetchEpoch } = useCurrentEpoch(stakingContractOptions)
-  const { rewardsPerEpoch, fetch: fetchRewardsPerEpoch } = useEpochRewards(epoch, stakingContractOptions)
+  const { fetchEpoch } = useCurrentEpoch(stakingContractOptions)
+  const { fetchRewardsPerEpoch } = useEpochRewards(stakingContractOptions)
 
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
-  useEffect(() => {
-    fetchEpoch()
-  }, [])
+  const [rewardsPerEpoch, setRewardsPerEpoch] = useState("0")
 
   useEffect(() => {
-    if (!epoch) return
-    fetchRewardsPerEpoch()
-  }, [epoch])
+    (async () => {
+      const epoch = await fetchEpoch()
+      if (!epoch) return
+      const rs = await fetchRewardsPerEpoch(epoch)
+      setRewardsPerEpoch(rs)
+    })()
+  }, [])
 
   return (
     <View style={[styles.stakingDataContainer, {backgroundColor: preferenceTheme.background.surface}]}>

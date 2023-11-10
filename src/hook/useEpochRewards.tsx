@@ -25,18 +25,14 @@ const getEpochRewards = async (epoch: number, rpc: string, stakingContractOption
   }
 }
 
-export const useEpochRewards = (epoch: number, stakingContractOptions?: ContractOptions) => {
+export const useEpochRewards = (stakingContractOptions?: ContractOptions) => {
   const {rpc} = useNetwork()
 
-  const {data: rewardsPerEpoch, refetch} = useQuery({
-    queryKey: ['getEpochRewards', stakingContractOptions, rpc, epoch],
-    queryFn: () => getEpochRewards(epoch, rpc, stakingContractOptions),
-    enabled: false,
-    initialData: "0"
-  })
+  const fetchRewardsPerEpoch = async (epoch: number) => {
+    return getEpochRewards(epoch, rpc, stakingContractOptions)
+  }
 
   return {
-    rewardsPerEpoch,
-    fetch: refetch
+    fetchRewardsPerEpoch
   }
 }
