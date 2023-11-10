@@ -13,6 +13,7 @@ export const useFetchDelegator = (delAddress: string) => {
       const {data: stakingStats} = await queryStakingStats()
       const totalNetworkStaked = stakingStats && stakingStats.stakings ? BigNumber(stakingStats.stakings[0].totalStaked || 0) : BigNumber(0)
       if (data && data?.delegators) {
+        console.log('data', data?.delegators[0])
         return delegatorDataProcessor(data?.delegators[0], totalNetworkStaked)
       }
       return {} as Delegator
@@ -22,15 +23,16 @@ export const useFetchDelegator = (delAddress: string) => {
     }
   }
 
-  const { data: delegator, refetch } = useQuery<Delegator>({
+  const { data: delegator, isLoading, refetch } = useQuery<Delegator>({
     queryKey: ['fetchDelegator', delAddress],
     queryFn: () => fetchDelegator(delAddress),
     placeholderData: {} as Delegator,
-    enabled: false
+    refetchInterval: 30000
   })
 
   return {
     delegator: delegator || {} as Delegator,
-    fetchDelegator: refetch
+    fetchDelegator: refetch,
+    isLoading
   }
 }

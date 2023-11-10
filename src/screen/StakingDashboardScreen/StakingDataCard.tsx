@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { useStaking } from '../../hook/useStaking';
@@ -41,6 +41,12 @@ const StakingDataCard = () => {
 
   const [rewardsPerEpoch, setRewardsPerEpoch] = useState("0")
 
+  const totalDelegator = useMemo(() => {
+    return validators.reduce((pre, cur) => {
+      return pre + cur.totalDelegator
+    }, 0)
+  }, [validators])
+
   useEffect(() => {
     (async () => {
       const epoch = await fetchEpoch()
@@ -54,8 +60,8 @@ const StakingDataCard = () => {
     <View style={[styles.stakingDataContainer, {backgroundColor: preferenceTheme.background.surface}]}>
       <View>
         <View style={{flexDirection: 'row', paddingBottom: 12}}>
-          <StakingInfoItem title={t('totalValidator')} value={validators.length.toString()} />
-          <StakingInfoItem title={t('totalDelegator')} value={validators.length.toString()} />
+          <StakingInfoItem title={t('totalValidator')} value={formatNumberString(validators.length.toString())} />
+          <StakingInfoItem title={t('totalDelegator')} value={formatNumberString(totalDelegator.toString())} />
         </View>
         <View style={{flexDirection: 'row'}}>
           <StakingInfoItem title={t('rewardsPerEpoch')} value={formatNumberString(rewardsPerEpoch, 4)} />

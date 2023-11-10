@@ -35,7 +35,8 @@ export const useFetchAllValidator = () => {
   const { data: validators, refetch } = useQuery<Validator[]>({
     queryKey: ['fetchValidators'],
     queryFn: fetchValidators,
-    enabled: false
+    // enabled: false
+    refetchInterval: 60000
   })
 
   return {

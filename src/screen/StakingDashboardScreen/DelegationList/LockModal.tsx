@@ -44,7 +44,7 @@ const LockModal = ({trigger, item}: {
   // })
 
   const {lockedStake: valLockedStake} = useFetchLockedStake(item.validator.auth.toLowerCase(), Number(item.validator.valId))
-  const {lockedStake: myLockedStake} = useFetchLockedStake(wallet.address.toLowerCase(), Number(item.validator.valId))
+  const {lockedStake: myLockedStake, fetchLockedStake} = useFetchLockedStake(wallet.address.toLowerCase(), Number(item.validator.valId))
   const {lockedAmount, penalty} = myLockedStake
   const {lockStake, relockStake} = useLockStake(stakingContractOptions)
   const {resetTxState} = useTransaction()
@@ -60,7 +60,7 @@ const LockModal = ({trigger, item}: {
   }, [valLockedStake])
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
+  const snapPoints = useMemo(() => ['50%'], []);
 
   const [amount, setAmount] = useState('0')
   const [duration, setDuration] = useState('0')
@@ -120,6 +120,7 @@ const LockModal = ({trigger, item}: {
   }
 
   const alertSuccess = (tx: TransactionReceipt) => {
+    fetchLockedStake()
     Toast.show({
       type: 'success',
       text1: 'Lock stake success',
@@ -273,7 +274,7 @@ const LockModal = ({trigger, item}: {
       </TouchableOpacity>
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        index={1}
+        index={0}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
         handleStyle={{
