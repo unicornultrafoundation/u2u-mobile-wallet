@@ -58,7 +58,7 @@ const BannerSection: React.FC<BannerSectionProps> = ({
         horizontal={true}
         renderItem={({item, index}: {item: any, index: number}) => {
           const RenderItemComponent = renderItemComponent;
-          return <RenderItemComponent {...item} index={index} />;
+          return <RenderItemComponent {...item} index={index} key={`banner-item-${item.id}`} />;
         }}
         keyExtractor={(item: any) => item.id}
       />

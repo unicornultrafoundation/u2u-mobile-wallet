@@ -17,7 +17,7 @@ const FeatureTab = () => {
       ) : (
         <>
           <BannerSection renderItemComponent={ImageItem} data={DATA} />
-          <BannerSection renderItemComponent={AnnouncementItem} data={DATA} />
+          {/* <BannerSection renderItemComponent={AnnouncementItem} data={DATA} /> */}
         </>
       )}
       <TopDapp />

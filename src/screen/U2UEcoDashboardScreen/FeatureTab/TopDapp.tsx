@@ -40,20 +40,23 @@ const TopDapp = () => {
         ) : (
           groupData.map((group, groupIndex) => (
             <View
-              key={groupIndex}
+              key={`top-group-${groupIndex}`}
               style={{
                 width: Dimensions.get('window').width * 0.85,
               }}>
               {group.map((item, index) => (
-                <SelectDappModal
-                  trigger={() => {
-                    return <DappRow dappMeta={item} key={`dapp-${index}`} />;
-                  }}
-                  title={item.title}
-                  description={item.description}
-                  logoImg={item.logoImg}
-                  key={`dapp-modal-${item.title}-${index}`}
-                />
+                <View
+                  key={`top-dapp-modal-${item.title}-${index}`}
+                >
+                  <SelectDappModal
+                    trigger={() => {
+                      return <DappRow dappMeta={item} key={`dapp-${index}`} />;
+                    }}
+                    title={item.title}
+                    description={item.description}
+                    logoImg={item.logoImg}
+                  />
+                </View>
               ))}
             </View>
           ))
