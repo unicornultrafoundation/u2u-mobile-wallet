@@ -54,7 +54,7 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
-      case 'arrowLeft':
+      case 'arrow-left':
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg

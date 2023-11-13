@@ -14,7 +14,8 @@ const SHOW_BOTTOM_TAB_ROUTE = [
   'Home',
   'Wallet',
   'StakingDashboard',
-  'U2UEcoDashboard'
+  'U2UEcoDashboard',
+  'Setting'
 ]
 
 export default ({ state, descriptors, navigation }: any) => {
@@ -74,7 +75,7 @@ export default ({ state, descriptors, navigation }: any) => {
           if (route.name === 'DiscoverStack') {
             return (
               <Text style={[styles.tabTitle, {color: focused ? color.primary[500] : color.neutral[500]}]}>
-                Discover
+                {t('discover')}
               </Text>
             )
           } else if (route.name === 'EcosystemStack') {

@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { TouchableOpacity, View } from 'react-native';
-import Icon from '../../component/Icon';
 import { styles } from './styles';
-import { useTranslation } from 'react-i18next';
 import Text from '../../component/Text';
-import OtpInputs from 'react-native-otp-inputs';
+import Icon from '../../component/Icon';
+import { useTranslation } from 'react-i18next';
 import theme from '../../theme';
+import OtpInputs from 'react-native-otp-inputs';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
-import Button from '../../component/Button';
 import { useLocalStore } from '../../state/local';
+import Button from '../../component/Button';
 
 const AuthStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
   onBack: () => void;
 }) => {
+  const {t} = useTranslation<string>()
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
-  const { t } = useTranslation<string>()
   const {password} = useLocalStore()
 
   const [internalPassword, setInternalPassword] = useState('')
@@ -60,7 +60,7 @@ const AuthStep = ({onNextStep, onBack}: {
               }
             ]}
           >
-            Please input Security password to confirm transaction
+            {t('enterPasswordToContinue')}
           </Text>
           <OtpInputs
             autofillFromClipboard={false}
@@ -98,6 +98,6 @@ const AuthStep = ({onNextStep, onBack}: {
       </View>
     </View>
   )
-};
+}
 
 export default AuthStep;

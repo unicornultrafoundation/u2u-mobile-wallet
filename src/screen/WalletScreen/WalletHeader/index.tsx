@@ -61,7 +61,10 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
             Clipboard.setString(wallet.address)
             Toast.show({
               type: "simpleNoti",
-              text1: "Copied to clipboard"
+              text1: "Copied to clipboard",
+              props: {
+                width: '45%'
+              }
             })
           }}
         >

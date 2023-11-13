@@ -124,7 +124,10 @@ const TxDetail = ({txHash, onClose}: {
                 Clipboard.setString(txReceipt.to!)
                 Toast.show({
                   type: "simpleNoti",
-                  text1: "Copied to clipboard"
+                  text1: "Copied to clipboard",
+                  props: {
+                    width: '45%'
+                  }
                 })
               }}
             >

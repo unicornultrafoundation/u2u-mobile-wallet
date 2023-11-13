@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info'
 import Text from '../../component/Text';
@@ -11,14 +11,27 @@ import Separator from '../../component/Separator';
 import LegalModal from './LegalModal';
 import LanguageModal from './LanguageModal';
 import { useTranslation } from 'react-i18next';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
+import { useGlobalStore } from '../../state/global';
 
 const VERSION = DeviceInfo.getVersion()
 
 const SettingScreen = () => {
+  const navigation = useNavigation<any>()
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
+  const { setRouteName } = useGlobalStore();
+
   const {t} = useTranslation<string>()
+
+  const route = useRoute();
+
+  useFocusEffect(
+    useCallback(() => {
+      setRouteName(route.name);
+    }, [route]),
+  );
 
   return (
     <View
@@ -75,7 +88,10 @@ const SettingScreen = () => {
             )
           }}
         />
-        <TouchableOpacity style={styles.settingItem}>
+        <TouchableOpacity
+          style={styles.settingItem}
+          onPress={() => navigation.navigate('ExportSeedPhrase')}
+        >
           <Icon
             name='lock'
             width={20}
@@ -94,7 +110,7 @@ const SettingScreen = () => {
                 theme.typography.caption1.medium
               ]}
             >
-              Export seed phrase
+              {t('exportSeedPhrase')}
             </Text>
           </View>
           <Icon
