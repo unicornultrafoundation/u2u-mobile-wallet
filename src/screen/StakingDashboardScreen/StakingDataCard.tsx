@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { useStaking } from '../../hook/useStaking';
@@ -8,6 +8,10 @@ import styles from './styles';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
+import { useTotalSupply } from '../../hook/useTotalSupply';
+import { useEpochRewards } from '../../hook/useEpochRewards';
+import { useFetchAllValidator } from '../../hook/useFetchAllValidator';
+import { useCurrentEpoch } from '../../hook/useCurrentEpoch';
 
 const StakingInfoItem = ({title, value}: {
   title: string;
@@ -26,21 +30,42 @@ const StakingInfoItem = ({title, value}: {
 
 const StakingDataCard = () => {
   const { t } = useTranslation<string>()
-  const {supply, rewardsPerEpoch, validators} = useStaking()
+  const { stakingContractOptions } = useStaking()
+  const { validators } = useFetchAllValidator()
+  const { supply } = useTotalSupply(stakingContractOptions)
+  const { fetchEpoch } = useCurrentEpoch(stakingContractOptions)
+  const { fetchRewardsPerEpoch } = useEpochRewards(stakingContractOptions)
 
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+
+  const [rewardsPerEpoch, setRewardsPerEpoch] = useState("0")
+
+  const totalDelegator = useMemo(() => {
+    return validators.reduce((pre, cur) => {
+      return pre + cur.totalDelegator
+    }, 0)
+  }, [validators])
+
+  useEffect(() => {
+    (async () => {
+      const epoch = await fetchEpoch()
+      if (!epoch) return
+      const rs = await fetchRewardsPerEpoch(epoch)
+      setRewardsPerEpoch(rs)
+    })()
+  }, [])
 
   return (
     <View style={[styles.stakingDataContainer, {backgroundColor: preferenceTheme.background.surface}]}>
       <View>
         <View style={{flexDirection: 'row', paddingBottom: 12}}>
-          <StakingInfoItem title={t('totalValidator')} value={validators.length.toString()} />
-          <StakingInfoItem title={t('totalDelegator')} value={validators.length.toString()} />
+          <StakingInfoItem title={t('totalValidator')} value={formatNumberString(validators.length.toString())} />
+          <StakingInfoItem title={t('totalDelegator')} value={formatNumberString(totalDelegator.toString())} />
         </View>
         <View style={{flexDirection: 'row'}}>
           <StakingInfoItem title={t('rewardsPerEpoch')} value={formatNumberString(rewardsPerEpoch, 4)} />
-          <StakingInfoItem title={t('circulatingSupply')} value={formatNumberString(supply)} />
+          <StakingInfoItem title={t('circulatingSupply')} value={supply ? formatNumberString(supply, 0) : "0"} />
         </View>
       </View>
     </View>

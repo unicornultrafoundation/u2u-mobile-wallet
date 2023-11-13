@@ -1,13 +1,14 @@
 import { StyleSheet } from "react-native";
 import { TABBAR_HEIGHT } from "../../component/CustomBottomTab";
+import { getPhonePaddingBottom, getPhonePaddingTop } from "../../util/platform";
 
 export default StyleSheet.create({
   container: {
     paddingHorizontal: 16,
-    paddingVertical: 28,
+    paddingTop: getPhonePaddingTop() + 28,
+    paddingBottom: getPhonePaddingBottom() + TABBAR_HEIGHT,
     backgroundColor: '#000',
     flex: 1,
-    paddingBottom: TABBAR_HEIGHT
   },
   input: {
     height: 40,  // You can adjust the height as needed

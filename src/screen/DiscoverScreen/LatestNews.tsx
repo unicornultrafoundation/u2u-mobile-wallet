@@ -1,14 +1,15 @@
 import { ScrollView, View } from 'react-native';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import news from '../../mock/news.json';
 import Tab from '../../component/Tab';
 import NewsList from '../../component/NewsList';
+import {Article} from "./index";
 
 interface Props {
   initialTab?: string
+  news: Article[]
 }
 
-const LatestNews = ({ initialTab }: Props) => {
+const LatestNews = ({ initialTab, news }: Props) => {
   const scrollView = useRef<ScrollView>(null)
 
   const categories = useMemo(() => {

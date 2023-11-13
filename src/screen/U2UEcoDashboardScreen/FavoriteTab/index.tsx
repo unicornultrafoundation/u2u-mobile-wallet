@@ -4,12 +4,9 @@ import SelectDappModal from '../../../component/SelectDappModal';
 import DappRow from '../ExploreTab/DappRowWithFavorite';
 import useFetchDappList from '../../../hook/useFetchDappList';
 import {useFavoriteStore} from '../../../state/favorite';
-import {DappResult} from '../base-type';
 
 const FavoriteSection = ({filter}: {filter: string}) => {
-  const {data: DATA, loading} = useFetchDappList<DappResult[]>(
-    'https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/mobile_config/dapp.json',
-  );
+  const {data: DATA, loading} = useFetchDappList();
   const {items} = useFavoriteStore();
   return (
     <View>
@@ -27,17 +24,17 @@ const FavoriteSection = ({filter}: {filter: string}) => {
                 );
               });
             })
-            .map((tokenObj: any, index) => {
+            .map((dappMeta: any, index) => {
               return (
                 <SelectDappModal
                   trigger={() => {
                     return (
-                      <DappRow tokenObj={tokenObj} key={`dapp-${index}`} />
+                      <DappRow dappMeta={dappMeta} key={`dapp-${index}`} />
                     );
                   }}
-                  title={tokenObj.title}
-                  description={tokenObj.description}
-                  logoImg={tokenObj.logoImg}
+                  title={dappMeta.title}
+                  description={dappMeta.description}
+                  logoImg={dappMeta.logoImg}
                 />
               );
             })

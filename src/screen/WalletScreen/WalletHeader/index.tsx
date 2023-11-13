@@ -13,6 +13,7 @@ import { useNetwork } from '../../../hook/useNetwork';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
 import SelectWalletModal from '../../../component/SelectWalletModal';
+import Toast from 'react-native-toast-message';
 
 interface Props {
   collapsed: boolean;
@@ -56,7 +57,13 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
           {/*</Text>*/}
         </View>
         <TouchableOpacity
-          onPress={() => Clipboard.setString(wallet.address)}
+          onPress={() => {
+            Clipboard.setString(wallet.address)
+            Toast.show({
+              type: "simpleNoti",
+              text1: "Copied to clipboard"
+            })
+          }}
         >
           <Icon name="copy" width={16} height={16}/>
         </TouchableOpacity>

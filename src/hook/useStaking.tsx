@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Web3 from 'web3'
 import { Delegation, fetchPendingRewards } from "../service/staking";
 import { useNetwork } from "./useNetwork";
 import { useWallet } from "./useWallet";
@@ -10,7 +9,6 @@ import { useTotalSupply } from "./useTotalSupply";
 import { useEpochRewards } from "./useEpochRewards";
 import { useFetchAllValidator } from "./useFetchAllValidator";
 import { useDelegate } from "./useDelegate";
-import { usePendingReward } from "./usePendingReward";
 import { useClaimRewards } from "./useClaimRewards";
 import { useUndelegate } from "./useUndelegate";
 
@@ -35,18 +33,12 @@ export function useStaking() {
       const _rewards = await fetchPendingRewards(stakingContractOptions, delegatorAddress, validatorId, rpc)
       return BigNumber(_rewards).dividedBy(10 ** 18).toFixed()
     } catch (error) {
-      console.log("get pending rewards fail", error)
+      console.log("get pending rewards fail")
       return "0"
     }
   }, [stakingContractOptions])
 
-  const { accumulateRewardPerEpoch } = useAPR(stakingContractOptions)
-  const { supply } = useTotalSupply(stakingContractOptions)
-  const { rewardsPerEpoch } = useEpochRewards(stakingContractOptions)
   const { validators } = useFetchAllValidator()
-  const { parseDelegate, submitDelegate } = useDelegate(stakingContractOptions)
-  const { claimRewards } = useClaimRewards(stakingContractOptions)
-  const { undegegate } = useUndelegate(stakingContractOptions)
 
   useEffect(() => {
     (async () => {
@@ -82,15 +74,7 @@ export function useStaking() {
 
   return {
     stakingContractOptions,
-    accumulateRewardPerEpoch,
-    supply,
-    rewardsPerEpoch,
-    validators,
     allPendingRewards,
     totalStakedAmount,
-    parseDelegate,
-    submitDelegate,
-    claimRewards,
-    undegegate
   }
 }

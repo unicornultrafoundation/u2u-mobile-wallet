@@ -54,7 +54,7 @@ const WRItem = ({item}: {
         }
       ]}
     >
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 12}}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12}}>
         <View>
           <Text
             style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}

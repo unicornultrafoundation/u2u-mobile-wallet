@@ -4,12 +4,13 @@ import {styles} from './styles';
 import Text from '../../../component/Text';
 import Button from '../../../component/Button';
 import theme from '../../../theme';
+import { useNavigation } from '@react-navigation/native';
 
-const DappRow = ({tokenObj}: {tokenObj: any}) => {
-  // const navigation = useNavigation<any>();
-  // const handlePressDetail = () => {
-  //   navigation.navigate('TokenDetail', {tokenMeta: tokenObj});
-  // };
+const DappRow = ({dappMeta}: {dappMeta: any}) => {
+  const navigation = useNavigation<any>();
+  const handlePressDetail = () => {
+    navigation.navigate('DAppWebView', {url: dappMeta.url});
+  };
 
   return (
     <View style={styles.tokenContainer}>
@@ -24,16 +25,18 @@ const DappRow = ({tokenObj}: {tokenObj: any}) => {
         />
       </View>
       <View style={{flex: 1, paddingHorizontal: 8}}>
-        <Text style={[theme.typography.label.bold]}>{tokenObj.title}</Text>
+        <Text style={[theme.typography.label.bold]}>{dappMeta.title}</Text>
         <Text style={[theme.typography.caption1.regular]}>
-          {tokenObj.description}
+          {dappMeta.description}
         </Text>
       </View>
       <View>
         <Button
           type="text"
           textStyle={{fontSize: 14, textAlign: 'center', color: '#B4B4B4'}}
-          style={styles.openButton}>
+          style={styles.openButton}
+          onPress={handlePressDetail}
+        >
           Open
         </Button>
       </View>

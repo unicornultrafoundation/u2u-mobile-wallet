@@ -1,6 +1,5 @@
-import React from 'react'
-import { styles } from './styles'
-import { FlatList, KeyboardAvoidingView, View } from 'react-native';
+import React, { useEffect } from 'react'
+import { FlatList, RefreshControl, View } from 'react-native';
 import { useFetchDelegator } from '../../../hook/useFetchDelegator';
 import { useWallet } from '../../../hook/useWallet';
 import { usePreferenceStore } from '../../../state/preferences';
@@ -18,6 +17,7 @@ const DelegationList = () => {
   return (
     <View style={{marginBottom: 400}}>
       <FlatList
+        // refreshControl={<RefreshControl refreshing={isLoading} onRefresh={fetchDelegator} />}
         contentContainerStyle={{
           paddingBottom: 400,
         }}

@@ -116,21 +116,21 @@ export const typography: Record<string, any> = {
   },
   body: {
     regular: {
-      fontSize: 14,
+      fontSize: 16,
       lineHeight: 22,
       letterSpacing: -0.41,
       fontWeight: "400",
       fontFamily: 'Regular'
     },
     medium: {
-      fontSize: 14,
+      fontSize: 16,
       lineHeight: 22,
       letterSpacing: -0.41,
       fontWeight: "500",
       fontFamily: 'Regular'
     },
     bold: {
-      fontSize: 14,
+      fontSize: 16,
       lineHeight: 22,
       letterSpacing: -0.41,
       fontWeight: "700",

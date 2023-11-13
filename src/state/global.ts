@@ -5,7 +5,7 @@ interface GlobalState {
   searchKeyword: string;
   setSearchKeyword: (searchKeyword: string) => void;
   unlocked: boolean;
-  toggleUnlocked: () => void;
+  setUnlocked: (unlocked: boolean) => void;
 }
 
 export const useGlobalStore = create<GlobalState>((set, get) => ({
@@ -18,7 +18,7 @@ export const useGlobalStore = create<GlobalState>((set, get) => ({
     set({ searchKeyword })
   },
   unlocked: false,
-  toggleUnlocked: () => {
-    set({ unlocked: !get().unlocked})
+  setUnlocked: (val: boolean) => {
+    set({ unlocked: val })
   }
 }))

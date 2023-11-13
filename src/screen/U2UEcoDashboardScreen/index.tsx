@@ -8,8 +8,13 @@ import ExploreTab from './ExploreTab';
 import FeatureTab from './FeatureTab';
 import FavoriteTab from './FavoritesTab';
 import SearchComponent from '../../component/SearchComponent';
+import { usePreferenceStore } from '../../state/preferences';
+import { darkTheme, lightTheme } from '../../theme/color';
 
 const U2UEcoDashboardScreen = () => {
+  const {darkMode} = usePreferenceStore()
+  const preferenceTheme = darkMode ? darkTheme : lightTheme
+
   const route = useRoute();
   const {setRouteName} = useGlobalStore();
 
@@ -34,15 +39,12 @@ const U2UEcoDashboardScreen = () => {
 
   const [selectedTab, setSelectedTab] = useState('feature');
   return (
-    <View style={styles.container}>
-      <Text>Investment dashboard screen</Text>
-      {/* <TextInput
-        style={styles.input}
-        placeholder="Search for DApps or enter a URL"
-        placeholderTextColor={'#363636'}
-        // onChangeText={onChangeText}
-        // value={text}
-      /> */}
+    <View style={[
+      styles.container,
+      {
+        backgroundColor: preferenceTheme.background.background
+      }
+    ]}>
       <SearchComponent />
       <Tab
         tabs={[

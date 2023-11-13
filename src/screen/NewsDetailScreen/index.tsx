@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Dimensions,
   Image,
   SafeAreaView,
@@ -11,8 +12,7 @@ import Text from '../../component/Text';
 import { color, darkTheme, lightTheme } from '../../theme/color';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DiscoverStackParamList } from '../../stack/DiscoverStack';
-import news from '../../mock/news.json';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Separator from '../../component/Separator';
 import U2UIcon from '../../asset/icon/u2u_wallet_icon.png';
 import RenderHtml, { MixedStyleDeclaration } from 'react-native-render-html';
@@ -21,35 +21,18 @@ import Icon from '../../component/Icon';
 import NewsList from '../../component/NewsList';
 import { useFocusEffect } from "@react-navigation/native";
 import { useGlobalStore } from "../../state/global";
+import { Article } from "../DiscoverScreen";
 
 type Props = NativeStackScreenProps<DiscoverStackParamList, 'NewsDetails'>;
-
-const source = {
-  html: `
-<div>
-    <p>
-      So far, the Venture Builder model seems to become a signature for Unicorn Ultra when aiming to the ambitious to become a “digital cradle” for unique ideas that are looking for launchpads. That ambition is reflected more clearly through the U2U Foundation with the search for startups — those who develop products serving the decentralized future, specifically engineered for enterprise solutions and a strong commitment to Environmental, Social, and Governance considerations.
-      In the same way, Chainly is trying to serve the best in the blockchain industry with its unique ideas through diverse terminal services, from development tools to auditing, marketing, listing, community management, etc. However, Chainly has yet to develop its own blockchain, but through cooperation with partners that own their chains — that’s why Unicorn Ultra with U2U Chain is a potential option.
-      U2U Chain represents a groundbreaking advancement in blockchain technology and is focused on providing enterprise solutions and ESG. At its core lies the Helios Consensus, a revolutionary mechanism designed to address the critical needs of modern businesses. Helios serves as the bedrock of the U2U Chain, facilitating an astonishing throughput of up to 500,000 transactions per second (TPS). This design intricacy results in a blockchain solution that effortlessly harmonizes with existing systems, delivers airtight security and integrates cutting-edge privacy features.
-      Moreover, the U2U Chain’s Helios Consensus boasts an impressively low transaction finality time of just 350 milliseconds. This near-instantaneous confirmation time ensures that transactions are rapidly validated and secured, creating an agile environment for business operations. This exceptional speed empowers businesses with unparalleled efficiency, enabling real-time transaction processing and data transfer at an unprecedented scale.
-    </p>
-    <img class="ad" src="https://fakeimg.pl/600x300/ff0000,128/000,255" alt="ad">
-     <p>
-      So far, the Venture Builder model seems to become a signature for Unicorn Ultra when aiming to the ambitious to become a “digital cradle” for unique ideas that are looking for launchpads. That ambition is reflected more clearly through the U2U Foundation with the search for startups — those who develop products serving the decentralized future, specifically engineered for enterprise solutions and a strong commitment to Environmental, Social, and Governance considerations.
-      In the same way, Chainly is trying to serve the best in the blockchain industry with its unique ideas through diverse terminal services, from development tools to auditing, marketing, listing, community management, etc. However, Chainly has yet to develop its own blockchain, but through cooperation with partners that own their chains — that’s why Unicorn Ultra with U2U Chain is a potential option.
-      U2U Chain represents a groundbreaking advancement in blockchain technology and is focused on providing enterprise solutions and ESG. At its core lies the Helios Consensus, a revolutionary mechanism designed to address the critical needs of modern businesses. Helios serves as the bedrock of the U2U Chain, facilitating an astonishing throughput of up to 500,000 transactions per second (TPS). This design intricacy results in a blockchain solution that effortlessly harmonizes with existing systems, delivers airtight security and integrates cutting-edge privacy features.
-      Moreover, the U2U Chain’s Helios Consensus boasts an impressively low transaction finality time of just 350 milliseconds. This near-instantaneous confirmation time ensures that transactions are rapidly validated and secured, creating an agile environment for business operations. This exceptional speed empowers businesses with unparalleled efficiency, enabling real-time transaction processing and data transfer at an unprecedented scale.
-    </p>
-</div>
-
-  `,
-};
 
 const NewsDetailScreen = ({ route, navigation }: Props) => {
   const { setRouteName } = useGlobalStore();
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const styles = useStyles();
+  const [loading, setLoading] = useState(true)
+  const [news, setNews] = useState<Article[]>([])
+
 
   const actions = [
     { name: 'twitter', url: '', icon: 'twitter-circle' },
@@ -62,11 +45,27 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
 
   const article = useMemo(() => {
     return news.find(item => item.id === route.params?.id);
-  }, [route.params]);
+  }, [route.params, news]);
+
+  const htmlSource = useMemo(() => {
+    return { html: article?.content || '' }
+  }, [article])
 
   const mixedStyle: Record<string, MixedStyleDeclaration> = useMemo(() => {
+    const pStyle = { ...styles.description, fontSize: 12 }
+    const headerStyle = { ...styles.title, fontSize: 20 }
+    const headingStyle = { ...styles.description, fontSize: 14 }
     return {
-      p: styles.description,
+      h1: headerStyle,
+      h2: headingStyle,
+      h3: headingStyle,
+      h4: headingStyle,
+      h5: headingStyle,
+      h6: headingStyle,
+      time: pStyle,
+      p: pStyle,
+      span: pStyle,
+      i: pStyle
     };
   }, [preferenceTheme]);
 
@@ -87,10 +86,37 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
     }, [route]),
   );
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('https://raw.githubusercontent.com/unicornultrafoundation/static-news/main/news.json')
+        const data = await res.json()
+        setNews(data)
+      } catch (e) {
+        setNews([])
+      } finally {
+        setLoading(false)
+      }
+    })()
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={[styles.container, { padding: 16 }]}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator/>
+        </View>
+      </View>
+    )
+  }
+
   if (!article) {
     return (
       <View style={[styles.container, { padding: 16 }]}>
-        <Text style={styles.title}>Article not found!</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="arrow-left" width={24} height={24}/>
+        </TouchableOpacity>
+        <Text style={[styles.title, { textAlign: 'center' }]}>Article not found!</Text>
       </View>
     );
   }
@@ -101,19 +127,16 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
         <View style={{ padding: 16, paddingBottom: 120 }}>
           <View style={{ gap: 8 }}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Icon name="arrow-left" width={24} height={24} />
+              <Icon name="arrow-left" width={24} height={24}/>
             </TouchableOpacity>
             <Image
               resizeMode="cover"
               style={styles.newsImage}
-              source={{
-                uri: 'https://fakeimg.pl/400x200/ff0000,128/000,255',
-              }}
+              source={{ uri: article.thumbnail }}
             />
 
             <Text style={[styles.title, { lineHeight: 25 }]} fontSize={20}>
-              From newbie to veteran: Three methods of Cryptocurrency Analysis
-              for successful trading
+              {article.title}
             </Text>
 
             <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
@@ -143,7 +166,7 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
           <Separator style={{ borderBottomWidth: 1, marginVertical: 16 }}/>
 
           <RenderHtml
-            source={source}
+            source={htmlSource}
             tagsStyles={mixedStyle}
             classesStyles={classesStyle}
             contentWidth={Dimensions.get('window').width - 32}

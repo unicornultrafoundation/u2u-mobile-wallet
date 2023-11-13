@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FlatList, View } from 'react-native';
 import { useStaking } from '../../../hook/useStaking';
 import ValidatorItem from './ValidatorItem';
+import { useFetchAllValidator } from '../../../hook/useFetchAllValidator';
 
 const ValidatorsList = () => {
-  const {validators} = useStaking()
+  const {validators} = useFetchAllValidator()
+
   return (
     <View>
       <FlatList

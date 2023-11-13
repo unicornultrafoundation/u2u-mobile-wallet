@@ -1,5 +1,4 @@
 import BigNumber from "bignumber.js";
-import { keccak256 } from 'js-sha3';
 
 export const truncate = (str: string, len: number) => {
   return `${str.substring(0, Math.min(len, str.length))}...`
@@ -49,7 +48,7 @@ export const formatNumberString = (numberString: string, fragtionsCount?: number
     suffix: ''
   }
   BigNumber.config({ FORMAT: fmt })
-  if (fragtionsCount) return (new BigNumber(numberString)).toFormat(fragtionsCount, roundMode)
+  if (fragtionsCount || fragtionsCount === 0) return (new BigNumber(numberString)).toFormat(fragtionsCount, roundMode)
   return (new BigNumber(numberString)).toFormat()
 }
 

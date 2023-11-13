@@ -8,6 +8,7 @@ import { fetch as fetchPolyfill } from 'whatwg-fetch'
 import BigNumber from 'bignumber.js'
 import "fast-text-encoding";
 import "./shim"
+// import 'react-native-get-random-values'
 
 BigNumber.config({ FORMAT: {
   prefix: '',
@@ -23,7 +24,8 @@ BigNumber.config({ FORMAT: {
 LogBox.ignoreLogs([
   'NOTE: web3.js is running without provider. You need to pass a provider in order to interact with the network!',
   'Non-serializable values were found in the navigation state',
-  'Warning: componentWillReceiveProps has been renamed, and is not recommended for use'
+  'Warning: componentWillReceiveProps has been renamed, and is not recommended for use',
+  'Warning: Cannot update a component (`AuthScreen`) while rendering a different component (`ForwardRef`)'
 ])
 
 global.fetch = fetchPolyfill

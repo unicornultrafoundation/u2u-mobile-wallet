@@ -6,8 +6,9 @@ export const useNativeBalance = (address: string) => {
   const {blockExplorer} = useNetworkStore()
 
   const query = useQuery({
-    queryKey: ['native-balance', address],
+    queryKey: ['native-balance', blockExplorer, address],
     queryFn: () => fetchNativeBalance(blockExplorer, address),
+    refetchInterval: 30000
   })
   
   return {

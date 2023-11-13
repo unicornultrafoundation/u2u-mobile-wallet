@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react'
 import { styles } from './styles';
-import { KeyboardAvoidingView, Platform, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
-import { formatNumberString } from '../../../util/string';
+import { formatNumberString, shortenAddress } from '../../../util/string';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
 import Button from '../../../component/Button';
@@ -19,6 +19,7 @@ import { useTransaction } from '../../../hook/useTransaction';
 import UnstakeSection from './UnstakeSection';
 import { useFetchLockedStake } from '../../../hook/useFetchLockedStake';
 import BigNumber from 'bignumber.js';
+import LockModal from './LockModal';
 
 const DelegationItem = ({item}: {
   item: Validation
@@ -61,12 +62,13 @@ const DelegationItem = ({item}: {
         return
       }
 
+      setShowUnstake(false)
       Toast.show({
         type: 'success',
         text1: 'Claim rewards success',
         onHide: resetTxState,
         props: {
-          txHash: tx.transactionHash,
+          txHash: tx.hash,
           renderTrailing: () => {
             return (
               <Text
@@ -120,7 +122,7 @@ const DelegationItem = ({item}: {
   }
 
   return (
-    <TouchableOpacity
+    <View
       style={[
         styles.delegationItem,
         {
@@ -159,7 +161,27 @@ const DelegationItem = ({item}: {
             ]}
           >
             {t('votingPower')}: {item.validator.votingPower ? formatNumberString((item.validator.votingPower / 10000).toString(), 3) : 0}%
+            {/* {shortenAddress(item.validator.auth, 8, 8)} */}
           </Text>
+        </View>
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <LockModal
+            item={item}
+            trigger={() => {
+              return (
+                <Text
+                  style={[
+                    theme.typography.body.bold,
+                    {
+                      textDecorationLine: 'underline'
+                    }
+                  ]}
+                >
+                  Lock
+                </Text>
+              )
+            }}
+          />
         </View>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 12}}>
@@ -251,7 +273,7 @@ const DelegationItem = ({item}: {
           </Button>
         </View>
       )}
-    </TouchableOpacity>
+    </View>
   )
 }
 

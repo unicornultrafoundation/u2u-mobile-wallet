@@ -54,7 +54,7 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
-      case 'arrow-left':
+      case 'arrowLeft':
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg
@@ -70,7 +70,7 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
-      case 'arrow-right':
+      case 'arrowRight':
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg
@@ -608,6 +608,24 @@ const Icon = ({name, width, height, color, style}: {
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg width="100%" height="100%" viewBox="0 0 25 24" fill="none">
               <Path d="M12.25 19.0001L8.28 21.3801C7.96894 21.567 7.61289 21.6657 7.25 21.6657C6.88711 21.6657 6.53106 21.567 6.22 21.3801L3.22 19.5801C2.92476 19.4027 2.68033 19.1521 2.51039 18.8525C2.34045 18.5529 2.25075 18.2145 2.25 17.8701V14.6301C2.25075 14.2857 2.34045 13.9473 2.51039 13.6477C2.68033 13.3481 2.92476 13.0975 3.22 12.9201L7.25 10.5001M12.25 19.0001V13.5001M12.25 19.0001L16.22 21.3801C16.5311 21.567 16.8871 21.6657 17.25 21.6657C17.6129 21.6657 17.9689 21.567 18.28 21.3801L21.28 19.5801C21.5752 19.4027 21.8197 19.1521 21.9896 18.8525C22.1596 18.5529 22.2492 18.2145 22.25 17.8701V14.6301C22.2492 14.2857 22.1596 13.9473 21.9896 13.6477C21.8197 13.3481 21.5752 13.0975 21.28 12.9201L17.25 10.5001M12.25 13.5001L7.25 10.5001M12.25 13.5001L7.24977 16.5001M12.25 13.5001L17.25 10.5001M12.25 13.5001L17.25 16.5001M12.25 13.5001L12.2498 8.00009M7.25 10.5001V6.13009C7.25075 5.78566 7.34045 5.44727 7.51039 5.14768C7.68033 4.84809 7.92476 4.59747 8.22 4.42009L11.22 2.62009C11.5311 2.43321 11.8871 2.33447 12.25 2.33447C12.6129 2.33447 12.9689 2.43321 13.28 2.62009L16.28 4.42009C16.5752 4.59747 16.8197 4.84809 16.9896 5.14768C17.1596 5.44727 17.2492 5.78566 17.25 6.13009V10.5001M7.24977 16.5001L2.50977 13.6501M7.24977 16.5001L7.25 21.6701M17.25 16.5001L21.99 13.6501M17.25 16.5001V21.6701M12.2498 8.00009L7.50977 5.15009M12.2498 8.00009L16.99 5.15009" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'globe':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 20 20" fill="none">
+              <Path d="M2.5 10H6.66667M2.5 10C2.5 14.1421 5.85786 17.5 10 17.5M2.5 10C2.5 5.85786 5.85786 2.5 10 2.5M6.66667 10H13.3333M6.66667 10C6.66667 14.1421 8.15905 17.5 10 17.5M6.66667 10C6.66667 5.85786 8.15905 2.5 10 2.5M13.3333 10H17.5M13.3333 10C13.3333 5.85786 11.8409 2.5 10 2.5M13.3333 10C13.3333 14.1421 11.8409 17.5 10 17.5M17.5 10C17.5 5.85786 14.1421 2.5 10 2.5M17.5 10C17.5 14.1421 14.1421 17.5 10 17.5" stroke={color || "#D8D8D8"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'lock':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 20 20" fill="none">
+              <Path d="M13.6863 7.87272V6.08355C13.6863 3.98939 11.9879 2.29105 9.89378 2.29105C7.79962 2.28189 6.09462 3.97189 6.08545 6.06689V6.08355V7.87272" stroke={color || "#D8D8D8"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path fillRule="evenodd" clipRule="evenodd" d="M13.0695 17.7076H6.70199C4.95699 17.7076 3.54199 16.2935 3.54199 14.5476V10.9735C3.54199 9.22764 4.95699 7.81348 6.70199 7.81348H13.0695C14.8145 7.81348 16.2295 9.22764 16.2295 10.9735V14.5476C16.2295 16.2935 14.8145 17.7076 13.0695 17.7076Z" stroke={color || "#D8D8D8"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M9.88591 11.835V13.6858" stroke={color || "#D8D8D8"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </Svg>
           </View>
         )

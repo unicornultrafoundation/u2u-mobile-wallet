@@ -29,7 +29,7 @@ const TokenBalanceCard = () => {
     <View style={styles.balanceCardContainer}>
       <View style={styles.balanceContainer}>
         <Text style={[styles.balanceNumberInToken, {color: preferenceTheme.text.primary}]}>
-          {balanceLoading ? '-' : formatNumberString(balance)} {tokenMeta.symbol}
+          {balanceLoading ? '-' : formatNumberString(balance, 4)} {tokenMeta.symbol}
         </Text>
         {/* <Text style={styles.balanceNumberInFiatText}>$0</Text> */}
       </View>

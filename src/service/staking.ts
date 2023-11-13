@@ -3,6 +3,7 @@ import { ContractOptions, contractCall } from "../util/contract";
 import { apolloClient, apolloStakingClient, apolloU2UNetworkClient } from "./graph/client";
 import { Schema } from "./graph/schema";
 import { TABLE_LIMIT } from "../config/constant";
+import { LockedStake } from "../hook/useFetchLockedStake";
 
 export interface Validation {
   id: string
@@ -47,6 +48,7 @@ export interface Validator {
   votingPower?: number
   totalDelegator: number
   apr: number
+  authLockInfo?: LockedStake,
 }
 
 export interface ValidatorEpochInfo {
@@ -87,17 +89,17 @@ export const fetchPendingRewards = (options: ContractOptions, delegatorAddress: 
 
 export const queryValidators = () => apolloClient.query({
   query: Schema().VALIDATORS,
-  fetchPolicy: "no-cache"
+  // fetchPolicy: "no-cache"
 })
 
 export const queryStakingStats = () => apolloClient.query({
   query: Schema().STAKING_STATS,
-  fetchPolicy: "no-cache"
+  // fetchPolicy: "no-cache"
 })
 
 export const queryValidatorsApr = (vals: number[]) => apolloStakingClient.query({
   query: Schema().VALIDATORS_APR(vals),
-  fetchPolicy: "no-cache"
+  // fetchPolicy: "no-cache"
 })
 
 export const queryEpochOfValidator = (valId: number, valIdHex: string, skip: number) => apolloU2UNetworkClient.query({
@@ -120,10 +122,18 @@ export const queryDelegatorDetail = (address: string) => apolloClient.query({
 })
 
 export const queryLockedStake = (delegator: string, valIdHex: string) => apolloClient.query({
-  query: Schema().LOCKE_STAKE,
+  query: Schema().LOCKED_STAKE,
   variables: {
     delegatorAddress: delegator,
     valId: valIdHex
+  },
+  fetchPolicy: "no-cache"
+})
+
+export const queryAllLockedStake = (delegator: string) => apolloClient.query({
+  query: Schema().ALL_LOCKED_STAKE,
+  variables: {
+    delegatorAddress: delegator,
   },
   fetchPolicy: "no-cache"
 })

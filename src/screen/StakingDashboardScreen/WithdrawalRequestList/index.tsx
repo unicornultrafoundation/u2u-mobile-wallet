@@ -16,7 +16,7 @@ const WithdrawalRequestList = () => {
   return (
     <View style={{marginBottom: 400}}>
       <FlatList
-        data={wr}
+        data={wr.filter((i) => !i.withdrawal)}
         contentContainerStyle={{
           paddingBottom: 400,
         }}

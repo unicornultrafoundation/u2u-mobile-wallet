@@ -1,8 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {View, TextInput, FlatList, BackHandler} from 'react-native';
+import {View, FlatList, BackHandler, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import {useDebounce} from '../../hook/useDebounce';
 import DappRow from '../../screen/U2UEcoDashboardScreen/FeatureTab/DappRow';
+import TextInput from '../TextInput';
+import Icon from '../Icon';
+import { getPhonePaddingTop } from '../../util/platform';
+import { usePreferenceStore } from '../../state/preferences';
+import { darkTheme, lightTheme } from '../../theme/color';
 // Define the types
 type SearchResult = {
   // id: number;
@@ -28,6 +33,9 @@ const SearchComponent: React.FC = () => {
   const [isLayerVisible, setIsLayerVisible] = useState<boolean>(false);
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
+  const {darkMode} = usePreferenceStore()
+  const preferenceTheme = darkMode ? darkTheme : lightTheme
+
   useEffect(() => {
     if (debouncedSearchQuery.length > 0) {
       const fetchResults = async () => {
@@ -37,7 +45,7 @@ const SearchComponent: React.FC = () => {
             'https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/mobile_config/dapp.json',
           );
           const data: APIResponse = await response.json();
-          setResults(data);
+          setResults(data.results);
         } catch (error) {
           console.error('Error fetching search results:', error);
         }
@@ -71,31 +79,32 @@ const SearchComponent: React.FC = () => {
   // };
   return (
     <>
-      {/* <TextInput
-        placeholder="Search..."
-        onFocus={() => setIsLayerVisible(true)}
-        onChangeText={text => setSearchQuery(text)}
-        value={searchQuery}
-        style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-      /> */}
       <TextInput
-        style={styles.input}
+        containerStyle={{height: 48}}
         placeholder="Search for DApps or enter a URL"
         placeholderTextColor={'#363636'}
         onTouchStart={() => setIsLayerVisible(true)}
         onChangeText={text => setSearchQuery(text)}
+        onBlur={() => setIsLayerVisible(false)}
         value={searchQuery}
+        postIcon={() => {
+          return (
+            <TouchableOpacity onPress={() => setIsLayerVisible(false)}>
+              <Icon name='close' width={24} height={24} />
+            </TouchableOpacity>
+          )
+        }}
       />
       {isLayerVisible && (
         <View
           style={{
             position: 'absolute',
             paddingTop: 20,
-            top: 100,
+            top: getPhonePaddingTop() + 28 + 48,
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'black',
+            backgroundColor: preferenceTheme.background.background,
             zIndex: 99,
           }}>
           {/* <TouchableOpacity onPress={() => setIsLayerVisible(false)}>
@@ -105,7 +114,7 @@ const SearchComponent: React.FC = () => {
             data={results}
             keyExtractor={item => item.title}
             renderItem={({item, index}) => (
-              <DappRow tokenObj={item} key={`dapp-${index}`} />
+              <DappRow dappMeta={item} key={`dapp-${index}`} />
             )}
           />
         </View>

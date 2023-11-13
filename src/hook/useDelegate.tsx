@@ -31,7 +31,7 @@ export const useDelegate = (stakingContractOptions?: ContractOptions) => {
 
   const submitDelegate = useCallback(async () => {
     const tx = await submitRawTx()
-    console.log('sented', tx?.transactionHash)
+    console.log('sented', tx?.hash)
     return tx
   }, [])
 

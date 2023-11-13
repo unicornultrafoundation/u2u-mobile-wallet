@@ -38,7 +38,7 @@ export const useWalletStore = create(
       },
       walletMetadata: [],
       seedPhrase: '',
-      selectedIndex: 1,
+      selectedIndex: 0,
       accessWallet: (seedPhrase) => {
         const _wallet = getWalletFromMnemonic(seedPhrase, get().selectedIndex);
         set({

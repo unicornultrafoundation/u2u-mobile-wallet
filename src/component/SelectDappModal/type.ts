@@ -1,4 +1,4 @@
-type FavoriteItem {
+interface FavoriteItem {
   title: string;
   isFavorite: boolean;
 }

@@ -5,7 +5,7 @@ import Text from '../Text';
 import { useTranslation } from 'react-i18next';
 import Icon from '../Icon';
 import Separator from '../Separator';
-import { Transaction, TransactionReceipt } from 'web3';
+import { TransactionReceipt, TransactionResponse } from 'ethers'
 import { useTransaction } from '../../hook/useTransaction';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
@@ -17,10 +17,10 @@ import BigNumber from 'bignumber.js';
 import { shortenAddress } from '../../util/string';
 import TX_DETAIL from '../../asset/images/tx_detail.png'
 import Clipboard from '@react-native-clipboard/clipboard';
-import { SvgUri } from 'react-native-svg';
 import NormalTxMetaSection from './NormalTxMetaSection';
 import { useSupportedTokens } from '../../hook/useSupportedTokens';
 import ERC20TxMetaSection from './ERC20TxMetaSection';
+import Toast from 'react-native-toast-message';
 
 const TxDetail = ({txHash, onClose}: {
   txHash: string;
@@ -37,7 +37,7 @@ const TxDetail = ({txHash, onClose}: {
   const {supportedTokens} = useSupportedTokens()
 
   const [txReceipt, setTxReceipt] = useState<TransactionReceipt>()
-  const [txDetail, setTxDetail] = useState<Transaction>()
+  const [txDetail, setTxDetail] = useState<TransactionResponse>()
   const [timestamp, setTimestamp] = useState(0)
 
   useEffect(() => {
@@ -56,6 +56,7 @@ const TxDetail = ({txHash, onClose}: {
     (async () => {
       if (!txReceipt) return
       const block = await fetchBlock(txReceipt.blockHash.toString())
+      if (!block) return
       setTimestamp(
         Number(block.timestamp.toString())
       )
@@ -67,7 +68,7 @@ const TxDetail = ({txHash, onClose}: {
   }, [txReceipt])
 
   const gasPrice = useMemo(() => {
-    return txReceipt ? txReceipt.effectiveGasPrice!.toString() : '0'
+    return txReceipt ? txReceipt.gasPrice!.toString() : '0'
   }, [txReceipt])
 
   const txValue = useMemo(() => {
@@ -76,7 +77,7 @@ const TxDetail = ({txHash, onClose}: {
 
   const renderTxMeta = () => {
     if (!txReceipt || !txDetail) return null
-    const tokenMetaItem = supportedTokens.find((i: Record<string, any>) => i.address.toLowerCase() === txReceipt.to.toLowerCase())
+    const tokenMetaItem = supportedTokens.find((i: Record<string, any>) => i.address.toLowerCase() === txReceipt.to!.toLowerCase())
 
     if (tokenMetaItem) {
       return <ERC20TxMetaSection tokenMeta={tokenMetaItem} txDetail={txDetail} />
@@ -88,10 +89,10 @@ const TxDetail = ({txHash, onClose}: {
     <View style={{flex: 1}}>
       <View style={styles.headerContainer}>
         <View>
-          <Icon name={txReceipt?.status.toString() === "1" ? 'success' : 'error'} width={24} height={24} />
+          <Icon name={txReceipt?.status!.toString() === "1" ? 'success' : 'error'} width={24} height={24} />
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'flex-start', flex: 1, paddingHorizontal: 8}}>
-          <Text style={[styles.headerText]}>{txReceipt?.status.toString() === "1" ? t('transactionSuccess') : t('transactionFailed')}</Text>
+          <Text style={[styles.headerText]}>{txReceipt?.status!.toString() === "1" ? t('transactionSuccess') : t('transactionFailed')}</Text>
         </View>
         <TouchableOpacity onPress={onClose}>
           <Icon name='close' width={24} height={24} />
@@ -116,9 +117,16 @@ const TxDetail = ({txHash, onClose}: {
         <View style={{paddingBottom: 12}}>
         <Text style={[{paddingVertical: 8, color: preferenceTheme.text.secondary}, theme.typography.caption2.regular]}>To</Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            {txReceipt && <Text>{shortenAddress(txReceipt.to, 10, 10) }</Text>}
+            {txReceipt && <Text>{shortenAddress(txReceipt.to!, 10, 10) }</Text>}
             <TouchableOpacity
-              onPress={() => txReceipt && Clipboard.setString(txReceipt.to)}
+              onPress={() => {
+                if (!txReceipt) return
+                Clipboard.setString(txReceipt.to!)
+                Toast.show({
+                  type: "simpleNoti",
+                  text1: "Copied to clipboard"
+                })
+              }}
             >
               <Icon name='copy' width={16} height={16} color={"#8D8D8D"} />
             </TouchableOpacity>
@@ -191,7 +199,7 @@ const TxDetail = ({txHash, onClose}: {
             <Text
               style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title, marginTop: 8}]}
             >
-              {txReceipt? shortenAddress(txReceipt.transactionHash.toString(), 10, 10) : '--'}
+              {txReceipt? shortenAddress(txReceipt.hash.toString(), 10, 10) : '--'}
             </Text>
           </View>
           <View style={{flex: 1}}>
@@ -211,7 +219,7 @@ const TxDetail = ({txHash, onClose}: {
         <TouchableOpacity
           style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}
           onPress={() => {
-            Linking.openURL(`${blockExplorer}/tx/${txReceipt?.transactionHash.toString().toLowerCase()}`)
+            Linking.openURL(`${blockExplorer}/tx/${txReceipt?.hash.toString().toLowerCase()}`)
           }}
         >
           <Text

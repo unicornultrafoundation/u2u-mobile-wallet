@@ -19,14 +19,13 @@ export const fetchNativeBalance = async (explorerURL: string, address: string) =
   return "0"
 }
 
-export const fetchURC20Balance = async (explorerURL: string, address: string, tokenAddress: string) => {
+export const fetchURC20Balance = async (explorerURL: string, address: string, tokenAddress: string, decimals = 18) => {
   const url = `${explorerURL}/api?module=account&action=tokenbalance&contractaddress=${tokenAddress}&address=${address}`
   const rs = await fetch(url)
   const rsJSON = await rs.json()
 
   if (rsJSON.result) {
-    console.log(rsJSON)
-    return parseFromRaw(rsJSON.result, 18)
+    return parseFromRaw(rsJSON.result, decimals)
   }
 
   return "0"

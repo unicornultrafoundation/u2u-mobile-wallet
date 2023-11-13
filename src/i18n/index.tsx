@@ -1,6 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import vi_VN from './locale/vi_vn.json'
+import en from './locale/en.json'
 import 'intl-pluralrules'
 
 i18n
@@ -10,12 +11,18 @@ i18n
     // (tip move them in a JSON file and import them,
     // or even better, manage them via a UI: https://react.i18next.com/guides/multiple-translation-files#manage-your-translations-with-a-management-gui)
     resources: {
-      vi_VN: {
+      vi: {
         translation: vi_VN
+      },
+      en: {
+        translation: en
+      },
+      thai: {
+        translation: en
       }
     },
-    lng: "vi_VN", // if you're using a language detector, do not define the lng option
-    fallbackLng: "vi_VN",
+    lng: "vi", // if you're using a language detector, do not define the lng option
+    fallbackLng: "vi",
 
     interpolation: {
       escapeValue: false // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape

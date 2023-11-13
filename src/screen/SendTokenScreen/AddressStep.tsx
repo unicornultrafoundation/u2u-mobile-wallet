@@ -11,6 +11,7 @@ import Button from '../../component/Button';
 import TextInput from '../../component/TextInput';
 import { isAddress } from 'ethers';
 import { useTransactionStore } from '../../state/transaction';
+import Scanner from '../../component/QRCodeScanner';
 
 const AddressStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -19,10 +20,11 @@ const AddressStep = ({onNextStep, onBack}: {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
   const {t} = useTranslation<string>()
-  const { receiveAddress, setReceiveAddress } = useTransactionStore()
+  const { receiveAddress, setReceiveAddress, setTokenMeta, setAmount } = useTransactionStore()
 
   const [address, setAddress] = useState(receiveAddress)
   const [errorAddress, setErrorAddress] = useState('')
+  const [showScanner, setShowScanner] = useState(false)
 
   const handleConfirm = () => {
     setErrorAddress('')
@@ -32,6 +34,39 @@ const AddressStep = ({onNextStep, onBack}: {
     }
     setReceiveAddress(address)
     onNextStep()
+  }
+
+  const handleScanSuccess = (value: string) => {
+    setErrorAddress('')
+    console.log(value)
+    try {
+      const dataObj = JSON.parse(value)
+      if (!dataObj.address || !dataObj.amount || !dataObj.tokenMeta) {
+        console.log('invalid QR data')
+        return;
+      }
+
+      setReceiveAddress(dataObj.address)
+      setTokenMeta(dataObj.tokenMeta)
+      setAmount(dataObj.amount)
+      onNextStep()
+    } catch (error) {
+      if (!isAddress(value)) {
+        console.log('invalid QR data')
+        return;
+      }
+      setReceiveAddress(value)
+      onNextStep()
+    }
+  }
+
+  if (showScanner) {
+    return (
+      <Scanner
+        onCancel={() => setShowScanner(false)}
+        onSuccess={handleScanSuccess}
+      />
+    )
   }
 
   return (
@@ -61,8 +96,7 @@ const AddressStep = ({onNextStep, onBack}: {
           error={errorAddress}
           postIcon={() => {
             return (
-              // TODO: trigger camera for QR code scan
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => setShowScanner(true)}>
                 <Icon name="scan" width={18} height={18} />
               </TouchableOpacity>
             )

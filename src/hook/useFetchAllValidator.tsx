@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query"
 export const useFetchAllValidator = () => {
   const fetchValidators = async () => {
     try {
+      console.log('fetchValidators')
       const { data } = await queryValidators()
       const { data: stakingStats } = await queryStakingStats()
       const totalNetworkStaked = stakingStats && stakingStats.stakings ? BigNumber(stakingStats.stakings[0].totalStaked || 0) : BigNumber(0)
@@ -26,18 +27,20 @@ export const useFetchAllValidator = () => {
       }
       return []
     } catch (error) {
-      console.log("fetch validators fail")
+      console.log("fetch validators fail", error)
       return []
     }
   }
 
-  const { data: validators } = useQuery<Validator[]>({
+  const { data: validators, refetch } = useQuery<Validator[]>({
     queryKey: ['fetchValidators'],
     queryFn: fetchValidators,
-    refetchInterval: 20000,
+    // enabled: false
+    refetchInterval: 60000
   })
 
   return {
-    validators: validators || []
+    validators: validators || [],
+    fetch: refetch
   }
 }
