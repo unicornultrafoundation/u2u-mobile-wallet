@@ -170,7 +170,6 @@ function App(): JSX.Element {
           <View
             style={{
               height: 40,
-              width: '45%',
               padding: 8,
               borderRadius: 12,
               backgroundColor: preferenceTheme.background.surface,

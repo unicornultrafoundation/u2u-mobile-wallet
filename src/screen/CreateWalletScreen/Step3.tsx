@@ -41,7 +41,10 @@ const Step3 = () => {
     Clipboard.setString(seed);
     Toast.show({
       type: "simpleNoti",
-      text1: "Copied to clipboard"
+      text1: "Copied to clipboard",
+      props: {
+        width: '45%'
+      }
     })
   }
 

@@ -74,5 +74,14 @@
   "language": "Language",
   "chooseYourLanguage": "Choose your language",
   "security": "Security",
-  "receive": "Receive"
+  "receive": "Receive",
+  "enterNewPassword": "Enter new password",
+  "enterConfirmPassword": "Confirm new password",
+  "enterPasswordToContinue": "Please input Security password to continue",
+  "enterConfirmPasswordToContinue": "Please confirm your new password",
+  "updatePasswordSuccess": "Security password updated",
+  "exportSeedPhrase": "Export seed phrase",
+  "incorrectPassword": "Incorrect password",
+  "discover": "Discover",
+  "totalBalance": "Total balance"
 }

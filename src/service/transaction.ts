@@ -1,5 +1,6 @@
 export const fetchNativeTokenTransaction = async (explorerURL: string, address: string) => {
   const url = `${explorerURL}/api?module=account&action=txlist&address=${address}&page=1&limit=10`
+  console.log('eee', url)
   const rs = await fetch(url)
   const rsJSON = await rs.json()
   return rsJSON.result || []

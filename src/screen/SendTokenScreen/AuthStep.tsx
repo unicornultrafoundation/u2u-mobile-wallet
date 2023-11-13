@@ -27,7 +27,7 @@ const AuthStep = ({onNextStep, onBack}: {
   const handleContinue = () => {
     setError('')
     if (internalPassword != password) {
-      setError('Incorrect password')
+      setError(t('incorrectPassword'))
       return
     }
 

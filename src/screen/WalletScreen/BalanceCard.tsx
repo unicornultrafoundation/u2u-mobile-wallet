@@ -28,7 +28,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
   return (
     <View style={styles.balanceCardContainer}>
       <TouchableOpacity style={styles.balanceCardVisibleButton} onPress={toggleShowBalance}>
-        <Text style={styles.balanceText}>Total balance</Text>
+        <Text style={styles.balanceText}>{t('totalBalance')}</Text>
         <Icon name="eye" width={16} height={16} />
       </TouchableOpacity>
 

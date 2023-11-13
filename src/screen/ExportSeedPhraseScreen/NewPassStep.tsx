@@ -1,36 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { TouchableOpacity, View } from 'react-native';
-import Icon from '../../component/Icon';
-import { styles } from './styles';
-import { useTranslation } from 'react-i18next';
-import Text from '../../component/Text';
-import OtpInputs from 'react-native-otp-inputs';
-import theme from '../../theme';
+import Button from '../../component/Button';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
-import Button from '../../component/Button';
-import { useLocalStore } from '../../state/local';
+import { useTranslation } from 'react-i18next';
+import { styles } from './styles';
+import Text from '../../component/Text';
+import Icon from '../../component/Icon';
+import theme from '../../theme';
+import OtpInputs from 'react-native-otp-inputs';
 
-const AuthStep = ({onNextStep, onBack}: {
+const NewPassStep = ({onNextStep, onBack, savePassword}: {
   onNextStep: () => void;
   onBack: () => void;
+  savePassword: (pass: string) => void
 }) => {
+  const {t} = useTranslation<string>()
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
-  const { t } = useTranslation<string>()
-  const {password} = useLocalStore()
-
   const [internalPassword, setInternalPassword] = useState('')
-  const [error, setError] = useState('')
 
   const handleContinue = () => {
-    setError('')
-    if (internalPassword != password) {
-      setError(t('incorrectPassword'))
-      return
-    }
-
+    savePassword(internalPassword)
     onNextStep()
   }
 
@@ -41,7 +33,7 @@ const AuthStep = ({onNextStep, onBack}: {
           <Icon name="arrow-left" width={24} height={24} />
         </TouchableOpacity>
         <View style={{flexDirection: 'row'}}>
-          <Text style={styles.headerText}>{t('enterPassword')}</Text>
+          <Text style={styles.headerText}>{t('enterNewPassword')}</Text>
         </View>
         <View />
       </View>
@@ -60,7 +52,7 @@ const AuthStep = ({onNextStep, onBack}: {
               }
             ]}
           >
-            Please input Security password to confirm transaction
+            {t('enterNewPassword')}
           </Text>
           <OtpInputs
             autofillFromClipboard={false}
@@ -72,20 +64,6 @@ const AuthStep = ({onNextStep, onBack}: {
             style={styles.otpContainer}
             inputStyles={styles.otpInput}
           />
-          {error && (
-            <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center'}}>
-              <Icon name='error' width={18} height={18} />
-              <Text style={[
-                theme.typography.caption2.regular,
-                {
-                  color: theme.accentColor.error.normal,
-                  paddingLeft: 4
-                }
-              ]}>
-                {error}
-              </Text>
-            </View>
-          )}
         </View>
 
         <Button
@@ -98,6 +76,6 @@ const AuthStep = ({onNextStep, onBack}: {
       </View>
     </View>
   )
-};
+}
 
-export default AuthStep;
+export default NewPassStep;
