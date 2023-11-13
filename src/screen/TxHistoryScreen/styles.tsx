@@ -34,5 +34,11 @@ export const styles = StyleSheet.create({
     fontSize: 11,
     lineHeight: 13,
     letterSpacing: 0.07
-  }
+  },
+  headerTokenSymbolText: {
+    fontSize: 20,
+    fontWeight: '700',
+    lineHeight: 25,
+    letterSpacing: 0.38
+  },
 });

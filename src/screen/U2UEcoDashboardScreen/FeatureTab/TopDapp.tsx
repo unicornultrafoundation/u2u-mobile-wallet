@@ -52,6 +52,7 @@ const TopDapp = () => {
                   title={item.title}
                   description={item.description}
                   logoImg={item.logoImg}
+                  key={`dapp-modal-${item.title}-${index}`}
                 />
               ))}
             </View>

@@ -629,6 +629,14 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'external-link':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 26 24" fill="none">
+              <Path d="M10.8001 5H8.92806C7.76315 5 7.18026 5 6.73532 5.21799C6.34395 5.40973 6.02598 5.71547 5.82656 6.0918C5.59985 6.51962 5.59985 7.08009 5.59985 8.2002V15.8002C5.59985 16.9203 5.59985 17.4801 5.82656 17.9079C6.02598 18.2842 6.34395 18.5905 6.73532 18.7822C7.17982 19 7.76201 19 8.92464 19H16.8351C17.9977 19 18.579 19 19.0235 18.7822C19.4149 18.5905 19.734 18.2839 19.9334 17.9076C20.1599 17.4802 20.1599 16.921 20.1599 15.8031V14M21.1999 9V4M21.1999 4H15.9999M21.1999 4L13.9199 11" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
       default:
         return null
     }

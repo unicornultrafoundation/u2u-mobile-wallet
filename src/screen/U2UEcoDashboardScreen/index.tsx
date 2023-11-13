@@ -46,7 +46,7 @@ const U2UEcoDashboardScreen = () => {
       }
     ]}>
       <SearchComponent />
-      <Tab
+      {/* <Tab
         tabs={[
           {
             label: 'Featured',
@@ -70,7 +70,7 @@ const U2UEcoDashboardScreen = () => {
           paddingLeft: 16,
           paddingRight: 12,
         }}
-      />
+      /> */}
       {renderScene()}
     </View>
   );

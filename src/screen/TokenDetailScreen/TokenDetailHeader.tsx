@@ -1,12 +1,14 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Linking, TouchableOpacity, View } from 'react-native';
 import Icon from '../../component/Icon';
 import { styles } from './styles';
 import Text from '../../component/Text';
 import { SvgUri } from 'react-native-svg';
+import { useNetwork } from '../../hook/useNetwork';
 
 const TokenDetailHeader = () => {
+  const {blockExplorer} = useNetwork()
   const {params} = useRoute<any>();
   const navigation = useNavigation()
 
@@ -27,8 +29,12 @@ const TokenDetailHeader = () => {
         </View>
         <Text style={styles.headerTokenSymbolText}>{tokenMeta.symbol}</Text>
       </View>
-      <TouchableOpacity>
-        <Icon name="question-mark-circle" width={24} height={24} />
+      <TouchableOpacity
+        onPress={() => {
+          Linking.openURL(`${blockExplorer}/token/${tokenMeta.address}`)
+        }}
+      >
+        <Icon name="external-link" width={26} height={24} />
       </TouchableOpacity>
     </View>
   )

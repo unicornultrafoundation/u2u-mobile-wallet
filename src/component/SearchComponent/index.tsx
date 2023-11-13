@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, FlatList, BackHandler, TouchableOpacity} from 'react-native';
+import {View, FlatList, BackHandler, TouchableOpacity, ActivityIndicator} from 'react-native';
 import styles from './styles';
 import {useDebounce} from '../../hook/useDebounce';
 import DappRow from '../../screen/U2UEcoDashboardScreen/FeatureTab/DappRow';
@@ -8,6 +8,8 @@ import Icon from '../Icon';
 import { getPhonePaddingTop } from '../../util/platform';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
+import Text from '../Text';
+import { useNetwork } from '../../hook/useNetwork';
 // Define the types
 type SearchResult = {
   // id: number;
@@ -31,7 +33,9 @@ const SearchComponent: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLayerVisible, setIsLayerVisible] = useState<boolean>(false);
+  const [searching, setSearching] = useState(false)
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
+  const {networkConfig} = useNetwork()
 
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
@@ -39,22 +43,27 @@ const SearchComponent: React.FC = () => {
   useEffect(() => {
     if (debouncedSearchQuery.length > 0) {
       const fetchResults = async () => {
+        if (!networkConfig) return
         try {
-          console.log(debouncedSearchQuery);
+          setSearching(true)
+          console.log('networkConfig.dappURL', networkConfig.dappURL)
           const response = await fetch(
-            'https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/mobile_config/dapp.json',
+            networkConfig.dappURL,
           );
-          const data: APIResponse = await response.json();
-          setResults(data.results);
+          const data: SearchResult[] = await response.json();
+          setResults(data.filter((i) => i.title.includes(debouncedSearchQuery)));
+          setSearching(false)
         } catch (error) {
+          setSearching(false)
           console.error('Error fetching search results:', error);
         }
       };
       fetchResults();
     } else {
+      setSearching(false)
       setResults([]); // Reset results if input is cleared
     }
-  }, [debouncedSearchQuery]);
+  }, [debouncedSearchQuery, networkConfig]);
 
   useEffect(() => {
     // Handle the back button press
@@ -89,7 +98,12 @@ const SearchComponent: React.FC = () => {
         value={searchQuery}
         postIcon={() => {
           return (
-            <TouchableOpacity onPress={() => setIsLayerVisible(false)}>
+            <TouchableOpacity
+              onPress={() => {
+                setIsLayerVisible(false)
+                setSearchQuery('')
+              }}
+            >
               <Icon name='close' width={24} height={24} />
             </TouchableOpacity>
           )
@@ -107,16 +121,27 @@ const SearchComponent: React.FC = () => {
             backgroundColor: preferenceTheme.background.background,
             zIndex: 99,
           }}>
-          {/* <TouchableOpacity onPress={() => setIsLayerVisible(false)}>
-            <Text onPress={handleResetButtonPress} style={{color: 'white'}}>Close</Text>
-          </TouchableOpacity> */}
-          <FlatList
-            data={results}
-            keyExtractor={item => item.title}
-            renderItem={({item, index}) => (
-              <DappRow dappMeta={item} key={`dapp-${index}`} />
-            )}
-          />
+          {searching ? (
+            <ActivityIndicator />
+          ) : (
+            (results.length === 0 && searchQuery.length > 0) ? (
+              <Text
+                style={{
+                  marginHorizontal: 16
+                }}
+              >
+                No data
+              </Text>
+            ) : (
+              <FlatList
+                data={results}
+                keyExtractor={item => item.title}
+                renderItem={({item, index}) => (
+                  <DappRow dappMeta={item} key={`dapp-${index}`} />
+                )}
+              />
+            )
+          )}
         </View>
       )}
     </>

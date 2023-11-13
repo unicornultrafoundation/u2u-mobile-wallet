@@ -20,7 +20,7 @@ const DappRow = ({dappMeta}: {dappMeta: any}) => {
     <View style={styles.tokenContainer}>
       <View style={{width: 40, height: 40}}>
         <Image
-          source={{uri: 'https://fakeimg.pl/300/'}}
+          source={{uri: dappMeta.logoImg}}
           style={{
             width: '100%',
             height: '100%',

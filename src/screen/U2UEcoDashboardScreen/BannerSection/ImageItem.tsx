@@ -10,8 +10,9 @@ interface ItemProps {
   index: number;
   title: string;
   description: string;
+  backgroundImg: string;
 }
-const ImageItem = ({index, title, description}: ItemProps) => {
+const ImageItem = ({index, title, description, backgroundImg}: ItemProps) => {
   const width = Dimensions.get('window').width;
 
   const CARD_LENGTH = width * 0.8;
@@ -58,7 +59,7 @@ const ImageItem = ({index, title, description}: ItemProps) => {
         },
       ]}>
       <Image
-        source={{uri: 'https://fakeimg.pl/300/'}}
+        source={{uri: backgroundImg}}
         style={{width: '100%', height: '100%'}}
       />
       <View style={styles.overlay}>

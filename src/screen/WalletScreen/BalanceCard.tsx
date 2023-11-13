@@ -108,7 +108,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
             >
               <Icon name="paper" width={24} height={24} />
             </TouchableOpacity>
-            <Text style={styles.balanceActionButtonText}>History</Text>
+            <Text style={styles.balanceActionButtonText}>{t('transactionHistory')}</Text>
           </View>
         </View>
       )}

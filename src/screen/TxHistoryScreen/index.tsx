@@ -14,6 +14,7 @@ import Button from '../../component/Button';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { useGlobalStore } from '../../state/global';
+import { useTranslation } from 'react-i18next';
 
 const TxHistoryScreen = () => {
   const { setRouteName } = useGlobalStore();
@@ -25,6 +26,8 @@ const TxHistoryScreen = () => {
 
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+
+  const {t} = useTranslation<string>()
 
   useFocusEffect(
     useCallback(() => {
@@ -42,7 +45,7 @@ const TxHistoryScreen = () => {
           }
         ]}
       >
-        <ActivityIndicator />
+        <ActivityIndicator style={{padding: 16}} />
       </View>
     )
   }
@@ -56,10 +59,12 @@ const TxHistoryScreen = () => {
         }
       ]}
     >
-      <View style={{padding: 16}}>
+      <View style={{padding: 16, flexDirection: 'row', justifyContent: 'space-between'}}>
         <TouchableOpacity onPress={navigation.goBack}>
           <Icon name="arrow-left" width={24} height={24} />
         </TouchableOpacity>
+        <Text style={styles.headerTokenSymbolText}>{t('transactionHistory')}</Text>
+        <View/>
       </View>
       <ScrollView style={{marginTop: 24}}>
         {txList.map((txItem: Record<string, any>) => {

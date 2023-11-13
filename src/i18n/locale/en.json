@@ -83,5 +83,6 @@
   "exportSeedPhrase": "Export seed phrase",
   "incorrectPassword": "Incorrect password",
   "discover": "Discover",
-  "totalBalance": "Total balance"
+  "totalBalance": "Total balance",
+  "transactionHistory": "History"
 }

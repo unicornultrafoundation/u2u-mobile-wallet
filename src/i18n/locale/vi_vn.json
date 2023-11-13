@@ -51,11 +51,11 @@
   "totalDelegator": "Tổng số người ủy quyền (Delegator)",
   "totalStakedAmount": "Tổng số lượng đã stake",
   "circulatingSupply": "Cung lưu hành",
-  "rewardsPerEpoch": "Lượng phần thưởng mỗi khối (Epoch)",
+  "rewardsPerEpoch": "Phần thưởng mỗi Epoch",
   "investedBalance": "Số lượng đã đầu tư",
   "available": "Khả dụng",
   "staked": "Đã stake",
-  "pendingRewards": "Phần thưởng đang xử lý",
+  "pendingRewards": "Phần thưởng",
   "address": "Địa chỉ",
   "epoch": "Khối (Epoch)",
   "reward": "Phần thưởng",
@@ -83,5 +83,6 @@
   "exportSeedPhrase": "Truy cập cụm từ khôi phục",
   "incorrectPassword": "Mật khẩu không đúng",
   "discover": "Khám phá",
-  "totalBalance": "Số dư ví"
+  "totalBalance": "Số dư ví",
+  "transactionHistory": "Lịch sử"
 }
