@@ -11,10 +11,13 @@ import { WithdrawalRequest } from '../../../hook/useFetchWithdrawRequest';
 import { formatDate } from '../../../util/date';
 import { WithdrawParams, useWithdraw } from '../../../hook/useWithdraw';
 import { useStaking } from '../../../hook/useStaking';
+import Toast from 'react-native-toast-message';
+import { useTransaction } from '../../../hook/useTransaction';
 
 const WRItem = ({item}: {
   item: WithdrawalRequest
 }) => {
+  const {resetTxState} = useTransaction()
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
@@ -39,9 +42,29 @@ const WRItem = ({item}: {
       const tx = await withdraw(params)
       console.log(tx)
       setClaiming(false)
+
+      if (!tx) {
+        return
+      }
+
+      Toast.show({
+        type: 'success',
+        text1: 'Withdraw success',
+        onHide: resetTxState,
+        props: {
+          txHash: tx.hash,
+        }
+      })
     } catch (error) {
       console.log("error: ", error);
       setClaiming(false)
+
+      Toast.show({
+        type: 'error',
+        text1: 'Withdraw fail',
+        text2: (error as Error).message,
+        onHide: resetTxState,
+      })
     }
   }
 

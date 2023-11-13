@@ -10,6 +10,7 @@ import { formatNumberString } from '../../../util/string';
 import { parseFromRaw } from '../../../util/bignum';
 import { formatDate, parseInterval } from '../../../util/date';
 import Button from '../../../component/Button';
+import UnlockModal from './UnlockModal';
 
 const LockedStakeItem = ({item}: {
   item: LockedStake
@@ -75,25 +76,33 @@ const LockedStakeItem = ({item}: {
           </Text>
         </View>
       </View>
-      <Button
-        loading={claiming}
-        disabled={!isClaimable}
-        onPress={handleClaim}
-        style={{
-          borderRadius: 60,
-          flex: 1,
-          paddingVertical: 8,
-          backgroundColor: isClaimable ? theme.color.primary[500] : preferenceTheme.background.surface
+      <UnlockModal
+        item={item}
+        trigger={() => {
+          return (
+            <View
+              style={{
+                borderRadius: 60,
+                flex: 1,
+                paddingVertical: 8,
+                backgroundColor: isClaimable ? theme.color.primary[500] : preferenceTheme.background.surface
+              }}
+            >
+              <Text
+                style={[
+                  theme.typography.label.medium,
+                  {
+                    color: preferenceTheme.text.title,
+                    textAlign: 'center'
+                  }
+                ]}
+              >
+                {isClaimable ? "Withdraw" : `Available at ${formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy")}`}
+              </Text>
+            </View>
+          )
         }}
-        textStyle={[
-          theme.typography.label.medium,
-          {
-            color: preferenceTheme.text.title
-          }
-        ]}
-      >
-        {isClaimable ? "Withdraw" : `Available at ${formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy")}`}
-      </Button>
+      />
     </View>
   )
 }

@@ -25,7 +25,7 @@ export const useFetchAllLockedStake = (delAddress: string) => {
     }
   }, [delAddress, networkConfig])
 
-  const { data: lockedStake, isLoading } = useQuery<LockedStake[]>({
+  const { data: lockedStake, isLoading, refetch } = useQuery<LockedStake[]>({
     queryKey: ['fetchAllLockedStake', delAddress, networkConfig],
     queryFn: fetchAllLockedStake,
     refetchInterval: 60000,
@@ -34,6 +34,7 @@ export const useFetchAllLockedStake = (delAddress: string) => {
 
   return {
     lockedStake: lockedStake || [] as LockedStake[],
-    isLoading
+    isLoading,
+    fetchLockedStake: refetch
   }
 }

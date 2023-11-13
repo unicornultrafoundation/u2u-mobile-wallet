@@ -61,6 +61,7 @@ export const useTransaction = () => {
 
   const submitTx = useCallback(async () => {
     if (txStore.txHash) {
+      console.log('in here')
       return
     }
     const isNativeTx = txStore.tokenMeta.address.toLowerCase() === "0x" || txStore.tokenMeta.address.toLowerCase() === ""
