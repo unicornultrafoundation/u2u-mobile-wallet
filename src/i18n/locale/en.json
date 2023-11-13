@@ -84,5 +84,8 @@
   "incorrectPassword": "Incorrect password",
   "discover": "Discover",
   "totalBalance": "Total balance",
-  "transactionHistory": "History"
+  "transactionHistory": "History",
+  "validators": "Validators",
+  "delegation": "Delegation",
+  "withdrawalRequest": "Withdrawal requests"
 }

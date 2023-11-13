@@ -14,6 +14,7 @@ import { SUPPORTED_CHAINS } from '../../config/chain';
 import Icon from '../Icon';
 import { useNetwork } from '../../hook/useNetwork';
 import Separator from '../Separator';
+import { useFetchAllValidator } from '../../hook/useFetchAllValidator';
 
 const SelectNetworkModal = ({trigger}: {
   trigger: () => JSX.Element,

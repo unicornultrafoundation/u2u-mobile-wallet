@@ -18,6 +18,7 @@ import WithdrawalRequestList from './WithdrawalRequestList'
 import { ScrollView } from 'react-native'
 import LockedStakeList from './LockedStakeList'
 import { useFetchAllValidator } from '../../hook/useFetchAllValidator'
+import { useNetwork } from '../../hook/useNetwork'
 
 const StakingDashboardScreen = () => {
   const route = useRoute()
@@ -34,16 +35,17 @@ const StakingDashboardScreen = () => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   const { fetch: fetchAllValidators } = useFetchAllValidator()
+  const {networkConfig} = useNetwork()
 
   useEffect(() => {
     fetchAllValidators()
-  }, [])
+  }, [networkConfig])
 
   const [tab, setTab] = useState('validators');
   const tabs = [
-    { label: 'Validators', value: 'validators' },
-    { label: 'Delegation', value: 'delegation' },
-    { label: 'Withdrawal Request', value: 'wr' },
+    { label: t('validators'), value: 'validators' },
+    { label: t('delegation'), value: 'delegation' },
+    { label: t('withdrawalRequest'), value: 'wr' },
     { label: 'Locked stake', value: 'locked' },
   ];
 

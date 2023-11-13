@@ -4,8 +4,10 @@ import { queryAllLockedStake, queryLockedStake } from "../service/staking"
 import { lockedStakeDataProcessor } from "../util/staking"
 import { useQuery } from "@tanstack/react-query"
 import { LockedStake } from './useFetchLockedStake'
+import { useNetwork } from "./useNetwork"
 
 export const useFetchAllLockedStake = (delAddress: string) => {
+  const {networkConfig} = useNetwork()
   const fetchAllLockedStake = useCallback(async () => {
     console.log('fetchAllLockedStake')
     if(!delAddress) return [] as LockedStake[]
@@ -21,10 +23,10 @@ export const useFetchAllLockedStake = (delAddress: string) => {
     } catch (error) {
       return [] as LockedStake[]
     }
-  }, [delAddress])
+  }, [delAddress, networkConfig])
 
   const { data: lockedStake, isLoading } = useQuery<LockedStake[]>({
-    queryKey: ['fetchAllLockedStake', delAddress],
+    queryKey: ['fetchAllLockedStake', delAddress, networkConfig],
     queryFn: fetchAllLockedStake,
     refetchInterval: 60000,
     placeholderData: [] as LockedStake[]

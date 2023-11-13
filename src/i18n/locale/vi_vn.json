@@ -84,5 +84,8 @@
   "incorrectPassword": "Mật khẩu không đúng",
   "discover": "Khám phá",
   "totalBalance": "Số dư ví",
-  "transactionHistory": "Lịch sử"
+  "transactionHistory": "Lịch sử",
+  "validators": "Người xác thực",
+  "delegation": "Uỷ quyền",
+  "withdrawalRequest": "Yêu cầu rút"
 }

@@ -2,6 +2,7 @@ import BigNumber from "bignumber.js"
 import { queryValidators, queryStakingStats, queryValidatorsApr, Validator } from "../service/staking"
 import { validatorDataProcessor } from "../util/staking"
 import { useQuery } from "@tanstack/react-query"
+import { useNetwork } from "./useNetwork"
 
 export const useFetchAllValidator = () => {
   const fetchValidators = async () => {
