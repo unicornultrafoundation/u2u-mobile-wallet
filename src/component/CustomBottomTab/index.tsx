@@ -5,6 +5,7 @@ import styles from './styles';
 import { usePreferenceStore } from '../../state/preferences';
 import { color } from '../../theme/color';
 import { useGlobalStore } from '../../state/global';
+import { useTranslation } from 'react-i18next';
 
 export const TABBAR_HEIGHT = 100
 export const TABBAR_ITEM_HEIGHT = 80
@@ -24,6 +25,8 @@ export default ({ state, descriptors, navigation }: any) => {
   const showTabBar = useMemo(() => {
     return SHOW_BOTTOM_TAB_ROUTE.includes(routeName)
   }, [routeName])
+
+  const {t} = useTranslation<string>()
 
   if (!showTabBar) return null
 
@@ -83,13 +86,13 @@ export default ({ state, descriptors, navigation }: any) => {
           } else if (route.name === 'WalletStack') {
             return (
               <Text style={[styles.tabTitle, {color: focused ? color.primary[500] : color.neutral[500]}]}>
-                Wallet
+                {t('walletTab')}
               </Text>
             )
           } else if (route.name === 'StakingStack') {
             return (
               <Text style={[styles.tabTitle, {color: focused ? color.primary[500] : color.neutral[500]}]}>
-                Staking
+                {t('stakingTab')}
               </Text>
             )
           } else if (route.name === 'MoreStack') {
@@ -101,7 +104,7 @@ export default ({ state, descriptors, navigation }: any) => {
           } else if (route.name === 'SettingStack') {
             return (
               <Text style={[styles.tabTitle, {color: focused ? color.primary[500] : color.neutral[500]}]}>
-                Setting
+                {t('settingTab')}
               </Text>
             )
           }

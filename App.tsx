@@ -40,6 +40,7 @@ import AuthScreen from './src/screen/AuthScreen';
 import { useNetworkStore } from './src/state/network';
 import { SUPPORTED_CHAINS } from './src/config/chain';
 import SettingStackScreen from './src/stack/SettingStack';
+import { useTranslation } from 'react-i18next';
 
 //@ts-ignore
 global.CustomEvent = global.Event
@@ -50,7 +51,7 @@ const queryClient = new QueryClient()
 
 function App(): JSX.Element {
   const {unlocked} = useGlobalStore()
-  const {darkMode: isDarkMode} = usePreferenceStore()
+  const {darkMode: isDarkMode, language} = usePreferenceStore()
   const preferenceTheme = isDarkMode ? darkTheme : lightTheme
 
   const {blockExplorer, chainId} = useNetwork()
@@ -63,6 +64,8 @@ function App(): JSX.Element {
 
   const {wallet} = useWallet()
   const {loaded} = useHydration()
+
+  const {i18n} = useTranslation<string>()
 
   const toastConfig = useMemo(() => {
     return {
@@ -223,6 +226,10 @@ function App(): JSX.Element {
     networkStore.switchNetwork(networkItem)
     
   }, [loaded, chainId])
+
+  useEffect(() => {
+    i18n.changeLanguage(language)
+  }, [language])
 
   if (!loaded) {
     return <SplashScreen />

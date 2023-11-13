@@ -7,6 +7,8 @@ interface PreferenceState {
   toggleDarkMode: () => void
   showBalance: boolean;
   toggleShowBalance: () => void
+  language: string;
+  setLangauge: (langKey: string) => void
 }
 
 export const usePreferenceStore = create<PreferenceState>()(
@@ -16,6 +18,8 @@ export const usePreferenceStore = create<PreferenceState>()(
       toggleDarkMode: () => set({ darkMode: !(get().darkMode) }),
       showBalance: true,
       toggleShowBalance: () => set({ showBalance: !(get().showBalance) }),
+      language: "en",
+      setLangauge: (langKey: string) => set({ language: langKey })
     }),
     {
       name: "preference-storage", // unique name

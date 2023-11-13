@@ -10,12 +10,15 @@ import Icon from '../../component/Icon';
 import Separator from '../../component/Separator';
 import LegalModal from './LegalModal';
 import LanguageModal from './LanguageModal';
+import { useTranslation } from 'react-i18next';
 
 const VERSION = DeviceInfo.getVersion()
 
 const SettingScreen = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+
+  const {t} = useTranslation<string>()
 
   return (
     <View
@@ -30,7 +33,7 @@ const SettingScreen = () => {
         <Text
           style={theme.typography.title3.bold}
         >
-          Settings
+          {t('settingTab')}
         </Text>
       </View>
       <ScrollView
@@ -53,14 +56,14 @@ const SettingScreen = () => {
                       theme.typography.body.medium
                     ]}
                   >
-                    Language
+                    {t('language')}
                   </Text>
                   <Text
                     style={[
                       theme.typography.caption1.medium
                     ]}
                   >
-                    Choose your language
+                    {t('chooseYourLanguage')}
                   </Text>
                 </View>
                 <Icon
@@ -84,7 +87,7 @@ const SettingScreen = () => {
                 theme.typography.body.medium
               ]}
             >
-              Security
+              {t('security')}
             </Text>
             <Text
               style={[
@@ -131,7 +134,7 @@ const SettingScreen = () => {
               theme.typography.body.medium
             ]}
           >
-            Version
+            {t('version')}
           </Text>
         </View>
         <Text
