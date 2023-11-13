@@ -39,6 +39,7 @@ import { useGlobalStore } from './src/state/global';
 import AuthScreen from './src/screen/AuthScreen';
 import { useNetworkStore } from './src/state/network';
 import { SUPPORTED_CHAINS } from './src/config/chain';
+import SettingStackScreen from './src/stack/SettingStack';
 
 //@ts-ignore
 global.CustomEvent = global.Event
@@ -251,7 +252,8 @@ function App(): JSX.Element {
                     <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
                     <Tab.Screen name="WalletStack" component={WalletStackScreen} />
                     <Tab.Screen name="StakingStack" component={StakingStackScreen} />
-                    <Tab.Screen name="MoreStack" component={MoreStackScreen} />
+                    {/* <Tab.Screen name="MoreStack" component={MoreStackScreen} /> */}
+                    <Tab.Screen name="SettingStack" component={SettingStackScreen} />
                   </Tab.Navigator>
                   {!unlocked && (<AuthScreen />)}
                 </>

@@ -6,7 +6,8 @@ import { usePreferenceStore } from '../../state/preferences';
 import { color } from '../../theme/color';
 import { useGlobalStore } from '../../state/global';
 
-export const TABBAR_HEIGHT = 80
+export const TABBAR_HEIGHT = 100
+export const TABBAR_ITEM_HEIGHT = 80
 
 const SHOW_BOTTOM_TAB_ROUTE = [
   'Home',
@@ -30,7 +31,7 @@ export default ({ state, descriptors, navigation }: any) => {
     <View 
       style={{ 
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         flexDirection: 'row', 
         height: TABBAR_HEIGHT,
         width: viewportWidth,
@@ -97,6 +98,12 @@ export default ({ state, descriptors, navigation }: any) => {
                 More
               </Text>
             )
+          } else if (route.name === 'SettingStack') {
+            return (
+              <Text style={[styles.tabTitle, {color: focused ? color.primary[500] : color.neutral[500]}]}>
+                Setting
+              </Text>
+            )
           }
         }
 
@@ -112,6 +119,8 @@ export default ({ state, descriptors, navigation }: any) => {
             iconName = 'coin'
           } else if (route.name === 'MoreStack') {
             iconName = 'category'
+          } else if (route.name === 'SettingStack') {
+            iconName= 'setting'
           }
 
           // You can return any component that you like here!
@@ -133,7 +142,7 @@ export default ({ state, descriptors, navigation }: any) => {
               justifyContent: 'center',
               borderTopColor: isFocused ? color.primary[500] : 'transparent',
               borderTopWidth: 2,
-              height: '100%'
+              height: TABBAR_ITEM_HEIGHT
             }}
           >
             {renderIcon({size: 22, focused: isFocused})}
