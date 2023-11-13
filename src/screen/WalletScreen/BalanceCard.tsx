@@ -10,6 +10,7 @@ import {useTransactionStore} from '../../state/transaction';
 import { useWallet } from '../../hook/useWallet';
 import { useNativeBalance } from '../../hook/useNativeBalance';
 import { formatNumberString } from '../../util/string';
+import { useTranslation } from 'react-i18next';
 
 const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
   const {darkMode} = usePreferenceStore();
@@ -21,6 +22,8 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
   const {wallet} = useWallet()
   const {balance} = useNativeBalance(wallet.address)
   const {toggleShowBalance, showBalance} = usePreferenceStore()
+
+  const {t} = useTranslation<string>()
 
   return (
     <View style={styles.balanceCardContainer}>
@@ -71,7 +74,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
               }}>
               <Icon name="arrow-up" width={24} height={24} />
             </TouchableOpacity>
-            <Text style={styles.balanceActionButtonText}>Send</Text>
+            <Text style={styles.balanceActionButtonText}>{t('send')}</Text>
           </View>
           <View
             style={{
@@ -94,7 +97,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
               }}>
               <Icon name="arrow-down" width={24} height={24} />
             </TouchableOpacity>
-            <Text style={styles.balanceActionButtonText}>Receive</Text>
+            <Text style={styles.balanceActionButtonText}>{t('receive')}</Text>
           </View>
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <TouchableOpacity

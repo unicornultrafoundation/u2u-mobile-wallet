@@ -13,10 +13,12 @@ import Icon from '../../../component/Icon';
 const LanguageModal = ({trigger}: {
   trigger: () => JSX.Element,
 }) => {
-  const {darkMode} = usePreferenceStore()
+  const {darkMode, setLangauge} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   const { t, i18n } = useTranslation<string>()
+
+  const languageKeys = Object.keys(i18n.services.resourceStore.data)
 
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -84,9 +86,16 @@ const LanguageModal = ({trigger}: {
             {t('chooseLanguage')}
           </Text>
           <Separator style={{width: '100%'}} />
-          {i18n.languages.map((lang: string) => {
+          {languageKeys.map((lang: string) => {
             return (
-              <TouchableOpacity style={styles.settingItem} key={`language-${lang}`}>
+              <TouchableOpacity
+                style={styles.settingItem}
+                key={`language-${lang}`}
+                onPress={() => {
+                  i18n.changeLanguage(lang)
+                  setLangauge(lang)
+                }}
+              >
                 <Text>{t(lang)}</Text>
                 <View>
                   {i18n.language === lang && (

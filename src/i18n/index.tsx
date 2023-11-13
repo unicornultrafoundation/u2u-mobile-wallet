@@ -17,12 +17,9 @@ i18n
       en: {
         translation: en
       },
-      thai: {
-        translation: en
-      }
     },
-    lng: "vi", // if you're using a language detector, do not define the lng option
-    fallbackLng: "vi",
+    // lng: "en", // if you're using a language detector, do not define the lng option
+    fallbackLng: "en",
 
     interpolation: {
       escapeValue: false // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
