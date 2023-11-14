@@ -87,5 +87,10 @@
   "transactionHistory": "Lịch sử",
   "validators": "Người xác thực",
   "delegation": "Uỷ quyền",
-  "withdrawalRequest": "Yêu cầu rút"
+  "withdrawalRequest": "Yêu cầu rút",
+  "penalty": "Phạt",
+  "amount": "Số lượng",
+  "unlock": "Mở khoá",
+  "insufficientBalance": "Số dư không đủ",
+  "invalidAmount": "Số lượng không hợp lệ"
 }

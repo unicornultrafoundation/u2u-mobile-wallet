@@ -109,6 +109,7 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
                   opacity: 0.9,
                 },
               ]}
+              onTouchEnd={handleClose}
             />
           );
         }}>

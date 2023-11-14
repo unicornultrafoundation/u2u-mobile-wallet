@@ -39,9 +39,9 @@ const SelectDappModal = ({
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
-  // const handleClose = useCallback(() => {
-  //   bottomSheetModalRef.current?.close();
-  // }, []);
+  const handleClose = useCallback(() => {
+    bottomSheetModalRef.current?.close();
+  }, []);
 
   const {items, toggleFavorite} = useFavoriteStore();
 
@@ -73,6 +73,7 @@ const SelectDappModal = ({
                   opacity: 0.9,
                 },
               ]}
+              onTouchEnd={handleClose}
             />
           );
         }}>

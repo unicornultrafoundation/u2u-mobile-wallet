@@ -34,10 +34,14 @@ const AmountStep = ({onNextStep, onBack}: {
   const [error, setError] = useState('')
 
   const handleContinue = async () => {
-    // TODO: validate amount
     setError('')
     const amountDigit = getDigit(internalAmount)
     const rawAmountBN = BigNumber(amountDigit)
+
+    if (rawAmountBN.toNumber() === 0) {
+      setError(t('invalidAmount'))
+      return
+    }
 
     if (rawAmountBN.gt(balance)) {
       setError('Insufficient balance')

@@ -67,6 +67,7 @@ const LanguageModal = ({trigger}: {
                   opacity: 0.9,
                 }
               ]}
+              onTouchEnd={handleClose}
             />
           )
         }}

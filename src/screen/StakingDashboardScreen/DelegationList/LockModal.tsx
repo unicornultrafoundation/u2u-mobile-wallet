@@ -295,6 +295,7 @@ const LockModal = ({trigger, item}: {
                   opacity: 0.9,
                 }
               ]}
+              onTouchEnd={handleClose}
             />
           )
         }}

@@ -20,6 +20,7 @@ import { useTransaction } from '../../../hook/useTransaction';
 import { TransactionReceipt } from 'ethers';
 import { useFetchAllLockedStake } from '../../../hook/useFetchAllLockedStake';
 import { useWallet } from '../../../hook/useWallet';
+import { useTranslation } from 'react-i18next';
 
 const UnlockModal = ({trigger, item}: {
   trigger: () => JSX.Element,
@@ -41,6 +42,7 @@ const UnlockModal = ({trigger, item}: {
     console.log('handleSheetChanges', index);
   }, []);
 
+  const { t } = useTranslation<string>()
   const {wallet} = useWallet()
   const { resetTxState } = useTransaction()
   const { stakingContractOptions } = useStaking()
@@ -169,7 +171,7 @@ const UnlockModal = ({trigger, item}: {
               theme.typography.footnote.regular
             ]}
           >
-            Amount
+            {t('amount')}
           </Text>
           <TouchableOpacity
             onPress={() => setAmount(parsedStakedAmount)}
@@ -182,7 +184,7 @@ const UnlockModal = ({trigger, item}: {
                 }
               ]}
             >
-              Available: {formatNumberString(parsedStakedAmount, 4)} U2U
+              {t('available')}: {formatNumberString(parsedStakedAmount, 4)} U2U
             </Text>
           </TouchableOpacity>
         </View>
@@ -202,7 +204,7 @@ const UnlockModal = ({trigger, item}: {
               theme.typography.footnote.regular
             ]}
           >
-            Penalty
+            {t('penalty')}
           </Text>
           <Text
             style={[
@@ -256,7 +258,7 @@ const UnlockModal = ({trigger, item}: {
             loading={unlocking}
             disabled={unlocking}
           >
-            Unlock
+            {t('unlock')}
           </Button>
         </View>
       </View>
@@ -293,6 +295,7 @@ const UnlockModal = ({trigger, item}: {
                   opacity: 0.9,
                 }
               ]}
+              onTouchEnd={handleClose}
             />
           )
         }}

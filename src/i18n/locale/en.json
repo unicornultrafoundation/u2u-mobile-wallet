@@ -87,5 +87,10 @@
   "transactionHistory": "History",
   "validators": "Validators",
   "delegation": "Delegation",
-  "withdrawalRequest": "Withdrawal requests"
+  "withdrawalRequest": "Withdrawal requests",
+  "penalty": "Penalty",
+  "amount": "Amount",
+  "unlock": "Unlock",
+  "insufficientBalance": "Insufficient balance",
+  "invalidAmount": "Invalid amount"
 }

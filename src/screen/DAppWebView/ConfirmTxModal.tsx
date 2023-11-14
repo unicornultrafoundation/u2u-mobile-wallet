@@ -47,6 +47,9 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
     console.log('handleSheetChanges', index);
     if (index === -1) onCloseModal()
   }, []);
+  const handleClose = useCallback(() => {
+    ref.current?.close();
+  }, []);
 
   const handleConfirm = async () => {
     try {
@@ -121,6 +124,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
                 opacity: 0.9,
               }
             ]}
+            onTouchEnd={handleClose}
           />
         )
       }}
