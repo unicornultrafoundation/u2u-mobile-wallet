@@ -197,6 +197,7 @@ const UnlockModal = ({trigger, item}: {
           containerStyle={{
             marginVertical: 8
           }}
+          insideModal={true}
         />
         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 40}}>
           <Text

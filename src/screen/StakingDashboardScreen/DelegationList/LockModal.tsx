@@ -215,6 +215,7 @@ const LockModal = ({trigger, item}: {
           containerStyle={{
             marginVertical: 8
           }}
+          insideModal={true}
         />
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text
@@ -245,6 +246,7 @@ const LockModal = ({trigger, item}: {
           containerStyle={{
             marginVertical: 8
           }}
+          insideModal={true}
         />
         <View
           style={{width: '100%', flex: 1, justifyContent: 'flex-end'}}

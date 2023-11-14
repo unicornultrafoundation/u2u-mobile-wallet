@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, TextInput as RNTextInput, StyleProp, View, ViewStyle } from 'react-native'
+import { TextInput as RNTextInput, StyleProp, View, ViewStyle } from 'react-native'
 import { TextInputProps } from 'react-native'
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet'
 import styles from './styles';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
@@ -12,9 +13,10 @@ interface Props extends TextInputProps {
   containerStyle?: StyleProp<ViewStyle>
   error?: string
   postIcon?: () => JSX.Element
+  insideModal?: boolean
 }
 
-const TextInput = ({style, containerStyle, error, postIcon, ...rest}: Props) => {
+const TextInput = ({style, containerStyle, error, postIcon, insideModal = false, ...rest}: Props) => {
 
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
@@ -52,26 +54,49 @@ const TextInput = ({style, containerStyle, error, postIcon, ...rest}: Props) => 
           },
         ]}
       >
-        <RNTextInput
-          {...rest}
-          onFocus={(e) => {
-            setFocused(true)
-            rest.onFocus && rest.onFocus(e)
-          }}
-          onBlur={(e) => {
-            setFocused(false)
-            rest.onBlur && rest.onBlur(e)
-          }}
-          style={[
-            // theme.typography.label.regular,
-            {
-              color: preferenceTheme.text.title,
-              flex: 1
-            },
-            style
-          ]}
-          placeholderTextColor={preferenceTheme.text.placeholder}
-        />
+        {insideModal ? (
+          <BottomSheetTextInput
+            {...rest}
+            onFocus={(e) => {
+              setFocused(true)
+              rest.onFocus && rest.onFocus(e)
+            }}
+            onBlur={(e) => {
+              setFocused(false)
+              rest.onBlur && rest.onBlur(e)
+            }}
+            style={[
+              // theme.typography.label.regular,
+              {
+                color: preferenceTheme.text.title,
+                flex: 1
+              },
+              style
+            ]}
+            placeholderTextColor={preferenceTheme.text.placeholder}
+          />
+        ) : (
+          <RNTextInput
+            {...rest}
+            onFocus={(e) => {
+              setFocused(true)
+              rest.onFocus && rest.onFocus(e)
+            }}
+            onBlur={(e) => {
+              setFocused(false)
+              rest.onBlur && rest.onBlur(e)
+            }}
+            style={[
+              // theme.typography.label.regular,
+              {
+                color: preferenceTheme.text.title,
+                flex: 1
+              },
+              style
+            ]}
+            placeholderTextColor={preferenceTheme.text.placeholder}
+          />
+        )}
         {renderPostIcon()}
       </View>
       {error && (
