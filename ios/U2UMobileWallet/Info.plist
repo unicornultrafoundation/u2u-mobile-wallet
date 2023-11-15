@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>U2UMobileWallet</string>
+	<string>U2U&#x2007;Super&#x2007;App</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -58,6 +58,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) wants to access your camera</string>
+	<string>$(PRODUCT_NAME) wants to access your camera to scan QR code</string>
 </dict>
 </plist>
