@@ -20,11 +20,8 @@ const NFTTab = () => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const navigation = useNavigation<any>();
-  // const data: NFTCollection[] = nftCollections as NFTCollection[];
 
   const {supportedNFT: data} = useSupportedNFT()
-
-  console.log(data)
 
   const [expandedItem, setExpandedItem] = useState("");
   const handleExpandItem = (id: string) => {

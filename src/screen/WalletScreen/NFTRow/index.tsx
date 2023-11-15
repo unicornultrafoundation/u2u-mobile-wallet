@@ -1,14 +1,15 @@
 import React from 'react'
 import Collapsible from '../../../component/Collapsible';
 import { NFTCollectionMeta } from '../../../hook/useSupportedNFT';
-import { Dimensions, ScrollView, View } from 'react-native';
+import { Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Image } from 'react-native';
 import Text from '../../../component/Text';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
-import { useURC20TokenBalance } from '../../../hook/useURC20TokenBalance';
-import { useWallet } from '../../../hook/useWallet';
 import { formatNumberString } from '../../../util/string';
+import { useOwnedNFT } from '../../../hook/useOwnedNFT';
+import { useNavigation } from '@react-navigation/native';
+import NFTItem from './NFTItem';
 
 const NFTRow = ({nftCollection, open, handleExpandItem}: {
   nftCollection: NFTCollectionMeta
@@ -18,9 +19,8 @@ const NFTRow = ({nftCollection, open, handleExpandItem}: {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
-  const {wallet} = useWallet()
-
-  const {balance} = useURC20TokenBalance(wallet.address, nftCollection.id, 0)
+  const {items} = useOwnedNFT(nftCollection)
+  const navigation = useNavigation<any>();
 
   return (
     <Collapsible
@@ -42,22 +42,13 @@ const NFTRow = ({nftCollection, open, handleExpandItem}: {
             marginBottom: 12,
           }}
         >
-          {/* {items.map(item => (
-            <TouchableOpacity
-              key={item.id}
-              style={{ width: 111, height: 111 }}
-              onPress={() => navigation.navigate('NFTCollection')}>
-              <Image
-                source={{ uri: item.image }}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  borderRadius: 8,
-                }}
-              />
-            </TouchableOpacity>
-          ))} */}
+          {items.map(item => (
+            <NFTItem
+              key={`${nftCollection.id}-item-${item.id}`}
+              item={item}
+              onClick={() => navigation.navigate('NFTCollection', {nftCollection})}
+            />
+          ))}
         </ScrollView>
       }>
       <View
@@ -82,7 +73,7 @@ const NFTRow = ({nftCollection, open, handleExpandItem}: {
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
           <Text style={{ color: preferenceTheme.text.primary, fontSize: 14 }}>
-            {formatNumberString(balance)}
+            {formatNumberString(items.length.toString())}
           </Text>
         </View>
       </View>

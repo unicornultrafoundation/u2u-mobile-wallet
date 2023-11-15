@@ -10,9 +10,16 @@ import Text from '../../../component/Text';
 import GradientText from '../../../component/Text/Gradient';
 import { styles } from '../styles';
 import U2ULogo from '../../../asset/icon/u2u_wallet_icon.png';
+import { NFTCollectionMeta } from '../../../hook/useSupportedNFT';
+import { OwnedNFT } from '../../../hook/useOwnedNFT';
+import { parseIPFSFile } from '../../../util/string';
 
 
-const ShareNFTModalButton = () => {
+const ShareNFTModalButton = ({item, metadata, nftCollection}: {
+  nftCollection: NFTCollectionMeta,
+  item: OwnedNFT,
+  metadata: Record<string, any>
+}) => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const [modalVisible, setModalVisible] = useState(false);
@@ -79,7 +86,7 @@ const ShareNFTModalButton = () => {
             </View>
 
             <Image
-              source={{ uri: 'https://fakeimg.pl/400/ff0000,128/000,255' }}
+              source={{ uri: parseIPFSFile(metadata.image) }}
               style={{
                 width: '100%',
                 height: 'auto',
@@ -91,15 +98,15 @@ const ShareNFTModalButton = () => {
             />
 
             <Text style={{ color: preferenceTheme.text.primary, fontSize: 12, fontWeight: '500' }}>
-              MECH Cyper - U2 Game
+              {nftCollection.name}
             </Text>
             <Text style={{ fontSize: 14, fontWeight: '700' }}>
-              WARRIOR #6969
+              {nftCollection.name} #{item.id}
             </Text>
 
             <View style={{ width: '100%', height: 1, backgroundColor: color.neutral[600], marginVertical: 8 }}/>
 
-            <View style={styles.row}>
+            {/* <View style={styles.row}>
               <View>
                 <Text
                   style={{ fontSize: 11, fontWeight: '500', letterSpacing: 0.07, color: preferenceTheme.text.primary }}>
@@ -122,7 +129,7 @@ const ShareNFTModalButton = () => {
                   10/11/2023, 17:50:47
                 </Text>
               </View>
-            </View>
+            </View> */}
           </View>
 
           <LinearGradient
