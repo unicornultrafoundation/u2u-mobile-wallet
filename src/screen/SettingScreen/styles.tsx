@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     marginBottom: 9
   },
   settingItemTextContainer: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 16,
     justifyContent: 'space-between',
     flex: 1
   }

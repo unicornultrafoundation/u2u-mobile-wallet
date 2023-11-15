@@ -156,7 +156,7 @@ const SettingScreen = () => {
         trigger={() => {
           return (
             <View style={styles.settingItem}>
-              <View style={styles.settingItemTextContainer}>
+              <View style={[styles.settingItemTextContainer, {paddingHorizontal: 8}]}>
                 <Text
                   style={[
                     theme.typography.body.medium
@@ -175,7 +175,7 @@ const SettingScreen = () => {
         }}
       />
       <TouchableOpacity style={styles.settingItem}>
-        <View style={styles.settingItemTextContainer}>
+        <View style={[styles.settingItemTextContainer, {paddingHorizontal: 8}]}>
           <Text
             style={[
               theme.typography.body.medium
