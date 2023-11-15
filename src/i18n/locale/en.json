@@ -92,5 +92,7 @@
   "amount": "Amount",
   "unlock": "Unlock",
   "insufficientBalance": "Insufficient balance",
-  "invalidAmount": "Invalid amount"
+  "invalidAmount": "Invalid amount",
+  "password": "Password",
+  "changeYourPassword": "Change your password"
 }

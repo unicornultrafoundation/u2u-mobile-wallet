@@ -93,7 +93,7 @@ const SettingScreen = () => {
           onPress={() => navigation.navigate('ExportSeedPhrase')}
         >
           <Icon
-            name='lock'
+            name='shield'
             width={20}
             height={20}
           />
@@ -111,6 +111,37 @@ const SettingScreen = () => {
               ]}
             >
               {t('exportSeedPhrase')}
+            </Text>
+          </View>
+          <Icon
+            name='chevron-right'
+            width={24}
+            height={24}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.settingItem}
+          onPress={() => navigation.navigate('UpdatePassword')}
+        >
+          <Icon
+            name='lock'
+            width={20}
+            height={20}
+          />
+          <View style={styles.settingItemTextContainer}>
+            <Text
+              style={[
+                theme.typography.body.medium
+              ]}
+            >
+              {t('password')}
+            </Text>
+            <Text
+              style={[
+                theme.typography.caption1.medium
+              ]}
+            >
+              {t('changeYourPassword')}
             </Text>
           </View>
           <Icon

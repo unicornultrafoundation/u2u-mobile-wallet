@@ -1,19 +1,21 @@
 import React, { useCallback, useState } from 'react'
-import { KeyboardAvoidingView, Platform } from 'react-native';
-import { styles } from './styles';
+import { KeyboardAvoidingView, Platform, View } from 'react-native';
+import { styles } from './styles'
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { useGlobalStore } from '../../state/global';
 import AuthStep from './AuthStep';
-import ShowSeedStep from './ShowSeedStep';
+import NewPassStep from './NewPassStep';
+import ConfirmStep from './ConfirmStep';
 
-const UpdatePasswordScreen = () => {
+const ExportSeedPhraseScreen = () => {
   const navigation = useNavigation<any>()
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
   const [step, setStep] = useState('auth')
+  const [passwordToConfirm, setPasswordToConfirm] = useState('')
 
   const route = useRoute()
   const {setRouteName} = useGlobalStore()
@@ -29,14 +31,24 @@ const UpdatePasswordScreen = () => {
       case 'auth':
         return (
           <AuthStep
-            onNextStep={() => setStep('show-seed')}
+            onNextStep={() => setStep('new-pass')}
             onBack={() => navigation.goBack()}
           />
         )
-      case 'show-seed':
+      case 'new-pass':
         return (
-          <ShowSeedStep
+          <NewPassStep
+            savePassword={setPasswordToConfirm}
+            onNextStep={() => setStep('confirm-pass')}
             onBack={() => navigation.goBack()}
+          />
+        )
+      case 'confirm-pass':
+        return (
+          <ConfirmStep
+            passwordToConfirm={passwordToConfirm}
+            onBack={() => setStep('new-pass')}
+            onNextStep={() => navigation.goBack()}
           />
         )
       default:
@@ -60,4 +72,4 @@ const UpdatePasswordScreen = () => {
   )
 }
 
-export default UpdatePasswordScreen;
+export default ExportSeedPhraseScreen;

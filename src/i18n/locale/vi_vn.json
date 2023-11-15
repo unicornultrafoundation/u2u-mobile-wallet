@@ -92,5 +92,7 @@
   "amount": "Số lượng",
   "unlock": "Mở khoá",
   "insufficientBalance": "Số dư không đủ",
-  "invalidAmount": "Số lượng không hợp lệ"
+  "invalidAmount": "Số lượng không hợp lệ",
+  "password": "Mật khẩu",
+  "changeYourPassword": "Cập nhật mật khẩu"
 }
