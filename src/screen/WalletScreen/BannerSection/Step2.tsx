@@ -6,10 +6,12 @@ import Button from '../../../component/Button';
 import theme from '../../../theme';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
+import { useTranslation } from 'react-i18next';
 
 const Step2 = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const { t } = useTranslation();
 
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: 16, paddingVertical: 12}}>
@@ -24,7 +26,7 @@ const Step2 = () => {
             }
           ]}
         >
-          2/4 U2U Foundation
+          {t('bannerTitle2')}
         </Text>
         <Text
           style={[
@@ -36,13 +38,13 @@ const Step2 = () => {
             }
           ]}
         >
-          Join U2U Foundation with Dapp: Explore to earn!
+          {t('bannerContent2')}
         </Text>
         <Button
           type='text'
           style={{justifyContent: 'flex-start'}}
         >
-          Explore now
+          {t('exploreNow')}
         </Button>
       </View>
       <View>

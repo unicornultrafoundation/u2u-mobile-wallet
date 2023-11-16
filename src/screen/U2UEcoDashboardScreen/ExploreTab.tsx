@@ -4,10 +4,12 @@ import ExploreSection from './ExploreTab/ExploreSection';
 import Tab from '../../component/Tab';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {useGlobalStore} from '../../state/global';
+import {useTranslation} from 'react-i18next';
 
 const ExploreTab = () => {
   const [selectedTab, setSelectedTab] = useState('trading');
   const route = useRoute();
+  const {t} = useTranslation();
 
   const {setRouteName} = useGlobalStore();
 
@@ -37,27 +39,27 @@ const ExploreTab = () => {
         containerStyle={{paddingLeft: 16}}
         tabs={[
           {
-            label: 'Trading',
+            label: t('Trading'),
             value: 'trading',
           },
           {
-            label: 'DeFi',
+            label: t('DeFi'),
             value: 'defi',
           },
           {
-            label: 'GameFi',
+            label: t('GameFi'),
             value: 'gamefi',
           },
           {
-            label: 'Dex',
+            label: t('Dex'),
             value: 'dex',
           },
           {
-            label: 'Tool',
+            label:t('Tool'),
             value: 'tool',
           },
           {
-            label: 'Filter',
+            label: t('Filter'),
             value: 'filter',
           },
         ]}

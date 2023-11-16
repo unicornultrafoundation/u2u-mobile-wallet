@@ -4,12 +4,14 @@ import Tab from '../../component/Tab';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {useGlobalStore} from '../../state/global';
 import FavoriteSection from './FavoriteTab';
+import {useTranslation} from 'react-i18next';
 
 const FavoriteTab = () => {
   const [selectedTab, setSelectedTab] = useState('trading');
   const route = useRoute();
 
   const {setRouteName} = useGlobalStore();
+  const {t} = useTranslation();
 
   const renderScene = () => {
     switch (selectedTab) {
@@ -37,27 +39,27 @@ const FavoriteTab = () => {
         containerStyle={{paddingLeft: 16}}
         tabs={[
           {
-            label: 'Trading',
+            label: t('Trading'),
             value: 'trading',
           },
           {
-            label: 'DeFi',
+            label: t('DeFi'),
             value: 'defi',
           },
           {
-            label: 'GameFi',
+            label: t('GameFi'),
             value: 'gamefi',
           },
           {
-            label: 'Dex',
+            label: t('Dex'),
             value: 'dex',
           },
           {
-            label: 'Tool',
+            label:t('Tool'),
             value: 'tool',
           },
           {
-            label: 'Filter',
+            label: t('Filter'),
             value: 'filter',
           },
         ]}

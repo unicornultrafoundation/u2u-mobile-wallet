@@ -6,10 +6,13 @@ import Button from '../../../component/Button';
 import theme from '../../../theme';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
+import { useTranslation } from 'react-i18next';
 
 const Step1 = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+
+  const { t } = useTranslation();
 
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: 16, paddingVertical: 12}}>
@@ -24,7 +27,7 @@ const Step1 = () => {
             }
           ]}
         >
-          1/4 Explore U2U Wallet
+          {t('bannerTitle1')}
         </Text>
         <Text
           style={[
@@ -36,13 +39,13 @@ const Step1 = () => {
             }
           ]}
         >
-          Take a tour with U2U Wallet to claim NFTs!
+           {t('bannerContent1')}
         </Text>
         <Button
           type='text'
           style={{justifyContent: 'flex-start'}}
         >
-          Visit now
+          {t('visitNow')}
         </Button>
       </View>
       <View>

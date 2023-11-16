@@ -6,10 +6,12 @@ import Button from '../../../component/Button';
 import theme from '../../../theme';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
+import { useTranslation } from 'react-i18next';
 
 const Step3 = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const { t } = useTranslation();
 
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: 16, paddingVertical: 12}}>
@@ -24,7 +26,7 @@ const Step3 = () => {
             }
           ]}
         >
-          4/4 U2 News
+          {t('bannerTitle4')}
         </Text>
         <Text
           style={[
@@ -36,13 +38,13 @@ const Step3 = () => {
             }
           ]}
         >
-          Enjoy free transation with Nebulas Testnet
+          {t('bannerContent4')}
         </Text>
         <Button
           type='text'
           style={{justifyContent: 'flex-start'}}
         >
-          Explorer now
+          {t('exploreNow')}
         </Button>
       </View>
       <View>
