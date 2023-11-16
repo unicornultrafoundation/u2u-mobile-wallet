@@ -120,5 +120,8 @@
   "Crypto": "Crypto",
   "NFT": "NFT",
   "Ecosystem": "Ecosystem",
-  "More": "More"
+  "More": "More",
+  "enterWalletAddress": "Enter wallet address",
+  "transfer": "Transfer",
+  "nftTransferWarning": "NFTs transferred to the wrong address cannot be recovered"
 }

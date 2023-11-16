@@ -8,8 +8,11 @@ import { useNavigation } from '@react-navigation/native';
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import { useState } from 'react';
 import ShareCollectionModalButton from './ShareCollectionModalButton';
+import { NFTCollectionMeta } from '../../../hook/useSupportedNFT';
 
-const CollectionBanner = () => {
+const CollectionBanner = ({nftCollection}: {
+  nftCollection: NFTCollectionMeta
+}) => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const navigation = useNavigation<any>();
@@ -31,11 +34,11 @@ const CollectionBanner = () => {
           <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
             <Icon name="arrow-left" width={24} height={24}/>
           </TouchableOpacity>
-          <ShareCollectionModalButton/>
+          <ShareCollectionModalButton nftCollection={nftCollection} />
         </View>
 
         <Image
-          source={{ uri: 'https://fakeimg.pl/780x240/ff0000,128/000,255' }}
+          source={{ uri: nftCollection.banner }}
           style={styles.bannerImage}
         />
       </View>
@@ -47,7 +50,7 @@ const CollectionBanner = () => {
             { borderColor: preferenceTheme.background.background },
           ]}>
           <Image
-            source={{ uri: 'https://fakeimg.pl/100/' }}
+            source={{ uri: nftCollection.image }}
             style={styles.bannerImage}
           />
         </View>
@@ -55,7 +58,7 @@ const CollectionBanner = () => {
         <View>
           <Text
             style={[styles.bannerText, { color: preferenceTheme.text.title }]}>
-            MECH Cyper - U2 Game
+            {nftCollection.name}
           </Text>
 
           <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
@@ -79,7 +82,8 @@ const CollectionBanner = () => {
               textAlign: 'justify',
             }}
             ellipsizeMode="tail"
-            numberOfLines={showFullDesc ? undefined : 1}>
+            numberOfLines={showFullDesc ? undefined : 1}
+          >
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type

@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client"
+import { gql as minimalGQL } from 'graphql-request'
 
 const DELEGATIONS_GQL = `
   id
@@ -216,6 +217,7 @@ export const Schema = () => {
             `
       );
       queryString += "}";
+      // @ts-ignore
       return gql(queryString);
     },
     EPOCH_OF_VALIDATOR: gql`
@@ -250,7 +252,34 @@ export const Schema = () => {
           totalRewards
         }
       }
+    `,
+    OWNED_NFT: minimalGQL`
+      query OwnedNFT($address: String!) {
+        items(
+          where: {
+            owner: $address
+          }
+        ) {
+          id
+          tokenID
+          tokenURI
+          owner {
+            id
+          }
+        }
+      }
+    `,
+    ALL_NFT: minimalGQL`
+      query AllNFT {
+        items {
+          id
+          tokenID
+          tokenURI
+          owner {
+            id
+          }
+        }
+      }
     `
-
   }
 }

@@ -9,9 +9,12 @@ import Icon from '../../../component/Icon';
 import Modal from '../../../component/Modal';
 import Text from '../../../component/Text';
 import GradientText from '../../../component/Text/Gradient';
+import { NFTCollectionMeta } from '../../../hook/useSupportedNFT';
 
 
-const ShareCollectionModalButton = () => {
+const ShareCollectionModalButton = ({nftCollection}: {
+  nftCollection: NFTCollectionMeta
+}) => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const [modalVisible, setModalVisible] = useState(false);
@@ -35,7 +38,7 @@ const ShareCollectionModalButton = () => {
           <View style={{ padding: 16 }}>
             <View style={[styles.banner, { marginBottom: 48 }]}>
               <Image
-                source={{ uri: 'https://fakeimg.pl/780x240/ff0000,128/000,255' }}
+                source={{ uri: nftCollection.banner }}
                 style={[styles.bannerImage, { borderRadius: 8 }]}
               />
 
@@ -46,7 +49,7 @@ const ShareCollectionModalButton = () => {
                   { borderColor: preferenceTheme.background.surface },
                 ]}>
                 <Image
-                  source={{ uri: 'https://fakeimg.pl/100/' }}
+                  source={{ uri: nftCollection.image }}
                   style={styles.bannerImage}
                 />
               </View>
@@ -60,7 +63,7 @@ const ShareCollectionModalButton = () => {
                   letterSpacing: 0.38,
                   marginBottom: 8,
                 }}>
-                MECH Cyper - U2 Game
+                {nftCollection.name}
               </Text>
               <Text
                 style={{

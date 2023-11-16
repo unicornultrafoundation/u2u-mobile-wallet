@@ -1,13 +1,13 @@
 import { Dimensions, StyleSheet } from 'react-native';
 import { getPhonePaddingBottom, getPhonePaddingTop } from '../../util/platform';
+import { TABBAR_HEIGHT } from '../../component/CustomBottomTab';
 
 export const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: Dimensions.get('window').height,
+    flex: 1,
     paddingTop: getPhonePaddingTop(),
-    paddingBottom: getPhonePaddingBottom(),
-    overflow: 'scroll',
+    paddingBottom: getPhonePaddingBottom() + TABBAR_HEIGHT,
+    // overflow: 'scroll',
   },
   section: {
     paddingHorizontal: 16,
@@ -49,6 +49,7 @@ export const styles = StyleSheet.create({
     borderRadius: 40,
     overflow: 'hidden',
     borderWidth: 4,
+    backgroundColor: "#FFF"
   },
   modalAvatarWrapper: {
     position: 'absolute',

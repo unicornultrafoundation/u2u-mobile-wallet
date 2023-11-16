@@ -7,8 +7,10 @@ import { useMemo } from 'react'
 export interface NFTCollectionMeta {
   id: string;
   image: string;
+  banner: string;
   name: string;
   category: string;
+  graph: string;
 }
 
 export interface NFTItemMeta {

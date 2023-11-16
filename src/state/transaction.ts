@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { NFTCollectionMeta } from '../hook/useSupportedNFT';
 
 interface TokenMeta {
   name: string;
@@ -8,11 +9,19 @@ interface TokenMeta {
   logo: string;
 }
 
+interface NFTMeta {
+  nftCollection: NFTCollectionMeta;
+  tokenID: string;
+  image: string;
+}
+
 interface TransactionState {
   receiveAddress: string;
   setReceiveAddress: (address: string) => void;
   tokenMeta: TokenMeta;
   setTokenMeta: (tokenMeta: TokenMeta) => void;
+  nftMeta: NFTMeta;
+  setNFTMeta: (nftMeta: NFTMeta) => void;
   amount: string;
   setAmount: (amount: string) => void;
   gasPrice: string;
@@ -45,6 +54,19 @@ export const useTransactionStore = create<TransactionState>((set) => ({
     logo: ""
   },
   setTokenMeta: (tokenMeta: TokenMeta) => set({ tokenMeta }),
+  nftMeta: {
+    nftCollection: {
+      id: "",
+      image: "",
+      banner: "",
+      name: "",
+      category: "",
+      graph: "",
+    },
+    tokenID: "",
+    image: "",
+  },
+  setNFTMeta: (nftMeta: NFTMeta) => set({ nftMeta }),
   amount: '0',
   setAmount: (amount: string) => set({ amount }),
   gasPrice: '10000000000',

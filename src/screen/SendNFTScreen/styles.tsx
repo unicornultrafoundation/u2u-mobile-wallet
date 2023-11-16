@@ -16,6 +16,9 @@ export const useStyles = () => {
       paddingBottom: getPhonePaddingBottom(),
       backgroundColor: preferenceTheme.background.background
     },
+    screenTitle: {
+      color: preferenceTheme.text.primary
+    },
     section: {
       paddingHorizontal: 16
     },
@@ -27,7 +30,9 @@ export const useStyles = () => {
     card: {
       padding: 12,
       borderRadius: 6,
-      backgroundColor: preferenceTheme.background.surface
+      backgroundColor: preferenceTheme.background.surface,
+      marginBottom: 24,
+      gap: 8
     }
   });
 }

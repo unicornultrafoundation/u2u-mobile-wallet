@@ -4,8 +4,16 @@ import { styles } from '../styles';
 import { usePreferenceStore } from '../../../state/preferences';
 import { color, darkTheme, lightTheme } from '../../../theme/color';
 import Icon from "../../../component/Icon";
+import { OwnedNFT } from '../../../hook/useOwnedNFT';
+import { NFTCollectionMeta } from '../../../hook/useSupportedNFT';
+import { shortenAddress } from '../../../util/string';
+import { useNetwork } from '../../../hook/useNetwork';
 
-const NFTBasicInfo = () => {
+const NFTBasicInfo = ({item, nftCollection}: {
+  item: OwnedNFT;
+  nftCollection: NFTCollectionMeta
+}) => {
+  const {networkConfig} = useNetwork()
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
@@ -32,7 +40,7 @@ const NFTBasicInfo = () => {
             Contract address
           </Text>
           <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-            <Text style={{ fontSize: 12 }}>0xa1234...9217021</Text>
+            <Text style={{ fontSize: 12 }}>{shortenAddress(nftCollection.id, 8, 8)}</Text>
             <TouchableOpacity>
               <Icon name='copy' width={16} height={16} color={color.neutral[500]} />
             </TouchableOpacity>
@@ -48,7 +56,7 @@ const NFTBasicInfo = () => {
             }}>
             Token ID
           </Text>
-          <Text style={{ fontSize: 12 }}>2361</Text>
+          <Text style={{ fontSize: 12 }}>{item.tokenID}</Text>
         </View>
 
         <View style={{ width: '50%' }}>
@@ -60,7 +68,7 @@ const NFTBasicInfo = () => {
             }}>
             Blockchain
           </Text>
-          <Text style={{ fontSize: 12 }}>U2U Solaris Mainnet</Text>
+          <Text style={{ fontSize: 12 }}>{networkConfig?.name}</Text>
         </View>
 
         <View style={{ width: '50%' }}>
@@ -75,7 +83,7 @@ const NFTBasicInfo = () => {
           <Text style={{ fontSize: 12 }}>ERC-721</Text>
         </View>
 
-        <View style={{ width: '50%' }}>
+        {/* <View style={{ width: '50%' }}>
           <Text
             style={{
               fontSize: 11,
@@ -85,7 +93,7 @@ const NFTBasicInfo = () => {
             Time
           </Text>
           <Text style={{ fontSize: 12 }}>10/11/2023, 14:27:47</Text>
-        </View>
+        </View> */}
       </View>
     </View>
   );

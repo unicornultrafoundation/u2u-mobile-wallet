@@ -31,6 +31,7 @@
     "events": "^3.3.0",
     "fast-text-encoding": "^1.0.6",
     "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0",
     "i18next": "^23.5.1",
     "intl-pluralrules": "^2.0.1",
     "jazzicon": "^1.5.0",
