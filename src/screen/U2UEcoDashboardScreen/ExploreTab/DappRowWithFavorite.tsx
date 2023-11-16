@@ -7,6 +7,8 @@ import StarButton from '../../../component/FavoriteButton';
 import theme from '../../../theme';
 import {useFavoriteStore} from '../../../state/favorite';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+
 
 const DappRow = ({dappMeta}: {dappMeta: any}) => {
   const {items, toggleFavorite} = useFavoriteStore();
@@ -15,6 +17,7 @@ const DappRow = ({dappMeta}: {dappMeta: any}) => {
   const handlePressDetail = () => {
     navigation.navigate('DAppWebView', {url: dappMeta.url});
   };
+  const { t } = useTranslation();
 
   return (
     <View style={styles.tokenContainer}>
@@ -41,7 +44,7 @@ const DappRow = ({dappMeta}: {dappMeta: any}) => {
           style={styles.openButton}
           onPress={handlePressDetail}
         >
-          Open
+          {t('open')}
         </Button>
         <StarButton
           isFavorite={

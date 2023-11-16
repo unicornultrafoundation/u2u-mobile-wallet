@@ -4,13 +4,15 @@ import Header from '../Header';
 import BannerSection from '../BannerSection';
 import BlurredImageItem from '../BannerSection/BlurImageItem';
 import useFetchDappList from '../../../hook/useFetchDappList';
+import { useTranslation } from 'react-i18next';
+import { styles } from '../../TokenDetailScreen/styles';
 
 const Upcoming = () => {
   const {data, loading} = useFetchDappList();
-
+  const { t } = useTranslation();
   return (
     <View>
-      <Header text="Upcoming" />
+      {data && data.filter((i) => i.upcoming).length > 0 && <Header text="Upcoming" />}
       <View>
         {loading ? (
           <ActivityIndicator />

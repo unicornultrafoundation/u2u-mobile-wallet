@@ -6,6 +6,7 @@ import Icon from '../../component/Icon';
 import { color } from '../../theme/color';
 import { useMemo } from 'react';
 import {Article} from "./index";
+import React from 'react';
 
 interface Props {
   news: Article[]

@@ -24,6 +24,8 @@ ios/.xcode.env.local
 ios/build/
 ios/builds/
 ios/fastlane/.env.default
+.eslintrc.js
+.prettierrc.js
 
 # Android/IntelliJ
 #

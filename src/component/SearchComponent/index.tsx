@@ -10,6 +10,7 @@ import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import Text from '../Text';
 import { useNetwork } from '../../hook/useNetwork';
+import { useTranslation } from 'react-i18next';
 // Define the types
 type SearchResult = {
   // id: number;
@@ -36,6 +37,7 @@ const SearchComponent: React.FC = () => {
   const [searching, setSearching] = useState(false)
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const {networkConfig} = useNetwork()
+  const { t } = useTranslation();
 
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
@@ -90,7 +92,7 @@ const SearchComponent: React.FC = () => {
     <>
       <TextInput
         containerStyle={{height: 48}}
-        placeholder="Search for DApps or enter a URL"
+        placeholder= {t('searchForDAppsOrEnterURL')}
         placeholderTextColor={'#363636'}
         onTouchStart={() => setIsLayerVisible(true)}
         onChangeText={text => setSearchQuery(text)}
