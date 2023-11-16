@@ -120,5 +120,8 @@
   "Crypto": "Crypto",
   "NFT": "NFT",
   "Ecosystem": "Hệ sinh thái",
-  "More": "Hơn nữa"
+  "More": "Hơn nữa",
+  "enterWalletAddress": "Nhập địa chỉ ví",
+  "transfer": "Giao dịch",
+  "nftTransferWarning": "NFT chuyển sai sẽ không thể được khôi phục"
 }

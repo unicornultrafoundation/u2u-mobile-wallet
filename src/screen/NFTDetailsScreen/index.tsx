@@ -13,12 +13,15 @@ import { useGlobalStore } from '../../state/global';
 import { getPhonePaddingBottom } from '../../util/platform';
 import { NFTCollectionMeta } from '../../hook/useSupportedNFT';
 import { OwnedNFT } from '../../hook/useOwnedNFT';
+import { useTransaction } from '../../hook/useTransaction';
 
 const NFTDetailsScreen = () => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const [tab, setTab] = useState('details');
   const navigation = useNavigation<any>()
+
+  const {setNFTMeta} = useTransaction()
 
   const route = useRoute<any>();
   const { setRouteName } = useGlobalStore();
@@ -32,6 +35,15 @@ const NFTDetailsScreen = () => {
   const nftCollection: NFTCollectionMeta = route.params?.nftCollection || {}
   const item: OwnedNFT = route.params?.item || {}
   const metadata: Record<string, any> = route.params?.metadata || {}
+
+  const handleTransfer = () => {
+    setNFTMeta({
+      nftCollection: nftCollection,
+      tokenID: item.tokenID,
+      image: metadata.image
+    })
+    navigation.navigate('SendNFT')
+  }
 
   return (
     <View
@@ -82,7 +94,7 @@ const NFTDetailsScreen = () => {
           backgroundColor: preferenceTheme.background.background
         }}
       >
-        <Button type="fill" style={{width: '90%', borderRadius: 60}} onPress={() => navigation.navigate('SendNFT')}>
+        <Button type="fill" style={{width: '90%', borderRadius: 60}} onPress={handleTransfer}>
           Transfer
         </Button>
       </View>
