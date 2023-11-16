@@ -9,6 +9,7 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import theme from '../../../theme';
+import { useTranslation } from 'react-i18next';
 
 export interface BlurredImageItemProps {
   backgroundImg: string;
@@ -28,7 +29,7 @@ const BlurredImageItem = ({
   gradientColor
 }: BlurredImageItemProps) => {
   const width = Dimensions.get('window').width;
-
+  const { t } = useTranslation();
   const SPACING = width * 0.1;
   const SIDECARD_LENGTH = (width * 0.18) / 2;
   const size = useSharedValue(0.8);
@@ -76,7 +77,7 @@ const BlurredImageItem = ({
               display: 'flex',
               alignItems: 'center',
             }}>
-            Open
+            {t('open')}
           </Button>
         </LinearGradient>
       </View>

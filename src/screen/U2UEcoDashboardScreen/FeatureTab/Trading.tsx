@@ -4,9 +4,11 @@ import Header from '../Header';
 import SelectDappModal from '../../../component/SelectDappModal';
 import DappRow from './DappRow';
 import useFetchDappList from '../../../hook/useFetchDappList';
+import {useTranslation} from 'react-i18next';
 
 const TopDapp = () => {
   const {data, loading} = useFetchDappList();
+  const {t} = useTranslation();
 
   const groupData = useMemo(() => {
     const rs: any[][] = [];
@@ -21,7 +23,7 @@ const TopDapp = () => {
 
   return (
     <View>
-      <Header text="Trading" />
+      {data && data.length > 0 && <Header text="Trading" />}
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {loading ? (
           <ActivityIndicator />

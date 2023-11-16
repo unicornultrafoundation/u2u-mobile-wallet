@@ -81,7 +81,7 @@ export default ({ state, descriptors, navigation }: any) => {
           } else if (route.name === 'EcosystemStack') {
             return (
               <Text style={[styles.tabTitle, {color: focused ? color.primary[500] : color.neutral[500]}]}>
-                Ecosystem
+                {t('Ecosystem')}
               </Text>
             )
           } else if (route.name === 'WalletStack') {
@@ -99,7 +99,7 @@ export default ({ state, descriptors, navigation }: any) => {
           } else if (route.name === 'MoreStack') {
             return (
               <Text style={[styles.tabTitle, {color: focused ? color.primary[500] : color.neutral[500]}]}>
-                More
+               {t('More')}
               </Text>
             )
           } else if (route.name === 'SettingStack') {

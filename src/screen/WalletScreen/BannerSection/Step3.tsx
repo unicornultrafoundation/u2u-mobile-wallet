@@ -7,12 +7,14 @@ import theme from '../../../theme';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 const Step3 = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   const navigation = useNavigation<any>()
+  const { t } = useTranslation();
 
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: 16, paddingVertical: 12}}>
@@ -27,7 +29,7 @@ const Step3 = () => {
             }
           ]}
         >
-          3/4 U2 Staking
+          {t('bannerTitle3')}
         </Text>
         <Text
           style={[
@@ -39,7 +41,7 @@ const Step3 = () => {
             }
           ]}
         >
-          Staking U2U now to share $100,000,000 price pool
+          {t('bannerContent3')}
         </Text>
         <Button
           type='text'
@@ -48,7 +50,7 @@ const Step3 = () => {
             navigation.navigate('StakingStack')
           }}
         >
-          Stake now
+          {t('stakeNow')} 
         </Button>
       </View>
       <View>
