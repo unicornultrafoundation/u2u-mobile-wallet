@@ -129,5 +129,12 @@
   "Announcements": "Thông báo",
   "General Information": "Thông tin chung",
   "Research": "Nghiên cứu",
-  "Search articles": "Tìm kiếm bài viết"
+  "Search articles": "Tìm kiếm bài viết",
+  "manageToken": "Quản lý token",
+  "searchTokenPlaceholder": "Tìm theo tên, địa chỉ hợp đồng thông minh...",
+  "customToken": "Token khác",
+  "addCustomToken": "Thêm token",
+  "symbol": "Ký hiệu",
+  "decimals": "Số thập phân",
+  "tokenName": "Tên"
 }

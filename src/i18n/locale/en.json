@@ -129,5 +129,12 @@
   "Announcements": "Announcements",
   "General Information": "General Information",
   "Research": "Research",
-  "Search articles": "Search articles"
+  "Search articles": "Search articles",
+  "manageToken": "Manage token",
+  "searchTokenPlaceholder": "Search token sympol, contract address...",
+  "customToken": "Custom token",
+  "addCustomToken": "Add custom token",
+  "symbol": "Symbol",
+  "decimals": "Decimals",
+  "tokenName": "Name"
 }

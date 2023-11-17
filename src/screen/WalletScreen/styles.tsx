@@ -7,7 +7,8 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: getPhonePaddingTop(),
-    paddingBottom: TABBAR_HEIGHT
+    paddingBottom: TABBAR_HEIGHT,
+    position: 'relative'
   },
   section: {
     paddingHorizontal: 16,
