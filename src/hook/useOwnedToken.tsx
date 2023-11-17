@@ -7,6 +7,7 @@ export const useOwnedToken = (address: string) => {
   const query = useQuery({
     queryKey: ['owned-tokens', address],
     queryFn: () => fetchOwnedToken(blockExplorer, address),
+    refetchInterval: 30000
   })
   
   return {
