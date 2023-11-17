@@ -7,6 +7,7 @@ import { color } from '../../theme/color';
 import { useMemo } from 'react';
 import {Article} from "./index";
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   news: Article[]
@@ -14,6 +15,8 @@ interface Props {
 }
 
 const FeaturedNews = ({ onViewCategory, news }: Props) => {
+  const { t } = useTranslation();
+
   const styles = useStyles();
   const categories = useMemo(() => {
     return news.reduce((a, b) => {
@@ -41,7 +44,7 @@ const FeaturedNews = ({ onViewCategory, news }: Props) => {
           <View key={category.name}>
             <View style={[styles.row, { marginBottom: 16 }]}>
               <Text style={styles.title} fontSize={16} letterSpacing={0.06}>
-                {category.name}
+                {t(category.name)}
               </Text>
 
               <TouchableOpacity onPress={() => onViewCategory(category.name)}>

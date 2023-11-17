@@ -26,5 +26,23 @@ export const useStyles = () => {
       justifyContent: 'space-between',
       alignItems: 'center'
     },
+    searchContainer: {
+      width: '100%',
+      paddingLeft: 16,
+      paddingRight: 16,
+      backgroundColor: preferenceTheme.background.background,
+    },
+    caption: {
+      color: preferenceTheme.text.primary,
+      fontSize: 11,
+      letterSpacing: 0.07
+    },
+
+    articleThumbnail: {
+      width: 110,
+      height: 80,
+      borderRadius: 12,
+      objectFit: 'cover'
+    }
   });
 };

@@ -123,5 +123,11 @@
   "More": "Hơn nữa",
   "enterWalletAddress": "Nhập địa chỉ ví",
   "transfer": "Giao dịch",
-  "nftTransferWarning": "NFT chuyển sai sẽ không thể được khôi phục"
+  "nftTransferWarning": "NFT chuyển sai sẽ không thể được khôi phục",
+  "Featured": "Nổi bật",
+  "Latest": "Mới nhất",
+  "Announcements": "Thông báo",
+  "General Information": "Thông tin chung",
+  "Research": "Nghiên cứu",
+  "Search articles": "Tìm kiếm bài viết"
 }

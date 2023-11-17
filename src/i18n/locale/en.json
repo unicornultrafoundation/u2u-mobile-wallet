@@ -123,5 +123,11 @@
   "More": "More",
   "enterWalletAddress": "Enter wallet address",
   "transfer": "Transfer",
-  "nftTransferWarning": "NFTs transferred to the wrong address cannot be recovered"
+  "nftTransferWarning": "NFTs transferred to the wrong address cannot be recovered",
+  "Featured": "Featured",
+  "Latest": "Latest",
+  "Announcements": "Announcements",
+  "General Information": "General Information",
+  "Research": "Research",
+  "Search articles": "Search articles"
 }
