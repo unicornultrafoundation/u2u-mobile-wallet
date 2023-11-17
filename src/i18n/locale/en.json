@@ -123,5 +123,12 @@
   "More": "More",
   "enterWalletAddress": "Enter wallet address",
   "transfer": "Transfer",
-  "nftTransferWarning": "NFTs transferred to the wrong address cannot be recovered"
+  "nftTransferWarning": "NFTs transferred to the wrong address cannot be recovered",
+  "manageToken": "Manage token",
+  "searchTokenPlaceholder": "Search token sympol, contract address...",
+  "customToken": "Custom token",
+  "addCustomToken": "Add custom token",
+  "symbol": "Symbol",
+  "decimals": "Decimals",
+  "tokenName": "Name"
 }

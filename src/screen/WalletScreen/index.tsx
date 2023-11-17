@@ -5,6 +5,8 @@ import {
   NativeSyntheticEvent,
   SafeAreaView,
   ScrollView,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import {usePreferenceStore} from '../../state/preferences';
 import {darkTheme, lightTheme} from '../../theme/color';
@@ -18,8 +20,16 @@ import Separator from '../../component/Separator';
 import {useFocusEffect, useRoute} from '@react-navigation/core';
 import {useGlobalStore} from '../../state/global';
 import {GestureResponderEvent} from 'react-native/Libraries/Types/CoreEventTypes';
+import Button from '../../component/Button';
+import { TABBAR_HEIGHT } from '../../component/CustomBottomTab';
+import theme from '../../theme';
+import Text from '../../component/Text';
+import Icon from '../../component/Icon';
+import ManageTokenModal from '../../component/ManageTokenModal';
+import { useTranslation } from 'react-i18next';
 
 const WalletScreen = () => {
+  const {t} = useTranslation()
   const {darkMode} = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
@@ -108,6 +118,40 @@ const WalletScreen = () => {
         {tab === 'crypto' && <CryptoTab />}
         {tab === 'nft' && <NFTTab />}
       </ScrollView>
+      <View style={{position: 'absolute', bottom: TABBAR_HEIGHT + 16, alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+        <ManageTokenModal
+          trigger={() => {
+            return (
+              <View
+                style={{
+                  borderRadius: 80,
+                  backgroundColor: preferenceTheme.background.surface,
+                  paddingVertical: 12,
+                  paddingHorizontal: 16,
+                  flexDirection: 'row',
+                  gap: 8
+                }}
+              >
+                <Icon
+                  name="filter"
+                  width={15}
+                  height={15}
+                />
+                <Text
+                  style={[
+                    theme.typography.caption1.medium,
+                    {
+                      color: preferenceTheme.text.disabled,
+                    }
+                  ]}
+                >
+                  {t('manageToken')}
+                </Text>
+              </View>
+            )
+          }}
+        />
+      </View>
     </SafeAreaView>
   );
 };

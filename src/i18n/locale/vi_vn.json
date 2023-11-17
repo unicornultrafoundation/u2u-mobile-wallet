@@ -123,5 +123,12 @@
   "More": "Hơn nữa",
   "enterWalletAddress": "Nhập địa chỉ ví",
   "transfer": "Giao dịch",
-  "nftTransferWarning": "NFT chuyển sai sẽ không thể được khôi phục"
+  "nftTransferWarning": "NFT chuyển sai sẽ không thể được khôi phục",
+  "manageToken": "Quản lý token",
+  "searchTokenPlaceholder": "Tìm theo tên, địa chỉ hợp đồng thông minh...",
+  "customToken": "Token khác",
+  "addCustomToken": "Thêm token",
+  "symbol": "Ký hiệu",
+  "decimals": "Số thập phân",
+  "tokenName": "Tên"
 }

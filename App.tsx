@@ -237,9 +237,9 @@ function App(): JSX.Element {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <MenuProvider>
-        <BottomSheetModalProvider>
-          <QueryClientProvider client={queryClient}>
-            <NavigationContainer>
+        <QueryClientProvider client={queryClient}>
+          <NavigationContainer>
+            <BottomSheetModalProvider>
               <StatusBar
                 barStyle={isDarkMode ? 'light-content' : 'dark-content'}
                 backgroundColor={backgroundStyle.backgroundColor}
@@ -264,9 +264,9 @@ function App(): JSX.Element {
                   {!unlocked && (<AuthScreen />)}
                 </>
               )}
-            </NavigationContainer>
-          </QueryClientProvider>
-        </BottomSheetModalProvider>
+            </BottomSheetModalProvider>
+          </NavigationContainer>
+        </QueryClientProvider>
       </MenuProvider>
       <Toast config={toastConfig} />
     </GestureHandlerRootView>
