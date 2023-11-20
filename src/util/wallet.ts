@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 
 export const getWalletFromMnemonic = (
   mnemonic: string,
-  index = 1
+  index = 0
 ) => {
   const path = `m/44'/60'/0'/0/${index}`
   const _mnemonic = ethers.Mnemonic.fromPhrase(mnemonic.trim());

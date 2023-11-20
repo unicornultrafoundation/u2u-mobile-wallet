@@ -138,5 +138,7 @@
   "decimals": "Số thập phân",
   "tokenName": "Tên",
   "recentAddress": "Địa chỉ ví gần đây",
-  "recipientAddressCannotBeTheSameAsSendingAddress" : "Địa chỉ nhận không được giống với địa chỉ gửi"
+  "recipientAddressCannotBeTheSameAsSendingAddress" : "Địa chỉ nhận không được giống với địa chỉ gửi",
+  "removeWalletFail": "Xoá ví thất bại",
+  "removeWalletFailDescription": "Phải giữ ít nhất 1 ví"
 }

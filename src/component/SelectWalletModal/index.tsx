@@ -13,6 +13,7 @@ import { getWalletFromMnemonic } from '../../util/wallet';
 import WalletRow from './WalletRow';
 import EditWalletModal from '../EditWalletModal';
 import { Wallet } from '../../state/wallet';
+import Toast from 'react-native-toast-message';
 
 const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
   const { darkMode } = usePreferenceStore();
@@ -36,7 +37,7 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
+  const snapPoints = useMemo(() => ['60%'], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -50,7 +51,6 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
   // }, []);
 
   const walletList = useMemo(() => {
-    // console.log("generatedPath", generatedPath)
     return generatedPath.map(path => {
       return getWalletFromMnemonic(seedPhrase, path);
     });
@@ -73,6 +73,15 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
   };
 
   const handleDeleteWallet = (w: Wallet) => {
+    if (generatedPath.length === 1) {
+      Toast.show({
+        type: 'error',
+        text1: t('removeWalletFail'),
+        text2: t('removeWalletFailDescription'),
+      })
+      return
+    }
+
     setLoading(true)
     setTimeout(() => {
       deleteWallet(w)
@@ -88,7 +97,7 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
       </TouchableOpacity>
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        index={1}
+        index={0}
         snapPoints={snapPoints}
         // onChange={handleSheetChanges}
         handleStyle={{

@@ -55,7 +55,7 @@ export const useWalletStore = create(
       generateNewPath: () => {
         const currentMetadata = get().walletMetadata
         const currentPath = get().generatedPath;
-        let newPath = 1;
+        let newPath = 0;
 
         while (currentPath.includes(newPath)) {
           newPath += 1;
@@ -93,11 +93,21 @@ export const useWalletStore = create(
         const pathIndex = Number(wallet.path[wallet.path.length - 1]);
         let currentPath = get().generatedPath;
 
+        if (currentPath.length === 1) return;
+
         currentPath = currentPath.filter(path => path !== pathIndex);
-        const updatedWallet = getWalletFromMnemonic(get().seedPhrase, 1);
+        let updatedWallet = get().wallet
+        let newSelectedIndex = get().selectedIndex
+
+        if (pathIndex === get().selectedIndex) {
+          updatedWallet = getWalletFromMnemonic(get().seedPhrase, pathIndex - 1);
+          newSelectedIndex = pathIndex - 1
+        }
+
+        // const updatedWallet = getWalletFromMnemonic(get().seedPhrase, 1);
 
         set({
-          selectedIndex: 1,
+          selectedIndex: newSelectedIndex,
           wallet: updatedWallet,
           generatedPath: currentPath,
         });

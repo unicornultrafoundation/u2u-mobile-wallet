@@ -95,7 +95,7 @@ const WalletRow = ({ item, selected, disabled, onSelect, onEdit, onDelete, ...re
               <Icon name="edit" width={24} height={24}/>
             </View>
           </MenuOption>
-          <MenuOption value={2} disableTouchable={generatedPath.length === 1}>
+          <MenuOption value={2}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
               <Text style={{ color: 'red' }}>
                 {t('removeAddress')}
