@@ -184,6 +184,13 @@ export const typography: Record<string, any> = {
     }
   },
   footnote: {
+    small: {
+      fontSize: 11,
+      lineHeight: 13,
+      letterSpacing: 0.07,
+      fontWeight: "400",
+      fontFamily: 'Regular'
+    },
     regular: {
       fontSize: 14,
       lineHeight: 18,
