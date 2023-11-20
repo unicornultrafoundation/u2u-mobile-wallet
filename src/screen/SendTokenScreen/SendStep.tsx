@@ -11,6 +11,7 @@ import Button from '../../component/Button';
 import { useTransaction } from '../../hook/useTransaction';
 import TxDetail from '../../component/TxDetail';
 import { useNavigation } from '@react-navigation/native';
+import { useLocalStore } from '../../state/local';
 
 const SendStep = ({onSkip}: {
   onSkip: () => void
@@ -20,7 +21,8 @@ const SendStep = ({onSkip}: {
 
   const navigation = useNavigation<any>()
 
-  const {submitTx, txStatus, txHash, resetTxState} = useTransaction()
+  const {submitTx, txHash, resetTxState, receiveAddress} = useTransaction()
+  const { addRecentAddress } = useLocalStore()
 
   const { t } = useTranslation<string>()
 
@@ -32,6 +34,7 @@ const SendStep = ({onSkip}: {
   useEffect(() => {
     (async () => {
       try {
+        addRecentAddress(receiveAddress)
         const txHash = await submitTx()
         console.log('sented', txHash)
       } catch (error) {
