@@ -38,6 +38,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginVertical: 8
   },
+  cardColumn: {
+    flexDirection: 'column', 
+    justifyContent: 'space-between', 
+    direction: 'rtl'
+  },
   otpContainer: {
     flexDirection: 'row',
     width: '100%',

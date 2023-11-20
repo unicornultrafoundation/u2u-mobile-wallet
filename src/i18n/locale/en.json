@@ -140,5 +140,7 @@
   "recentAddress": "Recent address",
   "recipientAddressCannotBeTheSameAsSendingAddress" : "The recipient address can't be the same as the sending address",
   "removeWalletFail": "Remove wallet fail",
-  "removeWalletFailDescription": "Must keep at least 1 wallet"
+  "removeWalletFailDescription": "Must keep at least 1 wallet",
+  "wallet": "Wallet",
+  "walletDefaultName" : "Wallet"
 }
