@@ -137,5 +137,6 @@
   "symbol": "Symbol",
   "decimals": "Decimals",
   "tokenName": "Name",
-  "recentAddress": "Recent address"
+  "recentAddress": "Recent address",
+  "recipientAddressCannotBeTheSameAsSendingAddress" : "The recipient address can't be the same as the sending address"
 }

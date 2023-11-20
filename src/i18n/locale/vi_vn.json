@@ -137,5 +137,6 @@
   "symbol": "Ký hiệu",
   "decimals": "Số thập phân",
   "tokenName": "Tên",
-  "recentAddress": "Địa chỉ ví gần đây"
+  "recentAddress": "Địa chỉ ví gần đây",
+  "recipientAddressCannotBeTheSameAsSendingAddress" : "Địa chỉ nhận không được giống với địa chỉ gửi"
 }
