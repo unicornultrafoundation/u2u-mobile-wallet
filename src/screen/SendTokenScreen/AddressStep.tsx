@@ -10,6 +10,7 @@ import { darkTheme, lightTheme } from '../../theme/color';
 import Button from '../../component/Button';
 import TextInput from '../../component/TextInput';
 import { isAddress } from 'ethers';
+import { useWallet } from '../../hook/useWallet';
 import { useTransactionStore } from '../../state/transaction';
 import Scanner from '../../component/QRCodeScanner';
 import { useLocalStore } from '../../state/local';
@@ -19,6 +20,7 @@ const AddressStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
   onBack: () => void;
 }) => {
+  const { wallet } = useWallet()
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
   const {t} = useTranslation<string>()
@@ -30,6 +32,10 @@ const AddressStep = ({onNextStep, onBack}: {
 
   const handleConfirm = () => {
     setErrorAddress('')
+    if (address == wallet.address) {
+      setErrorAddress(t('recipientAddressCannotBeTheSameAsSendingAddress'))
+      return
+    }
     if (!isAddress(address)) {
       setErrorAddress('Invalid address')
       return
