@@ -12,6 +12,8 @@ import TextInput from '../../component/TextInput';
 import { isAddress } from 'ethers';
 import { useTransactionStore } from '../../state/transaction';
 import Scanner from '../../component/QRCodeScanner';
+import { useLocalStore } from '../../state/local';
+import RecentAddress from '../../component/RecentAddress';
 
 const AddressStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -89,24 +91,32 @@ const AddressStep = ({onNextStep, onBack}: {
         </Text>
       </View>
       <View style={{flex: 1, justifyContent: 'space-between', paddingHorizontal: 16, marginTop: 36}}>
-        <TextInput
-          placeholder="Enter wallet address"
-          value={address}
-          onChangeText={(val) => setAddress(val)}
-          error={errorAddress}
-          postIcon={() => {
-            return (
-              <TouchableOpacity onPress={() => setShowScanner(true)}>
-                <Icon name="scan" width={18} height={18} />
-              </TouchableOpacity>
-            )
-          }}
-        />
+        <View style={{gap: 24}}>
+          <TextInput
+            placeholder="Enter wallet address"
+            value={address}
+            onChangeText={(val) => setAddress(val)}
+            error={errorAddress}
+            postIcon={() => {
+              return (
+                <TouchableOpacity onPress={() => setShowScanner(true)}>
+                  <Icon name="scan" width={18} height={18} />
+                </TouchableOpacity>
+              )
+            }}
+          />
+          <RecentAddress
+            onItemClick={(selectedAddress) => {
+              setAddress(selectedAddress)
+              handleConfirm()
+            }}
+          />
+        </View>
         <Button
           style={{borderRadius: 60}}
           onPress={handleConfirm}
         >
-          Confirm
+          {t('confirm')}
         </Button>
       </View>
     </View>

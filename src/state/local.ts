@@ -21,7 +21,9 @@ interface LocalState {
   tokenListInitted: boolean;
   setTokenListInitted: (tokenListInitted: boolean) => void;
   customTokenList: TokenMeta[];
-  addCustomToken: (token: TokenMeta) => void
+  addCustomToken: (token: TokenMeta) => void;
+  recentAddress: string[];
+  addRecentAddress: (address: string) => void;
 }
 
 export const useLocalStore = create<LocalState>()(
@@ -59,6 +61,11 @@ export const useLocalStore = create<LocalState>()(
 
         set({ customTokenList: current })
         get().toggleToken(toChecksumAddress(token.address))
+      },
+      recentAddress: ['0x6b08B3179b58FA0FC3dEd3d959E7B688c0E52Ac2'],
+      addRecentAddress: (address: string) => {
+        const current = get().recentAddress.filter((a) => a.toLowerCase() !== address.toLowerCase())
+        set({ recentAddress: [address, ...current] })
       }
     }),
     {
