@@ -4,7 +4,7 @@ import { getPhonePaddingTop } from "../../util/platform";
 
 export default StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
+    // paddingHorizontal: 16,
     paddingVertical: 28,
     backgroundColor: '#000',
     flex: 1,
@@ -13,6 +13,8 @@ export default StyleSheet.create({
   },
   stakingDataContainer: {
     marginHorizontal: 16,
+    marginTop: 10,
+    marginBottom: 16,
     padding: 16,
     borderRadius: 12
   },

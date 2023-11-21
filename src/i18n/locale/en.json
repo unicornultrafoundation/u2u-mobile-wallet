@@ -44,8 +44,8 @@
   "qrWithAmountWarningPost": " and can't be used by any other types of wallet.",
   "manageWallet": "Manage wallet",
   "myInvestment": "My investment",
-  "totalValidator": "Total validator",
-  "totalDelegator": "Total delegator",
+  "totalValidators": "Total validators",
+  "totalDelegators": "Total delegators",
   "totalStakedAmount": "Total staked amount",
   "circulatingSupply": "Circulating supply",
   "rewardsPerEpoch": "Rewards per epoch",
@@ -149,5 +149,6 @@
   "networkFee" : "Network Fee",
   "transactionHash" : "Transaction Hash",
   "block" : "Block",
-  "msgCopied" : "Copied to clipboard"
+  "msgCopied" : "Copied to clipboard",
+  "balance" : "Balance"
 }

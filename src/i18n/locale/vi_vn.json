@@ -47,8 +47,8 @@
   "qrWithAmountWarningPost": " và không thể được sử dụng bởi các loại ví khác.",
   "manageWallet": "Quản lý ví",
   "myInvestment": "Doanh mục đầu tư",
-  "totalValidator": "Tổng số người xác thực (Validator)",
-  "totalDelegator": "Tổng số người ủy quyền (Delegator)",
+  "totalValidators": "Tổng số người xác thực (Validator)",
+  "totalDelegators": "Tổng số người ủy quyền (Delegator)",
   "totalStakedAmount": "Tổng số lượng đã stake",
   "circulatingSupply": "Cung lưu hành",
   "rewardsPerEpoch": "Phần thưởng mỗi Epoch",
@@ -149,5 +149,6 @@
   "networkFee" : "Phí mạng lưới",
   "transactionHash" : "Mã giao dịch",
   "block" : "Khối",
-  "msgCopied" : "Đã sao chép"
+  "msgCopied" : "Đã sao chép",
+  "balance" : "Số dư"
 }
