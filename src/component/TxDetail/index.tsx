@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Image, Linking, TouchableOpacity, View, ScrollView } from 'react-native';
+import { Image, Linking, TouchableOpacity, View, ScrollView, ActivityIndicator } from 'react-native';
 import { styles } from '../../screen/SendTokenScreen/styles';
 import Text from '../Text';
 import { useTranslation } from 'react-i18next';
@@ -33,6 +33,7 @@ const TxDetail = ({txHash, onClose}: {
   const { t } = useTranslation<string>()
   const { fetchTxReceipt, fetchTxDetail } = useTransaction()
   const { fetchBlock } = useNetwork()
+  const [loading, setLoading] = useState(true)
 
   const {supportedTokens} = useSupportedTokens()
 
@@ -42,11 +43,14 @@ const TxDetail = ({txHash, onClose}: {
 
   useEffect(() => {
     (async () => {
+      setLoading(true)
       try {
         const [receipt, detail] = await Promise.all([fetchTxReceipt(txHash), fetchTxDetail(txHash)])
         setTxReceipt(receipt)
         setTxDetail(detail)
+        setLoading(false)
       } catch (error) {
+        setLoading(false)
         console.log(error)
       }
     })()
@@ -141,6 +145,15 @@ const TxDetail = ({txHash, onClose}: {
     );
   }
 
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator />
+        </View>
+      </View>
+    );
+  }
   return (
     <View style={{flex: 1}}>
       <View style={styles.headerContainer}>

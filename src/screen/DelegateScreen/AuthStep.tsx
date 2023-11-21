@@ -93,7 +93,7 @@ const AuthStep = ({onNextStep, onBack}: {
           textStyle={theme.typography.label.medium}
           onPress={handleContinue}
         >
-          {t('continue')}
+          {t('confirm')}
         </Button>
       </View>
     </View>
