@@ -51,7 +51,7 @@ const ERC20TxMetaSection = ({tokenMeta, txDetail}: {
 
   return (
     <View style={{flexDirection: 'row', padding: 16, alignItems: 'center'}}>
-      <View style={{width: 28, height: 28}}>
+      <View style={{width: 32, height: 32}}>
         <SvgUri
           uri={tokenMeta.logo}
           width="100%"

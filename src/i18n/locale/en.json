@@ -35,9 +35,9 @@
   "maxFee": "Max fee",
   "network": "Network",
   "enterPassword": "Enter password",
-  "transactionSubmitted": "Transaction submitted",
-  "transactionSuccess": "Transaction success",
-  "transactionFailed": "Transaction failed",
+  "transactionSubmitted": "Transaction Submitted",
+  "transactionSuccess": "Transaction Success",
+  "transactionFailed": "Transaction Failed",
   "selectNetwork": "Select network",
   "recipientAddress": "Recipient address",
   "qrWithAmountWarningPre": "QR code with amount can only use by ",
@@ -142,5 +142,12 @@
   "removeWalletFail": "Remove wallet fail",
   "removeWalletFailDescription": "Must keep at least 1 wallet",
   "wallet": "Wallet",
-  "walletDefaultName" : "Wallet"
+  "walletDefaultName" : "Wallet",
+  "viewOnBlockchainExplorer": "View on blockchain explorer",
+  "time": "Time",
+  "type": "Type",
+  "networkFee" : "Network Fee",
+  "transactionHash" : "Transaction Hash",
+  "block" : "Block",
+  "msgCopied" : "Copied to clipboard"
 }

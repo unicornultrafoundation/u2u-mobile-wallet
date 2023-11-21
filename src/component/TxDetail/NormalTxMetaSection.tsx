@@ -14,7 +14,7 @@ const NormalTxMetaSection = ({txValue}: {
 
   return (
     <View style={{flexDirection: 'row', padding: 16, alignItems: 'center'}}>
-      <View style={{width: 28, height: 28}}>
+      <View style={{width: 32, height: 32}}>
         <SvgUri
           uri={"https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"}
           width="100%"

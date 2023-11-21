@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Image, Linking, TouchableOpacity, View } from 'react-native';
+import { Image, Linking, TouchableOpacity, View, ScrollView } from 'react-native';
 import { styles } from '../../screen/SendTokenScreen/styles';
 import Text from '../Text';
 import { useTranslation } from 'react-i18next';
@@ -63,6 +63,18 @@ const TxDetail = ({txHash, onClose}: {
     })()
   }, [txReceipt])
 
+  function handleCopied(value: string | null | undefined) {
+    if (value == null) return
+    Clipboard.setString(value)
+    Toast.show({
+      type: "simpleNoti",
+      text1: t("msgCopied"),
+      props: {
+        width: '45%'
+      }
+    })
+  }
+
   const gasUsed = useMemo(() => {
     return txReceipt ? txReceipt.gasUsed.toString() : '0'
   }, [txReceipt])
@@ -85,6 +97,50 @@ const TxDetail = ({txHash, onClose}: {
     return <NormalTxMetaSection txValue={txValue} />
   }
 
+  const renderItem = ({label, value, flex = 1} : {
+    label: string,
+    value: string,
+    flex: number
+  }) => {
+    return (
+      <View style={{flex: flex}}>
+        <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary, marginBottom: 8}]}>
+          {t(label)}
+        </Text>
+        <Text style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}>
+          {value}
+        </Text>
+      </View>
+    );
+  }
+
+  const renderCopyItem = ({label, displayValue, value, flex = 1} : {
+    label: string,
+    displayValue: string,
+    value?: string,
+    flex: number
+  }) => {
+    return (
+      <View style={{flex: flex}}>
+        <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary, marginBottom: 8}]}>
+          {t(label)}
+        </Text>
+        { 
+        !value 
+          ? <Text style={theme.typography.caption1.medium}>{displayValue}</Text> 
+          : <TouchableOpacity onPress={() => {
+            handleCopied(value)
+          }}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={[theme.typography.caption1.medium, {paddingRight: 5, width: 'auto'}]}>{displayValue}</Text>
+              <Icon name='copy' width={16} height={16} color={"#8D8D8D"}/>
+            </View>
+          </TouchableOpacity>
+        }
+      </View>
+    );
+  }
+
   return (
     <View style={{flex: 1}}>
       <View style={styles.headerContainer}>
@@ -98,158 +154,95 @@ const TxDetail = ({txHash, onClose}: {
           <Icon name='close' width={24} height={24} />
         </TouchableOpacity>
       </View>
-
-      <Separator />
-      {renderTxMeta()}
-      <Separator />
-      <View style={{padding: 16}}>
-        <View style={{paddingBottom: 0}}>
-          <Text style={[{paddingVertical: 8, color: preferenceTheme.text.secondary}, theme.typography.caption2.regular]}>From</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            {txReceipt && <Text>{shortenAddress(txReceipt.from, 10, 10) }</Text>}
-            <TouchableOpacity
-              onPress={() => txReceipt && Clipboard.setString(txReceipt.from)}
-            >
-              <Icon name='copy' width={16} height={16} color={"#8D8D8D"} />
-            </TouchableOpacity>
+      <ScrollView>
+        <Separator/>{renderTxMeta()}<Separator/>
+        <View style={{padding: 16}}>
+          <View style={{paddingBottom: 20}}>
+            <Text style={[{paddingBottom: 8, color: preferenceTheme.text.secondary}, theme.typography.caption2.regular]}>{t('from')}</Text>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              {txReceipt && <Text style={theme.typography.caption1.medium}>{shortenAddress(txReceipt.from, 10, 10) }</Text>}
+              <TouchableOpacity onPress={() => handleCopied(txReceipt?.from)}>
+                <Icon name='copy' width={16} height={16} color={"#8D8D8D"} />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View>
+            <Text style={[{paddingBottom: 8, color: preferenceTheme.text.secondary}, theme.typography.caption2.regular]}>{t('to')}</Text>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              {txReceipt && <Text style={theme.typography.caption1.medium}>{shortenAddress(txReceipt.to!, 10, 10) }</Text>}
+              <TouchableOpacity onPress={() => handleCopied(txReceipt?.to)}>
+                <Icon name='copy' width={16} height={16} color={"#8D8D8D"} />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-        <View style={{paddingBottom: 12}}>
-        <Text style={[{paddingVertical: 8, color: preferenceTheme.text.secondary}, theme.typography.caption2.regular]}>To</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            {txReceipt && <Text>{shortenAddress(txReceipt.to!, 10, 10) }</Text>}
-            <TouchableOpacity
-              onPress={() => {
-                if (!txReceipt) return
-                Clipboard.setString(txReceipt.to!)
-                Toast.show({
-                  type: "simpleNoti",
-                  text1: "Copied to clipboard",
-                  props: {
-                    width: '45%'
-                  }
-                })
-              }}
-            >
-              <Icon name='copy' width={16} height={16} color={"#8D8D8D"} />
-            </TouchableOpacity>
+        <Separator/>
+        <View style={{paddingHorizontal: 16}}>
+          <View style={{flexDirection: 'row', paddingTop: 8, paddingBottom: 12}}>
+            {renderItem({
+              label: 'time', 
+              value: formatDate(timestamp * 1000, "dd/MM/yyyy, HH:mm:ss"), 
+              flex: 2,
+            })}
+            {renderItem({
+              label: 'type', 
+              value: txReceipt?.from.toLowerCase() === wallet.address.toLowerCase() ? t('Send') : t('Receive'), 
+              flex: 1,
+            })}
           </View>
-        </View>
-      </View>
-      <Separator />
-      <View style={{paddingHorizontal: 16}}>
-        <View style={{flexDirection: 'row', paddingVertical: 12}}>
-          <View style={{flex: 2}}>
-            <Text
-              style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
-            >
-              Time
-            </Text>
-            <Text
-              style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title, marginTop: 8}]}
-            >
-              {formatDate(timestamp * 1000, "dd/MM/yyyy, HH:mm:ss")}
-            </Text>
+          <Separator/>
+          <View style={{flexDirection: 'row', paddingTop: 8, paddingBottom: 12}}>
+            {renderItem({
+              label: 'networkFee', 
+              value: `${txReceipt? (BigNumber(gasUsed).multipliedBy(gasPrice)).dividedBy(10 ** 18).toFixed() : '--'} U2U`,
+              flex: 2,
+            })}
+            {renderItem({
+              label: 'network', 
+              value: name,
+              flex: 1,
+            })}
           </View>
-          <View style={{flex: 1}}>
-            <Text
-              style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
-            >
-              Type
-            </Text>
-            <Text
-              style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title, marginTop: 8}]}
-            >
-              {txReceipt?.from.toLowerCase() === wallet.address.toLowerCase() ? "Send" : "Receive"}
-            </Text>
+          <Separator/>
+          <View style={{flexDirection: 'row', paddingTop: 8, paddingBottom: 12}}>
+            {renderCopyItem({
+              label: 'transactionHash', 
+              displayValue: txReceipt? shortenAddress(txReceipt.hash.toString(), 10, 10) : '--',
+              value: txReceipt?.hash.toString(),
+              flex: 2,
+            })}
+            {renderItem({
+              label: 'block', 
+              value: txReceipt ? txReceipt.blockNumber.toString() : '--',
+              flex: 1,
+            })}
           </View>
-        </View>
-        <Separator />
-        <View style={{flexDirection: 'row', paddingVertical: 12}}>
-          <View style={{flex: 2}}>
-            <Text
-              style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
-            >
-              Network fee
-            </Text>
-            <Text
-              style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title, marginTop: 8}]}
-            >
-              {txReceipt? (BigNumber(gasUsed).multipliedBy(gasPrice)).dividedBy(10 ** 18).toFixed() : '--'} U2U
-            </Text>
-          </View>
-          <View style={{flex: 1}}>
-            <Text
-              style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
-            >
-              Network
-            </Text>
-            <Text
-              style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title, marginTop: 8}]}
-            >
-              {name}
-            </Text>
-          </View>
-        </View>
-        <Separator />
-        <View style={{flexDirection: 'row', paddingVertical: 12}}>
-          <View style={{flex: 2}}>
-            <Text
-              style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
-            >
-              Transaction hash
-            </Text>
-            <Text
-              style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title, marginTop: 8}]}
-            >
-              {txReceipt? shortenAddress(txReceipt.hash.toString(), 10, 10) : '--'}
-            </Text>
-          </View>
-          <View style={{flex: 1}}>
-            <Text
-              style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
-            >
-              Block
-            </Text>
-            <Text
-              style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title, marginTop: 8}]}
-            >
-              {txReceipt ? txReceipt.blockNumber.toString() : '--'}
-            </Text>
-          </View>
-        </View>
-        <Separator />
-        <TouchableOpacity
-          style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}
-          onPress={() => {
-            Linking.openURL(`${blockExplorer}/tx/${txReceipt?.hash.toString().toLowerCase()}`)
-          }}
-        >
-          <Text
-            style={[
-              theme.typography.label.medium,
-              {
-                color: preferenceTheme.text.title
-              }
-            ]}
-          >
-            View on blockchain explorer
-          </Text>
-          <Icon name="chevron-right" width={18} height={18} />
-        </TouchableOpacity>
-        <View style={{alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, paddingTop: 18}}>
-          <Image
-            source={TX_DETAIL}
-            resizeMode='contain'
-            width={223}
-            height={235}
-            style={{
-              width: 223,
-              height: 235
+          <Separator/>
+          <TouchableOpacity
+            style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}
+            onPress={() => {
+              Linking.openURL(`${blockExplorer}/tx/${txReceipt?.hash.toString().toLowerCase()}`)
             }}
-          />
+          >
+            <Text style={[theme.typography.label.large, {color: preferenceTheme.text.title}]}>
+              {t('viewOnBlockchainExplorer')}
+            </Text>
+            <Icon name="chevron-right" width={18} height={18} />
+          </TouchableOpacity>
+          <View style={{alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, paddingVertical: 18}}>
+            <Image
+              source={TX_DETAIL}
+              resizeMode='contain'
+              width={223}
+              height={235}
+              style={{
+                width: 223,
+                height: 235
+              }}
+            />
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   )
 }
