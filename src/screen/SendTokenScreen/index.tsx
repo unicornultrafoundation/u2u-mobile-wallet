@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
@@ -73,12 +73,12 @@ const SendTokenScreen = () => {
   }
 
   return (
-    <View style={[
+    <SafeAreaView style={[
       styles.container,
       {backgroundColor: preferenceTheme.background.background}
     ]}>
       {renderStep()}
-    </View>
+    </SafeAreaView>
   )
 };
 
