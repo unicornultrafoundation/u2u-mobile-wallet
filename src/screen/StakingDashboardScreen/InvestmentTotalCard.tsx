@@ -70,7 +70,7 @@ const InvestmentTotalCard = () => {
             }
           ]}
         >
-          {t('investedBalance')}
+          {t('balance')}
         </Text>
         <Text
           style={[
