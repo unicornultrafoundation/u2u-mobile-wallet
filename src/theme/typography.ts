@@ -158,6 +158,13 @@ export const typography: Record<string, any> = {
       letterSpacing: -0.32,
       fontWeight: "700",
       fontFamily: 'Regular'
+    },
+    large: {
+      fontSize: 16,
+      lineHeight: 25,
+      letterSpacing: 0.06,
+      fontWeight: "500",
+      fontFamily: 'Regular'
     }
   },
   subheadline: {

@@ -142,5 +142,12 @@
   "removeWalletFail": "Xoá ví thất bại",
   "removeWalletFailDescription": "Phải giữ ít nhất 1 ví",
   "wallet": "Ví",
-  "walletDefaultName" : "Ví"
+  "walletDefaultName" : "Ví",
+  "viewOnBlockchainExplorer": "Xem thêm trên trình duyệt",
+  "time": "Thời gian",
+  "type": "Loại",
+  "networkFee" : "Phí mạng lưới",
+  "transactionHash" : "Mã giao dịch",
+  "block" : "Khối",
+  "msgCopied" : "Đã sao chép"
 }
