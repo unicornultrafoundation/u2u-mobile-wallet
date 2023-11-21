@@ -29,6 +29,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import MoreStackScreen from './src/stack/MoreStack';
+import appsFlyer from 'react-native-appsflyer';
 import { MenuProvider } from 'react-native-popup-menu';
 import Toast from 'react-native-toast-message';
 import theme from './src/theme';
@@ -41,6 +42,7 @@ import { useNetworkStore } from './src/state/network';
 import { SUPPORTED_CHAINS } from './src/config/chain';
 import SettingStackScreen from './src/stack/SettingStack';
 import { useTranslation } from 'react-i18next';
+import { APP_FLYERS_DEV_KEY, APP_FLYERS_IOS_APP_ID } from './src/config/constant';
 
 //@ts-ignore
 global.CustomEvent = global.Event
@@ -48,6 +50,23 @@ global.CustomEvent = global.Event
 const Tab = createBottomTabNavigator();
 
 const queryClient = new QueryClient()
+
+appsFlyer.initSdk(
+  {
+    devKey: APP_FLYERS_DEV_KEY!,
+    isDebug: true,
+    appId: APP_FLYERS_IOS_APP_ID,
+    onInstallConversionDataListener: true, //Optional
+    onDeepLinkListener: true, //Optional
+    timeToWaitForATTUserAuthorization: 10 //for iOS 14.5
+  },
+  (result) => {
+    console.log(result);
+  },
+  (error) => {
+    console.error(error);
+  }
+);
 
 function App(): JSX.Element {
   const {unlocked} = useGlobalStore()
