@@ -5,7 +5,7 @@ import { styles } from './styles';
 import { SvgUri } from 'react-native-svg';
 import Text from '../../../component/Text';
 import BigNumber from 'bignumber.js';
-import { formatNumberString } from '../../../util/string';
+import { formatNumberString, shortenAddress } from '../../../util/string';
 import theme from '../../../theme';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
@@ -31,7 +31,7 @@ const ValidatorItem = ({validator}: {
 
   return (
     <TouchableOpacity style={styles.validatorItem} onPress={() => handleSelectValidator(validator)}>
-      <View style={{width: 34, height: 34, paddingRight: 6}}>
+      <View style={{width: 34, height: 34, paddingRight: 8}}>
         <SvgUri
           uri="https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"
           width="100%"
@@ -57,10 +57,12 @@ const ValidatorItem = ({validator}: {
             }
           ]}
         >
-          APR: {formatNumberString(validator.apr.toString(), 2)}%
+          {shortenAddress(validator.auth, 10, 10)} - APR: {formatNumberString(validator.apr.toString(), 2)}%
         </Text>
       </View>
-      <Text>{amount}</Text>
+      <Text style={[theme.typography.subheadline.medium, {maxWidth: '65%', marginLeft: 5}]}>
+        {amount}
+      </Text>
     </TouchableOpacity>
   )
 }

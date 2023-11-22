@@ -60,7 +60,7 @@ const Tab = ({selectedTab, onChange, tabs, tabStyle, tabTextStyle, containerStyl
             <Text style={[
               styles.tabTitle,
               {color: isActive ? preferenceTheme.text.title : theme.color.neutral[500]},
-              {fontWeight: isActive ? 'bold' : '500'},
+              {fontWeight: isActive ? '700' : '500'},
               tabTextStyle
             ]}>{tabItem.label}</Text>
           </TouchableOpacity>

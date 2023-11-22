@@ -55,9 +55,7 @@ const StakingDashboardScreen = () => {
 
   return (
     
-    <View
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <KeyboardAvoidingView
         behavior='position'
         keyboardVerticalOffset={24}
@@ -77,10 +75,8 @@ const StakingDashboardScreen = () => {
         <InvestmentTotalCard />
         <Separator />
         <StakingDataCard />
-        <View>
-          <ScrollView
-            horizontal
-          >
+        <View style={{marginHorizontal: 16}}>
+          <ScrollView horizontal>
             <Tab
               tabs={tabs}
               selectedTab={tab}
@@ -99,10 +95,12 @@ const StakingDashboardScreen = () => {
             />
           </ScrollView>
         </View>
-        {tab === 'validators' && (<ValidatorsList />)}
-        {tab === 'delegation' && (<DelegationList />)}
-        {tab === 'wr' && (<WithdrawalRequestList />)}
-        {tab === 'locked' && <LockedStakeList />}
+        <View style={{marginHorizontal: 16}}>
+          {tab === 'validators' && (<ValidatorsList />)}
+          {tab === 'delegation' && (<DelegationList />)}
+          {tab === 'wr' && (<WithdrawalRequestList />)}
+          {tab === 'locked' && <LockedStakeList />}
+        </View>
       </KeyboardAvoidingView>
     </View>
   )

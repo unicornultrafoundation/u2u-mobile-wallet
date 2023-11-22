@@ -22,7 +22,7 @@ const StakingInfoItem = ({title, value}: {
 
   return (
     <View style={{flex: 1}}>
-      <Text style={[theme.typography.caption1.regular, {color: preferenceTheme.text.title, textAlign: 'center'}]}>{title}</Text>
+      <Text style={[theme.typography.caption1.regular, {color: preferenceTheme.text.title, textAlign: 'center', paddingBottom: 3}]}>{title}</Text>
       <Text style={[theme.typography.headline.bold, {color: preferenceTheme.text.title, textAlign: 'center'}]}>{value}</Text>
     </View>
   )
@@ -58,15 +58,16 @@ const StakingDataCard = () => {
 
   return (
     <View style={[styles.stakingDataContainer, {backgroundColor: preferenceTheme.background.surface}]}>
-      <View>
-        <View style={{flexDirection: 'row', paddingBottom: 12}}>
-          <StakingInfoItem title={t('totalValidator')} value={formatNumberString(validators.length.toString())} />
-          <StakingInfoItem title={t('totalDelegator')} value={formatNumberString(totalDelegator.toString())} />
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <StakingInfoItem title={t('rewardsPerEpoch')} value={formatNumberString(rewardsPerEpoch, 4)} />
-          <StakingInfoItem title={t('circulatingSupply')} value={supply ? formatNumberString(supply, 0) : "0"} />
-        </View>
+      <View style={{flexDirection: 'row', paddingBottom: 12}}>
+        <StakingInfoItem title={t('totalValidators')} value={formatNumberString(validators.length.toString())} />
+        <View style={{width: 6}}/>
+        <StakingInfoItem title={t('totalDelegators')} value={formatNumberString(totalDelegator.toString())} />
+      </View>
+      <View style={{height: 10}}/>
+      <View style={{flexDirection: 'row'}}>
+        <StakingInfoItem title={`${t('rewardsPerEpoch')}\n(U2U)`} value={formatNumberString(rewardsPerEpoch, 4)} />
+        <View style={{width: 6}}/>
+        <StakingInfoItem title={`${t('circulatingSupply')}\n(U2U)`} value={supply ? formatNumberString(supply, 0) : "0"} />
       </View>
     </View>
   )
