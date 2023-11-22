@@ -15,7 +15,7 @@ export interface OwnedNFT {
 export const useOwnedNFT = (collection: NFTCollectionMeta) => {
   const {wallet} = useWallet()
 
-  const {data} = useQuery({
+  const {data, isLoading} = useQuery({
     queryKey: ['fetchOwnedNFT', collection.id, wallet.address],
     queryFn: () => request<{items: OwnedNFT[]}>(collection.graph, Schema().OWNED_NFT, {address: wallet.address.toLowerCase()}),
     refetchInterval: 60000,
@@ -25,6 +25,7 @@ export const useOwnedNFT = (collection: NFTCollectionMeta) => {
   const items = data ? data.items : [] as OwnedNFT[]
 
   return {
-    items
+    items,
+    isLoading
   }
 }
