@@ -123,9 +123,9 @@ const ConfirmStep = ({onNextStep, onBack}: {
           <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface}]}>
             <View style={styles.cardRow}>
               <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('wallet')}</Text>
-              <View style={[styles.cardColumn, {flex : 1}]}>
-                <Text style={[theme.typography.footnote.regular]}>{wallet.name ?? t('walletDefaultName')}</Text>
-                <Text style={[theme.typography.footnote.small, {color: preferenceTheme.text.secondary}]}>{shortenAddress(wallet.address, 8, 8)}</Text>
+              <View style={[styles.cardColumn]}>
+                <Text style={[theme.typography.footnote.regular, {textAlign: 'right'}]}>{wallet.name ?? t('walletDefaultName')}</Text>
+                <Text style={[theme.typography.footnote.small, {color: preferenceTheme.text.secondary, textAlign: 'right'}]}>{shortenAddress(wallet.address, 8, 8)}</Text>
               </View>
             </View>
             <View style={styles.cardRow}>
