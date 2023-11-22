@@ -151,5 +151,7 @@
   "block" : "Khối",
   "msgCopied" : "Đã sao chép",
   "balance" : "Số dư",
-  "invalidAddress": "Địa chỉ không hợp lệ"
+  "invalidAddress": "Địa chỉ không hợp lệ",
+  "active": "Hoạt động",
+  "inactive": "Không hoạt động"
 }
