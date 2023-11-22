@@ -191,7 +191,7 @@ const UnlockModal = ({trigger, item}: {
         <TextInput
           value={amount}
           onChangeText={(val) => {
-            setAmount(parseFormatedNumberInput(val))
+            setAmount(parseFormatedNumberInput(val.replaceAll(",", ".")))
           }}
           keyboardType="numeric"
           containerStyle={{

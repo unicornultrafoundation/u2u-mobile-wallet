@@ -63,7 +63,7 @@ const GasPriceInput = () => {
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           onChangeText={(val) => {
-            setInternalValue(parseFormatedNumberInput(val))
+            setInternalValue(parseFormatedNumberInput(val.replaceAll(",", ".")))
           }}
           keyboardType="numeric"
           value={internalValue}

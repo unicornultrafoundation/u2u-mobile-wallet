@@ -34,7 +34,7 @@ const SetAmountStep = ({handleBack, setAmount, amount, tokenMeta}: {
         <View style={{paddingVertical: 16, marginTop: 36, alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
           <TextInput
             onChangeText={(val) => {
-              setInternalAmount(parseFormatedNumberInput(val))
+              setInternalAmount(parseFormatedNumberInput(val.replaceAll(",", ".")))
             }}
             value={internalAmount}
             keyboardType="numeric"

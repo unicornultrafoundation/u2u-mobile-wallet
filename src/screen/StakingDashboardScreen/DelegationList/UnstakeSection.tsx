@@ -107,7 +107,7 @@ const UnstakeSection = ({onCancel, item} : {
         style={{ height: 20 }}
         value={unstakeAmount}
         onChangeText={val => {
-          setUnstakeAmount(parseFormatedNumberInput(val))
+          setUnstakeAmount(parseFormatedNumberInput(val.replaceAll(",", ".")))
         }}
         keyboardType="numeric"
         postIcon={() => {

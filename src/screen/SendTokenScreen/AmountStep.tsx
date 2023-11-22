@@ -93,7 +93,9 @@ const AmountStep = ({onNextStep, onBack}: {
           <TextInput
             autoFocus
             onChangeText={(val) => {
-              setInternalAmount(parseFormatedNumberInput(val))
+              setInternalAmount(
+                parseFormatedNumberInput(val.replaceAll(",", "."))
+              )
             }}
             value={internalAmount}
             keyboardType="numeric"

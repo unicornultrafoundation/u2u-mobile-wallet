@@ -209,7 +209,7 @@ const LockModal = ({trigger, item}: {
         <TextInput
           value={amount}
           onChangeText={(val) => {
-            setAmount(parseFormatedNumberInput(val))
+            setAmount(parseFormatedNumberInput(val.replaceAll(",", ".")))
           }}
           keyboardType="numeric"
           containerStyle={{
@@ -240,7 +240,7 @@ const LockModal = ({trigger, item}: {
 
             if (valNumber > maxDuration) return;
 
-            setDuration(parseFormatedNumberInput(val))
+            setDuration(parseFormatedNumberInput(val.replaceAll(",", ".")))
           }}
           keyboardType="numeric"
           containerStyle={{
