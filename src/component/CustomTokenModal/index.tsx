@@ -1,8 +1,8 @@
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { usePreferenceStore } from '../../state/preferences';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { darkTheme, lightTheme } from '../../theme/color';
-import { StyleProp, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { Keyboard, Platform, StyleProp, TouchableOpacity, View, ViewStyle } from 'react-native';
 import ModalContent from './ModalContent';
 
 const CustomTokenModal = ({trigger, triggerStyle}: {
@@ -16,7 +16,7 @@ const CustomTokenModal = ({trigger, triggerStyle}: {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['75%'], []);
+  const snapPoints = useMemo(() => ['100%'], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -36,9 +36,10 @@ const CustomTokenModal = ({trigger, triggerStyle}: {
       </TouchableOpacity>
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        index={0}
-        snapPoints={snapPoints}
-        // onChange={handleSheetChanges}
+        // index={0}
+        enableDynamicSizing
+        // snapPoints={snapPoints}
+        android_keyboardInputMode="adjustResize"
         handleStyle={{
           backgroundColor: preferenceTheme.background.background,
           borderTopLeftRadius: 16,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native';
+import { Keyboard, Platform, ScrollView, View } from 'react-native';
 import Text from '../../component/Text';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
@@ -13,6 +13,7 @@ import { useDebounce } from '../../hook/useDebounce';
 import { useNetwork } from '../../hook/useNetwork';
 import { fetchURC20MetaFromContract } from '../../service/token';
 import { useLocalStore } from '../../state/local';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 const ModalContent = ({onClose}: {
   onClose: () => void
@@ -53,12 +54,14 @@ const ModalContent = ({onClose}: {
   }
 
   return (
-    <View style={[
-      styles.contentContainer,
-      {
-        backgroundColor: preferenceTheme.background.background
-      }
-    ]}>
+    <BottomSheetScrollView
+      contentContainerStyle={[
+        styles.contentContainer,
+        {
+          backgroundColor: preferenceTheme.background.background,
+        }
+      ]}
+    >
       <Text
         style={[
         theme.typography.headline.medium,
@@ -91,7 +94,7 @@ const ModalContent = ({onClose}: {
           value={symbol}
         />
       </View>
-      <View style={{width: '100%', gap: 8, marginBottom: 16}}>
+      <View style={{width: '100%', gap: 8, marginBottom: 52}}>
         <Text>{t('decimals')}</Text>
         <TextInput
           insideModal
@@ -108,7 +111,7 @@ const ModalContent = ({onClose}: {
           {t('continue')}
         </Button>
       </View>
-    </View>
+    </BottomSheetScrollView>
   )
 }
 

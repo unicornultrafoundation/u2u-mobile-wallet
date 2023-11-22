@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useMemo } from 'react'
 import {
-  BottomSheetModal,
+  BottomSheetModal, BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import styles from './styles';
 import { View, TouchableOpacity } from 'react-native';
@@ -25,7 +25,7 @@ const CustomGasModal = ({trigger}: {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
+  const snapPoints = useMemo(() => ['70%'], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -47,9 +47,11 @@ const CustomGasModal = ({trigger}: {
       </TouchableOpacity>
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        index={1}
+        index={0}
         snapPoints={snapPoints}
+        // enableDynamicSizing
         onChange={handleSheetChanges}
+        android_keyboardInputMode="adjustResize"
         handleStyle={{
           backgroundColor: preferenceTheme.background.background,
           borderTopLeftRadius: 16,
@@ -73,7 +75,7 @@ const CustomGasModal = ({trigger}: {
           )
         }}
       >
-        <View style={[
+        <BottomSheetScrollView contentContainerStyle={[
           styles.contentContainer,
           {
             backgroundColor: preferenceTheme.background.background
@@ -103,7 +105,7 @@ const CustomGasModal = ({trigger}: {
               {t('continue')}
             </Button>
           </View>
-        </View>
+        </BottomSheetScrollView>
       </BottomSheetModal>
     </>
   )
