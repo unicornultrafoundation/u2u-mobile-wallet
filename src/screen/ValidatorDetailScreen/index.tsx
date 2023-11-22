@@ -10,17 +10,19 @@ import Icon from '../../component/Icon';
 import { SvgUri } from 'react-native-svg';
 import { Validator } from '../../service/staking';
 import theme from '../../theme';
-import { formatNumberString } from '../../util/string';
+import { formatNumberString, shortenAddress } from '../../util/string';
 import Tab from '../../component/Tab';
 import InfoTab from './InfoTab';
 import DelegatorTab from './DelegatorTab';
 import RewardTab from './RewardTab';
 import Button from '../../component/Button';
+import { useTranslation } from 'react-i18next';
 
 const ValidatorDetailScreen = () => {
   const navigation = useNavigation<any>()
   const route = useRoute<any>()
   const {setRouteName} = useGlobalStore()
+  const {t} = useTranslation<string>()
 
   useFocusEffect(
     useCallback(() => {
@@ -44,6 +46,37 @@ const ValidatorDetailScreen = () => {
     setTab(t);
   };
 
+  const renderHeader = () => {
+    return (
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Text
+          style={[
+            theme.typography.footnote.medium,
+            {
+              color: preferenceTheme.text.title,
+              maxWidth: '80%',
+            }
+          ]}
+        >
+          {validator.name}
+        </Text>
+        <View
+          style={{
+            marginLeft: 6,
+            paddingVertical: 2,
+            paddingHorizontal: 4,
+            backgroundColor: validator.online ? theme.accentColor.tertiary.normal : theme.accentColor.error.normal,
+            borderRadius: 16,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <Text style={theme.typography.caption1.medium}>{validator.online ? t('active') : t('inactive')}</Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View
       style={[
@@ -56,7 +89,7 @@ const ValidatorDetailScreen = () => {
       <TouchableOpacity style={{paddingVertical: 16}} onPress={navigation.goBack}>
         <Icon name="arrow-left" width={24} height={24} />
       </TouchableOpacity>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:'center'}}>
         <View style={{width: 42, height: 42, paddingRight: 8}}>
           <SvgUri
             uri="https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"
@@ -64,32 +97,11 @@ const ValidatorDetailScreen = () => {
             height="100%"
           />
         </View>
-        <View style={{flex: 1}}>
-          <Text
-            style={[
-              theme.typography.footnote.medium,
-              {
-                color: preferenceTheme.text.title,
-              }
-            ]}
-          >
-            {validator.name}
+        <View style={{flex: 1, flexDirection: 'column', gap: 2}}>
+          {renderHeader()}
+          <Text style={[theme.typography.caption1.regular]}>
+            {shortenAddress(validator.auth, 10, 10)}
           </Text>
-          <View
-            style={{
-              paddingVertical: 0,
-              paddingHorizontal: 4,
-              backgroundColor: validator.online ? theme.accentColor.tertiary.normal : theme.accentColor.error.normal,
-              borderRadius: 18,
-              width: 50,
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <Text>
-              {validator.online ? "Active" : "Inactive"}
-            </Text>
-          </View>
         </View>
         <View>
           <Text

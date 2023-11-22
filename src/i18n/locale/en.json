@@ -151,5 +151,7 @@
   "block" : "Block",
   "msgCopied" : "Copied to clipboard",
   "balance" : "Balance",
-  "invalidAddress": "Invalid Address"
+  "invalidAddress": "Invalid Address",
+  "active": "Active",
+  "inactive": "Inactive"
 }
