@@ -30,18 +30,24 @@ const AddressStep = ({onNextStep, onBack}: {
   const [errorAddress, setErrorAddress] = useState('')
   const [showScanner, setShowScanner] = useState(false)
 
-  const handleConfirm = () => {
+  const validateAdress = (value: string) => {
+    if (value == wallet.address) {
+      setErrorAddress('recipientAddressCannotBeTheSameAsSendingAddress')
+      return false
+    }
+    if (!isAddress(value)) {
+      setErrorAddress('invalidAddress')
+      return false
+    }
     setErrorAddress('')
-    if (address == wallet.address) {
-      setErrorAddress(t('recipientAddressCannotBeTheSameAsSendingAddress'))
-      return
+    return true
+  }
+ 
+  const handleConfirm = (value: string) => {
+    if (validateAdress(value)) {
+      setReceiveAddress(value)
+      onNextStep()
     }
-    if (!isAddress(address)) {
-      setErrorAddress('Invalid address')
-      return
-    }
-    setReceiveAddress(address)
-    onNextStep()
   }
 
   const handleScanSuccess = (value: string) => {
@@ -99,14 +105,14 @@ const AddressStep = ({onNextStep, onBack}: {
       <View style={{flex: 1, justifyContent: 'space-between', paddingHorizontal: 16, marginTop: 36}}>
         <View style={{gap: 24}}>
           <TextInput
-            placeholder="Enter wallet address"
+            placeholder={t('enterWalletAddress')}
             value={address}
             onChangeText={(val) => setAddress(val)}
-            error={errorAddress}
+            error={t(errorAddress)}
             postIcon={() => {
               return (
                 <TouchableOpacity onPress={() => setShowScanner(true)}>
-                  <Icon name="scan" width={18} height={18} />
+                  <Icon name="scan" width={18} height={18} style={{marginLeft: 5}} />
                 </TouchableOpacity>
               )
             }}
@@ -114,13 +120,13 @@ const AddressStep = ({onNextStep, onBack}: {
           <RecentAddress
             onItemClick={(selectedAddress) => {
               setAddress(selectedAddress)
-              handleConfirm()
+              handleConfirm(selectedAddress)
             }}
           />
         </View>
         <Button
           style={{borderRadius: 60}}
-          onPress={handleConfirm}
+          onPress={() => handleConfirm(address)}
         >
           {t('confirm')}
         </Button>
