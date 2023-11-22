@@ -150,5 +150,8 @@
   "transactionHash" : "Transaction Hash",
   "block" : "Block",
   "msgCopied" : "Copied to clipboard",
-  "balance" : "Balance"
+  "balance" : "Balance",
+  "invalidAddress": "Invalid Address",
+  "active": "Active",
+  "inactive": "Inactive"
 }

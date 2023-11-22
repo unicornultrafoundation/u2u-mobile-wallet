@@ -17,7 +17,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
   const navigation = useNavigation<any>();
-  const {setTokenMeta} = useTransactionStore();
+  const {setTokenMeta, resetTxState} = useTransactionStore();
 
   const {wallet} = useWallet()
   const {balance} = useNativeBalance(wallet.address)
@@ -63,6 +63,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
             <TouchableOpacity
               style={styles.balanceActionButton}
               onPress={() => {
+                resetTxState()
                 setTokenMeta({
                   name: 'Ultra Unicorn',
                   symbol: 'U2U',
