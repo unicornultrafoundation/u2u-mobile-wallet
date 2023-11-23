@@ -68,7 +68,7 @@ const WalletRow = ({ item, selected, disabled, onSelect, onEdit, onDelete, ...re
         disabled={disabled}
         style={{ flexDirection: 'row', gap: 8, flex: 1, alignItems: 'center' }}>
         <Jazzicon size={34} address={item.address}/>
-        <View>
+        <View style={{flex: 1, gap: 2, marginLeft: 5}}>
           <Text type="caption1-medium" color="title">
             {getWalletMetadata(item)?.name || `Address ${item.path[item.path.length - 1]}`}
           </Text>

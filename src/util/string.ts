@@ -56,6 +56,18 @@ export const isNumber = (val: string) => {
   return /^\d+(,\d{3})*(\.\d*)?$/.test(val);
 };
 
+export const parseNumberFormatter = (value: string) => {
+  const zeroFormatter = /^0*$/
+  if (zeroFormatter.test(value)) {
+    return '0'
+  }
+  const digitFormatter = /^\d*\.?\d{0,}$/
+  if (digitFormatter.test(value)) {
+    return value
+  }
+  return null
+}
+
 export const parseFormatedNumberInput = (amount: string): string => {
   const digitOnly = getDigit(amount);
   if (digitOnly === '') {

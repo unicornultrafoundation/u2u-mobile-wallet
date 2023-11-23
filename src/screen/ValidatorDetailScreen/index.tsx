@@ -54,7 +54,7 @@ const ValidatorDetailScreen = () => {
             theme.typography.footnote.medium,
             {
               color: preferenceTheme.text.title,
-              maxWidth: '80%',
+              flexShrink: 1,
             }
           ]}
         >
@@ -103,7 +103,7 @@ const ValidatorDetailScreen = () => {
             {shortenAddress(validator.auth, 10, 10)}
           </Text>
         </View>
-        <View>
+        <View style={{marginLeft: 10}}>
           <Text
             style={[
               theme.typography.footnote.medium,

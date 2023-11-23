@@ -56,14 +56,11 @@ const ConfirmStep = ({onNextStep, onBack}: {
         <TouchableOpacity onPress={onBack}>
           <Icon name="arrow-left" width={24} height={24} />
         </TouchableOpacity>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.headerText}>{t('confirmTransactionInfo')}</Text>
-        </View>
+        <Text style={[styles.headerText, {flex: 1, textAlign: 'center'}]}>{t('confirmTransactionInfo')}</Text>
         <View />
       </View>
-  
       <View style={styles.bodyContainer}>
-        <View>
+        <View style={{gap: 4, flex: 1}}>
           <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface}]}>
             <Text style={theme.typography.caption2.regular}>{t('send')}</Text>
             <View style={{flexDirection: 'row', alignItems: 'center', paddingTop: 8}}>
@@ -74,11 +71,11 @@ const ConfirmStep = ({onNextStep, onBack}: {
                   height="100%"
                 />
               </View>
-              <Text style={[theme.typography.footnote.medium, {paddingHorizontal: 8}]}>
+              <Text style={[theme.typography.footnote.medium, {paddingHorizontal: 8, flex: 1}]}>
                 {formatNumberString(amount)} {tokenMeta.symbol}
               </Text>
             </View>
-            <Separator />
+            <Separator/>
             <Text style={theme.typography.caption2.regular}>{t('to')}</Text>
             <View style={{flexDirection: 'row', alignItems: 'center', paddingTop: 8}}>
               <Icon name="wallet-icon" width={24} height={24} />
@@ -90,14 +87,14 @@ const ConfirmStep = ({onNextStep, onBack}: {
           <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface}]}>
             <View style={styles.cardRow}>
               <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('estFee')}</Text>
-              <Text style={[theme.typography.footnote.regular]}>{estimatedFee} U2U</Text>
+              <Text style={[theme.typography.footnote.regular, { flex: 1, textAlign: 'right' }]}>{estimatedFee} U2U</Text>
             </View>
             <View style={styles.cardRow}>
               <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('maxFee')}</Text>
               <CustomGasModal
                 trigger={() => {
                   return (
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={{flexDirection: 'row', flex: 1}}>
                       <Text style={[theme.typography.footnote.regular]}>{maxFee} U2U</Text>
                       <Icon name="chevron-right" />
                     </View>
@@ -121,11 +118,15 @@ const ConfirmStep = ({onNextStep, onBack}: {
             </View>
           )}
           <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface}]}>
-            <View style={styles.cardRow}>
+            <View style={[styles.cardRow, {gap: 8}]}>
               <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('wallet')}</Text>
-              <View style={[styles.cardColumn]}>
-                <Text style={[theme.typography.footnote.regular, {textAlign: 'right'}]}>{wallet.name ?? t('walletDefaultName')}</Text>
-                <Text style={[theme.typography.footnote.small, {color: preferenceTheme.text.secondary, textAlign: 'right'}]}>{shortenAddress(wallet.address, 8, 8)}</Text>
+              <View style={[styles.cardColumn, {flex: 1, gap: 2}]}>
+                <Text style={[theme.typography.footnote.regular, { alignSelf: 'flex-start', textAlign: 'right'}]}>
+                  {wallet.name ?? t('walletDefaultName')}
+                </Text>
+                <Text style={[theme.typography.footnote.small, {color: preferenceTheme.text.secondary, alignSelf: 'flex-start', textAlign: 'right'}]}>
+                  {shortenAddress(wallet.address, 8, 8)}
+                </Text>
               </View>
             </View>
             <View style={styles.cardRow}>

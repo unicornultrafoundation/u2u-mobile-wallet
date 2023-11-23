@@ -136,7 +136,12 @@ const TxDetail = ({txHash, onClose}: {
             handleCopied(value)
           }}>
             <View style={{flexDirection: 'row'}}>
-              <Text style={[theme.typography.caption1.medium, {paddingRight: 5, width: 'auto'}]}>{displayValue}</Text>
+              <Text style={[
+                theme.typography.caption1.medium, 
+                {paddingRight: 5, flexShrink: 1}
+              ]}>
+                {displayValue}
+              </Text>
               <Icon name='copy' width={16} height={16} color={"#8D8D8D"}/>
             </View>
           </TouchableOpacity>
@@ -191,7 +196,7 @@ const TxDetail = ({txHash, onClose}: {
         </View>
         <Separator/>
         <View style={{paddingHorizontal: 16}}>
-          <View style={{flexDirection: 'row', paddingTop: 8, paddingBottom: 12}}>
+          <View style={{flexDirection: 'row', paddingTop: 8, paddingBottom: 12, gap: 8}}>
             {renderItem({
               label: 'time', 
               value: formatDate(timestamp * 1000, "dd/MM/yyyy, HH:mm:ss"), 
@@ -204,7 +209,7 @@ const TxDetail = ({txHash, onClose}: {
             })}
           </View>
           <Separator/>
-          <View style={{flexDirection: 'row', paddingTop: 8, paddingBottom: 12}}>
+          <View style={{flexDirection: 'row', paddingTop: 8, paddingBottom: 12, gap: 8}}>
             {renderItem({
               label: 'networkFee', 
               value: `${txReceipt? (BigNumber(gasUsed).multipliedBy(gasPrice)).dividedBy(10 ** 18).toFixed() : '--'} U2U`,
@@ -217,7 +222,7 @@ const TxDetail = ({txHash, onClose}: {
             })}
           </View>
           <Separator/>
-          <View style={{flexDirection: 'row', paddingTop: 8, paddingBottom: 12}}>
+          <View style={{flexDirection: 'row', paddingTop: 8, paddingBottom: 12, gap: 8}}>
             {renderCopyItem({
               label: 'transactionHash', 
               displayValue: txReceipt? shortenAddress(txReceipt.hash.toString(), 10, 10) : '--',

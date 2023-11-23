@@ -14,6 +14,7 @@ import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
 import SelectWalletModal from '../../../component/SelectWalletModal';
 import Toast from 'react-native-toast-message';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   collapsed: boolean;
@@ -27,6 +28,7 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
 
   const { wallet, getWalletMetadata } = useWallet();
   const { name } = useNetwork()
+  const { t } = useTranslation()
 
   if (collapsed) {
     return <HeaderSearchComponent onGoBack={onGoBack} action={action}/>;
@@ -38,7 +40,6 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'center',
           gap: 8
         }}>
         <SelectWalletModal
@@ -48,46 +49,46 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
             )
           }}
         />
-        <View>
-          <Text type="subheadline-medium" color="title">
+        <View style={{flex: 1, flexDirection: 'row', gap: 6}}>
+          <Text type="subheadline-medium" color="title" style={{flexShrink: 1}}>
             {getWalletMetadata(wallet).name || `Address ${wallet.path[wallet.path.length - 1]}` }
           </Text>
           {/*<Text type="caption1-regular" color="primary">*/}
           {/*  {shortenAddress(wallet.address, 4, 4)}*/}
           {/*</Text>*/}
+          <TouchableOpacity
+            onPress={() => {
+              Clipboard.setString(wallet.address)
+              Toast.show({
+                type: "simpleNoti",
+                text1: t('msgCopied'),
+                props: {
+                  width: '45%'
+                }
+              })
+            }}
+          >
+            <Icon name="copy" width={16} height={16}/>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          onPress={() => {
-            Clipboard.setString(wallet.address)
-            Toast.show({
-              type: "simpleNoti",
-              text1: "Copied to clipboard",
-              props: {
-                width: '45%'
-              }
-            })
-          }}
-        >
-          <Icon name="copy" width={16} height={16}/>
-        </TouchableOpacity>
-      </View>
-      <View style={{ flexDirection: 'row' }}>
-        <SelectNetworkModal
-          trigger={() => {
-            return (
-              <View style={[styles.networkContainer, { backgroundColor: preferenceTheme.background.surface }]}>
-                <Text style={styles.networkText}>{name}</Text>
-                <Icon name="chevron-down" width={10} height={10}/>
-              </View>
-            )
-          }}
-        />
-        {/* <TouchableOpacity style={{marginHorizontal: 12}}>
-          <Icon name="notification" width={24} height={24} />
-        </TouchableOpacity> */}
-        {/* <TouchableOpacity>
-          <Icon name="scan" width={24} height={24} />
-        </TouchableOpacity> */}
+        <View style={{ flexDirection: 'row' }}>
+          <SelectNetworkModal
+            trigger={() => {
+              return (
+                <View style={[styles.networkContainer, { backgroundColor: preferenceTheme.background.surface }]}>
+                  <Text style={styles.networkText}>{name}</Text>
+                  <Icon name="chevron-down" width={10} height={10}/>
+                </View>
+              )
+            }}
+          />
+          {/* <TouchableOpacity style={{marginHorizontal: 12}}>
+            <Icon name="notification" width={24} height={24} />
+          </TouchableOpacity> */}
+          {/* <TouchableOpacity>
+            <Icon name="scan" width={24} height={24} />
+          </TouchableOpacity> */}
+        </View>
       </View>
     </View>
   );

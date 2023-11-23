@@ -153,5 +153,7 @@
   "balance" : "Balance",
   "invalidAddress": "Invalid Address",
   "active": "Active",
-  "inactive": "Inactive"
+  "inactive": "Inactive",
+  "gasPriceInU2U": "Gas price (in U2U)",
+  "gasLimit": "Gas limit"
 }
