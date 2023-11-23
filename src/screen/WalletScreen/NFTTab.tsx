@@ -15,8 +15,11 @@ import Dropdown from '../../component/Dropdown';
 import { useSupportedNFT } from '../../hook/useSupportedNFT';
 import NFTRow from './NFTRow';
 import theme from '../../theme';
+import { styles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 const NFTTab = () => {
+  const {t} = useTranslation()
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const navigation = useNavigation<any>();
@@ -42,12 +45,11 @@ const NFTTab = () => {
         </Text>
       </Dropdown> */}
 
-      {data.length === 0 && (
-        <Text
-          style={[theme.typography.caption2.medium]}
-        >
-          No data
-        </Text>
+      {(data ?? []).length == 0 && (
+       <View style={styles.containerNoNFT}>
+          <Image source={require('../../asset/images/ic_no_nft.png')} style={styles.imageNoNFT} resizeMode="contain"/>
+          <Text style={styles.textNoNFT}> {t('There is no NFTs yet')}</Text>
+       </View>
       )}
 
       {data.map((item) => (

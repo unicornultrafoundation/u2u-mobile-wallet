@@ -153,5 +153,7 @@
   "balance" : "Balance",
   "invalidAddress": "Invalid Address",
   "active": "Active",
-  "inactive": "Inactive"
+  "inactive": "Inactive",
+  "NFTs": "NFTs",
+  "There is no NFTs yet": "There is no NFTs yet"
 }

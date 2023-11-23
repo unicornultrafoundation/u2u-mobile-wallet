@@ -153,5 +153,7 @@
   "balance" : "Số dư",
   "invalidAddress": "Địa chỉ không hợp lệ",
   "active": "Hoạt động",
-  "inactive": "Không hoạt động"
+  "inactive": "Không hoạt động",
+  "NFTs": "NFTs",
+  "There is no NFTs yet": "Chưa có NFT nào"
 }
