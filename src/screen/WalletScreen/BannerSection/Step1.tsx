@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, View } from 'react-native';
 import Step1Illus from "../../../asset/images/wallet_steps/step1.png"
 import Text from '../../../component/Text';
@@ -7,12 +7,27 @@ import theme from '../../../theme';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
 import { useTranslation } from 'react-i18next';
+import { useClaimMembershipNFT } from '../../../hook/useClaimMembershipNFT';
 
 const Step1 = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   const { t } = useTranslation();
+  const { submitClaimRequest, claimRequest } = useClaimMembershipNFT()
+
+  const [alreadySubmitted, setAlreadySubmitted] = useState(false)
+
+  const handleClaimMembershipNFT = async () => {
+    if (alreadySubmitted) return;
+    const rs = await submitClaimRequest()
+    console.log(rs)
+  }
+
+  useEffect(() => {
+    console.log(claimRequest)
+    if (claimRequest) setAlreadySubmitted(true)
+  }, [claimRequest])
 
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: 16, paddingVertical: 12}}>
@@ -44,8 +59,9 @@ const Step1 = () => {
         <Button
           type='text'
           style={{justifyContent: 'flex-start'}}
+          onPress={handleClaimMembershipNFT}
         >
-          {t('visitNow')}
+          {alreadySubmitted ? t('alreadyClaimed') : t('claimNow')}
         </Button>
       </View>
       <View>

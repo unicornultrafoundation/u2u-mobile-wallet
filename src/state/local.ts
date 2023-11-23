@@ -24,6 +24,10 @@ interface LocalState {
   addCustomToken: (token: TokenMeta) => void;
   recentAddress: string[];
   addRecentAddress: (address: string) => void;
+  alreadySubmitDeviceID: boolean;
+  toggleAlreadySubmitDeviceID: () => void;
+  registeredWallet: string[];
+  addRegisteredWalelt: (address: string) => void;
 }
 
 export const useLocalStore = create<LocalState>()(
@@ -66,6 +70,17 @@ export const useLocalStore = create<LocalState>()(
       addRecentAddress: (address: string) => {
         const current = get().recentAddress.filter((a) => a.toLowerCase() !== address.toLowerCase())
         set({ recentAddress: [address, ...current] })
+      },
+      alreadySubmitDeviceID: false,
+      toggleAlreadySubmitDeviceID: () => {
+        set({ alreadySubmitDeviceID: !(get().alreadySubmitDeviceID) })
+      },
+      registeredWallet: [],
+      addRegisteredWalelt: (address: string) => {
+        const current = [...get().registeredWallet]
+        if (current.includes(address)) return
+        current.push(address)
+        set({ registeredWallet: current })
       }
     }),
     {

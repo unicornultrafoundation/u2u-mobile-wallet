@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {styles} from './styles';
 import {
   NativeScrollEvent,
@@ -20,13 +20,13 @@ import Separator from '../../component/Separator';
 import {useFocusEffect, useRoute} from '@react-navigation/core';
 import {useGlobalStore} from '../../state/global';
 import {GestureResponderEvent} from 'react-native/Libraries/Types/CoreEventTypes';
-import Button from '../../component/Button';
 import { TABBAR_HEIGHT } from '../../component/CustomBottomTab';
 import theme from '../../theme';
 import Text from '../../component/Text';
 import Icon from '../../component/Icon';
 import ManageTokenModal from '../../component/ManageTokenModal';
 import { useTranslation } from 'react-i18next';
+import { useTracking } from '../../hook/useTracking';
 
 const WalletScreen = () => {
   const {t} = useTranslation()
@@ -41,6 +41,8 @@ const WalletScreen = () => {
 
   const route = useRoute();
   const {setRouteName} = useGlobalStore();
+
+  const { registerWallet } = useTracking()
 
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const currentOffset = event.nativeEvent.contentOffset.y;
@@ -74,6 +76,10 @@ const WalletScreen = () => {
       setRouteName(route.name);
     }, [route]),
   );
+
+  useEffect(() => {
+    registerWallet()
+  }, [registerWallet])
 
   return (
     <SafeAreaView
