@@ -10,50 +10,58 @@ export const useClaimMembershipNFT = () => {
   const {wallet} = useWallet()
 
   const submitClaimRequest = useCallback(async () => {
-    if (!networkConfig || !wallet) return
-    const deviceID = await DeviceInfo.syncUniqueId();
-    const endpoint = `${networkConfig?.api_endpoint}${SUBMIT_CLAIM_REQUEST_ENDPOINT}`
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    
-    const raw = JSON.stringify({
-      deviceID,
-      walletToReceive: wallet.address
-    });
-    
-    const requestOptions: Record<string, any> = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
+    try {
+      if (!networkConfig || !wallet || !networkConfig.api_endpoint) return
+      const deviceID = await DeviceInfo.syncUniqueId();
+      const endpoint = `${networkConfig.api_endpoint}${SUBMIT_CLAIM_REQUEST_ENDPOINT}`
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      
+      const raw = JSON.stringify({
+        deviceID,
+        walletToReceive: wallet.address
+      });
+      
+      const requestOptions: Record<string, any> = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
 
-    const rs = await fetch(endpoint, requestOptions)
-    return rs
+      const rs = await fetch(endpoint, requestOptions)
+      return rs.json()
+    } catch (error) {
+      console.log('submitClaimRequest error')
+      return 
+    }
 
   }, [networkConfig, wallet])
 
   const {data} = useQuery({
     queryKey: ['fetchClaimNFTRequest', networkConfig],
     queryFn: async () => {
-      if (!networkConfig) return []
-      const deviceID = await DeviceInfo.syncUniqueId();
-      const endpoint = `${networkConfig?.api_endpoint}${FETCH_CLAIM_REQUEST_ENDPOINT}?deviceID=${deviceID}`
-      
-      const requestOptions: Record<string, any> = {
-        method: 'GET',
-        redirect: 'follow'
-      };
+      try {
+        if (!networkConfig || !networkConfig.api_endpoint) return []
+        const deviceID = await DeviceInfo.syncUniqueId();
+        const endpoint = `${networkConfig?.api_endpoint}${FETCH_CLAIM_REQUEST_ENDPOINT}?deviceID=${deviceID}`
+        const requestOptions: Record<string, any> = {
+          method: 'GET',
+          redirect: 'follow'
+        };
 
-      const rs = await fetch(endpoint, requestOptions)
-      return rs.json()
+        const rs = await fetch(endpoint, requestOptions)
+        return rs.json()
+      } catch (error) {
+        console.log("error useClaimMembershipNFT", error)
+        return [] 
+      }
     },
-    refetchInterval: 60000,
     placeholderData: []
   })
 
   return {
     submitClaimRequest,
-    claimRequest: data[0]
+    claimRequest: data && data[0] ? data[0] : {}
   }
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, View } from 'react-native';
+import { ActivityIndicator, Image, View } from 'react-native';
 import Step1Illus from "../../../asset/images/wallet_steps/step1.png"
 import Text from '../../../component/Text';
 import Button from '../../../component/Button';
@@ -17,16 +17,20 @@ const Step1 = () => {
   const { submitClaimRequest, claimRequest } = useClaimMembershipNFT()
 
   const [alreadySubmitted, setAlreadySubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleClaimMembershipNFT = async () => {
     if (alreadySubmitted) return;
+    setLoading(true)
     const rs = await submitClaimRequest()
-    console.log(rs)
+    setLoading(false)
+    if (rs.id) {
+      setAlreadySubmitted(true)
+    }
   }
 
   useEffect(() => {
-    console.log(claimRequest)
-    if (claimRequest) setAlreadySubmitted(true)
+    if (claimRequest.id) setAlreadySubmitted(true)
   }, [claimRequest])
 
   return (
@@ -56,13 +60,17 @@ const Step1 = () => {
         >
            {t('bannerContent1')}
         </Text>
-        <Button
-          type='text'
-          style={{justifyContent: 'flex-start'}}
-          onPress={handleClaimMembershipNFT}
-        >
-          {alreadySubmitted ? t('alreadyClaimed') : t('claimNow')}
-        </Button>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <Button
+            type='text'
+            style={{justifyContent: 'flex-start'}}
+            onPress={handleClaimMembershipNFT}
+          >
+            {alreadySubmitted ? t('alreadyClaimed') : t('claimNow')}
+          </Button>
+        )}
       </View>
       <View>
         <Image
