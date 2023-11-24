@@ -30,7 +30,7 @@ export const useStyles = () => {
       width: '100%',
       paddingLeft: 16,
       paddingRight: 16,
-      backgroundColor: preferenceTheme.background.background,
+      // backgroundColor: preferenceTheme.background.background,
     },
     caption: {
       color: preferenceTheme.text.primary,

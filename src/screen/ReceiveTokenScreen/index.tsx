@@ -119,7 +119,7 @@ const ReceiveTokenScreen = () => {
                   Clipboard.setString(wallet.address)
                   Toast.show({
                     type: "simpleNoti",
-                    text1: "Copied to clipboard",
+                    text1: t('msgCopied'),
                     props: {
                       width: '45%'
                     }

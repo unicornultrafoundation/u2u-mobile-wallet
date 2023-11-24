@@ -41,17 +41,17 @@ const DelegatorTab = ({validator}: {
           {t('staked')} (U2U)
         </Text>
       </View>
-
       <FlatList
         data={validator.delegations}
         contentContainerStyle={{
+          paddingTop: 10,
           paddingBottom: 40
         }}
         renderItem={({item}) => {
           return (
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-              <Text>{shortenAddress(item.delegatorAddress, 10, 10)}</Text>
-              <Text>{formatNumberString(item.stakedAmount.dividedBy(10 ** 18).toString(), 4)}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
+              <Text style={[theme.typography.caption1.medium, {maxWidth: '50%'}]}>{shortenAddress(item.delegatorAddress, 10, 10)}</Text>
+              <Text style={[theme.typography.caption1.medium, {flex: 1, textAlign: 'right'}]}>{formatNumberString(item.stakedAmount.dividedBy(10 ** 18).toString(), 4)}</Text>
             </View>
           )
         }}

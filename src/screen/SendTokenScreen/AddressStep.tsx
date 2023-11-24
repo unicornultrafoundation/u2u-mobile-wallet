@@ -95,11 +95,8 @@ const AddressStep = ({onNextStep, onBack}: {
         <View />
       </View>
       <View style={{alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, paddingVertical: 8}}>
-        <Text style={[theme.typography.caption2.medium, {color: preferenceTheme.text.secondary}]}>
-          You are about to send to the U2U network.
-        </Text>
-        <Text style={[theme.typography.caption2.medium, {color: preferenceTheme.text.secondary}]}>
-          Make sure you enter the correct address.
+        <Text style={[theme.typography.caption2.medium, {color: preferenceTheme.text.secondary, textAlign: 'center'}]}>
+          {t('msgAddressStepNotice')}
         </Text>
       </View>
       <View style={{flex: 1, justifyContent: 'space-between', paddingHorizontal: 16, marginTop: 36}}>

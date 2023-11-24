@@ -60,7 +60,7 @@ const AuthStep = ({onNextStep, onBack}: {
               }
             ]}
           >
-            Please input Security password to confirm transaction
+            {t('msgPleaseInputSecurityPasswordToConfirmTransaction')}
           </Text>
           <OtpInputs
             autofillFromClipboard={false}

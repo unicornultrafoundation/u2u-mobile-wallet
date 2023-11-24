@@ -7,19 +7,21 @@ import theme from '../../theme';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { formatNumberString } from '../../util/string';
+import { useTranslation } from 'react-i18next';
 
 const InfoTab = ({validator}: {
   validator: Validator
 }) => {
   const {darkMode} = usePreferenceStore()
+  const { t } = useTranslation()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   return (
-    <View style={{paddingTop: 16}}>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 8}}>
+    <View style={{paddingTop: 16, gap: 16}}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 8}}>
         <View style={{flex: 3}}>
           <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary, paddingBottom: 4}]}>
-            Commission
+            {t('commission')}
           </Text>
           <Text style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}>
             {VALIDATOR_COMMISSION}%
@@ -27,7 +29,7 @@ const InfoTab = ({validator}: {
         </View>
         <View style={{flex: 1}}>
           <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary, paddingBottom: 4}]}>
-            ID
+            {t('ID')}
           </Text>
           <Text style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}>
             {validator.valId}
@@ -35,10 +37,10 @@ const InfoTab = ({validator}: {
         </View>
       </View>
 
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 8}}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 8}}>
         <View style={{flex: 3}}>
           <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary, paddingBottom: 4}]}>
-            Total delegator
+            {t('totalDelegator')}
           </Text>
           <Text style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}>
             {validator.totalDelegator}
@@ -46,7 +48,7 @@ const InfoTab = ({validator}: {
         </View>
         <View style={{flex: 1}}>
           <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary, paddingBottom: 4}]}>
-            Voting power
+            {t('votingPower')}
           </Text>
           <Text style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}>
             {validator.votingPower ? formatNumberString((validator.votingPower / 10000).toString(), 3) : 0}%
@@ -54,10 +56,10 @@ const InfoTab = ({validator}: {
         </View>
       </View>
 
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 8}}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View style={{flex: 3}}>
           <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary, paddingBottom: 4}]}>
-            Total staked amount
+            {t('totalStakedAmount')}
           </Text>
           <Text style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}>
             {formatNumberString(validator.totalStakedAmount.dividedBy(10**18).toString(), 4)}

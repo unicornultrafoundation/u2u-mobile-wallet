@@ -17,6 +17,7 @@ import DelegatorTab from './DelegatorTab';
 import RewardTab from './RewardTab';
 import Button from '../../component/Button';
 import { useTranslation } from 'react-i18next';
+import { useTransactionStore } from '../../state/transaction';
 
 const ValidatorDetailScreen = () => {
   const navigation = useNavigation<any>()
@@ -35,11 +36,12 @@ const ValidatorDetailScreen = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
+  const {resetTxState} = useTransactionStore();
   const [tab, setTab] = useState('info');
   const tabs = [
-    { label: 'Info', value: 'info' },
-    { label: 'Delegator', value: 'delegator' },
-    { label: 'Latest Reward', value: 'reward' },
+    { label: t('info'), value: 'info' },
+    { label: t('delegator'), value: 'delegator' },
+    { label: t('latestReward'), value: 'reward' },
   ];
 
   const handleChangeTab = (t: string) => {
@@ -158,10 +160,11 @@ const ValidatorDetailScreen = () => {
             borderRadius: 60
           }}
           onPress={() => {
+            resetTxState()
             navigation.navigate('Delegate', {validator})
           }}
         >
-          Delegate
+          {t('delegate')}
         </Button>
       </View>
     </View>

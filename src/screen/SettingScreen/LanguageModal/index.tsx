@@ -55,7 +55,7 @@ const LanguageModal = ({trigger}: {
           borderTopRightRadius: 16
         }}
         handleIndicatorStyle={{
-          backgroundColor: '#F6F6F6'
+          backgroundColor: '#F6F6F6',
         }}
         backdropComponent={({ style }) => {
           return (

@@ -157,5 +157,19 @@
   "active": "Hoạt động",
   "inactive": "Không hoạt động",
   "gasPriceInU2U": "Giá Gas (U2U)",
-  "gasLimit": "Giới hạn Gas"
+  "gasLimit": "Giới hạn Gas",
+  "msgAddressStepNotice" : "Bạn sắp chuyển tới mạng lưới U2U.\nHãy đảm bảo rằng, bạn nhập đúng địa chỉ.",
+  "max" : "Tối đa",
+  "msgPleaseInputSecurityPasswordToConfirmTransaction": "Vui lòng nhập Mật khẩu bảo mật để xác nhận giao dịch",
+  "info" : "Thông tin",
+  "delegator" : "Người đại diện",
+  "latestReward" : "Phần thưởng mới nhất",
+  "commission": "Nhiệm vụ",
+  "totalDelegator": "Tổng người đại diện",
+  "delegate": "Đại diện",
+  "unstake": "Rút tiền",
+  "claimReward": "Yêu cầu phần thưởng",
+  "lock": "Khoá",
+  "stakedAmount": "Số lượng đặt cược",
+  "claimable": "Có thể nhận được"
 }

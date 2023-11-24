@@ -49,7 +49,7 @@ const TextInput = ({style, containerStyle, error, postIcon, insideModal = false,
           styles.container,
           {
             backgroundColor: preferenceTheme.background.surface,
-            borderColor: focused ? theme.accentColor.primary.normal : '',
+            borderColor: focused ? theme.accentColor.primary.normal : preferenceTheme.background.surface,
             width: "100%"
           },
         ]}

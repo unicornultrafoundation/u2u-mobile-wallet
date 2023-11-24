@@ -54,8 +54,7 @@ const StakingDashboardScreen = () => {
   };
 
   return (
-    
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: preferenceTheme.background.background}]}>
       <KeyboardAvoidingView
         behavior='position'
         keyboardVerticalOffset={24}

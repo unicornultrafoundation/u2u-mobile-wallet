@@ -157,5 +157,19 @@
   "active": "Active",
   "inactive": "Inactive",
   "gasPriceInU2U": "Gas price (in U2U)",
-  "gasLimit": "Gas limit"
+  "gasLimit": "Gas limit",
+  "msgAddressStepNotice": "You are about to send to the U2U network.\nMake sure you enter the correct address.",
+  "max": "Max",
+  "msgPleaseInputSecurityPasswordToConfirmTransaction": "Please input Security password to confirm transaction",
+  "info" : "Info",
+  "delegator" : "Delegator",
+  "latestReward" : "Latest Reward",
+  "commission": "Commission",
+  "totalDelegator": "Total delegator",
+  "delegate": "Delegate",
+  "unstake": "Unstake",
+  "claimReward": "Claim reward",
+  "lock": "Lock",
+  "stakedAmount": "Staked Amount",
+  "claimable": "Claimable"
 }
