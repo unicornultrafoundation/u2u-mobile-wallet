@@ -1,5 +1,5 @@
-import React from 'react'
-import { Image, View } from 'react-native';
+import React, { useEffect, useState } from 'react'
+import { ActivityIndicator, Image, View } from 'react-native';
 import Step1Illus from "../../../asset/images/wallet_steps/step1.png"
 import Text from '../../../component/Text';
 import Button from '../../../component/Button';
@@ -7,12 +7,31 @@ import theme from '../../../theme';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
 import { useTranslation } from 'react-i18next';
+import { useClaimMembershipNFT } from '../../../hook/useClaimMembershipNFT';
 
 const Step1 = () => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   const { t } = useTranslation();
+  const { submitClaimRequest, claimRequest } = useClaimMembershipNFT()
+
+  const [alreadySubmitted, setAlreadySubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const handleClaimMembershipNFT = async () => {
+    if (alreadySubmitted) return;
+    setLoading(true)
+    const rs = await submitClaimRequest()
+    setLoading(false)
+    if (rs.id) {
+      setAlreadySubmitted(true)
+    }
+  }
+
+  useEffect(() => {
+    if (claimRequest.id) setAlreadySubmitted(true)
+  }, [claimRequest])
 
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: 16, paddingVertical: 12}}>
@@ -41,12 +60,17 @@ const Step1 = () => {
         >
            {t('bannerContent1')}
         </Text>
-        <Button
-          type='text'
-          style={{justifyContent: 'flex-start'}}
-        >
-          {t('visitNow')}
-        </Button>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <Button
+            type='text'
+            style={{justifyContent: 'flex-start'}}
+            onPress={handleClaimMembershipNFT}
+          >
+            {alreadySubmitted ? t('alreadyClaimed') : t('claimNow')}
+          </Button>
+        )}
       </View>
       <View>
         <Image
