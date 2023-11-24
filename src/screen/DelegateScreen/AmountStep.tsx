@@ -8,7 +8,7 @@ import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
 import Button from '../../component/Button';
-import { formatNumberString, getDigit, parseFormatedNumberInput } from '../../util/string';
+import { formatNumberString, getDigit, parseNumberFormatter } from '../../util/string';
 import { useTransactionStore } from '../../state/transaction';
 import { useTokenBalance } from '../../hook/useTokenBalance';
 import { useWallet } from '../../hook/useWallet';
@@ -85,8 +85,14 @@ const AmountStep = ({onNextStep, onBack, validator}: {
         <View style={{paddingVertical: 16, marginTop: 36, alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
           <TextInput
             autoFocus
+            // onChangeText={(val) => {
+            //   setInternalAmount(parseFormatedNumberInput(val.replaceAll(",", ".")))
+            // }}
             onChangeText={(val) => {
-              setInternalAmount(parseFormatedNumberInput(val.replaceAll(",", ".")))
+              const newVal = parseNumberFormatter(val.replaceAll(",", "."))
+              if (newVal != null) {
+                setInternalAmount(newVal)
+              }
             }}
             value={internalAmount}
             keyboardType="numeric"
@@ -131,7 +137,8 @@ const AmountStep = ({onNextStep, onBack, validator}: {
                 borderColor: preferenceTheme.outline
               }}
               onPress={() => {
-                setInternalAmount(parseFormatedNumberInput(balance))
+                // setInternalAmount(parseFormatedNumberInput(balance))
+                setInternalAmount(balance)
               }}
             >
               <Text

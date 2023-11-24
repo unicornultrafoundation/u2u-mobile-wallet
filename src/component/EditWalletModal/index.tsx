@@ -71,6 +71,7 @@ const EditWalletModal = ({ onRequestClose, visible, onCancelEdit }: Props) => {
             color: preferenceTheme.text.title,
             textAlign: 'center',
           }}
+          maxLength={250}
           onChangeText={text => setName(text)}
           placeholderTextColor={preferenceTheme.text.disabled}
           value={name}

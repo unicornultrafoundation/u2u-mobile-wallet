@@ -91,6 +91,7 @@ const CustomGasModal = ({trigger}: {
             {t('customizeGasFee')}
           </Text>
           <GasPriceInput />
+          <View style={{height: 16}}/>
           <GasLimitInput />
           <View
             style={{width: '100%', flex: 1, justifyContent: 'flex-end'}}

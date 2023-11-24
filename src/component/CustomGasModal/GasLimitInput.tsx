@@ -7,8 +7,9 @@ import theme from '../../theme';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import Text from '../Text';
 import { useTransaction } from '../../hook/useTransaction';
-import { getDigit, parseFormatedNumberInput } from '../../util/string';
+import { getDigit, parseNumberFormatter } from '../../util/string';
 import BigNumber from 'bignumber.js';
+import { t } from 'i18next';
 
 const GasLimitInput = () => {
   const {darkMode} = usePreferenceStore()
@@ -18,7 +19,7 @@ const GasLimitInput = () => {
   const [focused, setFocused] = useState(false)
 
   const parsedGasLimit = useMemo(() => {
-    return BigNumber(gasLimit).toFormat()
+    return BigNumber(gasLimit).toFormat().replaceAll(',', '')
   }, [gasLimit])
 
   const [internalValue, setInternalValue] = useState(parsedGasLimit)
@@ -41,7 +42,7 @@ const GasLimitInput = () => {
           }
         ]}
       >
-        Gas limit
+        {t('gasLimit')}
       </Text>
       <View
         style={[
@@ -63,7 +64,11 @@ const GasLimitInput = () => {
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           onChangeText={(val) => {
-            setInternalValue(parseFormatedNumberInput(val.replaceAll(",", ".")))
+            // setInternalValue(parseFormatedNumberInput(val.replaceAll(",", ".")))
+            const newVal = parseNumberFormatter(val.replaceAll(",", "."))
+            if (newVal != null) {
+              setInternalValue(newVal)
+            }
           }}
           keyboardType="numeric"
           value={internalValue}
