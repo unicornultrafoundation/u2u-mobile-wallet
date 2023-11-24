@@ -155,5 +155,7 @@
   "balance" : "Số dư",
   "invalidAddress": "Địa chỉ không hợp lệ",
   "active": "Hoạt động",
-  "inactive": "Không hoạt động"
+  "inactive": "Không hoạt động",
+  "gasPriceInU2U": "Giá Gas (U2U)",
+  "gasLimit": "Giới hạn Gas"
 }

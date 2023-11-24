@@ -7,18 +7,20 @@ import theme from '../../theme';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import Text from '../Text';
 import { useTransaction } from '../../hook/useTransaction';
-import { getDigit, parseFormatedNumberInput } from '../../util/string';
+import { getDigit, parseNumberFormatter } from '../../util/string';
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 
 const GasPriceInput = () => {
   const {darkMode} = usePreferenceStore()
+  const {t} = useTranslation()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   const {gasPrice, setGasPrice} = useTransaction()
   const [focused, setFocused] = useState(false)
 
   const parsedGasPrice = useMemo(() => {
-    return BigNumber(gasPrice).dividedBy(10 ** 18).toFormat()
+    return BigNumber(gasPrice).dividedBy(10 ** 18).toFormat().replaceAll(',', '')
   }, [gasPrice])
 
   const [internalValue, setInternalValue] = useState(parsedGasPrice)
@@ -41,7 +43,7 @@ const GasPriceInput = () => {
           }
         ]}
       >
-        Gas price (in U2U)
+        {t('gasPriceInU2U')}
       </Text>
       <View
         style={[
@@ -63,7 +65,11 @@ const GasPriceInput = () => {
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           onChangeText={(val) => {
-            setInternalValue(parseFormatedNumberInput(val.replaceAll(",", ".")))
+            // setInternalValue(parseFormatedNumberInput(val.replaceAll(",", ".")))
+            const newVal = parseNumberFormatter(val.replaceAll(",", "."))
+            if (newVal != null) {
+              setInternalValue(newVal)
+            }
           }}
           keyboardType="numeric"
           value={internalValue}

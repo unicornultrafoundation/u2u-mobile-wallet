@@ -8,7 +8,7 @@ import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
 import Button from '../../component/Button';
-import { formatNumberString, getDigit, parseFormatedNumberInput } from '../../util/string';
+import { formatNumberString, getDigit, parseNumberFormatter } from '../../util/string';
 import { useTransactionStore } from '../../state/transaction';
 import { useTokenBalance } from '../../hook/useTokenBalance';
 import { useWallet } from '../../hook/useWallet';
@@ -39,12 +39,12 @@ const AmountStep = ({onNextStep, onBack}: {
     const rawAmountBN = BigNumber(amountDigit)
 
     if (rawAmountBN.toNumber() === 0) {
-      setError(t('invalidAmount'))
+      setError('invalidAmount')
       return
     }
 
     if (rawAmountBN.gt(balance)) {
-      setError('Insufficient balance')
+      setError('insufficientBalance')
       return
     }
 
@@ -89,24 +89,33 @@ const AmountStep = ({onNextStep, onBack}: {
       </View>
 
       <View style={styles.bodyContainer}>
-        <View style={{paddingVertical: 16, marginTop: 36, alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
-          <TextInput
-            autoFocus
-            onChangeText={(val) => {
-              setInternalAmount(
-                parseFormatedNumberInput(val.replaceAll(",", "."))
-              )
-            }}
-            value={internalAmount}
-            keyboardType="numeric"
-            style={[
-              theme.typography.largeTitle.medium,
-              {
-                marginRight: 4,
-                color: preferenceTheme.text.title
-              }
-            ]}
-          />
+        <View style={{
+          paddingHorizontal: 16, 
+          marginTop: 50, 
+          alignItems: 'center', 
+          flexDirection: 'row', 
+          justifyContent: 'center',
+        }}>
+          <View style={{flexWrap: 'nowrap', flexShrink: 1}}>
+            <TextInput
+              autoFocus
+              onChangeText={(val) =>{
+                const newVal = parseNumberFormatter(val.replaceAll(",", "."))
+                if (newVal != null) {
+                  setInternalAmount(newVal)
+                }
+              }}
+              value={internalAmount}
+              keyboardType="numeric"
+              style={[
+                theme.typography.largeTitle.medium,
+                {
+                  marginRight: 4,
+                  color: preferenceTheme.text.title
+                }
+              ]}
+            />
+          </View>
           <Text style={theme.typography.largeTitle.medium}>{tokenMeta.symbol}</Text>
         </View>
         <View>
@@ -140,7 +149,7 @@ const AmountStep = ({onNextStep, onBack}: {
                 borderColor: preferenceTheme.outline
               }}
               onPress={() => {
-                setInternalAmount(parseFormatedNumberInput(balance))
+                setInternalAmount(balance)
               }}
             >
               <Text
@@ -165,7 +174,7 @@ const AmountStep = ({onNextStep, onBack}: {
                   paddingLeft: 4
                 }
               ]}>
-                {error}
+                {t(error)}
               </Text>
             </View>
           )}
