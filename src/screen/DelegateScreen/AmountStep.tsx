@@ -82,28 +82,36 @@ const AmountStep = ({onNextStep, onBack, validator}: {
       </View>
 
       <View style={styles.bodyContainer}>
-        <View style={{paddingVertical: 16, marginTop: 36, alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
-          <TextInput
-            autoFocus
-            // onChangeText={(val) => {
-            //   setInternalAmount(parseFormatedNumberInput(val.replaceAll(",", ".")))
-            // }}
-            onChangeText={(val) => {
-              const newVal = parseNumberFormatter(val.replaceAll(",", "."))
-              if (newVal != null) {
-                setInternalAmount(newVal)
-              }
-            }}
-            value={internalAmount}
-            keyboardType="numeric"
-            style={[
-              theme.typography.largeTitle.medium,
-              {
-                marginRight: 4,
-                color: preferenceTheme.text.title
-              }
-            ]}
-          />
+        <View style={{
+          paddingHorizontal: 16, 
+          marginTop: 50, 
+          alignItems: 'center', 
+          flexDirection: 'row', 
+          justifyContent: 'center',
+        }}>
+          <View style={{flexWrap: 'nowrap', flexShrink: 1}}>
+            <TextInput
+              autoFocus
+              // onChangeText={(val) => {
+              //   setInternalAmount(parseFormatedNumberInput(val.replaceAll(",", ".")))
+              // }}
+              onChangeText={(val) => {
+                const newVal = parseNumberFormatter(val.replaceAll(",", "."))
+                if (newVal != null) {
+                  setInternalAmount(newVal)
+                }
+              }}
+              value={internalAmount}
+              keyboardType="numeric"
+              style={[
+                theme.typography.largeTitle.medium,
+                {
+                  marginRight: 4,
+                  color: preferenceTheme.text.title
+                }
+              ]}
+            />
+          </View>
           <Text style={theme.typography.largeTitle.medium}>U2U</Text>
         </View>
         <View>
@@ -125,7 +133,7 @@ const AmountStep = ({onNextStep, onBack, validator}: {
               />
             </View>
             <View style={{flex: 1, paddingHorizontal: 11}}>
-              <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.primary}]}>Balance</Text>
+              <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.primary}]}>{t('balance')}</Text>
               <Text style={theme.typography.footnote.regular}>{formatNumberString(balance)} U2U</Text>
             </View>
             <TouchableOpacity
@@ -149,7 +157,7 @@ const AmountStep = ({onNextStep, onBack, validator}: {
                   }
                 ]}
               >
-                Max
+                {t('max')}
               </Text>
             </TouchableOpacity>
           </View>

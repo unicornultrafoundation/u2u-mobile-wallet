@@ -137,7 +137,7 @@ const AmountStep = ({onNextStep, onBack}: {
               />
             </View>
             <View style={{flex: 1, paddingHorizontal: 11}}>
-              <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.primary}]}>Balance</Text>
+              <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.primary}]}>{t('balance')}</Text>
               <Text style={theme.typography.footnote.regular}>{formatNumberString(balance)} {tokenMeta.symbol}</Text>
             </View>
             <TouchableOpacity
@@ -160,7 +160,7 @@ const AmountStep = ({onNextStep, onBack}: {
                   }
                 ]}
               >
-                Max
+                {t('max')}
               </Text>
             </TouchableOpacity>
           </View>

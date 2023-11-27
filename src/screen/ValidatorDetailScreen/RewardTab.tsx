@@ -47,11 +47,15 @@ const RewardTab = ({validator}: {
       
       <FlatList
         data={epoches}
+        contentContainerStyle={{
+          paddingTop: 10,
+          paddingBottom: 40
+        }}
         renderItem={({item}) => {
           return (
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-              <Text>{item.epochId}</Text>
-              <Text>{formatNumberString(item.epochRewards.dividedBy(10 ** 18).toString(), 4)}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
+              <Text style={theme.typography.caption1.medium}>{item.epochId}</Text>
+              <Text style={{flex: 1, textAlign: 'right'}}>{formatNumberString(item.epochRewards.dividedBy(10 ** 18).toString(), 4)}</Text>
             </View>
           )
         }}

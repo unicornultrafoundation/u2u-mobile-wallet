@@ -126,12 +126,13 @@ const DelegationItem = ({item}: {
       style={[
         styles.delegationItem,
         {
-          borderColor: preferenceTheme.outline
+          borderColor: preferenceTheme.outline,
+          gap: 6,
         }
       ]}
       key={`delegation-${item.id}`}
     >
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 4}}>
         <View style={{width: 34, height: 34, marginRight: 8}}>
           <SvgUri
             uri={"https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"}
@@ -153,6 +154,8 @@ const DelegationItem = ({item}: {
             {item.validator.name}
           </Text>
           <Text
+            numberOfLines={1}
+            adjustsFontSizeToFit
             style={[
               theme.typography.caption1.regular,
               {
@@ -160,8 +163,8 @@ const DelegationItem = ({item}: {
               }
             ]}
           >
-            {t('votingPower')}: {item.validator.votingPower ? formatNumberString((item.validator.votingPower / 10000).toString(), 3) : 0}%
-            {/* {shortenAddress(item.validator.auth, 8, 8)} */}
+            {shortenAddress(item.validator.auth, 6, 6)}{' - '}
+            {t('votingPower')}: {item.validator.votingPower ? formatNumberString((item.validator.votingPower / 10000).toString(), 3) : 0}% 
           </Text>
         </View>
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -169,27 +172,27 @@ const DelegationItem = ({item}: {
             item={item}
             trigger={() => {
               return (
-                <Text
-                  style={[
-                    theme.typography.body.bold,
-                    {
-                      textDecorationLine: 'underline'
-                    }
-                  ]}
-                >
-                  Lock
-                </Text>
+                <View style={{
+                  backgroundColor: preferenceTheme.background.surface,
+                  paddingHorizontal: 12,
+                  paddingVertical: 4,
+                  borderRadius: 30,
+                }}>
+                  <Text style={theme.typography.footnote.bold}>
+                    {t('lock')}
+                  </Text>
+                </View>
               )
             }}
           />
         </View>
       </View>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 12}}>
-        <View>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 12, gap: 6}}>
+        <View style={{flex: 1, gap: 2}}>
           <Text
             style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
           >
-            {t('staked')}
+            {t('stakedAmount')}
           </Text>
           <Text
             style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}
@@ -199,11 +202,11 @@ const DelegationItem = ({item}: {
             )} U2U
           </Text>
         </View>
-        <View>
+        <View style={{flex: 1, gap: 2}}>
           <Text
             style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
           >
-            {t('pendingRewards')}
+            {t('claimable')}
           </Text>
           <Text
             style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}
@@ -213,7 +216,7 @@ const DelegationItem = ({item}: {
             )} U2U
           </Text>
         </View>
-        <View>
+        <View style={{gap: 2}}>
           <Text
             style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
           >
@@ -234,7 +237,7 @@ const DelegationItem = ({item}: {
           onCancel={() => setShowUnstake(false)}
         />
       ) : (
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 12}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 12, marginTop: 10}}>
           <Button
             onPress={handleClaim}
             loading={claiming}
@@ -252,7 +255,7 @@ const DelegationItem = ({item}: {
               }
             ]}
           >
-            Claim reward
+            {t('claimReward')}
           </Button>
           <Button
             onPress={handleUnstake}
@@ -269,7 +272,7 @@ const DelegationItem = ({item}: {
               }
             ]}
           >
-            Unstake
+            {t('unstake')}
           </Button>
         </View>
       )}

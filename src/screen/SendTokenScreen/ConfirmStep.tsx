@@ -85,22 +85,24 @@ const ConfirmStep = ({onNextStep, onBack}: {
             </View>
           </View>
           <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface}]}>
-            <View style={styles.cardRow}>
+            <View style={[styles.cardRow, {gap: 8}]}>
               <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('estFee')}</Text>
               <Text style={[theme.typography.footnote.regular, { flex: 1, textAlign: 'right' }]}>{estimatedFee} U2U</Text>
             </View>
-            <View style={styles.cardRow}>
+            <View style={[styles.cardRow, {gap: 8}]}>
               <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('maxFee')}</Text>
-              <CustomGasModal
-                trigger={() => {
-                  return (
-                    <View style={{flexDirection: 'row', flex: 1}}>
-                      <Text style={[theme.typography.footnote.regular]}>{maxFee} U2U</Text>
-                      <Icon name="chevron-right" />
-                    </View>
-                  )
-                }}
-              />
+              <View style={{flex: 1}}>
+                <CustomGasModal
+                  trigger={() => {
+                    return (
+                      <View style={{flexDirection: 'row'}}>
+                        <Text style={[theme.typography.footnote.regular, {flex: 1, textAlign: 'right'}]}>{maxFee} U2U</Text>
+                        <Icon name="chevron-right" />
+                      </View>
+                    )
+                  }}
+                />
+              </View>
             </View>
           </View>
           {error && (
