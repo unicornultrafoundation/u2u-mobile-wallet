@@ -52,8 +52,8 @@ const ShowSeedStep = ({onBack}: {
               <View style={{width: '100%', flexDirection: 'row' }}>
                 {wallet.mnemonic.split(" ").slice(0, 4).map((word, index) => {
                   return (
-                    <View style={{padding: 8, width: "25%"}} key={`seed-${word}-${index}`}>
-                      <Text style={styles.seed}>{word}</Text>
+                    <View style={styles.seedItem} key={`seed-${word}-${index}`}>
+                      <Text style={styles.seed}>{index+1}. {word}</Text>
                     </View>
                   )
                 })}
@@ -61,8 +61,8 @@ const ShowSeedStep = ({onBack}: {
               <View style={{width: '100%', flexDirection: 'row' }}>
                 {wallet.mnemonic.split(" ").slice(4, 8).map((word, index) => {
                   return (
-                    <View style={{padding: 8, width: "25%"}} key={`seed-${word}-${index}`}>
-                      <Text style={styles.seed}>{word}</Text>
+                    <View style={styles.seedItem} key={`seed-${word}-${index}`}>
+                      <Text style={styles.seed}>{index+5}. {word}</Text>
                     </View>
                   )
                 })}
@@ -70,8 +70,8 @@ const ShowSeedStep = ({onBack}: {
               <View style={{width: '100%', flexDirection: 'row' }}>
                 {wallet.mnemonic.split(" ").slice(8, 12).map((word, index) => {
                   return (
-                    <View style={{padding: 8, width: "25%"}} key={`seed-${word}-${index}`}>
-                      <Text style={styles.seed}>{word}</Text>
+                    <View style={styles.seedItem} key={`seed-${word}-${index}`}>
+                      <Text style={styles.seed}>{index+9}. {word}</Text>
                     </View>
                   )
                 })}
@@ -81,10 +81,10 @@ const ShowSeedStep = ({onBack}: {
         </View>
         {wallet.mnemonic.length > 0 && (
           <Button
-            type='text'
+            type="text"
             style={{
-              alignItems: 'center',
-              justifyContent: 'flex-start',
+              alignItems: "center",
+              justifyContent: "flex-start",
               marginTop: 12,
               paddingHorizontal: 8
             }}
@@ -93,8 +93,10 @@ const ShowSeedStep = ({onBack}: {
             }}
             onPress={handleCopy}
           >
-            <Icon name='copy' width={16} height={16} style={{marginRight: 2}} />
-            Copy to clipboard
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Icon name="copy" width={16} height={16} style={{ marginRight: 4 }} />
+              <Text style={{ fontWeight: "500", fontSize: 14 }}>Copy to clipboard</Text>
+            </View>
           </Button>
         )}
       </View>
