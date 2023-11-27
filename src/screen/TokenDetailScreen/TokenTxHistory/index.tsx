@@ -13,10 +13,13 @@ import theme from '../../../theme';
 import Button from '../../../component/Button';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
+import NoTransactionView from "./NoTransactionView";
+import { useTranslation } from "react-i18next";
 
 const TokenTxHistory = () => {
   const {params} = useRoute<any>();
   const tokenMeta = params?.tokenMeta || {}
+  const {t} = useTranslation()
 
   const navigation = useNavigation<any>()
 
@@ -34,6 +37,10 @@ const TokenTxHistory = () => {
     )
   }
 
+  if((txList ?? []).length == 0){
+    return <NoTransactionView/>
+  }
+
   return (
     <ScrollView>
       {txList.map((txItem: Record<string, any>) => {
@@ -48,12 +55,12 @@ const TokenTxHistory = () => {
               name={isSend ? 'arrow-up-circle' : 'arrow-down-circle'}
               color={isSend ? theme.accentColor.error.normal : theme.accentColor.tertiary.normal}
               width={20}
-              height={20} 
+              height={20}
               style={{marginRight: 24}}
             />
             <View style={{flex: 1}}>
               <Text style={styles.txTypeText}>
-                {isSend ? 'Send' : 'Receive'}
+                {isSend ? t("send") : t("receive")}
               </Text>
               <Text style={styles.txTypeDescriptionText}>
                 {isSend ? `To: ${shortenAddress(txItem.to, 8, 5)}` : `From: ${shortenAddress(txItem.from, 8, 5)}`}

@@ -11,6 +11,7 @@ import { useTokenBalance } from '../../hook/useTokenBalance';
 import { useWallet } from '../../hook/useWallet';
 import { useTransaction } from '../../hook/useTransaction';
 import { formatNumberString } from '../../util/string';
+import { useTranslation } from "react-i18next";
 
 const TokenBalanceCard = () => {
   const {wallet} = useWallet()
@@ -22,6 +23,7 @@ const TokenBalanceCard = () => {
 
   const {params} = useRoute<any>();
   const tokenMeta = params?.tokenMeta || {}
+  const {t} = useTranslation()
 
   const {loading: balanceLoading, balance} = useTokenBalance(wallet.address, tokenMeta.address)
 
@@ -44,7 +46,7 @@ const TokenBalanceCard = () => {
           >
             <Icon name="arrow-up" width={24} height={24} />
           </TouchableOpacity>
-          <Text style={styles.balanceActionButtonText}>Send</Text>
+          <Text style={styles.balanceActionButtonText}>{t("send")}</Text>
         </View>
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <TouchableOpacity
@@ -57,7 +59,7 @@ const TokenBalanceCard = () => {
           >
             <Icon name="arrow-down" width={24} height={24} />
           </TouchableOpacity>
-          <Text style={styles.balanceActionButtonText}>Receive</Text>
+          <Text style={styles.balanceActionButtonText}>{t("receive")}</Text>
         </View>
       </View>
     </View>

@@ -8,6 +8,7 @@ import TokenBalanceCard from './TokenBalanceCard';
 import TokenTxHistory from './TokenTxHistory';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 import { useGlobalStore } from '../../state/global';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const TokenDetailScreen = () => {
   const {darkMode} = usePreferenceStore()
@@ -27,7 +28,9 @@ const TokenDetailScreen = () => {
       styles.container,
       {backgroundColor: preferenceTheme.background.background}
     ]}>
-      <TokenDetailHeader />
+      <SafeAreaView>
+        <TokenDetailHeader />
+      </SafeAreaView>
       <TokenBalanceCard />
       <TokenTxHistory />
     </View>

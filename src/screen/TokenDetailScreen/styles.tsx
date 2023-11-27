@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: Dimensions.get('window').height,
-    paddingTop: getPhonePaddingTop(),
     paddingBottom: getPhonePaddingBottom()
   },
   headerContainer: {
@@ -25,7 +24,7 @@ export const styles = StyleSheet.create({
   balanceCardContainer: {
     width: '100%',
     justifyContent: 'center',
-    padding: 16
+    paddingBottom: 16
   },
   balanceActionButton: {
     padding: 10,
@@ -49,7 +48,6 @@ export const styles = StyleSheet.create({
     marginBottom: 8
   },
   balanceContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 20
+    marginBottom: 24
   }
 });
