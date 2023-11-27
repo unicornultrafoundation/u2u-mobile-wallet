@@ -4,9 +4,7 @@ import { getPhonePaddingBottom, getPhonePaddingTop } from '../../util/platform';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: getPhonePaddingTop(),
     paddingBottom: getPhonePaddingBottom(),
-    paddingHorizontal: 16
   },
   txRowContainer: {
     flexDirection: 'row',

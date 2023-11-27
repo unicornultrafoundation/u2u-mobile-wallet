@@ -61,12 +61,10 @@ const WalletScreen = () => {
 
     // check if position is growing positively and has reached specified range
     if (positionY - firstTouch > range) {
-      console.log('down')
       collapsed && setCollapsed(false);
     }
     // check if position is growing negatively and has reached specified range
     else if (firstTouch - positionY > range) {
-      console.log('up')
       // !collapsed && setCollapsed(true);
     }
   };
@@ -99,19 +97,18 @@ const WalletScreen = () => {
         <Tab
           tabs={[
             {
-              label: 'Crypto',
+              label: t('Crypto'),
               value: 'crypto',
             },
             {
-              label: 'NFT',
-              value: 'nft',
+              label: t('NFTs'),
+              value: 'nfts',
             },
           ]}
           selectedTab={tab}
           onChange={v => setTab(v)}
           tabStyle={{
             borderColor: 'transparent',
-
             alignItems: 'flex-start',
             justifyContent: 'flex-start',
             paddingLeft: 16,
@@ -122,7 +119,7 @@ const WalletScreen = () => {
           }}
         />
         {tab === 'crypto' && <CryptoTab />}
-        {tab === 'nft' && <NFTTab />}
+        {tab === 'nfts' && <NFTTab />}
       </ScrollView>
       <View style={{position: 'absolute', bottom: TABBAR_HEIGHT + 16, alignItems: 'center', justifyContent: 'center', width: '100%'}}>
         <ManageTokenModal

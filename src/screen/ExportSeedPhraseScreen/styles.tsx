@@ -46,17 +46,18 @@ export const styles = StyleSheet.create({
   },
   welcomeTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: '700',
     lineHeight: 25,
     letterSpacing: 0.38,
     paddingTop: 32,
-    paddingBottom: 8
+    textAlign: "center",
+    paddingBottom: 20,
   },
   instructionText: {
-    fontSize: 15,
-    lineHeight: 20,
-    letterSpacing: -0.5,
-    paddingBottom: 32,
+    fontSize: 11,
+    letterSpacing: 0.07,
+    lineHeight: 14,
+    paddingBottom: 12,
     textAlign: 'center'
   },
   seedContainer: {
@@ -71,5 +72,12 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
     lineHeight: 16
+  },
+  seedItem: {
+    paddingLeft: 4,
+    paddingTop: 12,
+    paddingRight: 4,
+    paddingBottom: 12,
+    width: "25%",
   }
 });

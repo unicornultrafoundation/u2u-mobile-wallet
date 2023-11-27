@@ -1,34 +1,34 @@
-import React, { useState } from 'react'
-import { View } from 'react-native';
-import { styles } from './styles';
-import Text from '../../component/Text';
-import { useTranslation } from 'react-i18next';
-import TextInput from '../../component/TextInput';
-import Button from '../../component/Button';
-import { useWallet } from '../../hook/useWallet';
+import React, { useState } from "react";
+import { View } from "react-native";
+import { styles } from "./styles";
+import Text from "../../component/Text";
+import { useTranslation } from "react-i18next";
+import TextInput from "../../component/TextInput";
+import Button from "../../component/Button";
+import { useWallet } from "../../hook/useWallet";
 
 const Step3 = () => {
-  const { t } = useTranslation<string>()
-  const { accessWallet } = useWallet()
+  const { t } = useTranslation<string>();
+  const { accessWallet } = useWallet();
 
-  const [seedList, setSeedList] = useState(Array(12).fill(""))
-  const [loading, setLoading] = useState(false)
+  const [seedList, setSeedList] = useState(Array(12).fill(""));
+  const [loading, setLoading] = useState(false);
 
   const handleUpdateSeedWord = (value: string, index: number) => {
     const newSeed = [...seedList]
     newSeed[index] = value
     setSeedList(newSeed)
-  }
+  };
 
   const handleSaveSeed = () => {
-    const isOK = seedList.every((item) => item != "")
+    const isOK = seedList.every((item) => item != "");
 
     if (isOK) {
-      setLoading(true)
+      setLoading(true);
       setTimeout(() => {
-        accessWallet(seedList.join(" "))
-        setLoading(false)
-      }, 100)
+        accessWallet(seedList.join(" "));
+        setLoading(false);
+      }, 100);
     }
   };
 
@@ -41,62 +41,65 @@ const Step3 = () => {
         {t("seedPhraseSignInDescription")}{"\n"}
         {t("enterSeedPhrase")}
       </Text>
-      <View style={{width: '100%', flex: 1}}>
-        <View style={{flexDirection: 'row'}}>
+      <View style={{ width: "100%", flex: 1 }}>
+        <View style={{ flexDirection: "row" }}>
           {seedList.slice(0, 4).map((word, index) => {
             return (
               <View
-                style={{width: "25%", paddingHorizontal: 4, paddingVertical: 6}}
-                key={`seed-${index + 0}`}
+                style={{ width: "25%", paddingHorizontal: 4, paddingVertical: 6 }}
+                key={`seed-${index}`}
               >
                 <TextInput
                   value={word}
                   autoCapitalize="none"
-                  style={{textAlign: 'center'}}
+                  style={{ textAlign: "left" }}
+                  placeholder={`${index + 1}.`}
                   onChangeText={(newText) => {
-                    handleUpdateSeedWord(newText, index + 0)
+                    handleUpdateSeedWord(newText, index);
                   }}
                 />
               </View>
-            )
+            );
           })}
         </View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: "row" }}>
           {seedList.slice(4, 8).map((word, index) => {
             return (
               <View
-                style={{width: "25%", paddingHorizontal: 4, paddingVertical: 6}}
+                style={{ width: "25%", paddingHorizontal: 4, paddingVertical: 6 }}
                 key={`seed-${index + 4}`}
               >
                 <TextInput
                   value={word}
                   autoCapitalize="none"
-                  style={{textAlign: 'center'}}
+                  placeholder={`${index + 4}.`}
+                  style={{ textAlign: "left" }}
                   onChangeText={(newText) => {
-                    handleUpdateSeedWord(newText, index + 4)
+                    handleUpdateSeedWord(newText, index + 4);
                   }}
                 />
               </View>
-            )
+            );
           })}
         </View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: "row" }}>
           {seedList.slice(8, 12).map((word, index) => {
             return (
               <View
-                style={{width: "25%", paddingHorizontal: 4, paddingVertical: 6}}
+                style={{ width: "25%", paddingHorizontal: 4, paddingVertical: 6 }}
                 key={`seed-${index + 8}`}
               >
                 <TextInput
                   value={word}
                   autoCapitalize="none"
-                  style={{textAlign: 'center'}}
+                  placeholder={`${index + 8}.`}
+                  style={{ textAlign: "left" }}
                   onChangeText={(newText) => {
-                    handleUpdateSeedWord(newText, index + 8)
+                    handleUpdateSeedWord(newText, index + 8);
                   }}
                 />
               </View>
-            )
+            );
           })}
         </View>
       </View>
@@ -110,7 +113,7 @@ const Step3 = () => {
         Continue
       </Button>
     </View>
-  )
+  );
 };
 
 export default Step3;

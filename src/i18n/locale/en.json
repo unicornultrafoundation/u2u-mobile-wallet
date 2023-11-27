@@ -113,11 +113,11 @@
   "visitNow": "Visit now",
   "exploreNow": "Explore now",
   "bannerTitle2": "2/4 U2U Foundation",
-  "bannerContent2": "Join U2U Foundation with Dapp: Explore to earn!", 
-  "stakeNow": "Stake now", 
-  "bannerTitle3": "3/4 U2 Staking", 
+  "bannerContent2": "Join U2U Foundation with Dapp: Explore to earn!",
+  "stakeNow": "Stake now",
+  "bannerTitle3": "3/4 U2 Staking",
   "bannerContent3": "Staking U2U now to share $100,000,000 price pool",
-  "bannerTitle4": " 4/4 U2 News", 
+  "bannerTitle4": " 4/4 U2 News",
   "bannerContent4": "Enjoy free transactions with Nebulas Testnet",
   "Crypto": "Crypto",
   "NFT": "NFT",
@@ -171,5 +171,8 @@
   "claimReward": "Claim reward",
   "lock": "Lock",
   "stakedAmount": "Staked Amount",
-  "claimable": "Claimable"
+  "claimable": "Claimable",
+  "There is no transaction to show": "There is no transaction to show",
+  "NFTs": "NFTs",
+  "There is no NFTs yet": "There is no NFTs yet"
 }
