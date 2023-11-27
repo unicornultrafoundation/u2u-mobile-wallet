@@ -172,5 +172,7 @@
   "lock": "Lock",
   "stakedAmount": "Staked Amount",
   "claimable": "Claimable",
-  "There is no transaction to show": "There is no transaction to show"
+  "There is no transaction to show": "There is no transaction to show",
+  "NFTs": "NFTs",
+  "There is no NFTs yet": "There is no NFTs yet"
 }

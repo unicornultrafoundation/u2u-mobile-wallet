@@ -72,7 +72,7 @@ const Step3 = () => {
                 <TextInput
                   value={word}
                   autoCapitalize="none"
-                  placeholder={`${index + 1}.`}
+                  placeholder={`${index + 4}.`}
                   style={{ textAlign: "left" }}
                   onChangeText={(newText) => {
                     handleUpdateSeedWord(newText, index + 4);
@@ -92,7 +92,7 @@ const Step3 = () => {
                 <TextInput
                   value={word}
                   autoCapitalize="none"
-                  placeholder={`${index + 1}.`}
+                  placeholder={`${index + 8}.`}
                   style={{ textAlign: "left" }}
                   onChangeText={(newText) => {
                     handleUpdateSeedWord(newText, index + 8);

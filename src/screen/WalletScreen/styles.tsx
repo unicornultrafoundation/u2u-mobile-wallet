@@ -101,4 +101,18 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6
   },
+  containerNoNFT: {
+    marginTop: 40,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  imageNoNFT: {
+    width: 120,
+    height: 80,
+    marginBottom: 20,
+  },
+  textNoNFT: {
+    fontSize: 16,
+    color: 'gray',
+  },
 });

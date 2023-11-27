@@ -172,5 +172,8 @@
   "lock": "Khoá",
   "stakedAmount": "Số lượng đặt cược",
   "claimable": "Có thể nhận được",
-  "There is no transaction to show": "Không có giao dịch nào để hiển thị"
+  "There is no transaction to show": "Không có giao dịch nào để hiển thị",
+  "NFTs": "NFTs",
+  "There is no NFTs yet": "Chưa có NFT nào"
 }
+
