@@ -9,7 +9,7 @@ import theme from '../../theme';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { SvgUri } from 'react-native-svg';
-import { formatNumberString, shortenAddress } from '../../util/string';
+import { formatNumberString, getWalletName, shortenAddress } from '../../util/string';
 import Separator from '../../component/Separator';
 import { useNetworkStore } from '../../state/network';
 import { useWallet } from '../../hook/useWallet';
@@ -129,7 +129,7 @@ const ConfirmStep = ({onNextStep, onBack}: {
               <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('wallet')}</Text>
               <View style={{flexDirection: 'column', flex: 1, gap: 2}}>
                 <Text style={[theme.typography.footnote.regular, {textAlign: 'right'}]}>
-                  {wallet.name ?? t('walletDefaultName')}
+                  {getWalletName(wallet)}
                 </Text>
                 <Text style={[theme.typography.footnote.small, {color: preferenceTheme.text.secondary, textAlign: 'right'}]}>
                   {shortenAddress(wallet.address, 8, 8)}

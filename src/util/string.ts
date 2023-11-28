@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js";
+import { Wallet } from "../state/wallet";
 
 export const truncate = (str: string, len: number) => {
   return `${str.substring(0, Math.min(len, str.length))}...`
@@ -57,15 +58,13 @@ export const isNumber = (val: string) => {
 };
 
 export const parseNumberFormatter = (value: string) => {
-  const zeroFormatter = /^0*$/
-  if (zeroFormatter.test(value)) {
-    return '0'
-  }
   const digitFormatter = /^\d*\.?\d{0,}$/
-  if (digitFormatter.test(value)) {
-    return value
+  if (!digitFormatter.test(value)) return null
+  value = value.replace(/^0+/, '')
+  if (!value || value.startsWith('.')) {
+    value = '0' + value
   }
-  return null
+  return value
 }
 
 export const parseFormatedNumberInput = (amount: string): string => {
@@ -94,4 +93,8 @@ export const parseIPFSFile = (rawURL: string) => {
     return rawURL.replace("ipfs://", "https://ipfs.io/ipfs/")
   }
   return rawURL
+}
+
+export const getWalletName = (wallet: Wallet) => {
+  return wallet.name ?? `Address ${wallet.path.split('/').at(-1)}`;
 }

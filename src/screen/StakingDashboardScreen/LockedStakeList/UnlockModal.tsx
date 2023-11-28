@@ -7,7 +7,7 @@ import { LockedStake } from '../../../hook/useFetchLockedStake';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
 import { styles } from './styles';
-import { formatNumberString, getDigit, parseFormatedNumberInput } from '../../../util/string';
+import { formatNumberString, getDigit, parseNumberFormatter } from '../../../util/string';
 import { parseFromRaw } from '../../../util/bignum';
 import TextInput from '../../../component/TextInput';
 import { formatDate, parseInterval } from '../../../util/date';
@@ -51,8 +51,10 @@ const UnlockModal = ({trigger, item}: {
   const {fetchLockedStake} = useFetchAllLockedStake(wallet.address)
 
   const [amount, setAmount] = useState('0')
-  const [penalty, setPennalty] = useState("0")
+  const [penalty, setPennalty] = useState('0')
   const [unlocking, setUnlocking] = useState(false)
+
+  const [errorAmount, setErrorAmount] = useState('')
 
   const parsedStakedAmount = useMemo(() => {
     return parseFromRaw(item.lockedAmount.toFixed(), 18)
@@ -71,7 +73,7 @@ const UnlockModal = ({trigger, item}: {
   const alertError = (error: any, withAmount = true) => {
     Toast.show({
       type: 'error',
-      text1: 'Unlock stake fail',
+      text1: t('msgUnlockStakeFail'),
       text2: (error as Error).message,
       onHide: resetTxState,
       props: {
@@ -86,9 +88,7 @@ const UnlockModal = ({trigger, item}: {
                 }
               ]}
             >
-              {formatNumberString(
-                amount, 6
-              )} U2U
+              {formatNumberString(amount, 6)} U2U
             </Text>
           )
         }
@@ -101,7 +101,7 @@ const UnlockModal = ({trigger, item}: {
     handleClose()
     Toast.show({
       type: 'success',
-      text1: 'Unlock stake success',
+      text1: t('msgUnlockStakeSuccess'),
       onHide: resetTxState,
       props: {
         txHash: tx.hash,
@@ -125,17 +125,27 @@ const UnlockModal = ({trigger, item}: {
     })
   }
 
+  const validateAmount = (value: string) => {
+    value = value.trim()
+    if (value.length == 0) {
+      setErrorAmount(t('msgFieldNotEmpty'))
+      return false
+    }
+    const zeroFormatter = /^0*$/
+    if (zeroFormatter.test(value)) {
+      setErrorAmount(t('invalidValue'))
+      return false
+    }
+    if (Number(getDigit(value)) > Number(parseFromRaw(item.lockedAmount.toFixed(), 18))) {
+      setErrorAmount(t('insufficientBalance'))
+      return false
+    }
+    setErrorAmount('')
+    return true
+  }
+
   const handleUnlock = async () => {
-    if (amount === "0") {
-      alertError(new Error(`Invalid unlock amount`), false)
-      return false;
-    }
-
-    if (Number(getDigit(amount)) > Number(parseFromRaw(item.lockedAmount.toFixed(), 18))) {
-      alertError(new Error('Insufficient balance'), false);
-      return false;
-    }
-
+    if (!validateAmount(amount)) return
     setUnlocking(true)
 
     const params: any = {
@@ -151,7 +161,6 @@ const UnlockModal = ({trigger, item}: {
         alertError(new Error("execution reverted"))
         return
       }
-      
       alertSuccess(tx);
 
     } catch (error) {
@@ -162,10 +171,35 @@ const UnlockModal = ({trigger, item}: {
     }
   }
 
+  const renderItem = ({label, content} : {
+    label: string,
+    content: string,
+  }) => {
+    return (
+      <View style={{flexDirection: 'row', gap: 8, marginBottom: 10}}>
+        <Text
+          style={[
+            theme.typography.footnote.regular
+          ]}
+        >
+          {t(label)}
+        </Text>
+        <Text
+          style={[
+            theme.typography.footnote.medium,
+            {flex: 1, textAlign: 'right'}
+          ]}
+        >
+          {content}
+        </Text>
+      </View>
+    )
+  }
+
   const renderForm = () => {
     return (
       <View style={{width: '100%', flex: 1}}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{flexDirection: 'row', gap: 8}}>
           <Text
             style={[
               theme.typography.footnote.regular
@@ -174,13 +208,15 @@ const UnlockModal = ({trigger, item}: {
             {t('amount')}
           </Text>
           <TouchableOpacity
+            style={{flex: 1}}
             onPress={() => setAmount(parsedStakedAmount)}
           >
             <Text
               style={[
                 theme.typography.footnote.regular,
                 {
-                  textDecorationLine: 'underline'
+                  textDecorationLine: 'underline',
+                  textAlign: 'right',
                 }
               ]}
             >
@@ -190,66 +226,25 @@ const UnlockModal = ({trigger, item}: {
         </View>
         <TextInput
           value={amount}
+          error={errorAmount}
           onChangeText={(val) => {
-            setAmount(parseFormatedNumberInput(val.replaceAll(",", ".")))
+            // setAmount(parseFormatedNumberInput(val.replaceAll(",", ".")))
+            const newVal = parseNumberFormatter(val.replaceAll(",", "."))
+            if (newVal != null) {
+              setAmount(newVal)
+            }
           }}
           keyboardType="numeric"
           containerStyle={{
-            marginVertical: 8
+            marginVertical: 8,
+            marginBottom: 20,
           }}
           insideModal={true}
         />
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 40}}>
-          <Text
-            style={[
-              theme.typography.footnote.regular
-            ]}
-          >
-            {t('penalty')}
-          </Text>
-          <Text
-            style={[
-              theme.typography.footnote.bold
-            ]}
-          >
-            {penalty} U2U
-          </Text>
-        </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 8}}>
-          <Text
-            style={[
-              theme.typography.footnote.regular
-            ]}
-          >
-            Locked duration (days)
-          </Text>
-          <Text
-            style={[
-              theme.typography.footnote.bold
-            ]}
-          >
-            {parseInterval(0, item.duration)}
-          </Text>
-        </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 8}}>
-          <Text
-            style={[
-              theme.typography.footnote.regular
-            ]}
-          >
-            Available at
-          </Text>
-          <Text
-            style={[
-              theme.typography.footnote.bold
-            ]}
-          >
-            {formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy")}
-          </Text>
-        </View>
-        <View
-          style={{width: '100%', flex: 1, justifyContent: 'flex-end'}}
-        >
+        {renderItem({label: 'penalty', content: `${penalty} U2U`})}
+        {renderItem({label: 'lockedDurationDays', content: parseInterval(0, item.duration)})}
+        {renderItem({label: 'availableAt', content: formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy")})}
+        <View style={{width: '100%', flex: 1, justifyContent: 'flex-end'}}>
           <Button
             fullWidth
             style={{

@@ -60,7 +60,7 @@ const WalletRow = ({ item, selected, disabled, onSelect, onEdit, onDelete, ...re
       onDelete()
     }
   }
-
+  
   return (
     <View style={styles.walletRowContainer} {...rest}>
       <TouchableOpacity
@@ -70,7 +70,7 @@ const WalletRow = ({ item, selected, disabled, onSelect, onEdit, onDelete, ...re
         <Jazzicon size={34} address={item.address}/>
         <View style={{flex: 1, gap: 2, marginLeft: 5}}>
           <Text type="caption1-medium" color="title">
-            {getWalletMetadata(item)?.name || `Address ${item.path[item.path.length - 1]}`}
+            {getWalletMetadata(item)?.name || `Address ${item.path.split('/').at(-1)}`}
           </Text>
           <Text type="caption1-regular" color="primary">
             {shortenAddress(item.address, 10, 10)}

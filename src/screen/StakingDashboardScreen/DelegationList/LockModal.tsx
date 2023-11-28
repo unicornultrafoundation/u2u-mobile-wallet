@@ -8,7 +8,7 @@ import theme from '../../../theme';
 import { styles } from './styles';
 import { SvgUri } from 'react-native-svg';
 import { Validation } from '../../../service/staking';
-import { formatNumberString, parseFormatedNumberInput, shortenAddress } from '../../../util/string';
+import { formatNumberString, shortenAddress, parseNumberFormatter } from '../../../util/string';
 import { useTranslation } from 'react-i18next';
 import Separator from '../../../component/Separator';
 import BigNumber from 'bignumber.js';
@@ -59,6 +59,8 @@ const LockModal = ({trigger, item}: {
 
   const [amount, setAmount] = useState('0')
   const [duration, setDuration] = useState('0')
+  const [errorAmount, setErrorAmount] = useState('')
+  const [errorDuration, setErrorDuration] = useState('')
   const [locking, setLocking] = useState(false)
 
   const handlePresentModalPress = useCallback(() => {
@@ -89,7 +91,7 @@ const LockModal = ({trigger, item}: {
   const alertError = (error: any, withAmount = true) => {
     Toast.show({
       type: 'error',
-      text1: 'Lock stake fail',
+      text1: t('msgLockStakeFail'),
       text2: (error as Error).message,
       onHide: resetTxState,
       props: {
@@ -104,9 +106,7 @@ const LockModal = ({trigger, item}: {
                 }
               ]}
             >
-              {formatNumberString(
-                amount, 6
-              )} U2U
+              {formatNumberString(amount, 6)} U2U
             </Text>
           )
         }
@@ -118,7 +118,7 @@ const LockModal = ({trigger, item}: {
     fetchLockedStake()
     Toast.show({
       type: 'success',
-      text1: 'Lock stake success',
+      text1: t('msgLockStakeSuccess'),
       onHide: resetTxState,
       props: {
         txHash: tx.hash,
@@ -142,16 +142,43 @@ const LockModal = ({trigger, item}: {
     })
   }
 
-  const handleLock = async () => {
-    if (amount === "0") {
-      alertError(new Error(`Invalid amount`), false)
-      return
+  const validateAmount = (value: string) => {
+    value = value.trim()
+    if (value.length == 0) {
+      return t('msgFieldNotEmpty')
     }
+    const zeroFormatter = /^0*$/
+    if (zeroFormatter.test(value)) {
+      return t('invalidAmount')
+    }
+    return ''
+  }
 
-    if (Number(duration) < MIN_LOCKUP_DURATION) {
-      alertError(new Error(`Minimum lockup is ${MIN_LOCKUP_DURATION}`), false)
-      return
+  const validateDuration = (value: string) => {
+    value = value.trim()
+    if (value.length == 0) {
+      return t('msgFieldNotEmpty')
     }
+    const valDuration = Number(value)
+    if (valDuration < MIN_LOCKUP_DURATION) {
+      return t('msgMinimumLockup').replace('{value}', MIN_LOCKUP_DURATION.toString())
+    }
+    if (valDuration > maxDuration) {
+      return t('msgLockedDurationCannotBeGreaterThanMax').replace('{value}', `${formatNumberString(maxDuration.toString())}`)
+    }
+    return ''
+  }
+
+  const validateForm = () => {
+    const amountErr = validateAmount(amount)
+    const durationErr = validateDuration(duration)
+    setErrorAmount(amountErr)
+    setErrorDuration(durationErr)
+    return !amountErr && !durationErr
+  }
+
+  const handleLock = async () => {
+    if (!validateForm()) return
     setLocking(true)
 
     const params: any = {
@@ -189,7 +216,7 @@ const LockModal = ({trigger, item}: {
               theme.typography.footnote.regular
             ]}
           >
-            Amount
+            {t('amount')}
           </Text>
           <TouchableOpacity
             onPress={() => setAmount(parsedStakedAmount)}
@@ -202,14 +229,20 @@ const LockModal = ({trigger, item}: {
                 }
               ]}
             >
-              Available: {formatNumberString(parsedStakedAmount, 4)} U2U
+              {t('available')}: {formatNumberString(parsedStakedAmount, 4)} U2U
             </Text>
           </TouchableOpacity>
         </View>
         <TextInput
           value={amount}
+          error={errorAmount}
+          placeholder={t('amount')}
           onChangeText={(val) => {
-            setAmount(parseFormatedNumberInput(val.replaceAll(",", ".")))
+            // setAmount(parseFormatedNumberInput(val.replaceAll(",", ".")))
+            const newVal = parseNumberFormatter(val.replaceAll(",", "."))
+            if (newVal != null) {
+              setAmount(newVal)
+            }
           }}
           keyboardType="numeric"
           containerStyle={{
@@ -217,30 +250,35 @@ const LockModal = ({trigger, item}: {
           }}
           insideModal={true}
         />
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 12}}>
           <Text
             style={[
               theme.typography.footnote.regular
             ]}
           >
-            Locked duration (days)
+            {t('lockedDurationDays')}
           </Text>
           <Text
             style={[
-              theme.typography.footnote.regular
+              theme.typography.footnote.regular,
+              {flex: 1, textAlign: 'right'}
             ]}
           >
-            Max: {formatNumberString(maxDuration.toString())} days
+            {t('max')}: {formatNumberString(maxDuration.toString())} {t('days')}
           </Text>
         </View>
         <TextInput
           value={duration}
+          error={errorDuration}
+          placeholder={t('lockedDurationDays')}
           onChangeText={(val) => {
-            const valNumber = Number(val)
-
-            if (valNumber > maxDuration) return;
-
-            setDuration(parseFormatedNumberInput(val.replaceAll(",", ".")))
+            // const valNumber = Number(val)
+            // if (valNumber > maxDuration) return;
+            // setDuration(parseFormatedNumberInput(val.replaceAll(",", ".")))
+            const newVal = parseNumberFormatter(val.replaceAll(",", "."))
+            if (newVal != null) {
+              setDuration(newVal)
+            }
           }}
           keyboardType="numeric"
           containerStyle={{
@@ -260,7 +298,7 @@ const LockModal = ({trigger, item}: {
             loading={locking}
             disabled={locking}
           >
-            Lock
+            {t('lock')}
           </Button>
         </View>
       </View>
