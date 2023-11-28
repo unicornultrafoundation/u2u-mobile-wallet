@@ -132,7 +132,7 @@
   "General Information": "General Information",
   "Research": "Research",
   "Search articles": "Search articles",
-  "manageToken": "Manage token",
+  "manageToken": "Manage Crypto",
   "searchTokenPlaceholder": "Search token sympol, contract address...",
   "customToken": "Custom token",
   "addCustomToken": "Add custom token",
@@ -174,5 +174,8 @@
   "claimable": "Claimable",
   "There is no transaction to show": "There is no transaction to show",
   "NFTs": "NFTs",
-  "There is no NFTs yet": "There is no NFTs yet"
+  "There is no NFTs yet": "There is no NFTs yet",
+  "By using U2U wallet, you agree to the": "By using U2U wallet, you agree to the ",
+  "Terms": "Terms",
+  "Privacy Policy": "Privacy Policy"
 }

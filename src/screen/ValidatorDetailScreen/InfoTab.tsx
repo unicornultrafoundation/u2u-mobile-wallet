@@ -20,7 +20,7 @@ const InfoTab = ({validator}: {
     <View style={{paddingTop: 16, gap: 16}}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 8}}>
         <View style={{flex: 3}}>
-          <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary, paddingBottom: 4}]}>
+          <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary, paddingBottom: 4, fontSize: 11}]}>
             {t('commission')}
           </Text>
           <Text style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}>

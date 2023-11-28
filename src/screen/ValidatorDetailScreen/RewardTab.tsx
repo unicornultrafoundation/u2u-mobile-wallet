@@ -22,7 +22,7 @@ const RewardTab = ({validator}: {
 
   return (
     <View style={{paddingTop: 16}}>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12}}>
         <Text
           style={[
             theme.typography.caption2.regular,
