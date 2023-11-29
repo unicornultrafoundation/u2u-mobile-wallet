@@ -33,15 +33,84 @@ const SettingScreen = () => {
     }, [route]),
   );
 
+  const renderTrigger = ({icon, title, description} : {
+    icon: string,
+    title: string,
+    description: string
+  }) => {
+    return (
+      <View style={styles.settingItem}>
+        <Icon name={icon} width={20} height={20}/>
+        <View style={styles.settingItemTextContainer}>
+          <Text style={theme.typography.body.medium}>
+            {t(title)}
+          </Text>
+          <Text
+            style={[
+              theme.typography.caption1.medium,
+              {color: preferenceTheme.text.secondary}
+            ]}
+          >
+            {t(description)}
+          </Text>
+        </View>
+        <Icon
+          name='chevron-right'
+          width={20}
+          height={20}
+          color={preferenceTheme.text.disabled}
+        />
+      </View>
+    )
+  }
+
+  const renderFooter = () => {
+    return (
+      <View style={{marginVertical: 10, gap: 5}}>
+        <LegalModal
+          trigger={() => {
+            return (
+              <View style={styles.settingItem}>
+                <Text
+                    style={[
+                      theme.typography.body.medium,
+                      {flex: 1}
+                    ]}
+                  >
+                    {t('legal')}
+                </Text>
+                <Icon
+                  name='chevron-right'
+                  width={20}
+                  height={20}
+                  color={preferenceTheme.text.secondary}
+                />
+              </View>
+            )
+          }}
+        />
+        <TouchableOpacity style={styles.settingItem}>
+          <Text style={[theme.typography.body.medium, {flex: 1}]}>
+            {t('version')}
+          </Text>
+          <Text
+            style={[
+              theme.typography.body.medium,
+              {color: preferenceTheme.text.secondary}
+            ]}
+          >
+            {VERSION}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: preferenceTheme.background.background
-        }
-      ]}
-    >
+    <View style={[
+      styles.container,
+      {backgroundColor: preferenceTheme.background.background},
+    ]}>
       <View style={styles.header}>
         <Text
           style={theme.typography.title3.bold}
@@ -50,148 +119,45 @@ const SettingScreen = () => {
         </Text>
       </View>
       <ScrollView
-        style={{
-          flex: 1
-        }}
+        bounces={false}
+        style={{flex: 1}}
       >
         <LanguageModal
           trigger={() => {
             return (
-              <View style={styles.settingItem}>
-                <Icon
-                  name='globe'
-                  width={20}
-                  height={20}
-                />
-                <View style={styles.settingItemTextContainer}>
-                  <Text
-                    style={[
-                      theme.typography.body.medium
-                    ]}
-                  >
-                    {t('language')}
-                  </Text>
-                  <Text
-                    style={[
-                      theme.typography.caption1.medium
-                    ]}
-                  >
-                    {t('chooseYourLanguage')}
-                  </Text>
-                </View>
-                <Icon
-                  name='chevron-right'
-                  width={24}
-                  height={24}
-                />
-              </View>
+              renderTrigger({
+                icon: 'globe', 
+                title: 'language', 
+                description: 'chooseYourLanguage'
+              })
             )
           }}
         />
         <TouchableOpacity
-          style={styles.settingItem}
           onPress={() => navigation.navigate('ExportSeedPhrase')}
         >
-          <Icon
-            name='shield'
-            width={20}
-            height={20}
-          />
-          <View style={styles.settingItemTextContainer}>
-            <Text
-              style={[
-                theme.typography.body.medium
-              ]}
-            >
-              {t('security')}
-            </Text>
-            <Text
-              style={[
-                theme.typography.caption1.medium
-              ]}
-            >
-              {t('exportSeedPhrase')}
-            </Text>
-          </View>
-          <Icon
-            name='chevron-right'
-            width={24}
-            height={24}
-          />
+          {
+            renderTrigger({
+              icon: 'shield', 
+              title: 'security', 
+              description: 'exportSeedPhrase'
+            })
+          }
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.settingItem}
           onPress={() => navigation.navigate('UpdatePassword')}
         >
-          <Icon
-            name='lock'
-            width={20}
-            height={20}
-          />
-          <View style={styles.settingItemTextContainer}>
-            <Text
-              style={[
-                theme.typography.body.medium
-              ]}
-            >
-              {t('password')}
-            </Text>
-            <Text
-              style={[
-                theme.typography.caption1.medium
-              ]}
-            >
-              {t('changeYourPassword')}
-            </Text>
-          </View>
-          <Icon
-            name='chevron-right'
-            width={24}
-            height={24}
-          />
+          {
+            renderTrigger({
+              icon: 'lock', 
+              title: 'password', 
+              description: 'changeYourPassword'
+            })
+          }
         </TouchableOpacity>
       </ScrollView>
-      <Separator />
-      <LegalModal
-        trigger={() => {
-          return (
-            <View style={styles.settingItem}>
-              <View style={[styles.settingItemTextContainer, {paddingHorizontal: 8}]}>
-                <Text
-                  style={[
-                    theme.typography.body.medium
-                  ]}
-                >
-                  Legal
-                </Text>
-              </View>
-              <Icon
-                name='chevron-right'
-                width={24}
-                height={24}
-              />
-            </View>
-          )
-        }}
-      />
-      <TouchableOpacity style={styles.settingItem}>
-        <View style={[styles.settingItemTextContainer, {paddingHorizontal: 8}]}>
-          <Text
-            style={[
-              theme.typography.body.medium
-            ]}
-          >
-            {t('version')}
-          </Text>
-        </View>
-        <Text
-          style={[
-            theme.typography.body.medium
-          ]}
-        >
-          {VERSION}
-        </Text>
-      </TouchableOpacity>
+      <Separator/>
+      {renderFooter()}
     </View>
   )
 }

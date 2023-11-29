@@ -5,6 +5,7 @@ import { useWallet } from '../../../hook/useWallet';
 import { darkTheme, lightTheme } from '../../../theme/color';
 import { useFetchAllLockedStake } from '../../../hook/useFetchAllLockedStake';
 import LockedStakeItem from './LockedStakeItem';
+import { TABBAR_HEIGHT } from '../../../component/CustomBottomTab';
 
 const LockedStakeList = () => {
   const {wallet} = useWallet()
@@ -14,11 +15,12 @@ const LockedStakeList = () => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   return (
-    <View style={{marginBottom: 400}}>
+    <View>
       <FlatList
+        bounces={false}
         data={lockedStake.filter((i) => i.isLockedUp)}
         contentContainerStyle={{
-          paddingBottom: 400,
+          paddingBottom: TABBAR_HEIGHT,
         }}
         renderItem={({item}) => {
           return (

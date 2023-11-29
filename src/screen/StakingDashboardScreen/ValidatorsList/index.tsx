@@ -3,6 +3,7 @@ import { FlatList, View } from 'react-native';
 import { useStaking } from '../../../hook/useStaking';
 import ValidatorItem from './ValidatorItem';
 import { useFetchAllValidator } from '../../../hook/useFetchAllValidator';
+import { TABBAR_HEIGHT } from '../../../component/CustomBottomTab';
 
 const ValidatorsList = () => {
   const {validators} = useFetchAllValidator()
@@ -10,8 +11,9 @@ const ValidatorsList = () => {
   return (
     <View>
       <FlatList
+        bounces={false}
         contentContainerStyle={{
-          paddingBottom: 800
+          paddingBottom: TABBAR_HEIGHT,
         }}
         data={validators}
         renderItem={({item}) => {

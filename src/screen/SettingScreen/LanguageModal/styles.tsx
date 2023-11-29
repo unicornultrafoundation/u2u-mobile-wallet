@@ -11,9 +11,8 @@ export default StyleSheet.create({
   settingItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     width: '100%',
-    paddingHorizontal: 16,
-    marginBottom: 9
+    marginVertical: 15,
+    gap: 5,
   },
 })

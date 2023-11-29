@@ -5,6 +5,7 @@ import { useWallet } from '../../../hook/useWallet';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
 import WRItem from './WRItem';
+import { TABBAR_HEIGHT } from '../../../component/CustomBottomTab';
 
 const WithdrawalRequestList = () => {
   const {wallet} = useWallet()
@@ -14,11 +15,12 @@ const WithdrawalRequestList = () => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   return (
-    <View style={{marginBottom: 400}}>
+    <View>
       <FlatList
+        bounces={false}
         data={wr.filter((i) => !i.withdrawal)}
         contentContainerStyle={{
-          paddingBottom: 400,
+          paddingBottom: TABBAR_HEIGHT,
         }}
         renderItem={({item}) => {
           return (

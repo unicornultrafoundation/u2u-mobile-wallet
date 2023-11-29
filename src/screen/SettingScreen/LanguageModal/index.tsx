@@ -24,7 +24,7 @@ const LanguageModal = ({trigger}: {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['25%'], []);
+  const snapPoints = useMemo(() => ['35%'], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -82,6 +82,7 @@ const LanguageModal = ({trigger}: {
             theme.typography.headline.medium,
             {
               color: preferenceTheme.text.title,
+              marginVertical: 8,
             }
           ]}>
             {t('chooseLanguage')}
@@ -97,7 +98,7 @@ const LanguageModal = ({trigger}: {
                   setLangauge(lang)
                 }}
               >
-                <Text>{t(lang)}</Text>
+                <Text style={[theme.typography.footnote.medium, {flex: 1}]}>{t(lang)}</Text>
                 <View>
                   {i18n.language === lang && (
                     <Icon
