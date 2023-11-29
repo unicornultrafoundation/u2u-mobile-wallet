@@ -15,8 +15,19 @@ const LockedStakeList = () => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   return (
-    <View>
-      <FlatList
+    <View style={{
+      paddingBottom: TABBAR_HEIGHT,
+      gap: 12
+    }}>
+      {lockedStake.filter((i) => i.isLockedUp).map((item) => {
+        return (
+          <LockedStakeItem
+            key={`locked-stake-${item.validatorId}-${item.delegator}`}
+            item={item}
+          />
+        )
+      })}
+      {/* <FlatList
         bounces={false}
         data={lockedStake.filter((i) => i.isLockedUp)}
         contentContainerStyle={{
@@ -28,7 +39,7 @@ const LockedStakeList = () => {
           )
         }}
         ItemSeparatorComponent={() => <View style={{height: 12}} />}
-      />
+      /> */}
     </View>
   )
 }

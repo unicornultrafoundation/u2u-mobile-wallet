@@ -16,8 +16,19 @@ const DelegationList = () => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   return (
-    <View>
-      <FlatList
+    <View style={{
+      paddingBottom: TABBAR_HEIGHT,
+      gap: 12
+    }}>
+      {validations?.map((item) => {
+        return (
+          <DelegationItem
+            key={`delegation-${item.id}`}
+            item={item}
+          />
+        )
+      })}
+      {/* <FlatList
         bounces={false}
         // refreshControl={<RefreshControl refreshing={isLoading} onRefresh={fetchDelegator} />}
         contentContainerStyle={{
@@ -33,7 +44,7 @@ const DelegationList = () => {
           )
         }}
         ItemSeparatorComponent={() => <View style={{height: 12}} />}
-      />
+      /> */}
     </View>
   )
 };

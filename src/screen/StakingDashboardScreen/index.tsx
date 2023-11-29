@@ -80,7 +80,7 @@ const StakingDashboardScreen = () => {
           <Separator/>
           <StakingDataCard />
           <View style={{paddingHorizontal: 16, backgroundColor: preferenceTheme.background.background}}>
-            <ScrollView horizontal>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <Tab
                 tabs={tabs}
                 selectedTab={tab}

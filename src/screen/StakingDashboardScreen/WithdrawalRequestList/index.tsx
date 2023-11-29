@@ -15,8 +15,19 @@ const WithdrawalRequestList = () => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   return (
-    <View>
-      <FlatList
+    <View style={{
+      paddingBottom: TABBAR_HEIGHT,
+      gap: 12
+    }}>
+      {wr.filter((i) => !i.withdrawal).map((item) => {
+        return (
+          <WRItem
+            key={`wr-item-${item.wrId}`}
+            item={item}
+          />
+        )
+      })}
+      {/* <FlatList
         bounces={false}
         data={wr.filter((i) => !i.withdrawal)}
         contentContainerStyle={{
@@ -28,7 +39,7 @@ const WithdrawalRequestList = () => {
           )
         }}
         ItemSeparatorComponent={() => <View style={{height: 12}} />}
-      />
+      /> */}
     </View>
   )
 }

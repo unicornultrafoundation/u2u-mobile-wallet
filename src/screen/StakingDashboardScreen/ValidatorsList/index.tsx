@@ -9,8 +9,19 @@ const ValidatorsList = () => {
   const {validators} = useFetchAllValidator()
 
   return (
-    <View>
-      <FlatList
+    <View style={{
+      paddingBottom: TABBAR_HEIGHT,
+      gap: 12
+    }}>
+      {validators?.map((item) => {
+        return (
+          <ValidatorItem
+            key={`validator-${item.auth}`}
+            validator={item}
+          />
+        )
+      })}
+      {/* <FlatList
         bounces={false}
         contentContainerStyle={{
           paddingBottom: TABBAR_HEIGHT,
@@ -20,7 +31,7 @@ const ValidatorsList = () => {
           return <ValidatorItem validator={item} />
         }}
         ItemSeparatorComponent={() => <View style={{height: 12}} />}
-      />
+      /> */}
     </View>
   )
 };
