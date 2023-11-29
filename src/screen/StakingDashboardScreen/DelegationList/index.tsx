@@ -5,6 +5,7 @@ import { useWallet } from '../../../hook/useWallet';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
 import DelegationItem from './DelegationItem';
+import { TABBAR_HEIGHT } from '../../../component/CustomBottomTab';
 
 const DelegationList = () => {
   const {wallet} = useWallet()
@@ -15,11 +16,12 @@ const DelegationList = () => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   return (
-    <View style={{marginBottom: 400}}>
+    <View>
       <FlatList
+        bounces={false}
         // refreshControl={<RefreshControl refreshing={isLoading} onRefresh={fetchDelegator} />}
         contentContainerStyle={{
-          paddingBottom: 400,
+          paddingBottom: TABBAR_HEIGHT,
         }}
         data={validations}
         renderItem={({item}) => {

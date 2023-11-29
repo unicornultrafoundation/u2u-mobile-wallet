@@ -19,6 +19,7 @@ import { ScrollView } from 'react-native'
 import LockedStakeList from './LockedStakeList'
 import { useFetchAllValidator } from '../../hook/useFetchAllValidator'
 import { useNetwork } from '../../hook/useNetwork'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const StakingDashboardScreen = () => {
   const route = useRoute()
@@ -71,35 +72,40 @@ const StakingDashboardScreen = () => {
         >
           {t("myInvestment")}
         </Text>
-        <InvestmentTotalCard />
-        <Separator />
-        <StakingDataCard />
-        <View style={{marginHorizontal: 16}}>
-          <ScrollView horizontal>
-            <Tab
-              tabs={tabs}
-              selectedTab={tab}
-              onChange={handleChangeTab}
-              tabStyle={{
-                borderColor: 'transparent',
-                alignItems: 'flex-start',
-                justifyContent: 'flex-start',
-                paddingLeft: 0,
-                paddingRight: 12,
-              }}
-              containerStyle={{
-                borderColor: 'transparent',
-                // marginTop: 8,
-              }}
-            />
-          </ScrollView>
-        </View>
-        <View style={{marginHorizontal: 16}}>
-          {tab === 'validators' && (<ValidatorsList />)}
-          {tab === 'delegation' && (<DelegationList />)}
-          {tab === 'wr' && (<WithdrawalRequestList />)}
-          {tab === 'locked' && <LockedStakeList />}
-        </View>
+        <ScrollView 
+          stickyHeaderIndices={[3]}
+          bounces={false}
+        >
+          <InvestmentTotalCard />
+          <Separator/>
+          <StakingDataCard />
+          <View style={{paddingHorizontal: 16, backgroundColor: preferenceTheme.background.background}}>
+            <ScrollView horizontal>
+              <Tab
+                tabs={tabs}
+                selectedTab={tab}
+                onChange={handleChangeTab}
+                tabStyle={{
+                  borderColor: 'transparent',
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
+                  paddingLeft: 0,
+                  paddingRight: 12,
+                }}
+                containerStyle={{
+                  borderColor: 'transparent',
+                  // marginTop: 8,
+                }}
+              />
+            </ScrollView>
+          </View>
+          <View style={{marginHorizontal: 16}}>
+            {tab === 'validators' && (<ValidatorsList />)}
+            {tab === 'delegation' && (<DelegationList />)}
+            {tab === 'wr' && (<WithdrawalRequestList />)}
+            {tab === 'locked' && <LockedStakeList />}
+          </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </View>
   )

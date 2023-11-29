@@ -172,7 +172,7 @@ const TxDetail = ({txHash, onClose}: {
           <Icon name='close' width={24} height={24} />
         </TouchableOpacity>
       </View>
-      <ScrollView>
+      <ScrollView bounces={false}>
         <Separator/>{renderTxMeta()}<Separator/>
         <View style={{padding: 16}}>
           <View style={{paddingBottom: 20}}>

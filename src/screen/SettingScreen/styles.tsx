@@ -9,20 +9,20 @@ export const styles = StyleSheet.create({
     paddingBottom: TABBAR_HEIGHT
   },
   header: {
-    paddingVertical: 10,
+    paddingVertical: 20,
     paddingHorizontal: 16,
-    marginBottom: 17
   },
   settingItem: {
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
     paddingHorizontal: 16,
-    marginBottom: 9
+    marginBottom: 16,
   },
   settingItemTextContainer: {
     paddingHorizontal: 16,
     justifyContent: 'space-between',
-    flex: 1
+    flex: 1,
+    gap: 2,
   }
 });

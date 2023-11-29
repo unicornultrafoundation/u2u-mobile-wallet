@@ -22,7 +22,7 @@ const LegalModal = ({trigger}: {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['25%'], []);
+  const snapPoints = useMemo(() => ['35%'], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -47,8 +47,10 @@ const LegalModal = ({trigger}: {
         index={0}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
-        handleStyle={{
+        backgroundStyle={{
           backgroundColor: preferenceTheme.background.background,
+        }}
+        handleStyle={{
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16
         }}
@@ -72,33 +74,33 @@ const LegalModal = ({trigger}: {
       >
         <View style={[
           styles.contentContainer,
-          {
-            backgroundColor: preferenceTheme.background.background
-          }
         ]}>
           <Text style={[
             theme.typography.headline.medium,
             {
               color: preferenceTheme.text.title,
+              marginVertical: 8,
             }
           ]}>
-            {t('Legal')}
+            {t('legal')}
           </Text>
           <Separator style={{width: '100%'}} />
-          <TouchableOpacity style={styles.settingItem}>
-            <Text>Privacy Policy</Text>
+          <TouchableOpacity style={[styles.settingItem]}>
+            <Text style={[theme.typography.footnote.medium, {flex: 1}]}>{t('privacyPolicy')}</Text>
             <Icon
               name='chevron-right'
-              width={24}
-              height={24}
+              width={18}
+              height={18}
+              color={preferenceTheme.text.disabled}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.settingItem}>
-            <Text>Terms of Service</Text>
+            <Text style={[theme.typography.footnote.medium, {flex: 1}]}>{t('termsOfService')}</Text>
             <Icon
               name='chevron-right'
-              width={24}
-              height={24}
+              width={18}
+              height={18}
+              color={preferenceTheme.text.disabled}
             />
           </TouchableOpacity>
         </View>
