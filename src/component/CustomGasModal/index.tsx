@@ -25,7 +25,7 @@ const CustomGasModal = ({trigger}: {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['70%'], []);
+  const snapPoints = useMemo(() => ['50%'], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -52,8 +52,11 @@ const CustomGasModal = ({trigger}: {
         // enableDynamicSizing
         onChange={handleSheetChanges}
         android_keyboardInputMode="adjustResize"
-        handleStyle={{
+        backgroundStyle={{
           backgroundColor: preferenceTheme.background.background,
+        }}
+        enablePanDownToClose={true}
+        handleStyle={{
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16
         }}
@@ -75,11 +78,8 @@ const CustomGasModal = ({trigger}: {
           )
         }}
       >
-        <BottomSheetScrollView contentContainerStyle={[
-          styles.contentContainer,
-          {
-            backgroundColor: preferenceTheme.background.background
-          }
+        <View style={[
+          styles.contentContainer
         ]}>
           <Text style={[
             theme.typography.headline.medium,
@@ -90,23 +90,21 @@ const CustomGasModal = ({trigger}: {
           ]}>
             {t('customizeGasFee')}
           </Text>
-          <GasPriceInput />
-          <View style={{height: 16}}/>
-          <GasLimitInput />
-          <View
-            style={{width: '100%', flex: 1, justifyContent: 'flex-end'}}
-          >
-            <Button
-              fullWidth
-              style={{
-                borderRadius: 60
-              }}
-              onPress={handleClose}
-            >
-              {t('continue')}
-            </Button>
+          <View style={{flex: 1, width: '100%', gap: 16}}>
+            <GasPriceInput />
+            <GasLimitInput />
           </View>
-        </BottomSheetScrollView>
+          <Button
+            fullWidth
+            style={{
+              borderRadius: 60,
+              marginTop: 10
+            }}
+            onPress={handleClose}
+          >
+            {t('continue')}
+          </Button>
+        </View>
       </BottomSheetModal>
     </>
   )

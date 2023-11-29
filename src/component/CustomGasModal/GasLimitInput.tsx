@@ -49,13 +49,13 @@ const GasLimitInput = () => {
           styles.inputContainer,
           {
             backgroundColor: preferenceTheme.background.surface,
-            borderColor: focused ? theme.accentColor.primary.normal : '',
+            borderColor: focused ? theme.accentColor.primary.normal : preferenceTheme.outline,
           },
         ]}
       >
         <BottomSheetTextInput
           style={[
-            theme.typography.label.regular,
+            theme.typography.body.regular,
             {
               color: preferenceTheme.text.title,
               flex: 1

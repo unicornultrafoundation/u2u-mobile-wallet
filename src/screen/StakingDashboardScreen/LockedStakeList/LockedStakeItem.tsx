@@ -11,11 +11,13 @@ import { parseFromRaw } from '../../../util/bignum';
 import { formatDate, parseInterval } from '../../../util/date';
 import Button from '../../../component/Button';
 import UnlockModal from './UnlockModal';
+import { useTranslation } from 'react-i18next';
 
 const LockedStakeItem = ({item}: {
   item: LockedStake
 }) => {
   const {darkMode} = usePreferenceStore()
+  const {t} = useTranslation()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   const [claiming, setClaiming] = useState(false)
@@ -29,52 +31,41 @@ const LockedStakeItem = ({item}: {
 
   }
 
+  const renderItem = ({label, content, flex} : {
+    label: string,
+    content: string,
+    flex?: number
+  }) => {
+    return (
+      <View style={{flex: flex, gap: 2}}>
+        <Text
+          style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
+        >
+          {t(label)}
+        </Text>
+        <Text
+          style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}
+        >
+          {content}
+        </Text>
+      </View>
+    )
+  }
+
   return (
     <View
       style={[
         styles.lockedStake,
         {
-          borderColor: preferenceTheme.outline
+          borderColor: preferenceTheme.outline,
+          gap: 20,
         }
       ]}
     >
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12}}>
-        <View>
-          <Text
-            style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
-          >
-            Validator ID
-          </Text>
-          <Text
-            style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}
-          >
-            {item.validatorId}
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
-          >
-            Amount
-          </Text>
-          <Text
-            style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}
-          >
-            {parseFromRaw(item.lockedAmount.toFixed(), 18, true)} U2U
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
-          >
-            Duration
-          </Text>
-          <Text
-            style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}
-          >
-            {parseInterval(0, item.duration)}
-          </Text>
-        </View>
+      <View style={{flexDirection: 'row', gap: 5}}>
+        {renderItem({label: 'validatorID', content: item.validatorId, flex: 1})}
+        {renderItem({label: 'amount', content: `${parseFromRaw(item.lockedAmount.toFixed(), 18, true)} U2U`, flex: 1})}
+        {renderItem({label: 'duration', content: parseInterval(0, item.duration)})}
       </View>
       <UnlockModal
         item={item}
@@ -97,7 +88,7 @@ const LockedStakeItem = ({item}: {
                   }
                 ]}
               >
-                {isClaimable ? "Withdraw" : `Available at ${formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy")}`}
+                {isClaimable ? t('withdraw') : t('availableAtValueDate').replace('{value}', formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy"))}
               </Text>
             </View>
           )

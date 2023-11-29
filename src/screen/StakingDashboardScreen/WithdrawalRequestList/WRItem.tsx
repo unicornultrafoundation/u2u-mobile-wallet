@@ -13,12 +13,14 @@ import { WithdrawParams, useWithdraw } from '../../../hook/useWithdraw';
 import { useStaking } from '../../../hook/useStaking';
 import Toast from 'react-native-toast-message';
 import { useTransaction } from '../../../hook/useTransaction';
+import { useTranslation } from 'react-i18next';
 
 const WRItem = ({item}: {
   item: WithdrawalRequest
 }) => {
   const {resetTxState} = useTransaction()
   const {darkMode} = usePreferenceStore()
+  const {t} = useTranslation()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
   const {stakingContractOptions} = useStaking()
@@ -46,10 +48,9 @@ const WRItem = ({item}: {
       if (!tx) {
         return
       }
-
       Toast.show({
         type: 'success',
-        text1: 'Withdraw success',
+        text1: t('msgWithdrawSuccess'),
         onHide: resetTxState,
         props: {
           txHash: tx.hash,
@@ -61,11 +62,31 @@ const WRItem = ({item}: {
 
       Toast.show({
         type: 'error',
-        text1: 'Withdraw fail',
+        text1: t('msgWithdrawFail'),
         text2: (error as Error).message,
         onHide: resetTxState,
       })
     }
+  }
+
+  const renderItem = ({label, content} : {
+    label: string,
+    content: string,
+  }) => {
+    return (
+      <View style={{flex: 1, gap: 2}}>
+        <Text
+          style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
+        >
+          {t(label)}
+        </Text>
+        <Text
+          style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}
+        >
+          {content}
+        </Text>
+      </View>
+    )
   }
 
   return (
@@ -73,59 +94,16 @@ const WRItem = ({item}: {
       style={[
         styles.wrItem,
         {
-          borderColor: preferenceTheme.outline
+          borderColor: preferenceTheme.outline,
+          gap: 20,
         }
       ]}
     >
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12}}>
-        <View>
-          <Text
-            style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
-          >
-            WrID
-          </Text>
-          <Text
-            style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}
-          >
-            {item.wrId}
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
-          >
-            Unbonding
-          </Text>
-          <Text
-            style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}
-          >
-            {formatNumberString(item.unbondingAmount.dividedBy(10 ** 18).toFixed())} U2U
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
-          >
-            Withdrawable
-          </Text>
-          <Text
-            style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}
-          >
-            {formatNumberString(item.withdrawalAmount.dividedBy(10 ** 18).toFixed())} U2U
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary}]}
-          >
-            Validator ID
-          </Text>
-          <Text
-            style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}
-          >
-            {item.validatorId}
-          </Text>
-        </View>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 5}}>
+        {renderItem({label: 'wrID', content: item.wrId})}
+        {renderItem({label: 'unbonding', content: `${formatNumberString(item.unbondingAmount.dividedBy(10 ** 18).toFixed())} U2U`})}
+        {renderItem({label: 'withdrawable', content: `${formatNumberString(item.withdrawalAmount.dividedBy(10 ** 18).toFixed())} U2U`})}
+        {renderItem({label: 'validatorID', content: item.validatorId})}
       </View>
       <Button
         loading={claiming}

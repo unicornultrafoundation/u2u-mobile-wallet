@@ -235,6 +235,7 @@ const DelegationItem = ({item}: {
         <UnstakeSection
           item={item}
           onCancel={() => setShowUnstake(false)}
+          actualStakedAmount={actualStakedAmount.dividedBy(10 ** 18)}
         />
       ) : (
         <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 12, marginTop: 10}}>

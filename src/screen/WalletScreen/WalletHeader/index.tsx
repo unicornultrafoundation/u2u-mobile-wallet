@@ -51,7 +51,7 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
         />
         <View style={{flex: 1, flexDirection: 'row', gap: 6}}>
           <Text type="subheadline-medium" color="title" style={{flexShrink: 1}}>
-            {getWalletMetadata(wallet).name || `Address ${wallet.path[wallet.path.length - 1]}` }
+            {getWalletMetadata(wallet).name || `Address ${wallet.path.split('/').at(-1)}` }
           </Text>
           {/*<Text type="caption1-regular" color="primary">*/}
           {/*  {shortenAddress(wallet.address, 4, 4)}*/}
