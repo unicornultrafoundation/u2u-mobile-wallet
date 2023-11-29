@@ -20,7 +20,7 @@ export interface NetworkConfig {
 export const SUPPORTED_CHAINS: NetworkConfig[] = [
   {
     chainID: "39",
-    name: "Mainnet",
+    name: "Solaris Mainnet",
     rpc: "https://rpc-mainnet.uniultra.xyz",
     explorerURL: "https://u2uscan.xyz",
     currency: "U2U",

@@ -18,6 +18,7 @@ import RewardTab from './RewardTab';
 import Button from '../../component/Button';
 import { useTranslation } from 'react-i18next';
 import { useTransactionStore } from '../../state/transaction';
+import { SafeAreaView } from 'react-native';
 
 const ValidatorDetailScreen = () => {
   const navigation = useNavigation<any>()
@@ -154,18 +155,15 @@ const ValidatorDetailScreen = () => {
         backgroundColor: preferenceTheme.background.background,
         paddingTop: 24
       }}>
-        <Button
-          color='primary'
-          style={{
-            borderRadius: 60
-          }}
-          onPress={() => {
-            resetTxState()
-            navigation.navigate('Delegate', {validator})
-          }}
-        >
-          {t('delegate')}
-        </Button>
+        <SafeAreaView>
+          <Button color='primary' style={{ borderRadius: 60 }}
+            onPress={() => {
+              resetTxState()
+              navigation.navigate('Delegate', { validator })
+            }}>
+            {t("Delegate")}
+          </Button>
+        </SafeAreaView>
       </View>
     </View>
   )

@@ -132,7 +132,7 @@
   "General Information": "Thông tin chung",
   "Research": "Nghiên cứu",
   "Search articles": "Tìm kiếm bài viết",
-  "manageToken": "Quản lý token",
+  "manageToken": "Quản lý tiền điện tử",
   "searchTokenPlaceholder": "Tìm theo tên, địa chỉ hợp đồng thông minh...",
   "customToken": "Token khác",
   "addCustomToken": "Thêm token",
@@ -198,5 +198,8 @@
   "wrID": "WrID",
   "withdrawable": "Có thể rút",
   "msgWithdrawSuccess": "Rút thành công",
-  "msgWithdrawFail": "Rút thất bại"
+  "msgWithdrawFail": "Rút thất bại",
+  "By using U2U wallet, you agree to the": "Bằng cách sử dụng ví U2U, bạn đồng ý với ",
+  "Terms": "Điều khoản",
+  "Privacy Policy": "Chính sách quyền riêng tư"
 }
