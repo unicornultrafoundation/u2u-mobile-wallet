@@ -5,7 +5,7 @@ import { styles } from '../styles';
 import Icon from '../../../component/Icon';
 import { useWallet } from '../../../hook/useWallet';
 import Text from '../../../component/Text';
-import { shortenAddress, truncate } from '../../../util/string';
+import { getDefaultWalletName, shortenAddress, truncate } from '../../../util/string';
 import HeaderSearchComponent from './HeaderSearchComponent';
 import Clipboard from '@react-native-clipboard/clipboard';
 import SelectNetworkModal from '../../../component/SelectNetworkModal';
@@ -51,7 +51,7 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
         />
         <View style={{flex: 1, flexDirection: 'row', gap: 6}}>
           <Text type="subheadline-medium" color="title" style={{flexShrink: 1}}>
-            {getWalletMetadata(wallet).name || `Address ${wallet.path.split('/').at(-1)}` }
+            {getWalletMetadata(wallet).name || getDefaultWalletName(wallet)}
           </Text>
           {/*<Text type="caption1-regular" color="primary">*/}
           {/*  {shortenAddress(wallet.address, 4, 4)}*/}

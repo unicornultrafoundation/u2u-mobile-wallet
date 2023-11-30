@@ -95,6 +95,6 @@ export const parseIPFSFile = (rawURL: string) => {
   return rawURL
 }
 
-export const getWalletName = (wallet: Wallet) => {
-  return wallet.name ?? `Address ${wallet.path.split('/').at(-1)}`;
+export const getDefaultWalletName = (wallet: Wallet) => {
+  return `Address ${wallet.path.split('/').at(-1)}`
 }

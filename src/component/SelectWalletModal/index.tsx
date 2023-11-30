@@ -100,8 +100,10 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
         index={0}
         snapPoints={snapPoints}
         // onChange={handleSheetChanges}
-        handleStyle={{
+        backgroundStyle={{
           backgroundColor: preferenceTheme.background.background,
+        }}
+        handleStyle={{
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
         }}
@@ -125,9 +127,6 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
         <View
           style={[
             styles.contentContainer,
-            {
-              backgroundColor: preferenceTheme.background.background,
-            },
           ]}>
           {loading && (
             <View
@@ -137,7 +136,6 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0.7)',
                 flex: 1,
                 zIndex: 10,
                 alignItems: 'center',
@@ -146,7 +144,7 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
               }}
             >
               <ActivityIndicator style={{marginRight: 8}} />
-              <Text>Loading...</Text>
+              <Text>{t('loading')}...</Text>
             </View>
           )}
           <Text type="headline-medium" color="title">
@@ -191,7 +189,6 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
             onPress={handleCreateWallet}
             disabled={loading}>
             <Icon name="plus" width={18} height={18}/>
-
             <Text type="label-medium" color="title">
               {t('createNewWallet')}
             </Text>

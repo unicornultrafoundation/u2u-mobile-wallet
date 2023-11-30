@@ -208,5 +208,8 @@
   "viewMore": "View More",
   "alreadyReleased": "Already released",
   "alreadySent": "NFT has been sent to your wallet, please check NFTs section",
-  "deviceIsEmulator": "Invalid device"
+  "deviceIsEmulator": "Invalid device",
+  "loading": "Loading",
+  "done": "Done",
+  "msgAreYouSureToDeleteWallet": "Are you sure to delete this wallet?"
 }

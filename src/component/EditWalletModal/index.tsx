@@ -1,7 +1,7 @@
 import { Image, TextInput, TouchableOpacity, View } from 'react-native';
 import U2ULogo from '../../asset/icon/u2u_wallet_icon.png';
 import Text from '../Text';
-import { shortenAddress } from '../../util/string';
+import { getDefaultWalletName, shortenAddress } from '../../util/string';
 import Separator from '../Separator';
 import theme from '../../theme';
 import Modal from '../Modal';
@@ -9,6 +9,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { useWallet } from '../../hook/useWallet';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   visible: boolean;
@@ -20,6 +21,7 @@ const EditWalletModal = ({ onRequestClose, visible, onCancelEdit }: Props) => {
   const { getWalletMetadata, editingWallet, updateWallet } = useWallet();
   const [name, setName] = useState('');
   const { darkMode } = usePreferenceStore();
+  const { t } = useTranslation();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const inputRef = useRef<TextInput>(null);
 
@@ -77,7 +79,7 @@ const EditWalletModal = ({ onRequestClose, visible, onCancelEdit }: Props) => {
           value={name}
           placeholder={
             !getWalletMetadata(editingWallet)?.name
-              ? `Address ${Number(editingWallet.path[editingWallet.path.length - 1])}`
+              ? getDefaultWalletName(editingWallet)
               : ''
           }
           ref={inputRef}
@@ -91,7 +93,7 @@ const EditWalletModal = ({ onRequestClose, visible, onCancelEdit }: Props) => {
           onPress={handleUpdateWallet}
           style={{ width: '100%', alignItems: 'center' }}>
           <Text type="label-medium" style={{ color: theme.color.primary[500] }}>
-            Done
+            {t('done')}
           </Text>
         </TouchableOpacity>
 
@@ -100,7 +102,7 @@ const EditWalletModal = ({ onRequestClose, visible, onCancelEdit }: Props) => {
           style={{ width: '100%', alignItems: 'center' }}
           onPress={handleCancelEdit}>
           <Text type="label-medium" color="disabled">
-            Cancel
+            {t('cancel')}
           </Text>
         </TouchableOpacity>
       </View>
