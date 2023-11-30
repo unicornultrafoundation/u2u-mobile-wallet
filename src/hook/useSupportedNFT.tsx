@@ -11,6 +11,7 @@ export interface NFTCollectionMeta {
   name: string;
   category: string;
   graph: string;
+  description: string;
 }
 
 export interface NFTItemMeta {

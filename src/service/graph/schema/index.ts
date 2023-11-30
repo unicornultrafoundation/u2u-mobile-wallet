@@ -254,11 +254,13 @@ export const Schema = () => {
       }
     `,
     OWNED_NFT: minimalGQL`
-      query OwnedNFT($address: String!) {
+      query OwnedNFT($address: String!, $first: Int!, $skip: Int!) {
         items(
           where: {
             owner: $address
-          }
+          },
+          first: $first,
+          skip: $skip
         ) {
           id
           tokenID
@@ -270,8 +272,11 @@ export const Schema = () => {
       }
     `,
     ALL_NFT: minimalGQL`
-      query AllNFT {
-        items {
+      query AllNFT($first: Int!, $skip: Int!) {
+        items(
+          first: $first,
+          skip: $skip
+        ) {
           id
           tokenID
           tokenURI

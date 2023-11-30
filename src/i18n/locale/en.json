@@ -206,5 +206,7 @@
   "privacyPolicy": "Privacy Policy",
   "termsOfService": "Terms of Service",
   "viewMore": "View More",
-  "alreadyReleased": "Already released"
+  "alreadyReleased": "Already released",
+  "alreadySent": "NFT has been sent to your wallet, please check NFTs section",
+  "deviceIsEmulator": "Invalid device"
 }

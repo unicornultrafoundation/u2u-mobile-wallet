@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { styles } from './styles';
 import { usePreferenceStore } from '../../state/preferences';
@@ -14,6 +14,8 @@ import { getPhonePaddingBottom } from '../../util/platform';
 import { NFTCollectionMeta } from '../../hook/useSupportedNFT';
 import { OwnedNFT } from '../../hook/useOwnedNFT';
 import { useTransaction } from '../../hook/useTransaction';
+import { useWallet } from '../../hook/useWallet';
+import { useTranslation } from 'react-i18next';
 
 const NFTDetailsScreen = () => {
   const { darkMode } = usePreferenceStore();
@@ -21,6 +23,7 @@ const NFTDetailsScreen = () => {
   const [tab, setTab] = useState('details');
   const navigation = useNavigation<any>()
 
+  const {wallet} = useWallet()
   const {setNFTMeta} = useTransaction()
 
   const route = useRoute<any>();
@@ -35,6 +38,7 @@ const NFTDetailsScreen = () => {
   const nftCollection: NFTCollectionMeta = route.params?.nftCollection || {}
   const item: OwnedNFT = route.params?.item || {}
   const metadata: Record<string, any> = route.params?.metadata || {}
+  const {t} = useTranslation()
 
   const handleTransfer = () => {
     setNFTMeta({
@@ -44,6 +48,13 @@ const NFTDetailsScreen = () => {
     })
     navigation.navigate('SendNFT')
   }
+
+  const isOwner = useMemo(() => {
+    if (item.owner.id === wallet.address.toLowerCase()) return true
+    return false
+  }, [item])
+
+  console.log('isOwner', isOwner)
 
   return (
     <View
@@ -81,23 +92,25 @@ const NFTDetailsScreen = () => {
         </View>
       </ScrollView>
     
-      <View 
-        style={{
-          position: 'absolute',
-          paddingBottom: getPhonePaddingBottom(),
-          paddingTop: 12,
-          bottom: 0,
-          width: '100%',
-          zIndex: 99,
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: preferenceTheme.background.background
-        }}
-      >
-        <Button type="fill" style={{width: '90%', borderRadius: 60}} onPress={handleTransfer}>
-          Transfer
-        </Button>
-      </View>
+      {isOwner && (
+        <View 
+          style={{
+            position: 'absolute',
+            paddingBottom: getPhonePaddingBottom(),
+            paddingTop: 12,
+            bottom: 0,
+            width: '100%',
+            zIndex: 99,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: preferenceTheme.background.background
+          }}
+        >
+          <Button type="fill" style={{width: '90%', borderRadius: 60}} onPress={handleTransfer}>
+            {t('transfer')}
+          </Button>
+        </View>
+      )}
     </View>
   );
 };

@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { FlatList, Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import TextInput from '../../component/TextInput';
-import Text from '../../component/Text';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
-import Dropdown from '../../component/Dropdown';
-import U2ULogo from '../../asset/icon/u2u_wallet_icon.png';
 import { useNavigation } from '@react-navigation/native';
 import { NFTCollectionMeta } from '../../hook/useSupportedNFT';
 import NFTCard from './NFTCard';
@@ -19,7 +16,12 @@ const NFTItems = ({nftCollection}: {
   const [searchString, setSearchString] = useState('');
   const navigation = useNavigation<any>()
   
-  const {items: data} = useAllNFT(nftCollection)
+  const {items: data, fetchNextPage, isFetching} = useAllNFT(nftCollection)
+
+  const handleLoadMore = () => {
+    if (isFetching) return;
+    fetchNextPage()
+  }
 
   return (
     // Todo: Fix scroll (on android?)
@@ -50,7 +52,7 @@ const NFTItems = ({nftCollection}: {
           columnGap: 24,
           paddingBottom: 450
         }}
-        data={data}
+        data={data?.pages.flat()}
         numColumns={2}
         renderItem={({item, index}) => {
           return (
@@ -61,6 +63,8 @@ const NFTItems = ({nftCollection}: {
             />
           )
         }}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={.7}
       />
     </View>
   );

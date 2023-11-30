@@ -206,5 +206,7 @@
   "privacyPolicy": "Chính sách bảo mật",
   "termsOfService": "Điều khoản dịch vụ",
   "viewMore": "Xem Thêm",
-  "alreadyReleased": "Đã trả thưởng"
+  "alreadyReleased": "Đã trả thưởng",
+  "alreadySent": "NFT đã được gửi đến ví của bạn. Vui lòng kiểm tra mục NFTs",
+  "deviceIsEmulator": "Thiết bị không hợp lệ"
 }

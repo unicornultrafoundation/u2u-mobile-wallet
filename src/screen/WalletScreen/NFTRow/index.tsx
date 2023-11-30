@@ -10,6 +10,7 @@ import { formatNumberString } from '../../../util/string';
 import { useOwnedNFT } from '../../../hook/useOwnedNFT';
 import { useNavigation } from '@react-navigation/native';
 import NFTItem from './NFTItem';
+import { useTokenBalance } from '../../../hook/useTokenBalance';
 
 const NFTRow = ({nftCollection, open, handleExpandItem}: {
   nftCollection: NFTCollectionMeta
@@ -19,7 +20,8 @@ const NFTRow = ({nftCollection, open, handleExpandItem}: {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
-  const {items, isLoading} = useOwnedNFT(nftCollection)
+  const {items, isLoading, owned} = useOwnedNFT(nftCollection, 1)
+
   const navigation = useNavigation<any>();
 
   return (
@@ -45,7 +47,7 @@ const NFTRow = ({nftCollection, open, handleExpandItem}: {
               marginBottom: 12,
             }}
           >
-            {items.map(item => (
+            {items?.pages.flat().map(item => (
               <NFTItem
                 key={`${nftCollection.id}-item-${item.id}`}
                 item={item}
@@ -77,7 +79,7 @@ const NFTRow = ({nftCollection, open, handleExpandItem}: {
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
           <Text style={{ color: preferenceTheme.text.primary, fontSize: 14 }}>
-            {formatNumberString(items.length.toString())}
+            {owned ? formatNumberString(owned) : 0}
           </Text>
         </View>
       </View>

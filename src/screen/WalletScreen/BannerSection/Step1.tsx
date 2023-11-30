@@ -8,6 +8,8 @@ import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
 import { useTranslation } from 'react-i18next';
 import { useClaimMembershipNFT } from '../../../hook/useClaimMembershipNFT';
+import DeviceInfo from 'react-native-device-info';
+import Toast from 'react-native-toast-message';
 
 const Step1 = () => {
   const {darkMode} = usePreferenceStore()
@@ -19,8 +21,22 @@ const Step1 = () => {
   const [alreadySubmitted, setAlreadySubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const alertError = () => {
+    Toast.show({
+      type: 'error',
+      text1: t('deviceIsEmulator'),
+    })
+  }
+
   const handleClaimMembershipNFT = async () => {
     if (alreadySubmitted) return;
+
+    const isEmulator = DeviceInfo.isEmulatorSync()
+    if (isEmulator) {
+      alertError()
+      return;
+    }
+    
     setLoading(true)
     const rs = await submitClaimRequest()
     setLoading(false)
@@ -30,6 +46,7 @@ const Step1 = () => {
   }
 
   useEffect(() => {
+    console.log('claimRequest', claimRequest.status)
     if (claimRequest.id) setAlreadySubmitted(true)
   }, [claimRequest])
 
@@ -68,7 +85,7 @@ const Step1 = () => {
             style={{justifyContent: 'flex-start'}}
             onPress={handleClaimMembershipNFT}
           >
-            {alreadySubmitted ? t('alreadyClaimed') : t('claimNow')}
+            {alreadySubmitted ? (claimRequest.status === "completed" ? t('alreadySent') : t('alreadyClaimed') ) : t('claimNow')}
           </Button>
         )}
       </View>
