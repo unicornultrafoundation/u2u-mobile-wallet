@@ -26,6 +26,7 @@ ios/builds/
 ios/fastlane/.env.default
 .eslintrc.js
 .prettierrc.js
+ios/Podfile.lock
 
 # Android/IntelliJ
 #
