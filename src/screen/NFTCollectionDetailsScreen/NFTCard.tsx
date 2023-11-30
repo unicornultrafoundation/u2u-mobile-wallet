@@ -24,18 +24,21 @@ const NFTCard = ({nftCollection, item}: {
       style={{width: '46%'}}
       onPress={() => navigation.navigate('NFTDetails', {nftCollection, item, metadata: data})}
     >
-      <View
-        style={{
-          width: '100%',
-          borderRadius: 12,
-          overflow: 'hidden',
-          marginBottom: 4,
-        }}>
-        <Image
-          source={{ uri: parseIPFSFile(data.image) }}
-          style={{ width: '100%', height: 171 }}
-        />
-      </View>
+      {data.image && (
+        <View
+          style={{
+            width: '100%',
+            borderRadius: 12,
+            overflow: 'hidden',
+            marginBottom: 4,
+          }}>
+          <Image
+            source={{ uri: parseIPFSFile(data.image) }}
+            style={{ width: '100%', height: 171 }}
+          />
+        </View>
+      )}
+      
       <View
         style={{
           flexDirection: 'row',

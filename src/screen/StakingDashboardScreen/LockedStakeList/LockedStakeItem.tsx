@@ -20,16 +20,10 @@ const LockedStakeItem = ({item}: {
   const {t} = useTranslation()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
-  const [claiming, setClaiming] = useState(false)
-
   const isClaimable = useMemo(() => {
     if (item.endTime > Date.now()) return false
     return true
   }, [item])
-
-  const handleClaim = async () => {
-
-  }
 
   const renderItem = ({label, content, flex} : {
     label: string,
@@ -52,6 +46,38 @@ const LockedStakeItem = ({item}: {
     )
   }
 
+  const renderUnlockModal = () => {
+    return (
+      <UnlockModal
+        item={item}
+        trigger={() => {
+          return (
+            <View
+              style={{
+                borderRadius: 60,
+                flex: 1,
+                paddingVertical: 8,
+                backgroundColor: preferenceTheme.background.surface
+              }}
+            >
+              <Text
+                style={[
+                  theme.typography.label.medium,
+                  {
+                    color: preferenceTheme.text.title,
+                    textAlign: 'center'
+                  }
+                ]}
+              >
+                {t('availableAtValueDate').replace('{value}', formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy"))}
+              </Text>
+            </View>
+          )
+        }}
+      />
+    )
+  }
+
   return (
     <View
       style={[
@@ -67,33 +93,31 @@ const LockedStakeItem = ({item}: {
         {renderItem({label: 'amount', content: `${parseFromRaw(item.lockedAmount.toFixed(), 18, true)} U2U`, flex: 1})}
         {renderItem({label: 'duration', content: parseInterval(0, item.duration)})}
       </View>
-      <UnlockModal
-        item={item}
-        trigger={() => {
-          return (
-            <View
-              style={{
-                borderRadius: 60,
-                flex: 1,
-                paddingVertical: 8,
-                backgroundColor: isClaimable ? theme.color.primary[500] : preferenceTheme.background.surface
-              }}
+      {
+        isClaimable ? (
+          <View
+            style={{
+              borderRadius: 60,
+              flex: 1,
+              paddingVertical: 8,
+              backgroundColor: theme.color.primary[500]
+            }}
+          >
+            <Text
+              style={[
+                theme.typography.label.medium,
+                {
+                  color: preferenceTheme.text.title,
+                  textAlign: 'center'
+                }
+              ]}
             >
-              <Text
-                style={[
-                  theme.typography.label.medium,
-                  {
-                    color: preferenceTheme.text.title,
-                    textAlign: 'center'
-                  }
-                ]}
-              >
-                {isClaimable ? t('withdraw') : t('availableAtValueDate').replace('{value}', formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy"))}
-              </Text>
-            </View>
-          )
-        }}
-      />
+              {t('alreadyReleased')}
+            </Text>
+          </View>
+        ) : renderUnlockModal()
+      }
+      
     </View>
   )
 }
