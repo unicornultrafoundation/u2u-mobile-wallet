@@ -1,15 +1,12 @@
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import React, { useCallback } from "react";
-import { ActivityIndicator, ScrollView, TouchableOpacity, View } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
 import { useWallet } from "../../hook/useWallet";
 import { useTokenTxHistory } from "../../hook/useTokenTxHistory";
 import { styles } from "./styles";
 import Icon from "../../component/Icon";
 import theme from "../../theme";
 import Text from "../../component/Text";
-import { shortenAddress } from "../../util/string";
-import { parseFromRaw } from "../../util/bignum";
-import { formatDate } from "../../util/date";
 import Button from "../../component/Button";
 import { usePreferenceStore } from "../../state/preferences";
 import { darkTheme, lightTheme } from "../../theme/color";
@@ -17,6 +14,8 @@ import { useGlobalStore } from "../../state/global";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 import NoTransactionView from "../TokenDetailScreen/TokenTxHistory/NoTransactionView";
+import TxHistoryItem from "./TxHistoryItem";
+import LoadingView from "../../component/Common/loadingView";
 
 const TxHistoryScreen = () => {
   const { setRouteName } = useGlobalStore();
@@ -37,106 +36,64 @@ const TxHistoryScreen = () => {
     }, [route])
   );
 
-  if (loading) {
+  const renderBody = () => {
+    if (loading) {
+      return <LoadingView/>
+    }
+    if ((txList ?? []).length == 0) {
+      return <NoTransactionView/>
+    }
     return (
-      <View
-        style={[
-          styles.container,
-          {
-            backgroundColor: preferenceTheme.background.background
-          }
-        ]}
-      >
-        <ActivityIndicator style={{ padding: 16 }} />
-      </View>
-    );
-  }
-
-  return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: preferenceTheme.background.background
-        }
-      ]}
-    >
-      <SafeAreaView>
-        <View style={{
-          paddingLeft: 16,
-          paddingRight: 16,
-          paddingBottom: 16,
-          flexDirection: "row",
-          justifyContent: "space-between"
-        }}>
-          <TouchableOpacity onPress={navigation.goBack}>
-            <Icon name="arrow-left" width={24} height={24} />
-          </TouchableOpacity>
-          <Text style={styles.headerTokenSymbolText}>{t("transactionHistory")}</Text>
-          <View />
-        </View>
-      </SafeAreaView>
-      {(txList ?? []).length == 0 ? <NoTransactionView /> : <ScrollView style={{ marginTop: 24 }}>
+      <ScrollView bounces={false}>
         {txList.map((txItem: Record<string, any>) => {
-          const isSend = wallet.address.toLowerCase() === txItem.from.toLowerCase();
-          return (
-            <TouchableOpacity
-              style={styles.txRowContainer}
-              key={`token-tx-${txItem.hash}`}
-              onPress={() => navigation.navigate("TransactionDetail", { transactionHash: txItem.hash })}
-            >
-              <Icon
-                name={isSend ? "arrow-up-circle" : "arrow-down-circle"}
-                color={isSend ? theme.accentColor.error.normal : theme.accentColor.tertiary.normal}
-                width={20}
-                height={20}
-                style={{ marginRight: 24 }}
-              />
-              <View style={{ flex: 1 }}>
-                <Text style={styles.txTypeText}>
-                  {isSend ? "Send" : "Receive"}
-                </Text>
-                <Text style={styles.txTypeDescriptionText}>
-                  {isSend ? `To: ${shortenAddress(txItem.to, 8, 5)}` : `From: ${shortenAddress(txItem.from, 8, 5)}`}
-                </Text>
-              </View>
-              <View style={{ alignItems: "flex-end" }}>
-                <Text style={[
-                  styles.amountText,
-                  { color: isSend ? theme.accentColor.error.normal : theme.accentColor.tertiary.normal }
-                ]}>
-                  {isSend ? "-" : "+"}{parseFromRaw(txItem.value, txItem.tokenDecimal || 18, true)}
-                </Text>
-                <Text style={styles.dateText}>
-                  {formatDate(Number(txItem.timeStamp) * 1000, "yyyy-MM-dd")}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          );
+          return <TxHistoryItem txItem={txItem}/>
         })}
         <View style={{ paddingVertical: 20, alignItems: "center", justifyContent: "center" }}>
           <Button
             style={{
-              width: 120,
-              // height: 34,
-              borderRadius: 80,
+              borderRadius: 60,
               paddingHorizontal: 16,
-              paddingVertical: 12,
+              paddingVertical: 10,
               backgroundColor: preferenceTheme.background.surface
             }}
             color="tertiary"
-            textStyle={{
-              fontSize: 12,
-              lineHeight: 16,
-              fontWeight: "500",
-              color: theme.color.neutral[500]
-            }}
+            textStyle={[
+              theme.typography.caption1.medium,
+              {color: preferenceTheme.text.disabled}
+            ]}
           >
-            View more
+            {t('viewMore')}
           </Button>
         </View>
-      </ScrollView>}
-    </View>
+      </ScrollView>
+    )
+  }
+
+  return (
+    <SafeAreaView
+      style={[
+        styles.container,
+        {
+          backgroundColor: preferenceTheme.background.background,
+          gap: 10,
+        }
+      ]}
+    >
+      <View style={{
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        flexDirection: "row",
+      }}>
+        <TouchableOpacity onPress={navigation.goBack}>
+          <Icon name="arrow-left" width={24} height={24} />
+        </TouchableOpacity>
+        <Text style={[styles.headerTokenSymbolText, {flex: 1, textAlign: "center"}]}>{t("transactionHistory")}</Text>
+        <View />
+      </View>
+      <View style={{flex: 1}}>
+        {renderBody()}
+      </View>
+    </SafeAreaView>
   );
 };
 

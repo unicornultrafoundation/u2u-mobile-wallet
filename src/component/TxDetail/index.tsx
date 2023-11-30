@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Image, Linking, TouchableOpacity, View, ScrollView, ActivityIndicator } from 'react-native';
+import { Image, Linking, TouchableOpacity, View, ScrollView } from 'react-native';
 import { styles } from '../../screen/SendTokenScreen/styles';
 import Text from '../Text';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +21,7 @@ import NormalTxMetaSection from './NormalTxMetaSection';
 import { useSupportedTokens } from '../../hook/useSupportedTokens';
 import ERC20TxMetaSection from './ERC20TxMetaSection';
 import Toast from 'react-native-toast-message';
+import LoadingView from '../Common/loadingView';
 
 const TxDetail = ({txHash, onClose}: {
   txHash: string;
@@ -151,13 +152,7 @@ const TxDetail = ({txHash, onClose}: {
   }
 
   if (loading) {
-    return (
-      <View style={styles.container}>
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <ActivityIndicator />
-        </View>
-      </View>
-    );
+    return <LoadingView/>
   }
   return (
     <View style={{flex: 1}}>

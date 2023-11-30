@@ -9,6 +9,7 @@ import TokenTxHistory from './TokenTxHistory';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 import { useGlobalStore } from '../../state/global';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Separator from '../../component/Separator';
 
 const TokenDetailScreen = () => {
   const {darkMode} = usePreferenceStore()
@@ -32,6 +33,7 @@ const TokenDetailScreen = () => {
         <TokenDetailHeader />
       </SafeAreaView>
       <TokenBalanceCard />
+      <Separator style={{width: '100%'}}/>
       <TokenTxHistory />
     </View>
   )

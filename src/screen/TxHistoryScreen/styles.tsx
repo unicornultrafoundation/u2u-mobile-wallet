@@ -39,4 +39,16 @@ export const styles = StyleSheet.create({
     lineHeight: 25,
     letterSpacing: 0.38
   },
+  containerItem: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    gap: 10, 
+    marginHorizontal: 16, 
+    marginVertical: 8
+  },
+  txRowContentItem: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    gap: 6
+  },
 });
