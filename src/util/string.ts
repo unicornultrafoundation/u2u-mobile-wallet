@@ -95,6 +95,16 @@ export const parseIPFSFile = (rawURL: string) => {
   return rawURL
 }
 
+export const getPathIndex = (path: string) => {
+  try {
+    const idx =  Number(path.split('/').at(-1))
+    if (Number.isNaN(idx)) return null
+    return idx
+  } catch {
+    return null
+  }
+}
+
 export const getDefaultWalletName = (wallet: Wallet) => {
-  return `Address ${wallet.path.split('/').at(-1)}`
+  return `Address ${getPathIndex(wallet.path) ?? '--'}`
 }

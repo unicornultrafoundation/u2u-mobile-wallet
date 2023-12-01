@@ -1,5 +1,6 @@
 import { useWalletStore, Wallet } from '../state/wallet';
 import { useCallback } from 'react';
+import { getPathIndex } from '../util/string';
 
 export function useWallet() {
   const {
@@ -20,8 +21,8 @@ export function useWallet() {
     if (!w) {
       return { name: '' };
     }
-    const walletIndex = Number(w.path[w.path.length - 1]) - 1;
-
+    const walletIndex = getPathIndex(w.path);
+    if (walletIndex == null) return { name: '' }
     return walletMetadata[walletIndex] || { name: '' };
   }, [walletMetadata]);
 

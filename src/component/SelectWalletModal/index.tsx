@@ -14,6 +14,7 @@ import WalletRow from './WalletRow';
 import EditWalletModal from '../EditWalletModal';
 import { Wallet } from '../../state/wallet';
 import Toast from 'react-native-toast-message';
+import { getPathIndex } from '../../util/string';
 
 const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
   const { darkMode } = usePreferenceStore();
@@ -167,7 +168,12 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
                   onSelect={() => {
                     setLoading(true);
                     setTimeout(() => {
-                      savePathIndex(Number(item.path[item.path.length - 1]));
+                      const idx = getPathIndex(item.path)
+                      if (idx == null) {
+                        setLoading(false)
+                        return
+                      }
+                      savePathIndex(idx);
                       handleClose();
                       setLoading(false);
                     }, 100);
