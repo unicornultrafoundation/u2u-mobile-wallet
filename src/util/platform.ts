@@ -1,5 +1,6 @@
 import ReactNative, { Appearance, Dimensions, NativeModules, Platform, ScaledSize } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import JailMonkey from 'jail-monkey'
 const { UIManager } = NativeModules;
 
 interface DimensionProps {
@@ -73,4 +74,40 @@ export function getViewPosition(ref: any, callback: (position: ViewPosition) => 
 
 export const SCREEN_WIDTH = Dimensions.get('window').width;
 export const SCREEN_HEIGHT = Dimensions.get('window').height;
+
+export const isValidDevice = async () => {
+  if (JailMonkey.isJailBroken()) {
+    console.log('device jail broken')
+    return false
+  }
+
+  const debugMode = await JailMonkey.isDebuggedMode()
+  if (debugMode) {
+    console.log('device in debug mode')
+    return false
+  }
+
+  if (JailMonkey.hookDetected()) {
+    console.log('hook detected')
+    return false
+  }
+
+  if (JailMonkey.AdbEnabled()) {
+    console.log('adb enabled')
+    return false
+  }
+
+  if (JailMonkey.isOnExternalStorage()) {
+    console.log('on external storage')
+    return false
+  }
+
+  const devMode = await JailMonkey.isDevelopmentSettingsMode()
+  if (devMode) {
+    console.log('in dev mode')
+    return false
+  }
+
+  return true
+}
 

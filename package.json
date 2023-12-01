@@ -35,6 +35,7 @@
     "graphql-request": "^6.1.0",
     "i18next": "^23.5.1",
     "intl-pluralrules": "^2.0.1",
+    "jail-monkey": "^2.8.0",
     "jazzicon": "^1.5.0",
     "lottie-react-native": "^6.4.0",
     "process": "^0.11.10",
