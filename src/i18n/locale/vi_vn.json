@@ -208,5 +208,8 @@
   "viewMore": "Xem Thêm",
   "alreadyReleased": "Đã trả thưởng",
   "alreadySent": "NFT đã được gửi đến ví của bạn. Vui lòng kiểm tra mục NFTs",
-  "deviceIsEmulator": "Thiết bị không hợp lệ"
+  "deviceIsEmulator": "Thiết bị không hợp lệ",
+  "loading": "Đang xử lý",
+  "done": "Done",
+  "msgAreYouSureToDeleteWallet": "Bạn có chắc chắn xoá ví này không?"
 }

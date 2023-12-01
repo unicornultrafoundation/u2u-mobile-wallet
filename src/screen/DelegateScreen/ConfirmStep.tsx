@@ -9,7 +9,7 @@ import theme from '../../theme';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { SvgUri } from 'react-native-svg';
-import { formatNumberString, getWalletName, shortenAddress } from '../../util/string';
+import { formatNumberString, getDefaultWalletName, shortenAddress } from '../../util/string';
 import Separator from '../../component/Separator';
 import { useNetworkStore } from '../../state/network';
 import { useWallet } from '../../hook/useWallet';
@@ -28,7 +28,7 @@ const ConfirmStep = ({onNextStep, onBack}: {
 
   const {receiveAddress, tokenMeta, amount, estimatedFee, maxFee} = useTransaction()
   const {name: networkName} = useNetworkStore()
-  const {wallet} = useWallet()
+  const {wallet, getWalletMetadata} = useWallet()
   const {balance} = useNativeBalance(wallet.address)
 
   const [error, setError] = useState('')
@@ -129,7 +129,7 @@ const ConfirmStep = ({onNextStep, onBack}: {
               <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('wallet')}</Text>
               <View style={{flexDirection: 'column', flex: 1, gap: 2}}>
                 <Text style={[theme.typography.footnote.regular, {textAlign: 'right'}]}>
-                  {getWalletName(wallet)}
+                  {getWalletMetadata(wallet).name || getDefaultWalletName(wallet)}
                 </Text>
                 <Text style={[theme.typography.footnote.small, {color: preferenceTheme.text.secondary, textAlign: 'right'}]}>
                   {shortenAddress(wallet.address, 8, 8)}
