@@ -79,3 +79,4 @@ android/key.json
 
 # Firebase credential
 ios/GoogleService-Info.plist
+android/app/google-services.json
