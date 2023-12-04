@@ -22,7 +22,7 @@ const jsoMetroPlugin = require("obfuscator-io-metro-plugin")(
     stringArrayThreshold: 1,
   },
   {
-    runInDev: false /* optional */,
+    runInDev: true /* optional */,
     logObfuscatedFiles: true /* optional generated files will be located at ./.jso */,
   }
 );
