@@ -46,7 +46,6 @@ const Step1 = () => {
   }
 
   useEffect(() => {
-    console.log('claimRequest', claimRequest.status)
     if (claimRequest.id) setAlreadySubmitted(true)
   }, [claimRequest])
 
