@@ -76,3 +76,6 @@ yarn-error.log
 android/key.json
 
 .jso/
+
+# Firebase credential
+ios/GoogleService-Info.plist
