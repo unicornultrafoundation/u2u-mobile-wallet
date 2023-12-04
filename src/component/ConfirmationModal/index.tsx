@@ -1,5 +1,4 @@
-import { Modal, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Modal, Text, View, TouchableOpacity } from "react-native";
 import { usePreferenceStore } from "../../state/preferences";
 import { useTranslation } from "react-i18next";
 import { darkTheme, lightTheme } from "../../theme/color";
