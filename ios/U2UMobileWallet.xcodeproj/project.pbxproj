@@ -17,7 +17,6 @@
 		CE37C9EC2AB4096500F247C1 /* FontAwesome6_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE37C9E92AB4096500F247C1 /* FontAwesome6_Solid.ttf */; };
 		CE37C9ED2AB4096500F247C1 /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE37C9EA2AB4096500F247C1 /* FontAwesome6_Brands.ttf */; };
 		CE37C9EE2AB4096500F247C1 /* FontAwesome6_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE37C9EB2AB4096500F247C1 /* FontAwesome6_Regular.ttf */; };
-		CE62FE2C2B1DE00900166AB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE62FE2B2B1DE00900166AB0 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +49,6 @@
 		CE37C9E92AB4096500F247C1 /* FontAwesome6_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome6_Solid.ttf"; sourceTree = "<group>"; };
 		CE37C9EA2AB4096500F247C1 /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome6_Brands.ttf"; sourceTree = "<group>"; };
 		CE37C9EB2AB4096500F247C1 /* FontAwesome6_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome6_Regular.ttf"; sourceTree = "<group>"; };
-		CE62FE2B2B1DE00900166AB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -124,7 +122,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				CE62FE2B2B1DE00900166AB0 /* GoogleService-Info.plist */,
 				CE37C9EA2AB4096500F247C1 /* FontAwesome6_Brands.ttf */,
 				CE37C9EB2AB4096500F247C1 /* FontAwesome6_Regular.ttf */,
 				CE37C9E92AB4096500F247C1 /* FontAwesome6_Solid.ttf */,
@@ -260,7 +257,6 @@
 				CE37C9EC2AB4096500F247C1 /* FontAwesome6_Solid.ttf in Resources */,
 				CE37C9ED2AB4096500F247C1 /* FontAwesome6_Brands.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				CE62FE2C2B1DE00900166AB0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
