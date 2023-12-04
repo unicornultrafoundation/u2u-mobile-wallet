@@ -60,3 +60,8 @@
 
 # react-native-config
 -keep class com.u2umobilewallet.BuildConfig {*; }
+
+# react-native-firebase section
+-keep class io.invertase.firebase.** { *; }
+-dontwarn io.invertase.firebase.**
+# end react-native-firebase section
