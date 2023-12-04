@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getWalletFromMnemonic } from '../util/wallet';
+import { getPathIndex } from '../util/string';
 
 export interface Wallet {
   address: string;
@@ -43,6 +44,7 @@ export const useWalletStore = create(
         const _wallet = getWalletFromMnemonic(seedPhrase, get().selectedIndex);
         set({
           seedPhrase,
+          walletMetadata: [{name: ''}],
           wallet: _wallet,
           generatedPath: [get().selectedIndex],
         });
@@ -56,15 +58,16 @@ export const useWalletStore = create(
         const currentMetadata = get().walletMetadata
         const currentPath = get().generatedPath;
         let newPath = 0;
-
         while (currentPath.includes(newPath)) {
           newPath += 1;
         }
-
         const _wallet = getWalletFromMnemonic(get().seedPhrase, newPath);
+        if (newPath >= currentMetadata.length) {
+          currentMetadata.push({name: ''})
+        }
         set({
           selectedIndex: newPath,
-          walletMetadata: [...currentMetadata, { name: '' }],
+          walletMetadata: currentMetadata,
           wallet: _wallet,
           generatedPath: [...currentPath, newPath],
         });
@@ -80,7 +83,9 @@ export const useWalletStore = create(
           return;
         }
 
-        const index = Number(wallet.path[wallet.path.length - 1]) - 1;
+        // const index = Number(wallet.path[wallet.path.length - 1]) - 1;
+        var index = getPathIndex(wallet.path)
+        if (index == null) return
         const walletMetadata = get().walletMetadata;
         walletMetadata[index] = { ...walletMetadata[index], name };
 
@@ -90,7 +95,9 @@ export const useWalletStore = create(
         });
       },
       deleteWallet: (wallet) => {
-        const pathIndex = Number(wallet.path[wallet.path.length - 1]);
+        // const pathIndex = Number(wallet.path[wallet.path.length - 1]);
+        const pathIndex = getPathIndex(wallet.path);
+        if (pathIndex == null) return
         let currentPath = get().generatedPath;
 
         if (currentPath.length === 1) return;
@@ -100,8 +107,8 @@ export const useWalletStore = create(
         let newSelectedIndex = get().selectedIndex
 
         if (pathIndex === get().selectedIndex) {
-          updatedWallet = getWalletFromMnemonic(get().seedPhrase, pathIndex - 1);
-          newSelectedIndex = pathIndex - 1
+          newSelectedIndex = currentPath.at(0)!
+          updatedWallet = getWalletFromMnemonic(get().seedPhrase, newSelectedIndex);
         }
 
         // const updatedWallet = getWalletFromMnemonic(get().seedPhrase, 1);
