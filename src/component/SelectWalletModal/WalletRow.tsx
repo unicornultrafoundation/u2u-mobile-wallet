@@ -116,8 +116,8 @@ const WalletRow = ({ item, selected, disabled, onSelect, onEdit, onDelete, ...re
         description={getWalletMetadata(item)?.name || getDefaultWalletName(item)}
         onCancel={() => {setVisible(false)}}
         onConfirm={() => {
-          setVisible(false)
           onDelete()
+          setVisible(false)
         }}
       />
     </>
