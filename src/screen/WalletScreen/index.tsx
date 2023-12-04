@@ -48,7 +48,6 @@ const WalletScreen = () => {
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const currentOffset = event.nativeEvent.contentOffset.y;
-    console.log(`handleScroll ${event.nativeEvent.contentOffset.y}`)
     setScrollOffset(currentOffset);
 
     if (scrollOffset > 200 && !collapsed) {
@@ -59,7 +58,6 @@ const WalletScreen = () => {
 
   // Handle Swipe event
   const onScrollEndDrag = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    console.log(`onScrollEndDrag ${e.nativeEvent.contentOffset.y}`)
     if (e.nativeEvent.contentOffset.y == 0 && firstTouch == 0 && collapsed) {
       setCollapsed(false);
       scrollViewRef.current?.scrollTo({ y: 0, animated: true });
@@ -67,7 +65,6 @@ const WalletScreen = () => {
   };
 
   const onScrollBeginDrag = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    console.log(`onScrollBeginDrag ${e.nativeEvent.contentOffset.y}`)
     setFirstTouch(e.nativeEvent.contentOffset.y);
   };
 

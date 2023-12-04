@@ -211,5 +211,8 @@
   "deviceIsEmulator": "Thiết bị không hợp lệ",
   "loading": "Đang xử lý",
   "done": "Done",
-  "msgAreYouSureToDeleteWallet": "Bạn có chắc chắn xoá ví này không?"
+  "msgAreYouSureToDeleteWallet": "Bạn có chắc chắn xoá ví này không?",
+  "No cryptos found": "Không tìm thấy tiền mã hóa",
+  "No cryptocurrency yet": "Không có tiền mã hóa",
+  "No NTFs found": "Không tìm thấy NFT nào"
 }

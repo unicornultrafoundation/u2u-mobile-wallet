@@ -211,5 +211,8 @@
   "deviceIsEmulator": "Invalid device",
   "loading": "Loading",
   "done": "Done",
-  "msgAreYouSureToDeleteWallet": "Do you really want to delete this wallet?"
+  "msgAreYouSureToDeleteWallet": "Do you really want to delete this wallet?",
+  "No cryptos found": "No cryptos found",
+  "No cryptocurrency yet": "No cryptocurrency yet",
+  "No NTFs found": "No NTFs found"
 }

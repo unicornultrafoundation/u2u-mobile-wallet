@@ -1,10 +1,10 @@
-import {styles} from '../styles';
-import {TouchableOpacity, View} from 'react-native';
+import { styles } from '../styles';
+import { TouchableOpacity, View } from 'react-native';
 import Icon from '../../../component/Icon';
 import Text from '../../../component/Text';
-import React, {useState} from 'react';
-import {usePreferenceStore} from '../../../state/preferences';
-import {darkTheme, lightTheme} from '../../../theme/color';
+import React, { useState } from 'react';
+import { usePreferenceStore } from '../../../state/preferences';
+import { darkTheme, lightTheme } from '../../../theme/color';
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import TextInput from '../../../component/TextInput';
 import theme from '../../../theme';
@@ -18,12 +18,12 @@ interface Props {
   onGoBack: () => void;
 }
 
-const HeaderSearchComponent = ({action, onGoBack}: Props) => {
-  const {darkMode} = usePreferenceStore();
+const HeaderSearchComponent = ({ action, onGoBack }: Props) => {
+  const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
-  const {name} = useNetwork()
-  const {searchKeyword, setSearchKeyword} = useGlobalStore()
+  const { name } = useNetwork()
+  const { searchKeyword, setSearchKeyword } = useGlobalStore()
 
   const [showInput, setShowInput] = useState(false);
 
@@ -42,11 +42,11 @@ const HeaderSearchComponent = ({action, onGoBack}: Props) => {
       )}
 
       {showInput ? (
-        <View style={{flexDirection: 'row', gap: 8}}>
+        <View style={{ flexDirection: 'row', gap: 8 }}>
           <TextInput
             onChangeText={val => setSearchKeyword(val)}
             value={searchKeyword}
-            containerStyle={{flex: 1, marginLeft: 8, height: 24}}
+            containerStyle={{ flex: 1, marginLeft: 8, height: 24 }}
             style={[
               theme.typography.label.regular,
               {
@@ -65,7 +65,10 @@ const HeaderSearchComponent = ({action, onGoBack}: Props) => {
           />
           <Button
             type='text'
-            onPress={() => setShowInput(false)}
+            onPress={() => {
+              setShowInput(false);
+              setSearchKeyword("");
+            }}
             textStyle={[
               theme.typography.subheadline.medium,
               {
