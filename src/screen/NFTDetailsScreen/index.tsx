@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, TouchableOpacity, Text } from 'react-native';
 import { styles } from './styles';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
@@ -16,6 +16,11 @@ import { OwnedNFT } from '../../hook/useOwnedNFT';
 import { useTransaction } from '../../hook/useTransaction';
 import { useWallet } from '../../hook/useWallet';
 import { useTranslation } from 'react-i18next';
+import { parseIPFSFile } from '../../util/string';
+import Icon from '../../component/Icon';
+import theme from '../../theme';
+import ShareNFTModalButton from './Banner/ShareNFTModalButton';
+import { Image } from 'react-native';
 
 const NFTDetailsScreen = () => {
   const { darkMode } = usePreferenceStore();
@@ -62,36 +67,67 @@ const NFTDetailsScreen = () => {
         styles.container,
         { backgroundColor: preferenceTheme.background.background },
       ]}>
-      <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
-        <NFTScreenBanner
-          nftCollection={nftCollection}
-          item={item}
-          metadata={metadata}
-        />
-
-        <View style={[styles.section]}>
-          <Tab
-            tabs={[
-              { label: 'Details', value: 'details' },
-              { label: 'History', value: 'history' },
-            ]}
-            selectedTab={tab}
-            onChange={v => setTab(v)}
-            tabStyle={{
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
-              paddingLeft: 16,
-              paddingRight: 12,
-            }}
+      <View style={styles.section}>
+        <View style={[styles.row, {paddingTop: 16, paddingBottom: 16}]}>
+          <TouchableOpacity onPress={() => navigation.goBack(null)}>
+            <Icon name="arrow-left" width={24} height={24}/>
+          </TouchableOpacity>
+          <Text
+            style={[
+              theme.typography.title3.bold,
+              { flex: 1, textAlign: 'center', color: preferenceTheme.text.title }
+            ]}>
+            {nftCollection.name} #{item.id}
+          </Text>
+          <ShareNFTModalButton
+            item={item}
+            nftCollection={nftCollection}
+            metadata={metadata}
           />
         </View>
+        <ScrollView 
+          contentContainerStyle={{ paddingBottom: 80 }} 
+          bounces={false} 
+          stickyHeaderIndices={[1]}
+        >
+          <Image
+            source={{ uri: parseIPFSFile(metadata.image) }}
+            style={{
+              width: '100%',
+              aspectRatio: 1.0,
+              objectFit: 'cover',
+              borderRadius: 16,
+              marginTop: 10,
+            }}
+          />
+          <View style={{backgroundColor: preferenceTheme.background.background}}>
+            <NFTScreenBanner
+              nftCollection={nftCollection}
+              item={item}
+              metadata={metadata}
+            />
+            <Tab
+              tabs={[
+                { label: t('details'), value: 'details' },
+                { label: t('history'), value: 'history' },
+              ]}
+              selectedTab={tab}
+              onChange={v => setTab(v)}
+              tabStyle={{
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start',
+                paddingLeft: 16,
+                paddingRight: 12,
+              }}
+            />
+          </View>
 
-        <View style={[styles.section, { marginTop: 16 }]}>
-          {tab === 'details' && <NFTDetails item={item} nftCollection={nftCollection} metadata={metadata} />}
-          {tab === 'history' && <NFTHistory/>}
-        </View>
-      </ScrollView>
-    
+          <View style={{ marginTop: 16 }}>
+            {tab === 'details' && <NFTDetails item={item} nftCollection={nftCollection} metadata={metadata} />}
+            {tab === 'history' && <NFTHistory/>}
+          </View>
+        </ScrollView>
+      </View>
       {isOwner && (
         <View 
           style={{

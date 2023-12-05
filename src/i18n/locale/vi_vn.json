@@ -214,5 +214,17 @@
   "msgAreYouSureToDeleteWallet": "Bạn có chắc chắn xoá ví này không?",
   "No cryptos found": "Không tìm thấy tiền mã hóa",
   "No cryptocurrency yet": "Không có tiền mã hóa",
-  "No NTFs found": "Không tìm thấy NFT nào"
+  "No NTFs found": "Không tìm thấy NFT nào",
+  "items": "Sản phẩm",
+  "activities": "Các hoạt động",
+  "searchNFT": "Tìm kiếm NFT...",
+  "details": "Chi tiết",
+  "history": "Lịch sử",
+  "basicInformation": "Thông tin cơ bản",
+  "contractAddress": "Địa chỉ hợp đồng",
+  "tokenID": "Mã Token",
+  "blockchain": "Chuỗi khối",
+  "tokenStandard": "Tiêu chuẩn token",
+  "properties": "Thuộc tính",
+  "lockedStake": "Đầu tư bị khoá"
 }
