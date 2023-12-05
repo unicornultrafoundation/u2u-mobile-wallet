@@ -4,9 +4,12 @@ import Icon from '../../component/Icon';
 import Text from '../../component/Text';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
+import theme from '../../theme';
+import { useTranslation } from 'react-i18next';
 
 const NFTHistory = () => {
   const { darkMode } = usePreferenceStore();
+  const { t } = useTranslation();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
   const history = [
@@ -60,71 +63,55 @@ const NFTHistory = () => {
     },
   ];
 
+  const renderAddress = (label: string, address: string) => {
+    return (
+      <Text style={[
+        theme.typography.caption2.regular,
+        {color: preferenceTheme.text.disabled, textAlign: 'right'}
+      ]}>
+        {t(label)}
+        <Text style={{color: preferenceTheme.text.title, textAlign: 'right'}}> {address}</Text>
+      </Text>
+    )
+  }
+
   return (
-    <View style={{ gap: 12 }}>
-      {history.map((item, index) => (
-        <View style={styles.row} key={index}>
-          <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+    <View>
+      {history.map((item, index) =>  {
+        const isReceive = item.type.toLowerCase() === 'receive'
+        const color = isReceive ? theme.accentColor.tertiary.normal : theme.accentColor.error.normal
+        return (
+          <View 
+            style={styles.txHistoryContainer} 
+            key={index}
+          >
             <Icon
-              name={item.type === 'Receive' ? 'chevron-down-circle' : 'chevron-up-circle'}
+              name={isReceive ? 'arrow-down-circle' : 'arrow-up-circle'}
+              color={color}
               width={20}
               height={20}
-              color={item.type === 'Receive' ? '#0FA44D' : '#D21C1C'}
             />
-
-            <View>
-              <Text style={{ fontSize: 12, fontWeight: '500', lineHeight: 13 }}>
+            <View style={{flexDirection: 'column', gap: 2}}>
+              <Text style={[ 
+                theme.typography.caption1.medium,
+                {color: preferenceTheme.text.primary}
+              ]}>
                 {item.type}
               </Text>
-              <Text style={{ fontSize: 11, letterSpacing: 0.07 }}>
+              <Text style={[
+                theme.typography.caption2.regular,
+                {color: preferenceTheme.text.disabled}
+              ]}>
                 {item.date}
               </Text>
             </View>
-          </View>
-
-          <View style={{ alignItems: 'flex-end' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Text
-                style={{
-                  fontSize: 11,
-                  letterSpacing: 0.07,
-                  lineHeight: 13,
-                  color: preferenceTheme.text.primary,
-                }}>
-                From
-              </Text>
-              <Text
-                style={{
-                  fontSize: 11,
-                  letterSpacing: 0.07,
-                  lineHeight: 13,
-                  fontWeight: '500',
-                }}>
-                {item.from}
-              </Text>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Text
-                style={{
-                  fontSize: 11,
-                  letterSpacing: 0.07,
-                  color: preferenceTheme.text.primary,
-                }}>
-                To
-              </Text>
-              <Text
-                style={{
-                  fontSize: 11,
-                  letterSpacing: 0.07,
-                  lineHeight: 13,
-                  fontWeight: '500',
-                }}>
-                {item.to}
-              </Text>
+            <View style={{flex: 1, flexDirection: 'column', gap: 2}}>
+              {renderAddress('from', item.from)}
+              {renderAddress('to', item.to)}
             </View>
           </View>
-        </View>
-      ))}
+        )
+      })}
     </View>
   );
 };

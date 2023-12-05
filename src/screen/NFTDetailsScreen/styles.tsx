@@ -14,6 +14,23 @@ export const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: 4
+  },
+  txHistoryContainer: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    gap: 10, 
+    marginVertical: 8
+  },
+  txTraitContainer: {
+    flexDirection: 'row', 
+    gap: 8,
+  },
+  txRowContainer: {
+    flexDirection: 'row', 
+    paddingTop: 8, 
+    paddingBottom: 12, 
+    gap: 8,
   }
 })

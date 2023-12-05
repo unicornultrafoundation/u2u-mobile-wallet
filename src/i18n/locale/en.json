@@ -214,5 +214,17 @@
   "msgAreYouSureToDeleteWallet": "Do you really want to delete this wallet?",
   "No cryptos found": "No cryptos found",
   "No cryptocurrency yet": "No cryptocurrency yet",
-  "No NTFs found": "No NTFs found"
+  "No NTFs found": "No NTFs found",
+  "items": "Items",
+  "activities": "Activities",
+  "searchNFT": "Search NFT...",
+  "details": "Details",
+  "history": "History",
+  "basicInformation": "Basic information",
+  "contractAddress": "Contract address",
+  "tokenID": "Token ID",
+  "blockchain": "Blockchain",
+  "tokenStandard": "Token standard",
+  "properties": "Properties",
+  "lockedStake": "Locked stake"
 }
