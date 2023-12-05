@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useClaimMembershipNFT } from '../../../hook/useClaimMembershipNFT';
 import DeviceInfo from 'react-native-device-info';
 import Toast from 'react-native-toast-message';
+import { isValidDevice } from '../../../util/platform';
 
 const Step1 = () => {
   const {darkMode} = usePreferenceStore()
@@ -29,6 +30,10 @@ const Step1 = () => {
   }
 
   const handleClaimMembershipNFT = async () => {
+    if (!isValidDevice()) {
+      alertError()
+      return;
+    }
     if (alreadySubmitted) return;
 
     const isEmulator = DeviceInfo.isEmulatorSync()

@@ -4,11 +4,31 @@ import { useNetwork } from "./useNetwork"
 import DeviceInfo from "react-native-device-info"
 import { useLocalStore } from "../state/local"
 import { useWallet } from "./useWallet"
+import { firebase } from "@react-native-firebase/app-check"
+import appsFlyer from "react-native-appsflyer"
 
 export const useTracking = () => {
   const { networkConfig } = useNetwork()
   const {wallet} = useWallet()
   const {alreadySubmitDeviceID, toggleAlreadySubmitDeviceID, registeredWallet, addRegisteredWalelt} = useLocalStore()
+
+  const getAppCheckToken = async (force = false) => {
+    const { token } = await firebase.appCheck().getToken(force);
+    return token
+  }
+  
+  const getAppFlyerUID = async (): Promise<string> => {
+    return new Promise((resolve) => {
+      appsFlyer.getAppsFlyerUID((err, uid) => {
+        if (err) {
+          console.log(err)
+          resolve("")
+        } else {
+          resolve(uid)
+        }
+      })
+    })
+  }
 
   const submitDeviceID = useCallback(async () => {
     try {
@@ -16,8 +36,13 @@ export const useTracking = () => {
       const deviceID = await DeviceInfo.syncUniqueId();
       const endpoint = `${networkConfig?.api_endpoint}${SUBMIT_DEVICE_ID_ENDPOINT}`
 
+      const appToken = await getAppCheckToken()
+      const appFlyerUID = await getAppFlyerUID()
+
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("X-Firebase-AppCheck", appToken)
+      myHeaders.append("X-App-Flyer-UID", appFlyerUID)
       
       const raw = JSON.stringify({
         deviceID
@@ -30,6 +55,7 @@ export const useTracking = () => {
         redirect: 'follow'
       };
       console.log('register device id', deviceID)
+      console.log(endpoint)
       const rs = await fetch(endpoint, requestOptions)
       toggleAlreadySubmitDeviceID()
       return rs
@@ -74,6 +100,8 @@ export const useTracking = () => {
 
   return {
     submitDeviceID,
-    registerWallet
+    registerWallet,
+    getAppCheckToken,
+    getAppFlyerUID
   }
 }
