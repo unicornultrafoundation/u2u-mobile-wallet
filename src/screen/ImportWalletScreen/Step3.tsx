@@ -6,12 +6,18 @@ import { useTranslation } from "react-i18next";
 import TextInput from "../../component/TextInput";
 import Button from "../../component/Button";
 import { useWallet } from "../../hook/useWallet";
+import { usePreferenceStore } from "../../state/preferences";
+import { darkTheme, lightTheme } from "../../theme/color";
+import ErrorTextInput from "../../component/TextInput/ErrorTextInput";
 
 const Step3 = () => {
   const { t } = useTranslation<string>();
+  const { darkMode } = usePreferenceStore();
+  const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const { accessWallet } = useWallet();
 
   const [seedList, setSeedList] = useState(Array(12).fill(""));
+  const [errorSeed, setErrorSeed] = useState('')
   const [loading, setLoading] = useState(false);
 
   const handleUpdateSeedWord = (value: string, index: number) => {
@@ -20,13 +26,27 @@ const Step3 = () => {
     setSeedList(newSeed)
   };
 
-  const handleSaveSeed = () => {
-    const isOK = seedList.every((item) => item != "");
+  const validateSeed = () => {
+    for(var i = 0; i < seedList.length; i++) { 
+      if (seedList[i] == '') {
+        setErrorSeed('msgEnterRecoveryPhrase')
+        return false
+      }
+    }
+    setErrorSeed('')
+    return true
+  }
 
+  const handleSaveSeed = () => {    
+    const isOK = validateSeed();
     if (isOK) {
       setLoading(true);
       setTimeout(() => {
-        accessWallet(seedList.join(" "));
+        try {
+          accessWallet(seedList.join(" "));
+        } catch(e) {
+          setErrorSeed('msgImportWalletError')
+        }
         setLoading(false);
       }, 100);
     }
@@ -54,8 +74,9 @@ const Step3 = () => {
                   autoCapitalize="none"
                   style={{ textAlign: "left" }}
                   placeholder={`${index + 1}.`}
+                  placeholderTextColor={preferenceTheme.text.primary}
                   onChangeText={(newText) => {
-                    handleUpdateSeedWord(newText, index);
+                    handleUpdateSeedWord(newText.trim(), index);
                   }}
                 />
               </View>
@@ -73,9 +94,10 @@ const Step3 = () => {
                   value={word}
                   autoCapitalize="none"
                   placeholder={`${index + 4}.`}
-                  style={{ textAlign: "left" }}
+                  placeholderTextColor={preferenceTheme.text.primary}
+                  style={{textAlign: "left"}}
                   onChangeText={(newText) => {
-                    handleUpdateSeedWord(newText, index + 4);
+                    handleUpdateSeedWord(newText.trim(), index + 4);
                   }}
                 />
               </View>
@@ -93,15 +115,17 @@ const Step3 = () => {
                   value={word}
                   autoCapitalize="none"
                   placeholder={`${index + 8}.`}
+                  placeholderTextColor={preferenceTheme.text.primary}
                   style={{ textAlign: "left" }}
                   onChangeText={(newText) => {
-                    handleUpdateSeedWord(newText, index + 8);
+                    handleUpdateSeedWord(newText.trim(), index + 8);
                   }}
                 />
               </View>
             );
           })}
         </View>
+        {errorSeed && <ErrorTextInput error={t(errorSeed)} style={{marginVertical: 10, justifyContent: 'center'}}/>}
       </View>
       <Button
         fullWidth
@@ -110,7 +134,7 @@ const Step3 = () => {
         }}
         onPress={handleSaveSeed}
       >
-        Continue
+        {t('continue')}
       </Button>
     </View>
   );

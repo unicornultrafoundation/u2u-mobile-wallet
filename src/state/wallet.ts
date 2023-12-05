@@ -41,13 +41,17 @@ export const useWalletStore = create(
       seedPhrase: '',
       selectedIndex: 0,
       accessWallet: (seedPhrase) => {
-        const _wallet = getWalletFromMnemonic(seedPhrase, get().selectedIndex);
-        set({
-          seedPhrase,
-          walletMetadata: [{name: ''}],
-          wallet: _wallet,
-          generatedPath: [get().selectedIndex],
-        });
+        try{ 
+          const _wallet = getWalletFromMnemonic(seedPhrase, get().selectedIndex);
+          set({
+            seedPhrase,
+            walletMetadata: [{name: ''}],
+            wallet: _wallet,
+            generatedPath: [get().selectedIndex],
+          });
+        } catch(e) {
+          throw e
+        }        
       },
       savePathIndex: (index) => {
         const _wallet = getWalletFromMnemonic(get().seedPhrase, index);

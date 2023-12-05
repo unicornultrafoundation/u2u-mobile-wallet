@@ -226,5 +226,7 @@
   "blockchain": "Blockchain",
   "tokenStandard": "Token standard",
   "properties": "Properties",
-  "lockedStake": "Locked stake"
+  "lockedStake": "Locked stake",
+  "msgImportWalletError" : "Error occurred. Make sure you provide the correct 12 words phrase when you created your wallet",
+  "msgEnterRecoveryPhrase" : "Please enter 12 words phrase"
 }
