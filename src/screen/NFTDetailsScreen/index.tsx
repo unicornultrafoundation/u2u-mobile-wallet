@@ -59,13 +59,14 @@ const NFTDetailsScreen = () => {
     return false
   }, [item])
 
-  console.log('isOwner', isOwner)
-
   return (
     <View
       style={[
         styles.container,
-        { backgroundColor: preferenceTheme.background.background },
+        {
+          backgroundColor: preferenceTheme.background.background,
+          paddingBottom: isOwner ? 100 : 20
+        },
       ]}>
       <View style={styles.section}>
         <View style={[styles.row, {paddingTop: 16, paddingBottom: 16}]}>
@@ -86,6 +87,7 @@ const NFTDetailsScreen = () => {
           />
         </View>
         <ScrollView 
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }} 
           bounces={false} 
           stickyHeaderIndices={[1]}

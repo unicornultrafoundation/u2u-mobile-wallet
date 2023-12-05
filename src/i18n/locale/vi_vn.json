@@ -226,5 +226,7 @@
   "blockchain": "Chuỗi khối",
   "tokenStandard": "Tiêu chuẩn token",
   "properties": "Thuộc tính",
-  "lockedStake": "Đầu tư bị khoá"
+  "lockedStake": "Đầu tư bị khoá",
+  "msgImportWalletError" : "Có lỗi xảy ra. Đảm bảo bạn cung cấp chính xác 12 từ khi tạo ví của mình",
+  "msgEnterRecoveryPhrase" : "Vui lòng nhập đủ 12 từ"
 }

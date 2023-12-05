@@ -60,7 +60,7 @@ export const useTracking = () => {
       toggleAlreadySubmitDeviceID()
       return rs
     } catch (error) {
-      console.log('error 123', error)
+      console.log('submit device id', error)
       return
     }
   }, [networkConfig, alreadySubmitDeviceID, toggleAlreadySubmitDeviceID])
