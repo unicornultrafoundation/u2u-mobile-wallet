@@ -11,12 +11,13 @@ import Text from '../Text';
 
 interface Props extends TextInputProps {
   containerStyle?: StyleProp<ViewStyle>
+  placeholderTextColor?: string,
   error?: string
   postIcon?: () => JSX.Element
   insideModal?: boolean
 }
 
-const TextInput = ({style, containerStyle, error, postIcon, insideModal = false, ...rest}: Props) => {
+const TextInput = ({style, containerStyle, placeholderTextColor, error, postIcon, insideModal = false, ...rest}: Props) => {
 
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
@@ -94,7 +95,7 @@ const TextInput = ({style, containerStyle, error, postIcon, insideModal = false,
               },
               style
             ]}
-            placeholderTextColor={preferenceTheme.text.placeholder}
+            placeholderTextColor={placeholderTextColor ?? preferenceTheme.text.placeholder}
           />
         )}
         {renderPostIcon()}
