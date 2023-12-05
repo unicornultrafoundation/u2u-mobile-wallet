@@ -317,8 +317,12 @@ const LockModal = ({trigger, item}: {
         index={0}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
-        handleStyle={{
+        enablePanDownToClose={true}
+        backgroundStyle={{
           backgroundColor: preferenceTheme.background.background,
+        }}
+        handleStyle={{
+          // backgroundColor: preferenceTheme.background.background,
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16
         }}
