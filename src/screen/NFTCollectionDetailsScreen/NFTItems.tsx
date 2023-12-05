@@ -7,11 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 import { NFTCollectionMeta } from '../../hook/useSupportedNFT';
 import NFTCard from './NFTCard';
 import { useAllNFT } from '../../hook/useAllNFT';
+import { useTranslation } from 'react-i18next';
 
 const NFTItems = ({nftCollection}: {
   nftCollection: NFTCollectionMeta
 }) => {
   const { darkMode } = usePreferenceStore();
+  const { t } = useTranslation();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const [searchString, setSearchString] = useState('');
   const navigation = useNavigation<any>()
@@ -30,7 +32,7 @@ const NFTItems = ({nftCollection}: {
         containerStyle={{ marginBottom: 16 }}
         value={searchString}
         onChangeText={val => setSearchString(val)}
-        placeholder='Search NFT...'
+        placeholder={t('searchNFT')}
       />
       {/* <Dropdown containerStyle={{ marginBottom: 16 }} renderList={<></>}>
         <Text
@@ -46,11 +48,12 @@ const NFTItems = ({nftCollection}: {
 
       <FlatList
         showsVerticalScrollIndicator={false}
-        columnWrapperStyle={{justifyContent: 'space-between'}}
         contentContainerStyle={{
-          rowGap: 12,
-          columnGap: 24,
+          gap: 12,
           paddingBottom: 450
+        }}
+        columnWrapperStyle={{
+          gap: 12
         }}
         data={data?.pages.flat()}
         numColumns={2}

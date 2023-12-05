@@ -10,10 +10,12 @@ import NFTCollectionActivities from './Activities';
 import { NFTCollectionMeta } from '../../hook/useSupportedNFT';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 import { useGlobalStore } from '../../state/global';
+import { useTranslation } from 'react-i18next';
 
 const NFTCollectionDetailsScreen = () => {
   const { setRouteName } = useGlobalStore();
   const { darkMode } = usePreferenceStore();
+  const { t } = useTranslation();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   
   const route = useRoute<any>()
@@ -28,18 +30,20 @@ const NFTCollectionDetailsScreen = () => {
   );
 
   return (
-    <SafeAreaView
+    <View
       style={[
         styles.container,
-        { backgroundColor: preferenceTheme.background.background },
+        { 
+          backgroundColor: preferenceTheme.background.background
+        },
       ]}>
       <CollectionBanner nftCollection={nftCollection} />
 
       <View style={[styles.section]}>
         <Tab
           tabs={[
-            { label: 'Items', value: 'items' },
-            // { label: 'Activities', value: 'activities' },
+            { label: t('items'), value: 'items' },
+            // { label: t('activities), value: 'activities' },
           ]}
           selectedTab={tab}
           onChange={v => setTab(v)}
@@ -56,7 +60,7 @@ const NFTCollectionDetailsScreen = () => {
         {tab === 'items' && <NFTItems nftCollection={nftCollection} />}
         {/* {tab === 'activities' && <NFTCollectionActivities/>} */}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

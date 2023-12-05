@@ -5,7 +5,7 @@ import { TABBAR_HEIGHT } from '../../component/CustomBottomTab';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: getPhonePaddingTop(),
+    // paddingTop: getPhonePaddingTop(),
     paddingBottom: getPhonePaddingBottom() + TABBAR_HEIGHT,
     // overflow: 'scroll',
   },
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
   },
   banner: {
     width: '100%',
-    height: 120,
+    height: getPhonePaddingTop() + 120,
     position: 'relative',
   },
   bannerActions: {
@@ -40,8 +40,9 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     letterSpacing: 0.06,
+    lineHeight: 25,
     textTransform: 'uppercase',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   bannerAvatarWrapper: {
     width: 80,
@@ -49,7 +50,6 @@ export const styles = StyleSheet.create({
     borderRadius: 40,
     overflow: 'hidden',
     borderWidth: 4,
-    backgroundColor: "#FFF"
   },
   modalAvatarWrapper: {
     position: 'absolute',
@@ -64,10 +64,8 @@ export const styles = StyleSheet.create({
   },
   descriptionSection: {
     width: '100%',
-    marginTop: 40,
     flexDirection: 'row',
-    gap: 8,
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    gap: 12,
+    alignItems: 'flex-start',
   },
 });

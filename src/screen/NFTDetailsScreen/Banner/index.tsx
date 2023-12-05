@@ -1,17 +1,13 @@
-import { Dimensions, Image, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-
-import { styles } from '../styles';
+import { Image, TouchableOpacity, View } from 'react-native';
 import Icon from '../../../component/Icon';
 import Text from '../../../component/Text';
-import ShareNFTModalButton from './ShareNFTModalButton';
-import { useState } from 'react';
-import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
 import { NFTCollectionMeta } from '../../../hook/useSupportedNFT';
 import { OwnedNFT } from '../../../hook/useOwnedNFT';
 import { parseIPFSFile } from '../../../util/string';
+import theme from '../../../theme';
+import DescriptionSection from '../../NFTCollectionDetailsScreen/Banner/DescriptionSection';
 
 const NFTScreenBanner = ({nftCollection, item, metadata}: {
   nftCollection: NFTCollectionMeta;
@@ -21,98 +17,35 @@ const NFTScreenBanner = ({nftCollection, item, metadata}: {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
-  const navigation = useNavigation<any>();
-  const [showFullDesc, setShowFullDesc] = useState(false);
-
   return (
-    <View style={[styles.section, { paddingVertical: 16 }]}>
-      <View style={[styles.row]}>
-        <TouchableOpacity onPress={() => navigation.goBack(null)}>
-          <Icon name="arrow-left" width={24} height={24}/>
-        </TouchableOpacity>
-
-        <Text
+    <View style={{paddingBottom: 16}}>
+      <View style={{ 
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8, 
+        marginTop: 12,
+      }}>
+        <Image
+          source={{ uri: parseIPFSFile(metadata.image) }}
           style={{
-            fontSize: 20,
-            fontWeight: '700',
-            letterSpacing: 0.38,
-            textAlign: 'center',
-          }}>
-          {nftCollection.name} #{item.id}
-        </Text>
-
-        <ShareNFTModalButton
-          item={item}
-          nftCollection={nftCollection}
-          metadata={metadata}
+            width: 24,
+            height: 24,
+            objectFit: 'cover',
+            borderRadius: 12,
+          }}
         />
-      </View>
-
-      <Image
-        source={{ uri: parseIPFSFile(metadata.image) }}
-        style={{
-          width: '100%',
-          height: Dimensions.get('window').width - 32,
-          objectFit: 'cover',
-          borderRadius: 16,
-          marginTop: 16,
-        }}
-      />
-
-      <View style={[styles.row, { marginTop: 12 }]}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-          <Image
-            source={{ uri: parseIPFSFile(metadata.image) }}
-            style={{
-              width: 24,
-              height: 24,
-              objectFit: 'cover',
-              borderRadius: 12,
-            }}
-          />
-
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: '700',
-              letterSpacing: 0.38,
-              textAlign: 'center',
-            }}>
-            {nftCollection.name}
-          </Text>
-        </View>
-
+        <Text
+          style={[
+            theme.typography.headline.bold, 
+            {flex: 1, color: preferenceTheme.text.title}
+          ]}>
+          {nftCollection.name}
+        </Text>
         <TouchableOpacity>
-          <Icon name="favourite" width={28} height={28}/>
+          <Icon name="favourite" width={26} height={26}/>
         </TouchableOpacity>
       </View>
-
-      <TouchableOpacity onPress={() => setShowFullDesc(!showFullDesc)}>
-        <View style={[styles.row, { marginTop: 12 }]}>
-          <Text
-            style={{
-              color: preferenceTheme.text.secondary,
-              fontSize: 14,
-              textAlign: 'justify',
-            }}
-            ellipsizeMode="tail"
-            numberOfLines={showFullDesc ? undefined : 1}
-          >
-            {nftCollection.description}
-          </Text>
-
-          {!showFullDesc && (
-            <FontAwesome6Icon
-              name="chevron-down"
-              solid
-              style={{
-                color: preferenceTheme.text.secondary,
-                fontSize: 14,
-              }}
-            />
-          )}
-        </View>
-      </TouchableOpacity>
+      <DescriptionSection description={nftCollection.description} style={{marginTop: 16}}/>
     </View>
   );
 };

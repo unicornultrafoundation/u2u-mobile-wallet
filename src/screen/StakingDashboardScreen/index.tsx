@@ -47,7 +47,7 @@ const StakingDashboardScreen = () => {
     { label: t('validators'), value: 'validators' },
     { label: t('delegation'), value: 'delegation' },
     { label: t('withdrawalRequest'), value: 'wr' },
-    { label: 'Locked stake', value: 'locked' },
+    { label: t('lockedStake'), value: 'locked' },
   ];
 
   const handleChangeTab = (t: string) => {
