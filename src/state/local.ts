@@ -28,6 +28,8 @@ interface LocalState {
   toggleAlreadySubmitDeviceID: () => void;
   registeredWallet: string[];
   addRegisteredWalelt: (address: string) => void;
+  appCheckToken: string;
+  setAppCheckToken: (appCheckToken: string) => void;
 }
 
 export const useLocalStore = create<LocalState>()(
@@ -81,6 +83,10 @@ export const useLocalStore = create<LocalState>()(
         if (current.includes(address)) return
         current.push(address)
         set({ registeredWallet: current })
+      },
+      appCheckToken: "",
+      setAppCheckToken: (appCheckToken: string) => {
+        set({ appCheckToken })
       }
     }),
     {
