@@ -108,6 +108,13 @@ export const isValidDevice = async () => {
     return false
   }
 
+  const androidRoot = JailMonkey.androidRootedDetectionMethods
+  if (!androidRoot) return true
+
+  if (androidRoot.rootBeer.checkSuExists || androidRoot.rootBeer.checkForMagiskBinary || androidRoot.rootBeer.checkForSuBinary || androidRoot.rootBeer.detectRootManagementApps) {
+    return false
+  }
+
   return true
 }
 
