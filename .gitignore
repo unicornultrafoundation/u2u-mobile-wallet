@@ -73,3 +73,10 @@ yarn-error.log
 
 # Environment
 .env
+android/key.json
+
+.jso/
+
+# Firebase credential
+ios/GoogleService-Info.plist
+android/app/google-services.json
