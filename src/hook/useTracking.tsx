@@ -4,11 +4,17 @@ import { useNetwork } from "./useNetwork"
 import DeviceInfo from "react-native-device-info"
 import { useLocalStore } from "../state/local"
 import { useWallet } from "./useWallet"
+import { firebase } from "@react-native-firebase/app-check"
 
 export const useTracking = () => {
   const { networkConfig } = useNetwork()
   const {wallet} = useWallet()
   const {alreadySubmitDeviceID, toggleAlreadySubmitDeviceID, registeredWallet, addRegisteredWalelt} = useLocalStore()
+
+  const getAppCheckToken = async (force = false) => {
+    const { token } = await firebase.appCheck().getToken(force);
+    return token
+  }
 
   const submitDeviceID = useCallback(async () => {
     try {
@@ -16,8 +22,11 @@ export const useTracking = () => {
       const deviceID = await DeviceInfo.syncUniqueId();
       const endpoint = `${networkConfig?.api_endpoint}${SUBMIT_DEVICE_ID_ENDPOINT}`
 
+      const appToken = await getAppCheckToken()
+
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("X-Firebase-AppCheck", appToken)
       
       const raw = JSON.stringify({
         deviceID
@@ -30,10 +39,12 @@ export const useTracking = () => {
         redirect: 'follow'
       };
       console.log('register device id', deviceID)
+      console.log(endpoint)
       const rs = await fetch(endpoint, requestOptions)
       toggleAlreadySubmitDeviceID()
       return rs
     } catch (error) {
+      console.log('error 123', error)
       return
     }
   }, [networkConfig, alreadySubmitDeviceID, toggleAlreadySubmitDeviceID])
@@ -73,6 +84,7 @@ export const useTracking = () => {
 
   return {
     submitDeviceID,
-    registerWallet
+    registerWallet,
+    getAppCheckToken
   }
 }
