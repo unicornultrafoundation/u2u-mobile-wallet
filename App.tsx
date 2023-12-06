@@ -252,12 +252,12 @@ function App(): JSX.Element {
     i18n.changeLanguage(language)
   }, [language])
 
-  if (!isConnected) {
-    return <NoInternetScreen />
-  }
-
   if (!loaded) {
     return <SplashScreen />
+  }
+
+  if (!isConnected) {
+    return <NoInternetScreen />
   }
 
   return (
