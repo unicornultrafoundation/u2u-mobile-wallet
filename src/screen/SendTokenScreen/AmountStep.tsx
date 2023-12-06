@@ -4,8 +4,6 @@ import { styles } from './styles';
 import Icon from '../../component/Icon';
 import Text from '../../component/Text';
 import { useTranslation } from 'react-i18next';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
 import Button from '../../component/Button';
 import { formatNumberString, getDigit, parseNumberFormatter } from '../../util/string';
@@ -17,13 +15,13 @@ import BigNumber from 'bignumber.js';
 import { encodeTxData } from '../../util/contract';
 import { ERC20_ABI } from '../../util/abis/erc20';
 import { getPhonePaddingBottom } from '../../util/platform';
+import { usePreference } from '../../hook/usePreference';
 
 const AmountStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
   onBack: () => void;
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
   const {t} = useTranslation<string>()
 
   const {setAmount, tokenMeta, amount, receiveAddress, setTxData} = useTransactionStore()

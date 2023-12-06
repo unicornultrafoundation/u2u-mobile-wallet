@@ -2,8 +2,6 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { TouchableOpacity, View, SafeAreaView } from 'react-native';
 import { styles } from './styles';
 import ReceiveTokenHeader from './ReceiveTokenHeader';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import Text from '../../component/Text';
 import { useTranslation } from 'react-i18next';
 import theme from '../../theme';
@@ -19,10 +17,10 @@ import { formatNumberString } from '../../util/string';
 import { SvgUri } from 'react-native-svg';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
+import { usePreference } from '../../hook/usePreference';
 
 const ReceiveTokenScreen = () => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const { t } = useTranslation<string>()
   const { wallet } = useWallet()

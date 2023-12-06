@@ -6,13 +6,13 @@ import { darkTheme, lightTheme } from '../../../theme/color';
 import { useFetchAllLockedStake } from '../../../hook/useFetchAllLockedStake';
 import LockedStakeItem from './LockedStakeItem';
 import { TABBAR_HEIGHT } from '../../../component/CustomBottomTab';
+import { usePreference } from '../../../hook/usePreference';
 
 const LockedStakeList = () => {
   const {wallet} = useWallet()
   const {lockedStake} = useFetchAllLockedStake(wallet.address.toLowerCase())
 
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   return (
     <View style={{

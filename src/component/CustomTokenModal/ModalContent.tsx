@@ -14,12 +14,12 @@ import { useNetwork } from '../../hook/useNetwork';
 import { fetchURC20MetaFromContract } from '../../service/token';
 import { useLocalStore } from '../../state/local';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { usePreference } from '../../hook/usePreference';
 
 const ModalContent = ({onClose}: {
   onClose: () => void
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const {rpc} = useNetwork()
   const {t} = useTranslation()

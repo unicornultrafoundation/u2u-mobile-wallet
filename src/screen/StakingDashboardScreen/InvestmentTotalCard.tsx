@@ -4,19 +4,17 @@ import styles from './styles'
 import Text from '../../component/Text'
 import { useTranslation } from 'react-i18next'
 import theme from '../../theme'
-import { usePreferenceStore } from '../../state/preferences'
-import { darkTheme, lightTheme } from '../../theme/color'
 import { useNativeBalance } from '../../hook/useNativeBalance'
 import { useWallet } from '../../hook/useWallet'
 import { formatNumberString } from '../../util/string'
 import { SvgUri } from 'react-native-svg'
 import { useStaking } from '../../hook/useStaking'
+import { usePreference } from '../../hook/usePreference'
 
 const InvestmentTotalCard = () => {
   const {t} = useTranslation<string>()
 
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const {wallet} = useWallet()
   const {balance} = useNativeBalance(wallet.address)

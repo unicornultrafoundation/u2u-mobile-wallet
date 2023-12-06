@@ -1,16 +1,14 @@
 import React from 'react'
 import { Image, View } from 'react-native';
 import Text from '../../component/Text';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import { useTranslation } from 'react-i18next';
 import COMING_SOON from '../../asset/images/coming_soon.png'
 import theme from '../../theme';
 import { getPhonePaddingTop } from '../../util/platform';
+import { usePreference } from '../../hook/usePreference';
 
 const ComingSoonScreen = () => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const {t} = useTranslation<string>()
 

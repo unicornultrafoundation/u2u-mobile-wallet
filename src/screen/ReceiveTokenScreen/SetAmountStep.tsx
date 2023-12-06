@@ -9,6 +9,7 @@ import theme from '../../theme';
 import Button from '../../component/Button';
 import { parseNumberFormatter } from '../../util/string';
 import { getPhonePaddingBottom } from '../../util/platform';
+import { usePreference } from '../../hook/usePreference';
 
 const SetAmountStep = ({handleBack, setAmount, amount, tokenMeta}: {
   handleBack: () => void
@@ -16,8 +17,7 @@ const SetAmountStep = ({handleBack, setAmount, amount, tokenMeta}: {
   setAmount: (newAmount: string) => void
   tokenMeta: Record<string, any>
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const [internalAmount, setInternalAmount] = useState(amount)
 

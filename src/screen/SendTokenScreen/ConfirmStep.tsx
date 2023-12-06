@@ -6,8 +6,6 @@ import Icon from '../../component/Icon';
 import { useTranslation } from 'react-i18next';
 import Button from '../../component/Button';
 import theme from '../../theme';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import { SvgUri } from 'react-native-svg';
 import { formatNumberString, getDefaultWalletName, shortenAddress } from '../../util/string';
 import Separator from '../../component/Separator';
@@ -17,14 +15,14 @@ import { useTransaction } from '../../hook/useTransaction';
 import BigNumber from 'bignumber.js';
 import { useNativeBalance } from '../../hook/useNativeBalance';
 import CustomGasModal from '../../component/CustomGasModal';
+import { usePreference } from '../../hook/usePreference';
 
 const ConfirmStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
   onBack: () => void;
 }) => {
   const {t} = useTranslation<string>()
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const {receiveAddress, tokenMeta, amount, estimateGasLimit, estimatedFee, maxFee} = useTransaction()
   const {name: networkName} = useNetworkStore()

@@ -1,7 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { SafeAreaView, View } from 'react-native';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
+import { SafeAreaView } from 'react-native';
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { useGlobalStore } from '../../state/global';
 import { styles } from './styles';
@@ -10,10 +8,10 @@ import AmountStep from './AmountStep';
 import ConfirmStep from './ConfirmStep';
 import AuthStep from './AuthStep';
 import SendStep from './SendStep';
+import { usePreference } from '../../hook/usePreference';
 
 const SendTokenScreen = () => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const navigation = useNavigation<any>()
 

@@ -8,12 +8,10 @@ import ExploreTab from './ExploreTab';
 import FeatureTab from './FeatureTab';
 import FavoriteTab from './FavoritesTab';
 import SearchComponent from '../../component/SearchComponent';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
+import { usePreference } from '../../hook/usePreference';
 
 const U2UEcoDashboardScreen = () => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const route = useRoute();
   const {setRouteName} = useGlobalStore();

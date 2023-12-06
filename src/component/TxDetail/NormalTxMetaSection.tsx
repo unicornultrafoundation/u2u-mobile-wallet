@@ -3,14 +3,12 @@ import { View } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import Text from '../Text';
 import theme from '../../theme';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
+import { usePreference } from '../../hook/usePreference';
 
 const NormalTxMetaSection = ({txValue}: {
   txValue: string
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   return (
     <View style={{flexDirection: 'row', padding: 16, alignItems: 'center'}}>

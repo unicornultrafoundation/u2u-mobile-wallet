@@ -5,8 +5,6 @@ import {
 import styles from './styles';
 import { View, TouchableOpacity } from 'react-native';
 import Text from '../Text';
-import { darkTheme, lightTheme } from '../../theme/color';
-import { usePreferenceStore } from '../../state/preferences';
 import theme from '../../theme';
 import Button from '../Button';
 import { useTranslation } from 'react-i18next';
@@ -14,13 +12,12 @@ import { SUPPORTED_CHAINS } from '../../config/chain';
 import Icon from '../Icon';
 import { useNetwork } from '../../hook/useNetwork';
 import Separator from '../Separator';
-import { useFetchAllValidator } from '../../hook/useFetchAllValidator';
+import { usePreference } from '../../hook/usePreference';
 
 const SelectNetworkModal = ({trigger}: {
   trigger: () => JSX.Element,
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const { t } = useTranslation<string>()
 

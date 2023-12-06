@@ -6,17 +6,15 @@ import { useTranslation } from 'react-i18next';
 import Text from '../../component/Text';
 import OtpInputs from 'react-native-otp-inputs';
 import theme from '../../theme';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import Button from '../../component/Button';
 import { useLocalStore } from '../../state/local';
+import { usePreference } from '../../hook/usePreference';
 
 const AuthStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
   onBack: () => void;
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const { t } = useTranslation<string>()
   const {password} = useLocalStore()

@@ -4,17 +4,15 @@ import Step1Illus from "../../../asset/images/wallet_steps/step1.png"
 import Text from '../../../component/Text';
 import Button from '../../../component/Button';
 import theme from '../../../theme';
-import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
 import { useTranslation } from 'react-i18next';
 import { useClaimMembershipNFT } from '../../../hook/useClaimMembershipNFT';
 import DeviceInfo from 'react-native-device-info';
 import Toast from 'react-native-toast-message';
 import { isValidDevice } from '../../../util/platform';
+import { usePreference } from '../../../hook/usePreference';
 
 const Step1 = () => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const { t } = useTranslation();
   const { submitClaimRequest, claimRequest } = useClaimMembershipNFT()

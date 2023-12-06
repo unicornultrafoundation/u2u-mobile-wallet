@@ -1,8 +1,6 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native';
-import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
 import { styles } from './styles';
@@ -25,13 +23,13 @@ import Toast from 'react-native-toast-message';
 import { useTransaction } from '../../../hook/useTransaction';
 import { TransactionReceipt } from 'ethers';
 import { parseFromRaw } from '../../../util/bignum';
+import { usePreference } from '../../../hook/usePreference';
 
 const LockModal = ({trigger, item}: {
   trigger: () => JSX.Element,
   item: Validation
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const {t} = useTranslation<string>()
 

@@ -7,17 +7,15 @@ import Text from '../../../component/Text';
 import BigNumber from 'bignumber.js';
 import { formatNumberString, shortenAddress } from '../../../util/string';
 import theme from '../../../theme';
-import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
 import { useNavigation } from '@react-navigation/native';
+import { usePreference } from '../../../hook/usePreference';
 
 const ValidatorItem = ({validator}: {
   validator: Validator
 }) => {
   const navigation = useNavigation<any>()
 
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const amount = useMemo(() => {
     return formatNumberString(validator.totalStakedAmount.dividedBy(10 ** 18).toFixed(), 2)

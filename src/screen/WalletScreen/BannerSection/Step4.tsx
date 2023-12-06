@@ -4,13 +4,11 @@ import Step4Illus from "../../../asset/images/wallet_steps/step4.png"
 import Text from '../../../component/Text';
 import Button from '../../../component/Button';
 import theme from '../../../theme';
-import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
 import { useTranslation } from 'react-i18next';
+import { usePreference } from '../../../hook/usePreference';
 
 const Step3 = () => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
   const { t } = useTranslation();
 
   return (

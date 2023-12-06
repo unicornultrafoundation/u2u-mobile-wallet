@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { TouchableOpacity, View } from 'react-native';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
+import { View } from 'react-native';
 import { styles } from './styles';
 import Icon from '../../component/Icon';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -10,10 +8,10 @@ import AmountStep from './AmountStep';
 import ConfirmStep from './ConfirmStep';
 import AuthStep from './AuthStep';
 import DelegateStep from './DelegateStep';
+import { usePreference } from '../../hook/usePreference';
 
 const DelegateScreen = () => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const navigation = useNavigation<any>()
   const route = useRoute<any>()

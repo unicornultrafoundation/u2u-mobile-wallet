@@ -19,6 +19,7 @@ import Button from '../../component/Button';
 import { useTranslation } from 'react-i18next';
 import { useTransactionStore } from '../../state/transaction';
 import { SafeAreaView } from 'react-native';
+import { usePreference } from '../../hook/usePreference';
 
 const ValidatorDetailScreen = () => {
   const navigation = useNavigation<any>()
@@ -34,8 +35,7 @@ const ValidatorDetailScreen = () => {
 
   const validator: Validator = route.params?.validator || {}
 
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const {resetTxState} = useTransactionStore();
   const [tab, setTab] = useState('info');

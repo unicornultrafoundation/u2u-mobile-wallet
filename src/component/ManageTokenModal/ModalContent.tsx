@@ -5,18 +5,16 @@ import styles from './styles';
 import theme from '../../theme';
 import TextInput from '../TextInput';
 import { useTranslation } from 'react-i18next';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import Separator from '../Separator';
 import Icon from '../Icon';
 import { useSupportedTokens } from '../../hook/useSupportedTokens';
 import TokenRow from './TokenRow';
 import CustomTokenModal from '../CustomTokenModal';
 import { useLocalStore } from '../../state/local';
+import { usePreference } from '../../hook/usePreference';
 
 const ModalContent = () => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const {t} = useTranslation()
   const {supportedTokens} = useSupportedTokens()

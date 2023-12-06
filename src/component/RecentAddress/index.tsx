@@ -5,16 +5,14 @@ import Text from '../Text'
 import { useLocalStore } from '../../state/local';
 import { shortenAddress } from '../../util/string';
 import theme from '../../theme';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import { useTranslation } from 'react-i18next';
+import { usePreference } from '../../hook/usePreference';
 
 const RecentAddress = ({onItemClick}: {
   onItemClick: (item: string) => void
 }) => {
   const { recentAddress } = useLocalStore()
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
   
   const { t } = useTranslation()
 

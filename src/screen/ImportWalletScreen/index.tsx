@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { ImageBackground, TouchableOpacity, View } from 'react-native';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import { useNavigation } from '@react-navigation/native';
 import BACKGROUND from '../../asset/images/create_wallet_bg.png'
 import Step1 from './Step1';
@@ -11,11 +9,11 @@ import Step3 from './Step3';
 import Icon from '../../component/Icon';
 import Steps from '../../component/Steps';
 import { styles } from './styles';
+import { usePreference } from '../../hook/usePreference';
 
 const ImportWalletScreen = () => {
   const navigation = useNavigation<any>()
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
   const { savePassword } = useLocalStore()
 
   const [currentStep, setCurrentStep] = useState(0)

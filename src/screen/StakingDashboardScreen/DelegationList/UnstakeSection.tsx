@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { View } from 'react-native';
 import Button from '../../../component/Button';
 import theme from '../../../theme';
-import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
 import { useTranslation } from 'react-i18next';
 import TextInput from '../../../component/TextInput';
 import { formatNumberString, getDigit, parseNumberFormatter } from '../../../util/string';
@@ -16,6 +14,7 @@ import { Validation } from '../../../service/staking';
 import { useUndelegate } from '../../../hook/useUndelegate';
 import Icon from '../../../component/Icon';
 import BigNumber from 'bignumber.js';
+import { usePreference } from '../../../hook/usePreference';
 
 const UnstakeSection = ({onCancel, item, actualStakedAmount} : {
   onCancel: () => void
@@ -27,8 +26,7 @@ const UnstakeSection = ({onCancel, item, actualStakedAmount} : {
   const [unstakeAmount, setUnstakeAmount] = useState('')
   const [errorUnstakeAmount, setErrorUnstakeAmount] = useState('')
 
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const {stakingContractOptions} = useStaking()
   const { undegegate } = useUndelegate(stakingContractOptions)

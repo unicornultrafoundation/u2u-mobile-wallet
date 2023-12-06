@@ -12,12 +12,12 @@ import { useTransaction } from '../../hook/useTransaction';
 import TxDetail from '../../component/TxDetail';
 import { useNavigation } from '@react-navigation/native';
 import { useLocalStore } from '../../state/local';
+import { usePreference } from '../../hook/usePreference';
 
 const SendStep = ({onSkip}: {
   onSkip: () => void
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const navigation = useNavigation<any>()
 

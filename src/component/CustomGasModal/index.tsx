@@ -1,23 +1,21 @@
 import React, { useCallback, useRef, useMemo } from 'react'
 import {
-  BottomSheetModal, BottomSheetScrollView,
+  BottomSheetModal,
 } from '@gorhom/bottom-sheet';
 import styles from './styles';
 import { View, TouchableOpacity } from 'react-native';
 import Text from '../Text';
-import { darkTheme, lightTheme } from '../../theme/color';
-import { usePreferenceStore } from '../../state/preferences';
 import GasPriceInput from './GasPriceInput';
 import theme from '../../theme';
 import GasLimitInput from './GasLimitInput';
 import Button from '../Button';
 import { useTranslation } from 'react-i18next';
+import { usePreference } from '../../hook/usePreference';
 
 const CustomGasModal = ({trigger}: {
   trigger: () => JSX.Element,
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const { t } = useTranslation<string>()
 
