@@ -1,5 +1,5 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
@@ -24,6 +24,7 @@ import { useTransaction } from '../../../hook/useTransaction';
 import { TransactionReceipt } from 'ethers';
 import { parseFromRaw } from '../../../util/bignum';
 import { usePreference } from '../../../hook/usePreference';
+import CustomBottomSheetModal from '../../../component/CustomBottomSheetModal';
 
 const LockModal = ({trigger, item}: {
   trigger: () => JSX.Element,
@@ -61,14 +62,8 @@ const LockModal = ({trigger, item}: {
   const [errorDuration, setErrorDuration] = useState('')
   const [locking, setLocking] = useState(false)
 
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
   const handleClose = useCallback(() => {
     bottomSheetModalRef.current?.close();
-  }, []);
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
   }, []);
 
   const actualStakedAmount = useMemo(() => {
@@ -304,49 +299,12 @@ const LockModal = ({trigger, item}: {
   }
 
   return (
-    <>
-      <TouchableOpacity
-        onPress={handlePresentModalPress}
-      >
-        {trigger()}
-      </TouchableOpacity>
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        index={0}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-        enablePanDownToClose={true}
-        backgroundStyle={{
-          backgroundColor: preferenceTheme.background.background,
-        }}
-        handleStyle={{
-          // backgroundColor: preferenceTheme.background.background,
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16
-        }}
-        handleIndicatorStyle={{
-          backgroundColor: '#F6F6F6'
-        }}
-        backdropComponent={({ style }) => {
-          return (
-            <View
-              style={[
-                style,
-                {
-                  backgroundColor: '#181818',
-                  opacity: 0.9,
-                }
-              ]}
-              onTouchEnd={handleClose}
-            />
-          )
-        }}
-      >
+    <CustomBottomSheetModal
+      modalRef={bottomSheetModalRef}
+      trigger={trigger()}
+      triggerModal={
         <View style={[
           styles.contentContainer,
-          {
-            backgroundColor: preferenceTheme.background.background
-          }
         ]}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View style={{width: 34, height: 34, marginRight: 8}}>
@@ -384,8 +342,10 @@ const LockModal = ({trigger, item}: {
           <Separator style={{width: '100%'}} />
           {renderForm()}
         </View>
-      </BottomSheetModal>
-    </>
+      }
+      snapPoints={snapPoints}
+      hasSeparator={false}
+    />
   )
 }
 

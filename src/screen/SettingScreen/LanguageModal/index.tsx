@@ -1,4 +1,3 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
@@ -7,8 +6,9 @@ import { darkTheme, lightTheme } from '../../../theme/color';
 import styles from './styles';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
-import Separator from '../../../component/Separator';
 import Icon from '../../../component/Icon';
+import CustomBottomSheetModal from '../../../component/CustomBottomSheetModal';
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 const LanguageModal = ({trigger}: {
   trigger: () => JSX.Element,
@@ -26,68 +26,13 @@ const LanguageModal = ({trigger}: {
   // variables
   const snapPoints = useMemo(() => ['35%'], []);
 
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-  const handleClose = useCallback(() => {
-    bottomSheetModalRef.current?.close();
-  }, []);
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
   return (
-    <>
-      <TouchableOpacity
-        onPress={handlePresentModalPress}
-      >
-        {trigger()}
-      </TouchableOpacity>
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        index={0}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-        handleStyle={{
-          backgroundColor: preferenceTheme.background.background,
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16
-        }}
-        handleIndicatorStyle={{
-          backgroundColor: '#F6F6F6',
-        }}
-        backdropComponent={({ style }) => {
-          return (
-            <View
-              style={[
-                style,
-                {
-                  backgroundColor: '#181818',
-                  opacity: 0.9,
-                }
-              ]}
-              onTouchEnd={handleClose}
-            />
-          )
-        }}
-      >
-        <View style={[
-          styles.contentContainer,
-          {
-            backgroundColor: preferenceTheme.background.background
-          }
-        ]}>
-          <Text style={[
-            theme.typography.headline.medium,
-            {
-              color: preferenceTheme.text.title,
-              marginVertical: 8,
-            }
-          ]}>
-            {t('chooseLanguage')}
-          </Text>
-          <Separator style={{width: '100%'}} />
+    <CustomBottomSheetModal 
+      modalRef={bottomSheetModalRef}
+      title='chooseLanguage' 
+      trigger={trigger()} 
+      triggerModal={
+        <BottomSheetScrollView bounces={false}>
           {languageKeys.map((lang: string) => {
             return (
               <TouchableOpacity
@@ -96,6 +41,7 @@ const LanguageModal = ({trigger}: {
                 onPress={() => {
                   i18n.changeLanguage(lang)
                   setLangauge(lang)
+                  bottomSheetModalRef.current?.close()
                 }}
               >
                 <Text style={[theme.typography.footnote.medium, {flex: 1}]}>{t(lang)}</Text>
@@ -111,9 +57,10 @@ const LanguageModal = ({trigger}: {
               </TouchableOpacity>
             )
           })}
-        </View>
-      </BottomSheetModal>
-    </>
+        </BottomSheetScrollView>
+      }
+      snapPoints={snapPoints}
+    />
   )
 }
 

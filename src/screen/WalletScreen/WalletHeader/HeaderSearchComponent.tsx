@@ -5,13 +5,13 @@ import Text from '../../../component/Text';
 import React, { useState } from 'react';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
-import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import TextInput from '../../../component/TextInput';
 import theme from '../../../theme';
 import { useNetwork } from '../../../hook/useNetwork';
 import SelectNetworkModal from '../../../component/SelectNetworkModal';
 import { useGlobalStore } from '../../../state/global';
 import Button from '../../../component/Button';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   action: string;
@@ -21,7 +21,7 @@ interface Props {
 const HeaderSearchComponent = ({ action, onGoBack }: Props) => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
-
+  const { t } = useTranslation();
   const { name } = useNetwork()
   const { searchKeyword, setSearchKeyword } = useGlobalStore()
 
@@ -34,7 +34,7 @@ const HeaderSearchComponent = ({ action, onGoBack }: Props) => {
   };
 
   return (
-    <View style={[styles.headerSection]}>
+    <View style={[styles.headerSection, {gap: 8}]}>
       {!showInput && (
         <TouchableOpacity onPress={handleGoBack}>
           <Icon name="arrow-left" width={24} height={24} />
@@ -42,7 +42,7 @@ const HeaderSearchComponent = ({ action, onGoBack }: Props) => {
       )}
 
       {showInput ? (
-        <View style={{ flexDirection: 'row', gap: 8 }}>
+        <View style={{ flex: 1, flexDirection: 'row', gap: 8 }}>
           <TextInput
             onChangeText={val => setSearchKeyword(val)}
             value={searchKeyword}
@@ -76,7 +76,7 @@ const HeaderSearchComponent = ({ action, onGoBack }: Props) => {
               },
             ]}
           >
-            Cancel
+            {t('cancel')}
           </Button>
         </View>
       ) : (

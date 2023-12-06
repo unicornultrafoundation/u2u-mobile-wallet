@@ -5,8 +5,8 @@ export default StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingBottom: getPhonePaddingBottom(),
+    paddingVertical: 10,
+    // paddingBottom: getPhonePaddingBottom(),
     position: 'relative'
   },
   walletRowContainer: {
