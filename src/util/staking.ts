@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js"
-import { Delegation, Delegator, Validation, Validator, ValidatorEpochInfo } from "../service/staking"
+import { Delegation, Delegator, Validation, Validator, ValidatorEpochInfo, fetchValidatorInfo } from "../service/staking"
 import { LockedStake } from "../hook/useFetchLockedStake"
 import { WithdrawalRequest } from "../hook/useFetchWithdrawRequest"
 
@@ -15,32 +15,42 @@ export const delegationDataProcessor = (data: any): Delegation => {
   }
 }
 
-export const validationDataProcessor = (data: any, totalStaked: BigNumber, apr: number = 0): Validation => {  
+export const validationDataProcessor = async (data: any, totalStaked: BigNumber, apr: number = 0): Promise<Validation> => {  
   if (!data) return {} as Validation
   return {
     id: data.id,
     stakedAmount: BigNumber(data.stakedAmount),
-    validator: validatorDataProcessor(data.validator, totalStaked, apr)
+    validator: await validatorDataProcessor(data.validator, totalStaked, apr)
   }
 }
 
-export const delegatorDataProcessor = (data: any, totalStaked: BigNumber): Delegator => {  
+export const delegatorDataProcessor = async (data: any, totalStaked: BigNumber): Promise<Delegator> => {  
   if (!data) return {} as Delegator
+
+  const validations = data.validations && data.validations.length > 0 ? 
+    await Promise.all(data.validations.map(async (i: any) => await validationDataProcessor(i, totalStaked)) ): 
+    []
+
   return {
     id: data.id,
     address: data.address,
     stakedAmount: BigNumber(data.stakedAmount),
     createdOn: Number(data.createdOn),
-    validations: data.validations && data.validations.length > 0 ? data.validations.map((i: any) => validationDataProcessor(i, totalStaked)) : [],
+    validations,
     totalClaimedRewards: BigNumber(data.totalClaimedRewards)
   }
 }
 
-export const validatorDataProcessor = (data: any, totalStaked: BigNumber, apr: number): Validator => {  
+export const validatorDataProcessor = async (data: any, totalStaked: BigNumber, apr: number): Promise<Validator> => {  
   if (!data) return {} as Validator
+  const valInfo = await fetchValidatorInfo(data.auth)
+
+  const valAvartar = valInfo && data.auth ? `https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/validators_info/${data.auth.toLowerCase()}/logo.png` : ""
+
   return {
     valId: data.validatorId,
-    name: `Validator ${data.validatorId}`,
+    name: valInfo && valInfo.moniker ? valInfo.moniker : `Validator ${data.validatorId}`,
+    avatar: valAvartar,
     auth: data.auth || "",
     createdEpoch: data.createdEpoch || "",
     createdTime: data.createdTime || "",

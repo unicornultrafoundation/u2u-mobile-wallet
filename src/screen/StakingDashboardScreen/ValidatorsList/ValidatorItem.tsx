@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, Image } from 'react-native';
 import { Validator } from '../../../service/staking';
 import { styles } from './styles';
 import { SvgUri } from 'react-native-svg';
@@ -29,13 +29,24 @@ const ValidatorItem = ({validator}: {
 
   return (
     <TouchableOpacity style={styles.validatorItem} onPress={() => handleSelectValidator(validator)}>
-      <View style={{width: 34, height: 34, paddingRight: 8}}>
-        <SvgUri
-          uri="https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"
-          width="100%"
-          height="100%"
+      {validator.avatar ? (
+        <Image
+          source={{ uri: validator.avatar }}
+          style={{
+            width: 26,
+            height: 26,
+            marginRight: 8
+          }}
         />
-      </View>
+      ) : (
+        <View style={{width: 34, height: 34, paddingRight: 8}}>
+          <SvgUri
+            uri="https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg"
+            width="100%"
+            height="100%"
+          />
+        </View>
+      )}
       <View style={{flex: 1, justifyContent: 'space-between'}}>
         <Text
           style={[

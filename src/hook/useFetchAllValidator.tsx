@@ -21,10 +21,15 @@ export const useFetchAllValidator = () => {
           console.log("queryValidatorsApr fail")
           return []
         }
-        return data.validators.map((v: any) => {
-          let apr = dataApr[`apr${v.validatorId}`] || 0
-          return validatorDataProcessor(v, totalNetworkStaked, Number(apr))
-        })
+        
+        const promiseArr = await Promise.all(
+          data.validators.map((v: any) => {
+            let apr = dataApr[`apr${v.validatorId}`] || 0
+            return validatorDataProcessor(v, totalNetworkStaked, Number(apr))
+          })
+        )
+
+        return promiseArr
       }
       return []
     } catch (error) {

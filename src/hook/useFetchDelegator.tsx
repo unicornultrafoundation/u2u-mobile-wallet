@@ -15,7 +15,7 @@ export const useFetchDelegator = (delAddress: string) => {
       const {data: stakingStats} = await queryStakingStats()
       const totalNetworkStaked = stakingStats && stakingStats.stakings ? BigNumber(stakingStats.stakings[0].totalStaked || 0) : BigNumber(0)
       if (data && data?.delegators) {
-        return delegatorDataProcessor(data?.delegators[0], totalNetworkStaked)
+        return await delegatorDataProcessor(data?.delegators[0], totalNetworkStaked)
       }
       return {} as Delegator
     } catch (error) {
