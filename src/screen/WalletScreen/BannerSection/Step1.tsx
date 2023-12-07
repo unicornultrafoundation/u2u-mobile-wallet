@@ -10,15 +10,20 @@ import DeviceInfo from 'react-native-device-info';
 import Toast from 'react-native-toast-message';
 import { isValidDevice } from '../../../util/platform';
 import { usePreference } from '../../../hook/usePreference';
+import { useWallet } from '../../../hook/useWallet';
+import { useTracking } from '../../../hook/useTracking';
 
 const Step1 = () => {
   const {preferenceTheme} = usePreference()
 
   const { t } = useTranslation();
   const { submitClaimRequest, claimRequest } = useClaimMembershipNFT()
+  const { deviceID } = useTracking()
+  const { wallet } = useWallet()
 
   const [alreadySubmitted, setAlreadySubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [claimMessage, setClaimMessage] = useState('')
 
   const alertError = () => {
     Toast.show({
@@ -39,7 +44,7 @@ const Step1 = () => {
       alertError()
       return;
     }
-    
+
     setLoading(true)
     const rs = await submitClaimRequest()
     setLoading(false)
@@ -49,8 +54,16 @@ const Step1 = () => {
   }
 
   useEffect(() => {
+    if (!claimRequest.id) return
     if (claimRequest.id) setAlreadySubmitted(true)
-  }, [claimRequest])
+
+    if (claimRequest.walletToReceive === wallet.address) {
+      setClaimMessage(t('alreadySent'))
+    } else if (claimRequest.device.deviceID === deviceID) {
+      setClaimMessage(t('deviceAlreadyClaim'))
+    }
+
+  }, [claimRequest, deviceID, wallet])
 
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: 16, paddingVertical: 12}}>
@@ -87,7 +100,7 @@ const Step1 = () => {
             style={{justifyContent: 'flex-start'}}
             onPress={handleClaimMembershipNFT}
           >
-            {alreadySubmitted ? (claimRequest.status === "completed" ? t('alreadySent') : t('alreadyClaimed') ) : t('claimNow')}
+            {alreadySubmitted ? (claimRequest.status === "completed" ? claimMessage : t('alreadyClaimed') ) : t('claimNow')}
           </Button>
         )}
       </View>
