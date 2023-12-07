@@ -2,19 +2,17 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
-import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
 import styles from './styles';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
 import Separator from '../../../component/Separator';
 import Icon from '../../../component/Icon';
+import { usePreference } from '../../../hook/usePreference';
 
 const LegalModal = ({trigger}: {
   trigger: () => JSX.Element,
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const { t } = useTranslation<string>()
 

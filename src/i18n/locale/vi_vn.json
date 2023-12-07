@@ -228,5 +228,7 @@
   "properties": "Thuộc tính",
   "lockedStake": "Đầu tư bị khoá",
   "msgImportWalletError" : "Có lỗi xảy ra. Đảm bảo bạn cung cấp chính xác 12 từ khi tạo ví của mình",
-  "msgEnterRecoveryPhrase" : "Vui lòng nhập đủ 12 từ"
+  "msgEnterRecoveryPhrase" : "Vui lòng nhập đủ 12 từ",
+  "noInternetConnection": "Không có kết nối internet. Vui lòng thử lại sau.",
+  "deviceAlreadyClaim": "Thiết bị này đã nhận NFT ở ví khác"
 }

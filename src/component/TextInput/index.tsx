@@ -3,11 +3,10 @@ import { TextInput as RNTextInput, StyleProp, View, ViewStyle } from 'react-nati
 import { TextInputProps } from 'react-native'
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet'
 import styles from './styles';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
 import Icon from '../Icon';
 import Text from '../Text';
+import { usePreference } from '../../hook/usePreference';
 
 interface Props extends TextInputProps {
   containerStyle?: StyleProp<ViewStyle>
@@ -19,8 +18,7 @@ interface Props extends TextInputProps {
 
 const TextInput = ({style, containerStyle, placeholderTextColor, error, postIcon, insideModal = false, ...rest}: Props) => {
 
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const [focused, setFocused] = useState(false)
 

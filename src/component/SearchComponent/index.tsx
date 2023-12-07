@@ -6,11 +6,10 @@ import DappRow from '../../screen/U2UEcoDashboardScreen/FeatureTab/DappRow';
 import TextInput from '../TextInput';
 import Icon from '../Icon';
 import { getPhonePaddingTop } from '../../util/platform';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import Text from '../Text';
 import { useNetwork } from '../../hook/useNetwork';
 import { useTranslation } from 'react-i18next';
+import { usePreference } from '../../hook/usePreference';
 // Define the types
 type SearchResult = {
   // id: number;
@@ -39,8 +38,7 @@ const SearchComponent: React.FC = () => {
   const {networkConfig} = useNetwork()
   const { t } = useTranslation();
 
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   useEffect(() => {
     if (debouncedSearchQuery.length > 0) {
@@ -48,7 +46,6 @@ const SearchComponent: React.FC = () => {
         if (!networkConfig) return
         try {
           setSearching(true)
-          console.log('networkConfig.dappURL', networkConfig.dappURL)
           const response = await fetch(
             networkConfig.dappURL,
           );

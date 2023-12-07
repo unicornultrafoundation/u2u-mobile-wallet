@@ -5,24 +5,21 @@ import Text from '../../component/Text';
 import Icon from '../../component/Icon';
 import { useTranslation } from 'react-i18next';
 import theme from '../../theme';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import Button from '../../component/Button';
 import TextInput from '../../component/TextInput';
 import { isAddress } from 'ethers';
 import { useWallet } from '../../hook/useWallet';
 import { useTransactionStore } from '../../state/transaction';
 import Scanner from '../../component/QRCodeScanner';
-import { useLocalStore } from '../../state/local';
 import RecentAddress from '../../component/RecentAddress';
+import { usePreference } from '../../hook/usePreference';
 
 const AddressStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
   onBack: () => void;
 }) => {
   const { wallet } = useWallet()
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
   const {t} = useTranslation<string>()
   const { receiveAddress, setReceiveAddress, setTokenMeta, setAmount } = useTransactionStore()
 

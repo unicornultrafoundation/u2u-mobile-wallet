@@ -2,18 +2,16 @@ import React from 'react'
 import { FlatList, View } from 'react-native';
 import { useFetchDelegator } from '../../../hook/useFetchDelegator';
 import { useWallet } from '../../../hook/useWallet';
-import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
 import DelegationItem from './DelegationItem';
 import { TABBAR_HEIGHT } from '../../../component/CustomBottomTab';
+import { usePreference } from '../../../hook/usePreference';
 
 const DelegationList = () => {
   const {wallet} = useWallet()
   const {delegator} = useFetchDelegator(wallet.address)
   const { validations, address: delegatorAddr } = delegator
 
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   return (
     <View style={{

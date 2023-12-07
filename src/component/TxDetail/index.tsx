@@ -7,8 +7,6 @@ import Icon from '../Icon';
 import Separator from '../Separator';
 import { TransactionReceipt, TransactionResponse } from 'ethers'
 import { useTransaction } from '../../hook/useTransaction';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
 import { useNetwork } from '../../hook/useNetwork';
 import { formatDate } from '../../util/date';
@@ -22,6 +20,7 @@ import { useSupportedTokens } from '../../hook/useSupportedTokens';
 import ERC20TxMetaSection from './ERC20TxMetaSection';
 import Toast from 'react-native-toast-message';
 import LoadingView from '../Common/loadingView';
+import { usePreference } from '../../hook/usePreference';
 
 const TxDetail = ({txHash, onClose}: {
   txHash: string;
@@ -29,8 +28,7 @@ const TxDetail = ({txHash, onClose}: {
 }) => {
   const {wallet} = useWallet()
   const {name, blockExplorer} = useNetwork()
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
   const { t } = useTranslation<string>()
   const { fetchTxReceipt, fetchTxDetail } = useTransaction()
   const { fetchBlock } = useNetwork()

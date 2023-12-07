@@ -29,6 +29,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import MoreStackScreen from './src/stack/MoreStack';
+import { useNetInfo } from "@react-native-community/netinfo";
 import appsFlyer from 'react-native-appsflyer';
 import { MenuProvider } from 'react-native-popup-menu';
 import Toast from 'react-native-toast-message';
@@ -43,6 +44,7 @@ import { SUPPORTED_CHAINS } from './src/config/chain';
 import SettingStackScreen from './src/stack/SettingStack';
 import { useTranslation } from 'react-i18next';
 import { APP_FLYERS_DEV_KEY, APP_FLYERS_IOS_APP_ID } from './src/config/constant';
+import NoInternetScreen from './src/screen/NoInternetScreen';
 
 //@ts-ignore
 global.CustomEvent = global.Event
@@ -70,6 +72,7 @@ appsFlyer.initSdk(
 
 function App(): JSX.Element {
   const {unlocked} = useGlobalStore()
+  const { type, isConnected } = useNetInfo();
   const {darkMode: isDarkMode, language} = usePreferenceStore()
   const preferenceTheme = isDarkMode ? darkTheme : lightTheme
 
@@ -251,6 +254,10 @@ function App(): JSX.Element {
 
   if (!loaded) {
     return <SplashScreen />
+  }
+
+  if (!isConnected) {
+    return <NoInternetScreen />
   }
 
   return (

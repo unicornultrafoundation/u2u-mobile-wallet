@@ -4,19 +4,17 @@ import { styles } from './styles';
 import Text from '../../component/Text';
 import { useTranslation } from 'react-i18next';
 import theme from '../../theme';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import SEND_ILLUS from '../../asset/images/send_tx.png'
 import Button from '../../component/Button';
 import { useTransaction } from '../../hook/useTransaction';
 import TxDetail from '../../component/TxDetail';
 import { useNavigation } from '@react-navigation/native';
+import { usePreference } from '../../hook/usePreference';
 
 const DelegateStep = ({onSkip}: {
   onSkip: () => void
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const navigation = useNavigation<any>()
 

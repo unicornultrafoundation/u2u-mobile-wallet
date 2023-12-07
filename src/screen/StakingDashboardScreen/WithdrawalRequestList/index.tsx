@@ -1,18 +1,16 @@
 import React from 'react'
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
 import { useFetchWithdrawRequest } from '../../../hook/useFetchWithdrawRequest';
 import { useWallet } from '../../../hook/useWallet';
-import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
 import WRItem from './WRItem';
 import { TABBAR_HEIGHT } from '../../../component/CustomBottomTab';
+import { usePreference } from '../../../hook/usePreference';
 
 const WithdrawalRequestList = () => {
   const {wallet} = useWallet()
   const {wr} = useFetchWithdrawRequest(wallet.address.toLowerCase())
 
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   return (
     <View style={{

@@ -20,13 +20,13 @@ import UnstakeSection from './UnstakeSection';
 import { useFetchLockedStake } from '../../../hook/useFetchLockedStake';
 import BigNumber from 'bignumber.js';
 import LockModal from './LockModal';
+import { usePreference } from '../../../hook/usePreference';
 
 const DelegationItem = ({item}: {
   item: Validation
 }) => {
   const {wallet} = useWallet()
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const {t} = useTranslation<string>()
 

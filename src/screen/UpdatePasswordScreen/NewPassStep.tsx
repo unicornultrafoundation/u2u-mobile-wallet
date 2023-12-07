@@ -9,6 +9,7 @@ import Text from '../../component/Text';
 import Icon from '../../component/Icon';
 import theme from '../../theme';
 import OtpInputs from 'react-native-otp-inputs';
+import { usePreference } from '../../hook/usePreference';
 
 const NewPassStep = ({onNextStep, onBack, savePassword}: {
   onNextStep: () => void;
@@ -16,8 +17,7 @@ const NewPassStep = ({onNextStep, onBack, savePassword}: {
   savePassword: (pass: string) => void
 }) => {
   const {t} = useTranslation<string>()
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const [internalPassword, setInternalPassword] = useState('')
 

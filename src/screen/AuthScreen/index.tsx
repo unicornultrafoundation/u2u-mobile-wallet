@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { ImageBackground, View } from 'react-native';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import { styles } from './styles';
 import { useLocalStore } from '../../state/local';
 import BACKGROUND from '../../asset/images/create_wallet_bg.png'
@@ -12,10 +10,10 @@ import theme from '../../theme';
 import Button from '../../component/Button';
 import { useGlobalStore } from '../../state/global';
 import { useTranslation } from 'react-i18next';
+import { usePreference } from '../../hook/usePreference';
 
 const AuthScreen = () => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const {t} = useTranslation<string>()
 

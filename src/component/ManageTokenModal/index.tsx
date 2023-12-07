@@ -1,16 +1,14 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useMemo, useRef } from 'react'
 import { TouchableOpacity, View } from 'react-native';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 
 import ModalContent from './ModalContent';
+import { usePreference } from '../../hook/usePreference';
 
 const ManageTokenModal = ({trigger}: {
   trigger: () => JSX.Element,
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);

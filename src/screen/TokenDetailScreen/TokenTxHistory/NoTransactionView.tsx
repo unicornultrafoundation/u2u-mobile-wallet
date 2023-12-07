@@ -1,15 +1,13 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
 import { useTranslation } from "react-i18next";
-import { darkTheme, lightTheme } from '../../../theme/color';
-import { usePreferenceStore } from '../../../state/preferences';
 import theme from '../../../theme';
+import { usePreference } from '../../../hook/usePreference';
 
 const NoTransactionView = () => {
 
   const {t} = useTranslation()
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   return (
     <View style={styles.container}>

@@ -4,15 +4,16 @@ import { useWallet } from "./useWallet"
 import DeviceInfo from "react-native-device-info"
 import { FETCH_CLAIM_REQUEST_ENDPOINT, SUBMIT_CLAIM_REQUEST_ENDPOINT } from "../config/endpoint"
 import { useQuery } from "@tanstack/react-query"
+import { useTracking } from "./useTracking"
 
 export const useClaimMembershipNFT = () => {
   const { networkConfig } = useNetwork()
   const {wallet} = useWallet()
+  const {deviceID} = useTracking()
 
   const submitClaimRequest = useCallback(async () => {
     try {
       if (!networkConfig || !wallet || !networkConfig.api_endpoint) return
-      const deviceID = await DeviceInfo.syncUniqueId();
       const endpoint = `${networkConfig.api_endpoint}${SUBMIT_CLAIM_REQUEST_ENDPOINT}`
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -36,7 +37,7 @@ export const useClaimMembershipNFT = () => {
       return 
     }
 
-  }, [networkConfig, wallet])
+  }, [networkConfig, wallet, deviceID])
 
   const {data} = useQuery({
     queryKey: ['fetchClaimNFTRequest', networkConfig],
@@ -44,7 +45,7 @@ export const useClaimMembershipNFT = () => {
       try {
         if (!networkConfig || !networkConfig.api_endpoint) return []
         const deviceID = await DeviceInfo.syncUniqueId();
-        const endpoint = `${networkConfig?.api_endpoint}${FETCH_CLAIM_REQUEST_ENDPOINT}?deviceID=${deviceID}`
+        const endpoint = `${networkConfig?.api_endpoint}${FETCH_CLAIM_REQUEST_ENDPOINT}?deviceID=${deviceID}&walletAddress=${wallet.address}`
         const requestOptions: Record<string, any> = {
           method: 'GET',
           redirect: 'follow'

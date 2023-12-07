@@ -1,38 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
-  TouchableOpacity,
   View,
   Image,
   ScrollView,
-  Dimensions,
   NativeScrollEvent,
   NativeSyntheticEvent,
 } from 'react-native';
 import Text from '../../component/Text';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
-import Collapsible from '../../component/Collapsible';
-import { useNavigation } from '@react-navigation/native';
-import Dropdown from '../../component/Dropdown';
 import { useSupportedNFT } from '../../hook/useSupportedNFT';
 import { useGlobalStore } from '../../state/global';
 import NFTRow from './NFTRow';
-import theme from '../../theme';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { FlatList } from 'react-native';
+import { useMultipleTokenBalance } from '../../hook/useTokenBalance';
 
 const NFTTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onResetParentView: () => void; }) => {
   const { t } = useTranslation()
-  const { darkMode } = usePreferenceStore();
-  const preferenceTheme = darkMode ? darkTheme : lightTheme;
-  const navigation = useNavigation<any>();
   const [firstTouch, setFirstTouch] = useState(0);
   const { searchKeyword } = useGlobalStore()
 
   const { supportedNFT: data } = useSupportedNFT()
 
   const [expandedItem, setExpandedItem] = useState("");
+  const nftsBalance = useMultipleTokenBalance(
+    data.map((i) => {
+      return {
+        tokenAddress: i.id,
+        decimals: 0
+      }
+    })
+  )
+
+  const dataWithBalance = useMemo(() => {
+    return data.filter((i) => {
+      const balanceItem = nftsBalance.find((item) => item.address === i.id)
+      if (!balanceItem) return false
+      return balanceItem.balance !== "0"
+    })
+  }, [data, nftsBalance])
+
   const handleExpandItem = (id: string) => {
     if (id === expandedItem) {
       setExpandedItem("");
@@ -55,7 +62,7 @@ const NFTTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onResetP
   };
 
   if (collapsed) {
-    const filteredNFTs = data.filter((i) => {
+    const filteredNFTs = dataWithBalance.filter((i) => {
       return (
         (i.name as string).toLowerCase().includes(searchKeyword.toLowerCase())
       );
@@ -96,7 +103,7 @@ const NFTTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onResetP
           </Text>
         </Dropdown> */}
 
-        {(data ?? []).length == 0 && (
+        {(dataWithBalance ?? []).length == 0 && (
           <View style={styles.containerNoNFT}>
             <Image source={require('../../asset/images/ic_no_nft.png')} style={styles.imageNoNFT} resizeMode="contain" />
             <Text style={styles.textNoNFT}> {t('There is no NFTs yet')}</Text>
@@ -109,7 +116,7 @@ const NFTTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onResetP
           style={{ minHeight: 500 }}
           onScrollBeginDrag={e => onScrollBeginDrag(e)}
           onScrollEndDrag={e => onScrollEndDrag(e)}
-          data={data}
+          data={dataWithBalance}
           renderItem={({ item }) => <NFTRow key={`nft-${item.id}`} nftCollection={item} open={expandedItem === item.id} handleExpandItem={handleExpandItem} />}
           keyExtractor={item => item.id}
         />

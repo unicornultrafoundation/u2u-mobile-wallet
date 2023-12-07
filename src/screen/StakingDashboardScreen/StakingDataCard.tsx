@@ -12,13 +12,13 @@ import { useTotalSupply } from '../../hook/useTotalSupply';
 import { useEpochRewards } from '../../hook/useEpochRewards';
 import { useFetchAllValidator } from '../../hook/useFetchAllValidator';
 import { useCurrentEpoch } from '../../hook/useCurrentEpoch';
+import { usePreference } from '../../hook/usePreference';
 
 const StakingInfoItem = ({title, value}: {
   title: string;
   value: string
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   return (
     <View style={{flex: 1}}>
@@ -36,8 +36,7 @@ const StakingDataCard = () => {
   const { fetchEpoch } = useCurrentEpoch(stakingContractOptions)
   const { fetchRewardsPerEpoch } = useEpochRewards(stakingContractOptions)
 
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const [rewardsPerEpoch, setRewardsPerEpoch] = useState("0")
 

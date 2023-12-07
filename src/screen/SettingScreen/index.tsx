@@ -2,8 +2,6 @@ import React, { useCallback } from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info'
 import Text from '../../component/Text';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import { styles } from './styles'
 import theme from '../../theme';
 import Icon from '../../component/Icon';
@@ -13,13 +11,13 @@ import LanguageModal from './LanguageModal';
 import { useTranslation } from 'react-i18next';
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { useGlobalStore } from '../../state/global';
+import { usePreference } from '../../hook/usePreference';
 
 const VERSION = DeviceInfo.getVersion()
 
 const SettingScreen = () => {
   const navigation = useNavigation<any>()
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const { setRouteName } = useGlobalStore();
 

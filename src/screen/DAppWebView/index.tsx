@@ -9,11 +9,10 @@ import loadLocalResource from 'react-native-local-resource';
 import { parseError, parseRun } from '../../util/dapp';
 import Icon from '../../component/Icon';
 import Text from '../../component/Text';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import ConfirmTxModal from './ConfirmTxModal';
 import { useGlobalStore } from '../../state/global';
 import { Wallet } from 'ethers';
+import { usePreference } from '../../hook/usePreference';
 
 const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `
@@ -21,8 +20,7 @@ const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.set
 const DAppWebView = () => {
 
   const { setRouteName } = useGlobalStore();
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
   const navigation = useNavigation<any>()
 
   const appURL = 'https://testnet-staking.uniultra.xyz/'

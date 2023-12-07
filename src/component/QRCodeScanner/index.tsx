@@ -8,6 +8,7 @@ import Button from '../Button';
 import { useTranslation } from 'react-i18next';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
+import { usePreference } from '../../hook/usePreference';
 
 const Scanner = ({onSuccess, onCancel}: {
   onSuccess: (val: string) => void
@@ -15,8 +16,7 @@ const Scanner = ({onSuccess, onCancel}: {
 }) => {
   const {t} = useTranslation<string>()
 
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   return (
     <View style={styles.container}>

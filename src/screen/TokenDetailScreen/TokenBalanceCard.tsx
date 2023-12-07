@@ -4,19 +4,17 @@ import { TouchableOpacity, View } from 'react-native';
 import Text from '../../component/Text';
 import { styles } from './styles';
 import Icon from '../../component/Icon';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTokenBalance } from '../../hook/useTokenBalance';
 import { useWallet } from '../../hook/useWallet';
 import { useTransaction } from '../../hook/useTransaction';
 import { formatNumberString } from '../../util/string';
 import { useTranslation } from "react-i18next";
+import { usePreference } from '../../hook/usePreference';
 
 const TokenBalanceCard = () => {
   const {wallet} = useWallet()
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const {setTokenMeta} = useTransaction();
   const navigation = useNavigation<any>()

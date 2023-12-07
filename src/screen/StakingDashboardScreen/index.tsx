@@ -20,6 +20,7 @@ import LockedStakeList from './LockedStakeList'
 import { useFetchAllValidator } from '../../hook/useFetchAllValidator'
 import { useNetwork } from '../../hook/useNetwork'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { usePreference } from '../../hook/usePreference'
 
 const StakingDashboardScreen = () => {
   const route = useRoute()
@@ -32,8 +33,7 @@ const StakingDashboardScreen = () => {
   )
 
   const {t} = useTranslation<string>()
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const { fetch: fetchAllValidators } = useFetchAllValidator()
   const {networkConfig} = useNetwork()

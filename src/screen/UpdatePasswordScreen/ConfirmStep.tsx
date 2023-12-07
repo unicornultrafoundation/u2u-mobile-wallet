@@ -6,11 +6,10 @@ import Icon from '../../component/Icon';
 import { useTranslation } from 'react-i18next';
 import theme from '../../theme';
 import OtpInputs from 'react-native-otp-inputs';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import { useLocalStore } from '../../state/local';
 import Button from '../../component/Button';
 import Toast from 'react-native-toast-message';
+import { usePreference } from '../../hook/usePreference';
 
 const ConfirmStep = ({onNextStep, onBack, passwordToConfirm}: {
   onNextStep: () => void;
@@ -18,8 +17,7 @@ const ConfirmStep = ({onNextStep, onBack, passwordToConfirm}: {
   passwordToConfirm: string;
 }) => {
   const {t} = useTranslation<string>()
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const {savePassword} = useLocalStore()
 

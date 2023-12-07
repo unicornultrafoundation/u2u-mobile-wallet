@@ -1,16 +1,15 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react'
-import { ActivityIndicator, ScrollView, TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useTokenTxHistory } from '../../../hook/useTokenTxHistory';
 import { useWallet } from '../../../hook/useWallet';
 import theme from '../../../theme';
 import Button from '../../../component/Button';
-import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
 import NoTransactionView from "./NoTransactionView";
 import { useTranslation } from "react-i18next";
 import TxHistoryItem from '../../TxHistoryScreen/TxHistoryItem';
 import LoadingView from '../../../component/Common/loadingView';
+import { usePreference } from '../../../hook/usePreference';
 
 const TokenTxHistory = () => {
   const {params} = useRoute<any>();
@@ -22,8 +21,7 @@ const TokenTxHistory = () => {
   const {wallet} = useWallet()
   const {loading, txList} = useTokenTxHistory(wallet.address, tokenMeta.address)
 
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   if (loading) {
     return <LoadingView/>

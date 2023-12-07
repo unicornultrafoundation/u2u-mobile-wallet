@@ -10,10 +10,10 @@ import { useTransaction } from '../../hook/useTransaction';
 import { getDigit, parseNumberFormatter } from '../../util/string';
 import BigNumber from 'bignumber.js';
 import { t } from 'i18next';
+import { usePreference } from '../../hook/usePreference';
 
 const GasLimitInput = () => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const {gasLimit, setGasLimit} = useTransaction()
   const [focused, setFocused] = useState(false)

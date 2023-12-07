@@ -4,8 +4,6 @@ import { styles } from './styles';
 import Icon from '../../component/Icon';
 import Text from '../../component/Text';
 import { useTranslation } from 'react-i18next';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
 import Button from '../../component/Button';
 import { formatNumberString, getDigit, parseNumberFormatter } from '../../util/string';
@@ -14,8 +12,6 @@ import { useTokenBalance } from '../../hook/useTokenBalance';
 import { useWallet } from '../../hook/useWallet';
 import { SvgUri } from 'react-native-svg';
 import BigNumber from 'bignumber.js';
-import { encodeTxData } from '../../util/contract';
-import { ERC20_ABI } from '../../util/abis/erc20';
 import { useNativeBalance } from '../../hook/useNativeBalance';
 import { useNetwork } from '../../hook/useNetwork';
 import { useStaking } from '../../hook/useStaking';
@@ -23,14 +19,14 @@ import { Validator } from '../../service/staking';
 import { GAS_LIMIT_HARD } from '../../config/constant';
 import { useDelegate } from '../../hook/useDelegate';
 import { getPhonePaddingBottom } from '../../util/platform';
+import { usePreference } from '../../hook/usePreference';
 
 const AmountStep = ({onNextStep, onBack, validator}: {
   onNextStep: () => void;
   onBack: () => void;
   validator: Validator
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
   const {t} = useTranslation<string>()
   const {networkConfig} = useNetwork()
 

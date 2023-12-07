@@ -1,8 +1,6 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native';
-import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
 import { LockedStake } from '../../../hook/useFetchLockedStake';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
@@ -21,13 +19,13 @@ import { TransactionReceipt } from 'ethers';
 import { useFetchAllLockedStake } from '../../../hook/useFetchAllLockedStake';
 import { useWallet } from '../../../hook/useWallet';
 import { useTranslation } from 'react-i18next';
+import { usePreference } from '../../../hook/usePreference';
 
 const UnlockModal = ({trigger, item}: {
   trigger: () => JSX.Element,
   item: LockedStake
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['50%'], []);

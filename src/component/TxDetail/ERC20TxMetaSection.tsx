@@ -4,11 +4,10 @@ import { SvgUri } from 'react-native-svg';
 import { TransactionResponse } from 'ethers';
 import Text from '../Text';
 import theme from '../../theme';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import { decodeTxData, findABIFragment } from '../../util/contract';
 import BigNumber from 'bignumber.js';
 import { ERC20_ABI } from '../../util/abis/erc20';
+import { usePreference } from '../../hook/usePreference';
 
 const TRANSFER_INPUT_ABI = [
   {
@@ -27,8 +26,7 @@ const ERC20TxMetaSection = ({tokenMeta, txDetail}: {
   tokenMeta: Record<string, any>;
   txDetail: TransactionResponse
 }) => {
-  const {darkMode} = usePreferenceStore()
-  const preferenceTheme = darkMode ? darkTheme : lightTheme
+  const {preferenceTheme} = usePreference()
 
   // const [decodedParams, setDecodedParams] = useState<Record<string, any>>({})
   const [amount, setAmount] = useState("0")
