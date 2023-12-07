@@ -125,7 +125,6 @@ const UnstakeSection = ({onCancel, item, actualStakedAmount} : {
     <View>
       <TextInput
         autoFocus
-        style={{ height: 20 }}
         value={unstakeAmount}
         placeholder={t('unstakeAmount')}
         onChangeText={val => {

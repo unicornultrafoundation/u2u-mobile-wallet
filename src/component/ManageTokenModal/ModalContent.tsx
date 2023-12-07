@@ -23,22 +23,7 @@ const ModalContent = () => {
   const [searchQuery, setSearchQuery] = useState('')
 
   return (
-    <View style={[
-      styles.contentContainer,
-      {
-        backgroundColor: preferenceTheme.background.background
-      }
-    ]}>
-      <Text
-        style={[
-        theme.typography.headline.medium,
-        {
-          color: preferenceTheme.text.title,
-          marginBottom: 16
-        }
-      ]}>
-        {t('manageToken')}
-      </Text>
+    <View style={styles.contentContainer}>
       <TextInput
         value={searchQuery}
         onChangeText={setSearchQuery}

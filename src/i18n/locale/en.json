@@ -230,5 +230,8 @@
   "msgImportWalletError" : "Error occurred. Make sure you provide the correct 12 words phrase when you created your wallet",
   "msgEnterRecoveryPhrase" : "Please enter 12 words phrase",
   "noInternetConnection": "No internet connection. Please try again later.",
-  "deviceAlreadyClaim": "Already claimed on another wallet."
+  "deviceAlreadyClaim": "Already claimed on another wallet.",
+  "description": "Description",
+  "socialMedia": "Social media",
+  "filter": "Filter"
 }

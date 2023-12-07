@@ -10,8 +10,6 @@ export const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingBottom: getPhonePaddingBottom(),
     paddingTop: 16
   },
 });

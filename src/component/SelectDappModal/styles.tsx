@@ -1,12 +1,10 @@
 import {StyleSheet} from 'react-native';
-import {getPhonePaddingBottom} from '../../util/platform';
 
 export default StyleSheet.create({
   contentContainer: {
     flex: 1,
     // alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingBottom: getPhonePaddingBottom(),
+    paddingVertical: 10,
   },
   title: {
     marginTop: 12,
@@ -14,9 +12,7 @@ export default StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
     paddingVertical: 8,
   },
   walletRowContainer: {

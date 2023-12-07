@@ -4,7 +4,6 @@ import { TouchableOpacity, View } from 'react-native';
 import { LockedStake } from '../../../hook/useFetchLockedStake';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
-import { styles } from './styles';
 import { formatNumberString, getDigit, parseNumberFormatter } from '../../../util/string';
 import { parseFromRaw } from '../../../util/bignum';
 import TextInput from '../../../component/TextInput';
@@ -20,6 +19,7 @@ import { useFetchAllLockedStake } from '../../../hook/useFetchAllLockedStake';
 import { useWallet } from '../../../hook/useWallet';
 import { useTranslation } from 'react-i18next';
 import { usePreference } from '../../../hook/usePreference';
+import CustomBottomSheetModal from '../../../component/CustomBottomSheetModal';
 
 const UnlockModal = ({trigger, item}: {
   trigger: () => JSX.Element,
@@ -30,14 +30,8 @@ const UnlockModal = ({trigger, item}: {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['50%'], []);
 
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
   const handleClose = useCallback(() => {
     bottomSheetModalRef.current?.close();
-  }, []);
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
   }, []);
 
   const { t } = useTranslation<string>()
@@ -196,7 +190,7 @@ const UnlockModal = ({trigger, item}: {
 
   const renderForm = () => {
     return (
-      <View style={{width: '100%', flex: 1}}>
+      <View style={{width: '100%', flex: 1, paddingVertical: 10}}>
         <View style={{flexDirection: 'row', gap: 8}}>
           <Text
             style={[
@@ -260,50 +254,13 @@ const UnlockModal = ({trigger, item}: {
   }
 
   return (
-    <>
-      <TouchableOpacity
-        onPress={handlePresentModalPress}
-      >
-        {trigger()}
-      </TouchableOpacity>
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        index={0}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-        handleStyle={{
-          backgroundColor: preferenceTheme.background.background,
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16
-        }}
-        handleIndicatorStyle={{
-          backgroundColor: '#F6F6F6'
-        }}
-        backdropComponent={({ style }) => {
-          return (
-            <View
-              style={[
-                style,
-                {
-                  backgroundColor: '#181818',
-                  opacity: 0.9,
-                }
-              ]}
-              onTouchEnd={handleClose}
-            />
-          )
-        }}
-      >
-        <View style={[
-          styles.contentContainer,
-          {
-            backgroundColor: preferenceTheme.background.background
-          }
-        ]}>
-          {renderForm()}
-        </View>
-      </BottomSheetModal>
-    </>
+    <CustomBottomSheetModal
+      modalRef={bottomSheetModalRef}
+      trigger={trigger()}
+      triggerModal={renderForm()}
+      snapPoints={snapPoints}
+      hasSeparator={false}
+    />
   )
 }
 

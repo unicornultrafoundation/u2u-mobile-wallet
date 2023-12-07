@@ -1,24 +1,21 @@
 import React, { useCallback, useRef, useMemo } from 'react'
 import {
-  BottomSheetModal,
+  BottomSheetModal, BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
-import styles from './styles';
-import { View, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import Text from '../Text';
 import theme from '../../theme';
-import Button from '../Button';
 import { useTranslation } from 'react-i18next';
 import { SUPPORTED_CHAINS } from '../../config/chain';
 import Icon from '../Icon';
 import { useNetwork } from '../../hook/useNetwork';
-import Separator from '../Separator';
 import { usePreference } from '../../hook/usePreference';
+import CustomBottomSheetModal from '../CustomBottomSheetModal';
 
 const SelectNetworkModal = ({trigger}: {
   trigger: () => JSX.Element,
 }) => {
   const {preferenceTheme} = usePreference()
-
   const { t } = useTranslation<string>()
 
   const { chainId, switchNetwork } = useNetwork()
@@ -27,119 +24,60 @@ const SelectNetworkModal = ({trigger}: {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
+  const snapPoints = useMemo(() => ['35%', '60%'], []);
 
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
   const handleClose = useCallback(() => {
     bottomSheetModalRef.current?.close();
   }, []);
-  // const handleSheetChanges = useCallback((index: number) => {
-  //   console.log('handleSheetChanges', index);
-  // }, []);
+
+  const renderTriggerModal = () => {
+    return (
+      <BottomSheetScrollView bounces={false}>
+        {SUPPORTED_CHAINS.map((item) => {
+          const selected = chainId === item.chainID
+          return (
+            <TouchableOpacity
+              key={`network-${item.chainID}`}
+              style={{
+                flexDirection: 'row',
+                width: "100%",
+                alignItems: 'center',
+                justifyContent: selected ? "space-between" : "flex-start",
+                paddingVertical: 8
+              }}
+              onPress={() => {
+                switchNetwork(item.chainID)
+                handleClose()
+              }}
+            >
+              <Text
+                style={[
+                  theme.typography.label.bold,
+                  {
+                    color: preferenceTheme.text.title
+                  }
+                ]}
+              >
+                {item.name}
+              </Text>
+              {selected && (
+                <Icon name="success" width={24} height={24} />
+              )}
+            </TouchableOpacity>
+          )
+        })}
+      </BottomSheetScrollView>
+    )
+  }
 
   return (
-    <>
-      <TouchableOpacity
-        onPress={handlePresentModalPress}
-      >
-        {trigger()}
-      </TouchableOpacity>
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        index={1}
-        snapPoints={snapPoints}
-        // onChange={handleSheetChanges}
-        handleStyle={{
-          backgroundColor: preferenceTheme.background.background,
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16
-        }}
-        handleIndicatorStyle={{
-          backgroundColor: '#F6F6F6'
-        }}
-        backdropComponent={({ style }) => {
-          return (
-            <View
-              style={[
-                style,
-                {
-                  backgroundColor: '#181818',
-                  opacity: 0.9,
-                }
-              ]}
-              onTouchEnd={handleClose}
-            />
-          )
-        }}
-      >
-        <View style={[
-          styles.contentContainer,
-          {
-            backgroundColor: preferenceTheme.background.background
-          }
-        ]}>
-          <Text style={[
-            theme.typography.headline.medium,
-            {
-              color: preferenceTheme.text.title,
-              // marginBottom: 28
-            }
-          ]}>
-            {t('selectNetwork')}
-          </Text>
-          <Separator style={{width: '100%'}} />
-          {SUPPORTED_CHAINS.map((item) => {
-            const selected = chainId === item.chainID
-            return (
-              <TouchableOpacity
-                key={`network-${item.chainID}`}
-                style={{
-                  flexDirection: 'row',
-                  width: "100%",
-                  alignItems: 'center',
-                  justifyContent: selected ? "space-between" : "flex-start",
-                  paddingVertical: 8
-                }}
-                onPress={() => {
-                  switchNetwork(item.chainID)
-                  handleClose()
-                }}
-              >
-                <Text
-                  style={[
-                    theme.typography.label.bold,
-                    {
-                      color: preferenceTheme.text.title
-                    }
-                  ]}
-                >
-                  {item.name}
-                </Text>
-                {selected && (
-                  <Icon name="success" width={24} height={24} />
-                )}
-              </TouchableOpacity>
-            )
-          })}
-          {/* <View
-            style={{width: '100%', flex: 1, justifyContent: 'flex-end'}}
-          >
-            <Button
-              fullWidth
-              style={{
-                borderRadius: 60
-              }}
-              onPress={handleClose}
-            >
-              {t('continue')}
-            </Button>
-          </View> */}
-        </View>
-      </BottomSheetModal>
-    </>
+    <CustomBottomSheetModal
+      modalRef={bottomSheetModalRef}
+      title={'selectNetwork'}
+      trigger={trigger()}
+      triggerModal={renderTriggerModal()}
+      snapPoints={snapPoints}
+    />
   )
 };
 

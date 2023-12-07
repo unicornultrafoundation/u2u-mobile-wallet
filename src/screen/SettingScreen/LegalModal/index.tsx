@@ -1,13 +1,13 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
-import Separator from '../../../component/Separator';
 import Icon from '../../../component/Icon';
 import { usePreference } from '../../../hook/usePreference';
+import CustomBottomSheetModal from '../../../component/CustomBottomSheetModal';
 
 const LegalModal = ({trigger}: {
   trigger: () => JSX.Element,
@@ -21,68 +21,14 @@ const LegalModal = ({trigger}: {
 
   // variables
   const snapPoints = useMemo(() => ['35%'], []);
-
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-  const handleClose = useCallback(() => {
-    bottomSheetModalRef.current?.close();
-  }, []);
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
+  
   return (
-    <>
-      <TouchableOpacity
-        onPress={handlePresentModalPress}
-      >
-        {trigger()}
-      </TouchableOpacity>
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        index={0}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-        backgroundStyle={{
-          backgroundColor: preferenceTheme.background.background,
-        }}
-        handleStyle={{
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16
-        }}
-        handleIndicatorStyle={{
-          backgroundColor: '#F6F6F6'
-        }}
-        backdropComponent={({ style }) => {
-          return (
-            <View
-              style={[
-                style,
-                {
-                  backgroundColor: '#181818',
-                  opacity: 0.9,
-                }
-              ]}
-              onTouchEnd={handleClose}
-            />
-          )
-        }}
-      >
-        <View style={[
-          styles.contentContainer,
-        ]}>
-          <Text style={[
-            theme.typography.headline.medium,
-            {
-              color: preferenceTheme.text.title,
-              marginVertical: 8,
-            }
-          ]}>
-            {t('legal')}
-          </Text>
-          <Separator style={{width: '100%'}} />
+    <CustomBottomSheetModal
+      modalRef={bottomSheetModalRef}
+      title='legal' 
+      trigger={trigger()} 
+      triggerModal={
+        <View>
           <TouchableOpacity style={[styles.settingItem]}>
             <Text style={[theme.typography.footnote.medium, {flex: 1}]}>{t('privacyPolicy')}</Text>
             <Icon
@@ -102,8 +48,9 @@ const LegalModal = ({trigger}: {
             />
           </TouchableOpacity>
         </View>
-      </BottomSheetModal>
-    </>
+      }
+      snapPoints={snapPoints}
+    />
   )
 }
 
