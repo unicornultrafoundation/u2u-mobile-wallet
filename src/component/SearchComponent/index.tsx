@@ -46,7 +46,6 @@ const SearchComponent: React.FC = () => {
         if (!networkConfig) return
         try {
           setSearching(true)
-          console.log('networkConfig.dappURL', networkConfig.dappURL)
           const response = await fetch(
             networkConfig.dappURL,
           );

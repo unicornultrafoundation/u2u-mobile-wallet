@@ -23,7 +23,7 @@ const Step1 = () => {
 
   const [alreadySubmitted, setAlreadySubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [claimMessage, setClaimMessage] = useState('')
+  const [claimMessageKey, setClaimMessageKey] = useState('')
 
   const alertError = () => {
     Toast.show({
@@ -58,9 +58,9 @@ const Step1 = () => {
     if (claimRequest.id) setAlreadySubmitted(true)
 
     if (claimRequest.walletToReceive === wallet.address) {
-      setClaimMessage(t('alreadySent'))
+      setClaimMessageKey('alreadySent')
     } else if (claimRequest.device.deviceID === deviceID) {
-      setClaimMessage(t('deviceAlreadyClaim'))
+      setClaimMessageKey('deviceAlreadyClaim')
     }
 
   }, [claimRequest, deviceID, wallet])
@@ -100,7 +100,7 @@ const Step1 = () => {
             style={{justifyContent: 'flex-start'}}
             onPress={handleClaimMembershipNFT}
           >
-            {alreadySubmitted ? (claimRequest.status === "completed" ? claimMessage : t('alreadyClaimed') ) : t('claimNow')}
+            {alreadySubmitted ? (claimRequest.status === "completed" ? t(claimMessageKey) : t('alreadyClaimed') ) : t('claimNow')}
           </Button>
         )}
       </View>
