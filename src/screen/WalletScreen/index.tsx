@@ -5,7 +5,6 @@ import {
   NativeSyntheticEvent,
   SafeAreaView,
   ScrollView,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import { usePreferenceStore } from '../../state/preferences';
@@ -19,7 +18,6 @@ import BannerSection from './BannerSection';
 import Separator from '../../component/Separator';
 import { useFocusEffect, useRoute } from '@react-navigation/core';
 import { useGlobalStore } from '../../state/global';
-import { GestureResponderEvent } from 'react-native/Libraries/Types/CoreEventTypes';
 import { TABBAR_HEIGHT } from '../../component/CustomBottomTab';
 import theme from '../../theme';
 import Text from '../../component/Text';
@@ -27,7 +25,6 @@ import Icon from '../../component/Icon';
 import ManageTokenModal from '../../component/ManageTokenModal';
 import { useTranslation } from 'react-i18next';
 import { useTracking } from '../../hook/useTracking';
-import { Gesture } from 'react-native-gesture-handler';
 
 const WalletScreen = () => {
   const { t } = useTranslation()
@@ -38,7 +35,7 @@ const WalletScreen = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [scrollOffset, setScrollOffset] = useState(0);
   const [firstTouch, setFirstTouch] = useState(0);
-  const scrollViewRef = useRef(null);
+  const scrollViewRef = useRef<ScrollView>(null);
   let touchY = 0;
 
   const route = useRoute();
@@ -58,7 +55,7 @@ const WalletScreen = () => {
 
   // Handle Swipe event
   const onScrollEndDrag = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (e.nativeEvent.contentOffset.y == 0 && firstTouch == 0 && collapsed) {
+    if (e.nativeEvent.contentOffset.y === 0 && firstTouch === 0 && collapsed) {
       setCollapsed(false);
       scrollViewRef.current?.scrollTo({ y: 0, animated: true });
     }
