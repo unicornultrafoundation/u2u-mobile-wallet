@@ -139,22 +139,22 @@ export const typography: Record<string, any> = {
   },
   label: {
     regular: {
-      fontSize: 14,
-      lineHeight: 21,
+      fontSize: 16,
+      lineHeight: 25,
       letterSpacing: -0.32,
       fontWeight: "400",
       fontFamily: 'Regular'
     },
     medium: {
-      fontSize: 14,
-      lineHeight: 21,
+      fontSize: 16,
+      lineHeight: 25,
       letterSpacing: -0.32,
       fontWeight: "500",
       fontFamily: 'Regular'
     },
     bold: {
-      fontSize: 14,
-      lineHeight: 21,
+      fontSize: 16,
+      lineHeight: 25,
       letterSpacing: -0.32,
       fontWeight: "700",
       fontFamily: 'Regular'
