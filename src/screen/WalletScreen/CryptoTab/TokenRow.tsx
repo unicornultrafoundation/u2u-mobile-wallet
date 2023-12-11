@@ -34,7 +34,7 @@ const TokenRow = ({tokenObj}: {
         <Text>{tokenObj.symbol}</Text>
       </View>
       <View>
-        <Text>{formatNumberString(tokenObj.balance)} {tokenObj.symbol}</Text>
+        <Text>{formatNumberString(tokenObj.balance, 3)} {tokenObj.symbol}</Text>
       </View>
     </TouchableOpacity>
   )
