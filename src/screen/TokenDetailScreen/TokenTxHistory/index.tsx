@@ -34,7 +34,7 @@ const TokenTxHistory = () => {
   return (
     <ScrollView>
       {txList.map((txItem: Record<string, any>) => {
-        return <TxHistoryItem txKey={`token-tx-detail-${txItem.hash}`} txItem={txItem}/>
+        return <TxHistoryItem key={`token-tx-detail-${txItem.hash}`} txItem={txItem}/>
       })}
       <View style={{paddingVertical: 20, alignItems: 'center', justifyContent: 'center'}}>
         <Button
