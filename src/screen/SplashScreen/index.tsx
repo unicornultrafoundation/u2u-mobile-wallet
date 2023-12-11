@@ -3,7 +3,6 @@ import { ImageBackground } from 'react-native';
 import { styles } from './styles';
 import SPLASH_BG from '../../asset/images/splash_screen.png'
 import LottieView from "lottie-react-native";
-import { useTracking } from '../../hook/useTracking';
 import { firebase } from '@react-native-firebase/app-check';
 
 const rnfbProvider = firebase.appCheck().newReactNativeFirebaseAppCheckProvider();
