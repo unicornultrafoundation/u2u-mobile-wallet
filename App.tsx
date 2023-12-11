@@ -45,6 +45,7 @@ import SettingStackScreen from './src/stack/SettingStack';
 import { useTranslation } from 'react-i18next';
 import { APP_FLYERS_DEV_KEY, APP_FLYERS_IOS_APP_ID } from './src/config/constant';
 import NoInternetScreen from './src/screen/NoInternetScreen';
+import { useTracking } from './src/hook/useTracking';
 
 //@ts-ignore
 global.CustomEvent = global.Event
@@ -88,6 +89,12 @@ function App(): JSX.Element {
   const {loaded} = useHydration()
 
   const {i18n} = useTranslation<string>()
+
+  const {submitDeviceID} = useTracking()
+  
+  useEffect(() => {
+    submitDeviceID()
+  }, [submitDeviceID])
 
   const toastConfig = useMemo(() => {
     return {

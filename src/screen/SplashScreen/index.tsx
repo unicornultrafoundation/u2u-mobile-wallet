@@ -25,12 +25,6 @@ rnfbProvider.configure({
 firebase.appCheck().initializeAppCheck({ provider: rnfbProvider, isTokenAutoRefreshEnabled: true });
 
 const SplashScreen = () => {
-  const {submitDeviceID, deviceID} = useTracking()
-  
-  useEffect(() => {
-    submitDeviceID()
-  }, [submitDeviceID, deviceID])
-
   return (
     <ImageBackground
       source={SPLASH_BG}

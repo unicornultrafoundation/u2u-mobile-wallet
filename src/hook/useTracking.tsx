@@ -81,8 +81,8 @@ export const useTracking = () => {
   const submitDeviceID = useCallback(async () => {
     try {
       // if (!networkConfig || !networkConfig.api_endpoint || !toggleAlreadySubmitDeviceID || alreadySubmitDeviceID || !deviceID) return
-      if (!networkConfig || !networkConfig.api_endpoint || !deviceID) return
-
+      if (!networkConfig || !networkConfig.api_endpoint) return
+      const deviceID = await DeviceInfo.syncUniqueId();
       const endpoint = `${networkConfig?.api_endpoint}${SUBMIT_DEVICE_ID_ENDPOINT}`
 
       const appToken = await getAppCheckToken()
@@ -115,7 +115,6 @@ export const useTracking = () => {
     networkConfig,
     // alreadySubmitDeviceID,
     // toggleAlreadySubmitDeviceID,
-    deviceID
   ])
 
   return {
