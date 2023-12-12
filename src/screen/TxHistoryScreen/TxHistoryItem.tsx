@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Key } from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
 import { useTranslation } from "react-i18next";
 import { usePreferenceStore } from '../../state/preferences';
@@ -12,7 +12,7 @@ import { formatDate } from '../../util/date';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './styles'
 
-const TxHistoryItem = ({txItem} : {txItem: Record<string, any>}) => {
+const TxHistoryItem = ({txKey, txItem} : {txKey?: Key | null | undefined, txItem: Record<string, any>}) => {
 
   const {t} = useTranslation()
   const {darkMode} = usePreferenceStore()
@@ -25,7 +25,7 @@ const TxHistoryItem = ({txItem} : {txItem: Record<string, any>}) => {
   return (
     <TouchableOpacity
       style={styles.containerItem}
-      key={`token-tx-${txItem.hash}`}
+      key={txKey}
       onPress={() => navigation.navigate("TransactionDetail", {transactionHash: txItem.hash})}
     >
       <Icon

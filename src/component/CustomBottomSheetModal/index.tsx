@@ -1,7 +1,7 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next';
-import { TouchableOpacity, View, Text } from 'react-native';
+import { TouchableOpacity, View, Text, StyleProp, ViewStyle } from 'react-native';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
@@ -19,10 +19,11 @@ interface Props {
   | Array<string | number>
   | SharedValue<Array<string | number>>
   | Readonly<(string | number)[] | SharedValue<(string | number)[]>>;
-  hasSeparator?: boolean
+  hasSeparator?: boolean;
+  triggerStyle?: StyleProp<ViewStyle>;
 }
 
-const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoints, hasSeparator = true} : Props) => {
+const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoints, hasSeparator = true, triggerStyle} : Props) => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
   const insets = useSafeAreaInsets();
@@ -50,6 +51,7 @@ const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoi
     <>
       <TouchableOpacity
         onPress={handlePresentModalPress}
+        style={triggerStyle}
       >
         {trigger}
       </TouchableOpacity>
@@ -68,7 +70,6 @@ const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoi
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
           paddingVertical: 10,
-          paddingBottom: 10,
         }}
         handleIndicatorStyle={{
           backgroundColor: '#F6F6F6',
@@ -79,8 +80,8 @@ const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoi
               style={[
                 style,
                 {
-                  backgroundColor: 'black',//#181818
-                  opacity: 0.5,//0.9
+                  backgroundColor: '#181818',
+                  opacity: 0.9,
                 }
               ]}
               onTouchEnd={handleClose}
