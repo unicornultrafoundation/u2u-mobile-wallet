@@ -141,7 +141,7 @@ export default ({ state, descriptors, navigation }: any) => {
             onPress={onPress}
             onLongPress={onLongPress}
             style={{ 
-              width: viewportWidth / 5 ,
+              width: viewportWidth / state.routes.length ,
               alignItems: 'center',
               justifyContent: 'center',
               borderTopColor: isFocused ? color.primary[500] : 'transparent',

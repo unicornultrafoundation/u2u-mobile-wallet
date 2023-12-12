@@ -12,13 +12,8 @@ import React, { useEffect, useMemo } from 'react';
 import { Linking, StatusBar, TouchableOpacity, View } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import "./src/i18n"
-import DiscoverStackScreen from './src/stack/DiscoverStack';
-import CustomBottomTab from './src/component/CustomBottomTab';
-import WalletStackScreen from './src/stack/WalletStack';
-import EcosystemStackScreen from './src/stack/EcosystemStack';
-import StakingStackScreen from './src/stack/StakingStack';
 import { useWallet } from './src/hook/useWallet';
 import OnboardingStackScreen from './src/stack/OnboardingStack';
 import { usePreferenceStore } from './src/state/preferences';
@@ -28,7 +23,6 @@ import SplashScreen from './src/screen/SplashScreen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import MoreStackScreen from './src/stack/MoreStack';
 import { useNetInfo } from "@react-native-community/netinfo";
 import appsFlyer from 'react-native-appsflyer';
 import { MenuProvider } from 'react-native-popup-menu';
@@ -41,16 +35,14 @@ import { useGlobalStore } from './src/state/global';
 import AuthScreen from './src/screen/AuthScreen';
 import { useNetworkStore } from './src/state/network';
 import { SUPPORTED_CHAINS } from './src/config/chain';
-import SettingStackScreen from './src/stack/SettingStack';
 import { useTranslation } from 'react-i18next';
 import { APP_FLYERS_DEV_KEY, APP_FLYERS_IOS_APP_ID } from './src/config/constant';
 import NoInternetScreen from './src/screen/NoInternetScreen';
 import { useTracking } from './src/hook/useTracking';
+import MainTabNav from './src/stack/MainTab';
 
 //@ts-ignore
 global.CustomEvent = global.Event
-
-const Tab = createBottomTabNavigator();
 
 const queryClient = new QueryClient()
 
@@ -282,18 +274,7 @@ function App(): JSX.Element {
                 <OnboardingStackScreen />
               ) : (
                 <>
-                  <Tab.Navigator
-                    tabBar={({state, descriptors, navigation}) => <CustomBottomTab state={state} descriptors={descriptors} navigation={navigation} />}
-                    screenOptions={{ headerShown: false }}
-                    initialRouteName='WalletStack'
-                  >
-                    <Tab.Screen name="DiscoverStack" component={DiscoverStackScreen} />
-                    <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
-                    <Tab.Screen name="WalletStack" component={WalletStackScreen} />
-                    <Tab.Screen name="StakingStack" component={StakingStackScreen} />
-                    {/* <Tab.Screen name="MoreStack" component={MoreStackScreen} /> */}
-                    <Tab.Screen name="SettingStack" component={SettingStackScreen} />
-                  </Tab.Navigator>
+                  <MainTabNav />
                   {!unlocked && (<AuthScreen />)}
                 </>
               )}

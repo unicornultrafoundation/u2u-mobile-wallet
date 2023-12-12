@@ -7,3 +7,5 @@ export const MIN_LOCKUP_DURATION = 0.03
 
 export const APP_FLYERS_DEV_KEY = Config.APP_FLYERS_DEV_KEY
 export const APP_FLYERS_IOS_APP_ID = Config.APP_FLYERS_IOS_APP_ID
+
+export const APP_REMOTE_CONFIG = Config.APP_REMOTE_CONFIG
