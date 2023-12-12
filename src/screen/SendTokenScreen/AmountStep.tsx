@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { styles } from './styles';
 import Icon from '../../component/Icon';
 import Text from '../../component/Text';
@@ -71,121 +71,123 @@ const AmountStep = ({onNextStep, onBack}: {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={{flex: 1, paddingBottom: getPhonePaddingBottom()}}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={24}
-    >
-      <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={onBack}>
-          <Icon name="arrow-left" width={24} height={24} />
-        </TouchableOpacity>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.headerText}>{t('setAmountForTransaction')}</Text>
-        </View>
-        <View />
-      </View>
-
-      <View style={styles.bodyContainer}>
-        <View style={{
-          paddingHorizontal: 16, 
-          marginTop: 50, 
-          alignItems: 'center', 
-          flexDirection: 'row', 
-          justifyContent: 'center',
-        }}>
-          <View style={{flexWrap: 'nowrap', flexShrink: 1}}>
-            <TextInput
-              autoFocus
-              onChangeText={(val) =>{
-                const newVal = parseNumberFormatter(val.replaceAll(",", "."))
-                if (newVal != null) {
-                  setInternalAmount(newVal)
-                }
-              }}
-              value={internalAmount}
-              keyboardType="numeric"
-              style={[
-                theme.typography.largeTitle.medium,
-                {
-                  marginRight: 4,
-                  color: preferenceTheme.text.title
-                }
-              ]}
-            />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <KeyboardAvoidingView
+        style={{flex: 1, paddingBottom: getPhonePaddingBottom()}}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={24}
+      >
+        <View style={styles.headerContainer}>
+          <TouchableOpacity onPress={onBack}>
+            <Icon name="arrow-left" width={24} height={24} />
+          </TouchableOpacity>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.headerText}>{t('setAmountForTransaction')}</Text>
           </View>
-          <Text style={theme.typography.largeTitle.medium}>{tokenMeta.symbol}</Text>
+          <View />
         </View>
-        <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginBottom: 14,
-              padding: 8,
-              borderRadius: 8,
-              backgroundColor: preferenceTheme.background.surface,
-              alignItems: 'center',
-            }}
-          >
-            <View style={{width: 28, height: 28}}>
-              <SvgUri
-                uri={tokenMeta.logo}
-                width="100%"
-                height="100%"
-              />
-            </View>
-            <View style={{flex: 1, paddingHorizontal: 11}}>
-              <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.primary}]}>{t('balance')}</Text>
-              <Text style={theme.typography.footnote.regular}>{formatNumberString(balance)} {tokenMeta.symbol}</Text>
-            </View>
-            <TouchableOpacity
-              style={{
-                paddingVertical: 12,
-                paddingHorizontal: 16,
-                borderRadius: 8,
-                borderWidth: 1,
-                borderColor: preferenceTheme.outline
-              }}
-              onPress={() => {
-                setInternalAmount(balance)
-              }}
-            >
-              <Text
+
+        <View style={styles.bodyContainer}>
+          <View style={{
+            paddingHorizontal: 16, 
+            marginTop: 50, 
+            alignItems: 'center', 
+            flexDirection: 'row', 
+            justifyContent: 'center',
+          }}>
+            <View style={{flexWrap: 'nowrap', flexShrink: 1}}>
+              <TextInput
+                autoFocus
+                onChangeText={(val) =>{
+                  const newVal = parseNumberFormatter(val.replaceAll(",", "."))
+                  if (newVal != null) {
+                    setInternalAmount(newVal)
+                  }
+                }}
+                value={internalAmount}
+                keyboardType="numeric"
                 style={[
-                  theme.typography.caption1.medium,
+                  theme.typography.largeTitle.medium,
                   {
-                    color: theme.color.neutral[500]
+                    marginRight: 4,
+                    color: preferenceTheme.text.title
                   }
                 ]}
-              >
-                {t('max')}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          {error && (
-            <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center'}}>
-              <Icon name='error' width={18} height={18} />
-              <Text style={[
-                theme.typography.caption2.regular,
-                {
-                  color: theme.accentColor.error.normal,
-                  paddingLeft: 4
-                }
-              ]}>
-                {t(error)}
-              </Text>
+              />
             </View>
-          )}
-          <Button
-            style={{borderRadius: 60}}
-            textStyle={theme.typography.label.medium}
-            onPress={handleContinue}
-          >
-            {t('continue')}
-          </Button>
+            <Text style={theme.typography.largeTitle.medium}>{tokenMeta.symbol}</Text>
+          </View>
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginBottom: 14,
+                padding: 8,
+                borderRadius: 8,
+                backgroundColor: preferenceTheme.background.surface,
+                alignItems: 'center',
+              }}
+            >
+              <View style={{width: 28, height: 28}}>
+                <SvgUri
+                  uri={tokenMeta.logo}
+                  width="100%"
+                  height="100%"
+                />
+              </View>
+              <View style={{flex: 1, paddingHorizontal: 11}}>
+                <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.primary}]}>{t('balance')}</Text>
+                <Text style={theme.typography.footnote.regular}>{formatNumberString(balance)} {tokenMeta.symbol}</Text>
+              </View>
+              <TouchableOpacity
+                style={{
+                  paddingVertical: 12,
+                  paddingHorizontal: 16,
+                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderColor: preferenceTheme.outline
+                }}
+                onPress={() => {
+                  setInternalAmount(balance)
+                }}
+              >
+                <Text
+                  style={[
+                    theme.typography.caption1.medium,
+                    {
+                      color: theme.color.neutral[500]
+                    }
+                  ]}
+                >
+                  {t('max')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {error && (
+              <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center'}}>
+                <Icon name='error' width={18} height={18} />
+                <Text style={[
+                  theme.typography.caption2.regular,
+                  {
+                    color: theme.accentColor.error.normal,
+                    paddingLeft: 4
+                  }
+                ]}>
+                  {t(error)}
+                </Text>
+              </View>
+            )}
+            <Button
+              style={{borderRadius: 60}}
+              textStyle={theme.typography.label.medium}
+              onPress={handleContinue}
+            >
+              {t('continue')}
+            </Button>
+          </View>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   )
 };
 

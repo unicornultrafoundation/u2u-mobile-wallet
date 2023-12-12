@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { styles } from './styles';
 import Text from '../../component/Text';
 import Icon from '../../component/Icon';
@@ -13,6 +13,7 @@ import { useTransactionStore } from '../../state/transaction';
 import Scanner from '../../component/QRCodeScanner';
 import RecentAddress from '../../component/RecentAddress';
 import { usePreference } from '../../hook/usePreference';
+import { getPhonePaddingBottom } from '../../util/platform';
 
 const AddressStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -81,51 +82,57 @@ const AddressStep = ({onNextStep, onBack}: {
   }
 
   return (
-    <View style={{flex: 1}}>
-      <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={onBack}>
-          <Icon name="arrow-left" width={24} height={24} />
-        </TouchableOpacity>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.headerText}>{t('recipientAddress')}</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <KeyboardAvoidingView 
+        style={{flex: 1, paddingBottom: getPhonePaddingBottom()}}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={24}
+      >
+        <View style={styles.headerContainer}>
+          <TouchableOpacity onPress={onBack}>
+            <Icon name="arrow-left" width={24} height={24} />
+          </TouchableOpacity>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.headerText}>{t('recipientAddress')}</Text>
+          </View>
+          <View />
         </View>
-        <View />
-      </View>
-      <View style={{alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, paddingVertical: 8}}>
-        <Text style={[theme.typography.caption2.medium, {color: preferenceTheme.text.secondary, textAlign: 'center'}]}>
-          {t('msgAddressStepNotice')}
-        </Text>
-      </View>
-      <View style={{flex: 1, justifyContent: 'space-between', paddingHorizontal: 16, marginTop: 36}}>
-        <View style={{gap: 24}}>
-          <TextInput
-            placeholder={t('enterWalletAddress')}
-            value={address}
-            onChangeText={(val) => setAddress(val)}
-            error={t(errorAddress)}
-            postIcon={() => {
-              return (
-                <TouchableOpacity onPress={() => setShowScanner(true)}>
-                  <Icon name="scan" width={18} height={18} style={{marginLeft: 5}} />
-                </TouchableOpacity>
-              )
-            }}
-          />
-          <RecentAddress
-            onItemClick={(selectedAddress) => {
-              setAddress(selectedAddress)
-              handleConfirm(selectedAddress)
-            }}
-          />
+        <View style={{alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, paddingVertical: 8}}>
+          <Text style={[theme.typography.caption2.medium, {color: preferenceTheme.text.secondary, textAlign: 'center'}]}>
+            {t('msgAddressStepNotice')}
+          </Text>
         </View>
-        <Button
-          style={{borderRadius: 60}}
-          onPress={() => handleConfirm(address)}
-        >
-          {t('confirm')}
-        </Button>
-      </View>
-    </View>
+        <View style={{flex: 1, justifyContent: 'space-between', paddingHorizontal: 16, marginTop: 36}}>
+          <View style={{gap: 24}}>
+            <TextInput
+              placeholder={t('enterWalletAddress')}
+              value={address}
+              onChangeText={(val) => setAddress(val)}
+              error={t(errorAddress)}
+              postIcon={() => {
+                return (
+                  <TouchableOpacity onPress={() => setShowScanner(true)}>
+                    <Icon name="scan" width={18} height={18} style={{marginLeft: 5}} />
+                  </TouchableOpacity>
+                )
+              }}
+            />
+            <RecentAddress
+              onItemClick={(selectedAddress) => {
+                setAddress(selectedAddress)
+                handleConfirm(selectedAddress)
+              }}
+            />
+          </View>
+          <Button
+            style={{borderRadius: 60}}
+            onPress={() => handleConfirm(address)}
+          >
+            {t('confirm')}
+          </Button>
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   )
 }
 
