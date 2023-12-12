@@ -79,7 +79,7 @@ const SendStep = ({onSkip}: {
               }
             ]}
           >
-            Please wait a moment or skip to check transaction status 
+            {t('msgPleaseWaitAMomentOrSkipToCheckTransactionStatus')} 
           </Text>
 
           <Image
@@ -96,7 +96,7 @@ const SendStep = ({onSkip}: {
           textStyle={theme.typography.label.medium}
           onPress={handleSkip}
         >
-          Skip
+          {t('skip')}
         </Button>
       </View>
     </View>

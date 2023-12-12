@@ -14,6 +14,7 @@ import Scanner from '../../component/QRCodeScanner';
 import RecentAddress from '../../component/RecentAddress';
 import { usePreference } from '../../hook/usePreference';
 import { getPhonePaddingBottom } from '../../util/platform';
+import ErrorTextInput from '../../component/TextInput/ErrorTextInput';
 
 const AddressStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -40,7 +41,7 @@ const AddressStep = ({onNextStep, onBack}: {
     setErrorAddress('')
     return true
   }
- 
+
   const handleConfirm = (value: string) => {
     if (validateAdress(value)) {
       setReceiveAddress(value)
@@ -102,35 +103,35 @@ const AddressStep = ({onNextStep, onBack}: {
             {t('msgAddressStepNotice')}
           </Text>
         </View>
-        <View style={{flex: 1, justifyContent: 'space-between', paddingHorizontal: 16, marginTop: 36}}>
-          <View style={{gap: 24}}>
-            <TextInput
-              placeholder={t('enterWalletAddress')}
-              value={address}
-              onChangeText={(val) => setAddress(val)}
-              error={t(errorAddress)}
-              postIcon={() => {
-                return (
-                  <TouchableOpacity onPress={() => setShowScanner(true)}>
-                    <Icon name="scan" width={18} height={18} style={{marginLeft: 5}} />
-                  </TouchableOpacity>
-                )
-              }}
-            />
-            <RecentAddress
-              onItemClick={(selectedAddress) => {
-                setAddress(selectedAddress)
-                handleConfirm(selectedAddress)
-              }}
-            />
-          </View>
-          <Button
-            style={{borderRadius: 60}}
+        <View style={{marginTop: 36, marginHorizontal: 16}}>
+          <TextInput
+            placeholder={t('enterWalletAddress')}
+            value={address}
+            onChangeText={(val) => setAddress(val)}
+            postIcon={() => {
+              return (
+                <TouchableOpacity onPress={() => setShowScanner(true)}>
+                  <Icon name="scan" width={18} height={18} style={{marginLeft: 5}} />
+                </TouchableOpacity>
+              )
+            }}
+          />
+          {errorAddress && <ErrorTextInput error={t(errorAddress)} style={{justifyContent: 'center', marginTop: 8}}/>}
+        </View>
+        <View style={{flex: 1, marginTop: 20, marginHorizontal: 16}}>
+          <RecentAddress
+            onItemClick={(selectedAddress) => {
+              setAddress(selectedAddress)
+              handleConfirm(selectedAddress)
+            }}
+          />
+        </View>
+        <Button
+            style={{borderRadius: 60, marginHorizontal: 16}}
             onPress={() => handleConfirm(address)}
           >
             {t('confirm')}
           </Button>
-        </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   )

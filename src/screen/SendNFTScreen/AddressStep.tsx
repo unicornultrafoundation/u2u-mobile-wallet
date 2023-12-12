@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, TouchableOpacity, View } from 'react-native';
 import { useStyles } from './styles';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 import { useGlobalStore } from '../../state/global';
@@ -15,6 +15,9 @@ import { ERC721_ABI } from '../../util/abis/erc721';
 import { useWallet } from '../../hook/useWallet';
 import Scanner from '../../component/QRCodeScanner';
 import { isAddress } from 'ethers';
+import theme from '../../theme';
+import { getPhonePaddingBottom } from '../../util/platform';
+import ErrorTextInput from '../../component/TextInput/ErrorTextInput';
 
 const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
   const route = useRoute();
@@ -35,8 +38,13 @@ const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
   const [errorAddress, setErrorAddress] = useState('')
   const [showScanner, setShowScanner] = useState(false)
 
-  const handleContinue = async () => {
-    setReceiveAddress(address)
+  const handleContinue = async (value: string) => {
+    if (!isAddress(value)) {
+      setErrorAddress('invalidAddress')
+      return
+    }
+    setErrorAddress('')
+    setReceiveAddress(value)
 
     const txData = await encodeTxData({
       contractAddress: nftMeta.nftCollection.id,
@@ -48,13 +56,8 @@ const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
   }
 
   const handleScanSuccess = async (value: string) => {
-    setErrorAddress('')
-    if (!isAddress(value)) {
-      console.log('invalid QR data')
-      return;
-    }
     setAddress(value)
-    handleContinue()
+    handleContinue(value)
   }
 
   if (showScanner) {
@@ -67,7 +70,11 @@ const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
   }
 
   return (
-    <View style={{ padding: 16, flex: 1 }}>
+    <KeyboardAvoidingView 
+      style={{ padding: 16, flex: 1 }} 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={24}
+    >
       <View style={[styles.row, { marginBottom: 24 }]}>
         <View style={{ flex: 1 }}>
           <TouchableOpacity onPress={onBack}>
@@ -88,8 +95,7 @@ const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
 
         <View style={{ flex: 1 }}/>
       </View>
-
-      <View>
+      <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start', marginBottom: 24}}>
         <Text
           style={{
             fontSize: 11,
@@ -101,11 +107,10 @@ const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
         </Text>
         {/* Todo: Fix input style */}
         <TextInput
-          containerStyle={{ height: 48, marginVertical: 24 }}
+          containerStyle={{ height: 48, marginTop: 24, marginBottom: 8 }}
           placeholder={t("enterWalletAddress")}
           value={address}
           onChangeText={(val) => setAddress(val)}
-          error={errorAddress}
           postIcon={() => {
             return (
               <TouchableOpacity onPress={() => setShowScanner(true)}>
@@ -114,14 +119,18 @@ const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
             )
           }}
         />
+        {errorAddress && <ErrorTextInput error={t(errorAddress)} style={{justifyContent: 'center'}}/>}
       </View>
-
-      <View style={{ flex: 1 }}/>
-
-      <Button type="fill" fullWidth onPress={handleContinue}>
+      <Button 
+        style={{borderRadius: 60}}
+        type="fill" 
+        fullWidth 
+        textStyle={theme.typography.label.large}
+        onPress={() => handleContinue(address)}
+      >
         {t('continue')}
       </Button>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

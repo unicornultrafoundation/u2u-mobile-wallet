@@ -1,6 +1,6 @@
 import React from 'react'
 import Collapsible from '../Collapsible';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, ScrollView } from 'react-native';
 import Text from '../Text'
 import { useLocalStore } from '../../state/local';
 import { shortenAddress } from '../../util/string';
@@ -20,16 +20,17 @@ const RecentAddress = ({onItemClick}: {
 
   return (
     <Collapsible
+      style={{flex: 1}}
       expandedSection={
-        <View>
+        <ScrollView style={{flex: 1}} contentContainerStyle={{gap: 5, paddingBottom: 50}} bounces={false}>
           {recentAddress.map((address: string) => (
             <TouchableOpacity
+              key={`recent-address-${address}`}
               onPress={() => onItemClick(address)}
             >
               <Text
-                key={`recent-address-${address}`}
                 style={[
-                  theme.typography.body.medium,
+                  theme.typography.body2.medium,
                   {
                     color: preferenceTheme.text.title
                   }
@@ -39,7 +40,7 @@ const RecentAddress = ({onItemClick}: {
               </Text>
             </TouchableOpacity>
           ))}
-        </View>
+        </ScrollView>
       }>
       <View
         style={{

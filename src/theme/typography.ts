@@ -137,6 +137,15 @@ export const typography: Record<string, any> = {
       fontFamily: 'Regular'
     }
   },
+  body2: {
+    medium: {
+      fontSize: 14,
+      lineHeight: 22,
+      letterSpacing: -0.41,
+      fontWeight: "500",
+      fontFamily: 'Regular'
+    },
+  },
   label: {
     regular: {
       fontSize: 16,
@@ -166,6 +175,15 @@ export const typography: Record<string, any> = {
       fontWeight: "500",
       fontFamily: 'Regular'
     }
+  },
+  label2: {
+    bold: {
+      fontSize: 14,
+      lineHeight: 21,
+      letterSpacing: 0.07,
+      fontWeight: "700",
+      fontFamily: 'Regular'
+    },
   },
   subheadline: {
     regular: {
