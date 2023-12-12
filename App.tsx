@@ -255,7 +255,7 @@ function App(): JSX.Element {
     return <SplashScreen />
   }
 
-  if (!isConnected) {
+  if (!isConnected && type !== "unknown") {
     return <NoInternetScreen />
   }
 
