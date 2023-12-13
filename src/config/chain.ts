@@ -34,7 +34,7 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     dappURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/dapp_mainnet.json",
     ecosystemSettingURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/ecosystem_setting_mainnet.json",
     suppoted_nfts_endpoint: "https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/mobile_config/supported_nfts_mainnet.json",
-    api_endpoint: ""
+    api_endpoint: "https://sa-backend.uniultra.xyz"
   },
   {
     chainID: "2484",
