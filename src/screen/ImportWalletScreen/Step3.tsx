@@ -88,12 +88,12 @@ const Step3 = () => {
             return (
               <View
                 style={{ width: "25%", paddingHorizontal: 4, paddingVertical: 6 }}
-                key={`seed-${index + 4}`}
+                key={`seed-${index + 5}`}
               >
                 <TextInput
                   value={word}
                   autoCapitalize="none"
-                  placeholder={`${index + 4}.`}
+                  placeholder={`${index + 5}.`}
                   placeholderTextColor={preferenceTheme.text.primary}
                   style={{textAlign: "left"}}
                   onChangeText={(newText) => {
@@ -114,7 +114,7 @@ const Step3 = () => {
                 <TextInput
                   value={word}
                   autoCapitalize="none"
-                  placeholder={`${index + 8}.`}
+                  placeholder={`${index + 9}.`}
                   placeholderTextColor={preferenceTheme.text.primary}
                   style={{ textAlign: "left" }}
                   onChangeText={(newText) => {
