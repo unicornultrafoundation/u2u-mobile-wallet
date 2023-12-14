@@ -102,11 +102,11 @@ export const isValidDevice = async () => {
     return false
   }
 
-  const devMode = await JailMonkey.isDevelopmentSettingsMode()
-  if (devMode) {
-    console.log('in dev mode')
-    return false
-  }
+  // const devMode = await JailMonkey.isDevelopmentSettingsMode()
+  // if (devMode) {
+  //   console.log('in dev mode')
+  //   return false
+  // }
 
   const androidRoot = JailMonkey.androidRootedDetectionMethods
   if (!androidRoot) return true

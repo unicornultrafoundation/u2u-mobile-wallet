@@ -85,12 +85,12 @@ export const useTracking = () => {
       const deviceID = await DeviceInfo.syncUniqueId();
       const endpoint = `${networkConfig?.api_endpoint}${SUBMIT_DEVICE_ID_ENDPOINT}`
 
-      const appToken = await getAppCheckToken()
+      // const appToken = await getAppCheckToken()
       const appFlyerUID = await getAppFlyerUID()
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("X-Firebase-AppCheck", appToken)
+      // myHeaders.append("X-Firebase-AppCheck", appToken)
       myHeaders.append("X-App-Flyer-UID", appFlyerUID)
       
       const raw = JSON.stringify({
