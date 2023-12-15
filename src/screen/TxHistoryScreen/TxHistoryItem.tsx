@@ -12,7 +12,7 @@ import { formatDate } from '../../util/date';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './styles'
 
-const TxHistoryItem = ({txKey, txItem} : {txKey?: Key | null | undefined, txItem: Record<string, any>}) => {
+const TxHistoryItem = ({txItem} : {txItem: Record<string, any>}) => {
 
   const {t} = useTranslation()
   const {darkMode} = usePreferenceStore()
@@ -25,7 +25,6 @@ const TxHistoryItem = ({txKey, txItem} : {txKey?: Key | null | undefined, txItem
   return (
     <TouchableOpacity
       style={styles.containerItem}
-      key={txKey}
       onPress={() => navigation.navigate("TransactionDetail", {transactionHash: txItem.hash})}
     >
       <Icon

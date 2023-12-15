@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState, useRef } from 'react'
 import { TouchableOpacity, View, SafeAreaView } from 'react-native';
 import { styles } from './styles';
 import ReceiveTokenHeader from './ReceiveTokenHeader';
@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import theme from '../../theme';
 import Separator from '../../component/Separator';
 import Icon from '../../component/Icon';
-import U2UIcon from '../../asset/icon/u2u_wallet_icon.png'
 import { useWallet } from '../../hook/useWallet';
 import QRCode from 'react-native-qrcode-svg';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
@@ -18,6 +17,8 @@ import { SvgUri } from 'react-native-svg';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
 import { usePreference } from '../../hook/usePreference';
+import ViewShot, { captureRef } from 'react-native-view-shot';
+import Share from 'react-native-share';
 
 const ReceiveTokenScreen = () => {
   const {preferenceTheme} = usePreference()
@@ -42,12 +43,27 @@ const ReceiveTokenScreen = () => {
   
   const route = useRoute()
   const {setRouteName} = useGlobalStore()
+  const viewRef = useRef(null);
 
   useFocusEffect(
     useCallback(() => {
       setRouteName(route.name)
     }, [route])
   )
+
+  const shareQrImage = async () => {
+    try {
+      const uri = await captureRef(viewRef, {
+        format: 'png',
+        quality: 0.9
+      })
+      await Share.open({
+        url: uri,
+      })
+    } catch(e) {
+      console.log('ShareException: ', e)
+    }
+  }
 
   const renderBody = () => {
     if (showingAmount) {
@@ -64,8 +80,7 @@ const ReceiveTokenScreen = () => {
       )
     }
     return (
-      <View style={{flex: 1}}>
-        <ReceiveTokenHeader />
+      <View style={{flex: 1, backgroundColor: preferenceTheme.background.background}}>
         <View style={{paddingVertical: 8, paddingHorizontal: 53}}>
           <Text
             style={[
@@ -173,35 +188,43 @@ const ReceiveTokenScreen = () => {
               </View>
             )}
           </View>
-          <View style={styles.bottomButtonContainer}>
-            <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
-              <Icon name="share" width={18} height={18} />
-              <Text
-                style={[
-                  theme.typography.label.medium,
-                  {marginLeft: 8}
-                ]}
-              >
-                {t('shareQRCode')}
-              </Text>
-            </TouchableOpacity>
-            <View style={{height: '100%', width: 1, backgroundColor: '#FFF'}} />
-            <TouchableOpacity
-              style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}
-              onPress={() => setShowingAmount(true)}
-            >
-              <Icon name="setting" width={18} height={18} />
-              <Text
-                style={[
-                  theme.typography.label.medium,
-                  {marginLeft: 8}
-                ]}
-              >
-                {t('setAmountQRCode')}
-              </Text>
-            </TouchableOpacity>
-          </View>
         </View>
+      </View>
+    )
+  }
+
+  const renderFooter = () => {
+    return (
+      <View style={styles.bottomButtonContainer}>
+        <TouchableOpacity 
+          style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}
+          onPress={shareQrImage}
+        >
+          <Icon name="share" width={18} height={18} />
+          <Text
+            style={[
+              theme.typography.label.medium,
+              {marginLeft: 8}
+            ]}
+          >
+            {t('shareQRCode')}
+          </Text>
+        </TouchableOpacity>
+        <View style={{height: '100%', width: 1, backgroundColor: '#FFF'}} />
+        <TouchableOpacity
+          style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}
+          onPress={() => setShowingAmount(true)}
+        >
+          <Icon name="setting" width={18} height={18} />
+          <Text
+            style={[
+              theme.typography.label.medium,
+              {marginLeft: 8}
+            ]}
+          >
+            {t('setAmountQRCode')}
+          </Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -213,7 +236,11 @@ const ReceiveTokenScreen = () => {
         {backgroundColor: preferenceTheme.background.background}
       ]}
     >
-      {renderBody()}
+      <ReceiveTokenHeader/>
+      <ViewShot ref={viewRef} style={{flex: 1}}>
+        {renderBody()}
+      </ViewShot>
+      {renderFooter()}
     </SafeAreaView>
   )
 };
