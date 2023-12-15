@@ -233,5 +233,9 @@
   "deviceAlreadyClaim": "Thiết bị này đã nhận NFT ở ví khác",
   "description": "Mô tả",
   "socialMedia": "Mạng xã hội",
-  "filter": "Lọc"
+  "filter": "Lọc",
+  "msgInsufficientBalanceForTransactionFee": "Số dư không đủ cho phí giao dịch",
+  "transferSubmitted": "Đã gửi giao dịch",
+  "msgPleaseWaitAMomentOrSkipToCheckTransactionStatus": "Vui lòng đợi trong giây lát hoặc bỏ qua để kiểm tra trạng thái giao dịch",
+  "skip": "Bỏ qua"
 }

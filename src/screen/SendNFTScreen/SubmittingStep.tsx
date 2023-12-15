@@ -7,10 +7,13 @@ import Button from '../../component/Button';
 import { useTransaction } from '../../hook/useTransaction';
 import TxDetail from '../../component/TxDetail';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import theme from '../../theme';
 
 const NFTTransferSubmittingStep = ({ onNextStep, onBack }: StepProps) => {
   const navigation = useNavigation<any>()
   const {submitRawTx, txStatus, txHash, resetTxState} = useTransaction()
+  const {t} = useTranslation()
 
   const handleSkipResult = () => {
     resetTxState()
@@ -44,31 +47,28 @@ const NFTTransferSubmittingStep = ({ onNextStep, onBack }: StepProps) => {
     <View style={{ padding: 16, flex: 1, alignItems: 'center' }}>
       <View style={{ flex: 1 }}>
         <Text
-          fontSize={20}
-          fontWeight="700"
-          letterSpacing={0.38}
-          textAlign="center"
-          style={{ marginBottom: 32 }}
+          color='title'
+          style={[
+            theme.typography.title3.bold,
+            {textAlign: "center", marginBottom: 32}
+          ]}
         >
-          Transfer submitted
+          {t('transferSubmitted')}
         </Text>
         <Text
-          fontSize={11}
-          fontWeight="500"
-          letterSpacing={0.07}
-          textAlign="center"
-          style={{ lineHeight: 13 }}>
-          Please wait a moment or skip to
+          color='secondary'
+          style={[
+            theme.typography.caption2.medium,
+            {
+              textAlign: 'center',
+              marginHorizontal: 64,
+              marginTop: 8,
+              marginBottom: 42
+            }
+          ]}
+        >
+          {t('msgPleaseWaitAMomentOrSkipToCheckTransactionStatus')}
         </Text>
-        <Text
-          fontSize={11}
-          fontWeight="500"
-          letterSpacing={0.07}
-          textAlign="center"
-          style={{ lineHeight: 13 }}>
-          check transaction status
-        </Text>
-
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Image
             source={SEND_ILLUS}
@@ -81,8 +81,14 @@ const NFTTransferSubmittingStep = ({ onNextStep, onBack }: StepProps) => {
         </View>
       </View>
 
-      <Button type="fill" fullWidth onPress={handleSkipResult}>
-        Skip
+      <Button 
+        style={{borderRadius: 60}}
+        type="fill" 
+        fullWidth 
+        textStyle={theme.typography.label.large}
+        onPress={handleSkipResult}
+      >
+        {t('skip')}
       </Button>
     </View>
   );

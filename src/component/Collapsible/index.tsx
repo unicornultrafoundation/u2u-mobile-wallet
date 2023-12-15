@@ -54,7 +54,7 @@ const Collapsible = ({
           />
         )}
       </View>
-      {showExpanded && <View>{expandedSection}</View>}
+      {showExpanded && expandedSection}
     </View>
   );
 };

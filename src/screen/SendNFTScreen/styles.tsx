@@ -17,7 +17,10 @@ export const useStyles = () => {
       backgroundColor: preferenceTheme.background.background
     },
     screenTitle: {
-      color: preferenceTheme.text.primary
+      flex: 1,
+      color: preferenceTheme.text.primary,
+      textAlign: 'center',
+      paddingHorizontal: 8,
     },
     section: {
       paddingHorizontal: 16
@@ -25,13 +28,13 @@ export const useStyles = () => {
     row: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      alignItems: 'center',
+      gap: 8,
     },
     card: {
       padding: 12,
       borderRadius: 6,
       backgroundColor: preferenceTheme.background.surface,
-      marginBottom: 24,
       gap: 8
     }
   });

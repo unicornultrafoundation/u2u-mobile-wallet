@@ -1,7 +1,5 @@
 import React, { useCallback, useRef, useMemo } from 'react'
-import styles from './styles';
-import { View, TouchableOpacity } from 'react-native';
-import Text from '../Text';
+import { View } from 'react-native';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import GasPriceInput from './GasPriceInput';
 import GasLimitInput from './GasLimitInput';
@@ -54,6 +52,7 @@ const CustomGasModal = ({trigger}: {
       }
       snapPoints={snapPoints}
       hasSeparator={false}
+      triggerStyle={{flex: 1}}
     />
   )
 };

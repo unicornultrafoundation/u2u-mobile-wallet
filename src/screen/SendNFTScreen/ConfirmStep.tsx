@@ -8,7 +8,7 @@ import Separator from '../../component/Separator';
 import U2UIcon from '../../asset/icon/u2u_wallet_icon.png';
 import Button from '../../component/Button';
 import { useTransaction } from '../../hook/useTransaction';
-import { parseIPFSFile, shortenAddress } from '../../util/string';
+import { getDefaultWalletName, parseIPFSFile, shortenAddress } from '../../util/string';
 import { useNetwork } from '../../hook/useNetwork';
 import { useTranslation } from 'react-i18next';
 import theme from '../../theme';
@@ -25,7 +25,7 @@ const NFTTransferConfirmStep = ({ onNextStep, onBack }: StepProps) => {
 
   const {t} = useTranslation()
 
-  const {wallet} = useWallet()
+  const {wallet, getWalletMetadata} = useWallet()
   const {balance} = useNativeBalance(wallet.address)
 
   const [error, setError] = useState('')
@@ -39,7 +39,7 @@ const NFTTransferConfirmStep = ({ onNextStep, onBack }: StepProps) => {
     setError("")
     const balanceBN = BigNumber(balance)
     if (balanceBN.minus(estimatedFee).lt(0)) {
-      setError('Insufficient balance for transaction fee')
+      setError("msgInsufficientBalanceForTransactionFee")
       return;
     }
 
@@ -49,12 +49,9 @@ const NFTTransferConfirmStep = ({ onNextStep, onBack }: StepProps) => {
   return (
     <View style={{ padding: 16, flex: 1 }}>
       <View style={[styles.row, { marginBottom: 24 }]}>
-        <View style={{ flex: 1 }}>
-          <TouchableOpacity onPress={onBack}>
-            <Icon name="arrow-left" width={24} height={24}/>
-          </TouchableOpacity>
-        </View>
-
+        <TouchableOpacity onPress={onBack}>
+          <Icon name="arrow-left" width={24} height={24}/>
+        </TouchableOpacity>
         <Text
           style={[
             theme.typography.title3.bold,
@@ -63,57 +60,50 @@ const NFTTransferConfirmStep = ({ onNextStep, onBack }: StepProps) => {
         >
           {t('transfer')}
         </Text>
-
-        <View style={{ flex: 1 }}/>
       </View>
-
-      <ScrollView style={{ gap: 16, flex: 1 }} showsVerticalScrollIndicator={false} >
-        <View style={[styles.card, { gap: 8 }]}>
+      <ScrollView style={{flex: 1}} contentContainerStyle={{gap: 16}} showsVerticalScrollIndicator={false} bounces={false}>
+        <View style={styles.card}>
           <Image
             source={{ uri: parseIPFSFile(nftMeta.image) }}
             style={{
               width: '100%',
               height: 'auto',
               objectFit: 'cover',
-              minHeight: 330,
+              minHeight: 280,
               borderRadius: 6,
             }}
           />
 
-          <View>
-            <Text color="primary" fontSize={12} fontWeight="500">
+          <View style={{marginTop: 6}}>
+            <Text color="primary" style={theme.typography.caption1.medium}>
               {nftMeta.nftCollection.name}
             </Text>
-            <Text fontSize={14} fontWeight="700">
+            <Text color="title" style={theme.typography.label2.bold}>
               #{nftMeta.tokenID}
             </Text>
           </View>
-
           <Separator style={{ marginVertical: 8 }}/>
-
-          <View>
+          <View style={{gap: 2}}>
             <Text color="primary" fontSize={11} letterSpacing={0.07}>
               {t('to')}
             </Text>
-            <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center'}}>
               <Icon name="wallet-icon" width={24} height={24}/>
-              <Text fontSize={12}>
+              <Text color="primary" style={[theme.typography.caption1.regular, {flex: 1}]}>
                 {shortenAddress(receiveAddress, 10, 10)}
               </Text>
             </View>
           </View>
         </View>
 
-        <View style={styles.card}>
-          <View style={[styles.row, { alignItems: 'flex-start' }]}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Text fontSize={14} letterSpacing={-0.08} color="primary">
-                {t('estFee')}
-              </Text>
-            </View>
+        <View style={[styles.card, {gap: 12}]}>
+          <View style={styles.row}>
+            <Text color="secondary" style={theme.typography.footnote.regular}>
+              {t('estFee')}
+            </Text>
 
-            <View style={{ alignItems: 'flex-end' }}>
-              <Text fontSize={14} letterSpacing={-0.08}>
+            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+              <Text color="title" style={[theme.typography.footnote.regular, {textAlign: 'right'}]}>
                 {estimatedFee} U2U
               </Text>
               {/* <Text fontSize={11} letterSpacing={0.07} color="primary">
@@ -122,15 +112,15 @@ const NFTTransferConfirmStep = ({ onNextStep, onBack }: StepProps) => {
             </View>
           </View>
 
-          <View style={[styles.row, { alignItems: 'flex-start' }]}>
-            <Text fontSize={14} letterSpacing={-0.08} color="primary">
+          <View style={styles.row}>
+            <Text color="secondary" style={theme.typography.footnote.regular}>
               {t('maxFee')}
             </Text>
             <CustomGasModal
               trigger={() => {
                 return (
-                  <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-                    <Text style={[theme.typography.footnote.regular]}>
+                  <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
+                    <Text color="title" style={[theme.typography.footnote.regular, {flex: 1, textAlign: 'right'}]}>
                       {maxFee} U2U
                     </Text>
                     <Icon
@@ -145,45 +135,43 @@ const NFTTransferConfirmStep = ({ onNextStep, onBack }: StepProps) => {
           </View>
         </View>
         {error && (
-          <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center'}}>
+          <View style={{flexDirection: 'row', gap: 8, alignItems: 'center'}}>
             <Icon name='error' width={18} height={18} />
             <Text style={[
               theme.typography.caption2.regular,
               {
                 color: theme.accentColor.error.normal,
-                paddingLeft: 4
+                flex: 1,
               }
             ]}>
-              {error}
+              {t(error)}
             </Text>
           </View>
         )}
-        <View style={styles.card}>
-          <View style={[styles.row, { alignItems: 'flex-start' }]}>
-            <Text fontSize={14} letterSpacing={-0.08} color="primary">
-              {t('from')}
-            </Text>
-
-            <View style={{ alignItems: 'flex-end' }}>
-              <Text fontSize={14} letterSpacing={-0.08}>
-                {wallet.name || shortenAddress(wallet.address, 6, 6)}
+        <View style={[styles.card, {gap: 12}]}>
+          <View style={styles.row}>
+            <Text color="secondary" style={theme.typography.footnote.regular}>{t('wallet')}</Text>
+            <View style={{flexDirection: 'column', flex: 1, gap: 2}}>
+              <Text color="title" style={[theme.typography.footnote.regular, {textAlign: 'right'}]}>
+                {getWalletMetadata(wallet).name || getDefaultWalletName(wallet)}
               </Text>
-              <Text fontSize={11} letterSpacing={0.07} color="primary">
-                {shortenAddress(wallet.address, 6, 6)}
+              <Text color="secondary"  style={[theme.typography.footnote.small, {textAlign: 'right'}]}>
+                {shortenAddress(wallet.address, 8, 8)}
               </Text>
             </View>
           </View>
 
-          <View style={[styles.row, { alignItems: 'flex-start' }]}>
-            <Text fontSize={14} letterSpacing={-0.08} color="primary">
+          <View style={styles.row}>
+            <Text color="secondary" style={theme.typography.footnote.regular}>
               {t('network')}
             </Text>
-
-            <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-              <Text fontSize={14} letterSpacing={-0.08}>
-                {networkConfig?.name}
-              </Text>
+            <View style={{ flex: 1, flexDirection: 'row', gap: 6, alignItems: 'center', justifyContent: 'flex-end' }}>
               <Image source={U2UIcon} style={{ width: 16, height: 16 }}/>
+              <View style={{flexShrink: 1}}>
+                <Text color="title" style={[theme.typography.footnote.regular]}>
+                  {networkConfig?.name}
+                </Text>
+              </View>
             </View>
           </View>
         </View>
@@ -195,7 +183,7 @@ const NFTTransferConfirmStep = ({ onNextStep, onBack }: StepProps) => {
           fullWidth
           onPress={handleConfirm}
           style={{borderRadius: 60}}
-          textStyle={theme.typography.label.medium}
+          textStyle={theme.typography.label.large}
         >
           {t('confirm')}
         </Button>
