@@ -8,7 +8,7 @@ import theme from '../../theme';
 import Separator from '../Separator';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { SharedValue } from 'react-native-reanimated';
+import { SharedValue, useReducedMotion } from 'react-native-reanimated';
 
 interface Props {
   modalRef?: React.RefObject<BottomSheetModalMethods>;
@@ -29,6 +29,7 @@ const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoi
   const insets = useSafeAreaInsets();
 
   const { t } = useTranslation<string>()
+  const reducedMotion = useReducedMotion();
 
   // ref
   const bottomSheetModalRef = modalRef ?? useRef<BottomSheetModal>(null);
@@ -56,6 +57,7 @@ const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoi
         {trigger}
       </TouchableOpacity>
       <BottomSheetModal
+        animateOnMount={!reducedMotion}
         ref={bottomSheetModalRef}
         index={0}
         snapPoints={snapPoints}

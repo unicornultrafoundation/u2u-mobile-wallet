@@ -46,7 +46,7 @@ const Text = ({
   }, [darkMode, color, fontWeight, letterSpacing]);
 
   return (
-    <RNText {...rest} style={[defaultStyle, customStyle, style]}>
+    <RNText {...rest} allowFontScaling={false} style={[defaultStyle, customStyle, style]}>
       {children}
     </RNText>
   );

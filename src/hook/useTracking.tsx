@@ -104,7 +104,6 @@ export const useTracking = () => {
       };
       console.log('register device id', deviceID)
       const rs = await fetch(endpoint, requestOptions)
-      console.log(rs)
       // toggleAlreadySubmitDeviceID()
       return rs
     } catch (error) {
