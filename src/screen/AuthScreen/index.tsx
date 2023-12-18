@@ -96,7 +96,21 @@ const AuthScreen = () => {
         style={styles.otpContainer}
         inputStyles={styles.otpInput}
       />
-      {error && (
+      {passwordTry === APP_PASSWORD_RETRY_MAX && (
+        <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center'}}>
+          <Icon name='error' width={18} height={18} />
+          <Text style={[
+            theme.typography.caption2.regular,
+            {
+              color: theme.accentColor.error.normal,
+              paddingLeft: 4
+            }
+          ]}>
+            {t('passwordRetryReached')}
+          </Text>
+        </View>
+      )}
+      {error && passwordTry !== APP_PASSWORD_RETRY_MAX && (
         <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center'}}>
           <Icon name='error' width={18} height={18} />
           <Text style={[
