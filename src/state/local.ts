@@ -30,6 +30,11 @@ interface LocalState {
   addRegisteredWalelt: (address: string) => void;
   appCheckToken: string;
   setAppCheckToken: (appCheckToken: string) => void;
+  passwordTry: number;
+  setPasswordTry: (passwordTry: number) => void;
+  increasePasswordTry: () => void;
+  lockedUntil: number;
+  setLockedUntil: (lockedUntil: number) => void
 }
 
 export const useLocalStore = create<LocalState>()(
@@ -68,7 +73,7 @@ export const useLocalStore = create<LocalState>()(
         set({ customTokenList: current })
         get().toggleToken(toChecksumAddress(token.address))
       },
-      recentAddress: ['0x6b08B3179b58FA0FC3dEd3d959E7B688c0E52Ac2'],
+      recentAddress: [],
       addRecentAddress: (address: string) => {
         const current = get().recentAddress.filter((a) => a.toLowerCase() !== address.toLowerCase())
         set({ recentAddress: [address, ...current] })
@@ -87,6 +92,17 @@ export const useLocalStore = create<LocalState>()(
       appCheckToken: "",
       setAppCheckToken: (appCheckToken: string) => {
         set({ appCheckToken })
+      },
+      passwordTry: 0,
+      setPasswordTry: (passwordTry: number) => {
+        set({ passwordTry })
+      },
+      increasePasswordTry: () => {
+        set({ passwordTry: get().passwordTry + 1 })
+      },
+      lockedUntil: 0,
+      setLockedUntil: (lockedUntil: number) => {
+        set({ lockedUntil })
       }
     }),
     {

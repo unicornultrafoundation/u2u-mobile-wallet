@@ -9,6 +9,8 @@ import theme from '../../theme';
 import Button from '../../component/Button';
 import { useLocalStore } from '../../state/local';
 import { usePreference } from '../../hook/usePreference';
+import { APP_PASSWORD_RETRY_MAX } from '../../config/constant';
+import { useGlobalStore } from '../../state/global';
 
 const AuthStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -17,18 +19,34 @@ const AuthStep = ({onNextStep, onBack}: {
   const {preferenceTheme} = usePreference()
 
   const { t } = useTranslation<string>()
-  const {password} = useLocalStore()
+  const {password, increasePasswordTry, passwordTry, setPasswordTry, lockedUntil, setLockedUntil} = useLocalStore()
+  const { setUnlocked } = useGlobalStore()
 
   const [internalPassword, setInternalPassword] = useState('')
   const [error, setError] = useState('')
 
   const handleContinue = () => {
     setError('')
-    if (internalPassword != password) {
-      setError(t('incorrectPassword'))
+
+    if (Date.now() <= lockedUntil) {
+      setError(t('passwordRetryReached'))
       return
     }
 
+    if (internalPassword != password) {
+      if (passwordTry >= APP_PASSWORD_RETRY_MAX) {
+        setUnlocked(false)
+        setError(t('passwordRetryReached'))
+        return
+      }
+      
+      setError(t('incorrectPassword'))
+      increasePasswordTry()
+      return
+    }
+
+    setPasswordTry(0)
+    setLockedUntil(0)
     onNextStep()
   }
 
