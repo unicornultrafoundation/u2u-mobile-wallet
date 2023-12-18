@@ -11,6 +11,7 @@ import { NFTCollectionMeta } from '../../hook/useSupportedNFT';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 import { useGlobalStore } from '../../state/global';
 import { useTranslation } from 'react-i18next';
+import MyNFTItems from './MyNFTItems';
 
 const NFTCollectionDetailsScreen = () => {
   const { setRouteName } = useGlobalStore();
@@ -21,7 +22,7 @@ const NFTCollectionDetailsScreen = () => {
   const route = useRoute<any>()
   const nftCollection: NFTCollectionMeta = route.params?.nftCollection || {}
   
-  const [tab, setTab] = useState('items');
+  const [tab, setTab] = useState('myItems');
 
   useFocusEffect(
     useCallback(() => {
@@ -42,6 +43,7 @@ const NFTCollectionDetailsScreen = () => {
       <View style={[styles.section]}>
         <Tab
           tabs={[
+            { label: t('myItems'), value: 'myItems' },
             { label: t('items'), value: 'items' },
             // { label: t('activities), value: 'activities' },
           ]}
@@ -57,6 +59,7 @@ const NFTCollectionDetailsScreen = () => {
       </View>
 
       <View style={[styles.section, { marginTop: 16 }]}>
+        {tab === 'myItems' && <MyNFTItems nftCollection={nftCollection} /> }
         {tab === 'items' && <NFTItems nftCollection={nftCollection} />}
         {/* {tab === 'activities' && <NFTCollectionActivities/>} */}
       </View>

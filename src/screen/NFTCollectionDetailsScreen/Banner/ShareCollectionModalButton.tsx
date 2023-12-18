@@ -1,4 +1,4 @@
-import { Dimensions, Image, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, Platform, TouchableOpacity, View } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import React, { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
@@ -10,11 +10,13 @@ import Modal from '../../../component/Modal';
 import Text from '../../../component/Text';
 import GradientText from '../../../component/Text/Gradient';
 import { NFTCollectionMeta } from '../../../hook/useSupportedNFT';
+import { useTranslation } from 'react-i18next';
 
 
 const ShareCollectionModalButton = ({nftCollection}: {
   nftCollection: NFTCollectionMeta
 }) => {
+  const { t } = useTranslation()
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const [modalVisible, setModalVisible] = useState(false);
@@ -102,7 +104,7 @@ const ShareCollectionModalButton = ({nftCollection}: {
                     end: { x: 0.15, y: 1.0 },
                     angle: 60,
                   }}>
-                  U2U Wallet
+                  {t('appName')}
                 </GradientText>
               </View>
             </View>
@@ -139,7 +141,7 @@ const ShareCollectionModalButton = ({nftCollection}: {
               </View>
 
               <QRCode
-                value={'test'}
+                value={Platform.OS === "ios" ? 'https://apps.apple.com/vn/app/u2u-super-app/id6471394866' : 'https://play.google.com/store/apps/details?id=com.u2umobilewallet'}
                 quietZone={16}
                 size={64}
               />
