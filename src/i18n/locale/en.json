@@ -238,5 +238,6 @@
   "msgInsufficientBalanceForTransactionFee": "Insufficient balance for transaction fee",
   "transferSubmitted": "Transfer submitted",
   "msgPleaseWaitAMomentOrSkipToCheckTransactionStatus": "Please wait a moment or skip to check transaction status",
-  "skip": "Skip"
+  "skip": "Skip",
+  "passwordRetryReached": "Already tried 5 times, please try again after 30 minutes"
 }
