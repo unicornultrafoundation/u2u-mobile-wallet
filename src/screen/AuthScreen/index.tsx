@@ -36,7 +36,6 @@ const AuthScreen = () => {
         return
       }
 
-    if (pass != password) {
       setError(t('incorrectPassword'))
       increasePasswordTry()
       return
