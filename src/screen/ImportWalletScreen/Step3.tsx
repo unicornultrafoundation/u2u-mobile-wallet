@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { KeyboardAvoidingView, Platform, View } from "react-native";
+import { KeyboardAvoidingView, Platform, SafeAreaView, View } from "react-native";
 import { styles } from "./styles";
 import Text from "../../component/Text";
 import { useTranslation } from "react-i18next";
@@ -19,8 +19,9 @@ const Step3 = () => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const { accessWallet } = useWallet();
 
-  const SEED_LENGTH = 12;
-  const [seedList, setSeedList] = useState(Array(SEED_LENGTH).fill(""));
+  // const SEED_LENGTH = 12;
+  const [seedLength, setSeedLength] = useState(12)
+  const [seedList, setSeedList] = useState(Array(seedLength).fill(""));
   const [errorSeed, setErrorSeed] = useState('')
   const [loading, setLoading] = useState(false);
 
@@ -44,8 +45,8 @@ const Step3 = () => {
   const pasteRecoveryPhrase = async () => {
     const content = await Clipboard.getString();
     const contentLi = content.trim().split(/\s+/)
-    const newSeedLi = Array(SEED_LENGTH).fill("")
-    const len = Math.min(contentLi.length, SEED_LENGTH)
+    const newSeedLi = Array(seedLength).fill("")
+    const len = Math.min(contentLi.length, seedLength)
     for (var i = 0; i < len; ++i) {
       newSeedLi[i] = contentLi[i]
     }
@@ -67,25 +68,14 @@ const Step3 = () => {
     }
   };
 
-  return (
-    <KeyboardAvoidingView 
-      style={styles.passwordContainer}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={24}
-    >
-      <Text style={styles.welcomeTitle}>
-        {t("seedPhraseSignIn")}
-      </Text>
-      <Text style={styles.instructionText}>
-        {t("seedPhraseSignInDescription")}{"\n"}
-        {t("enterSeedPhrase")}
-      </Text>
-      <ScrollView style={{ width: "100%", flex: 1 }} contentContainerStyle={{paddingBottom: 20}} bounces={false}>
+  const renderMode12 = () => {
+    return (
+      <>
         <View style={{ flexDirection: "row" }}>
           {seedList.slice(0, 4).map((word, index) => {
             return (
               <View
-                style={{ width: "25%", paddingHorizontal: 4, paddingVertical: 6 }}
+                style={{ flex: 1, paddingHorizontal: 4, paddingVertical: 6 }}
                 key={`seed-${index}`}
               >
                 <TextInput
@@ -106,7 +96,7 @@ const Step3 = () => {
           {seedList.slice(4, 8).map((word, index) => {
             return (
               <View
-                style={{ width: "25%", paddingHorizontal: 4, paddingVertical: 6 }}
+                style={{ flex: 1, paddingHorizontal: 4, paddingVertical: 6 }}
                 key={`seed-${index + 5}`}
               >
                 <TextInput
@@ -127,7 +117,7 @@ const Step3 = () => {
           {seedList.slice(8, 12).map((word, index) => {
             return (
               <View
-                style={{ width: "25%", paddingHorizontal: 4, paddingVertical: 6 }}
+                style={{ flex: 1, paddingHorizontal: 4, paddingVertical: 6 }}
                 key={`seed-${index + 8}`}
               >
                 <TextInput
@@ -144,6 +134,137 @@ const Step3 = () => {
             );
           })}
         </View>
+      </>
+    )
+  }
+
+  const renderMode15 = () => {
+    return (
+      <>
+        <View style={{ flexDirection: "row" }}>
+          {seedList.slice(0, 3).map((word, index) => {
+            return (
+              <View
+                style={{ flex: 1, paddingHorizontal: 4, paddingVertical: 6 }}
+                key={`seed-${index}`}
+              >
+                <TextInput
+                  value={word}
+                  autoCapitalize="none"
+                  style={{ textAlign: "left" }}
+                  placeholder={`${index + 1}.`}
+                  placeholderTextColor={preferenceTheme.text.primary}
+                  onChangeText={(newText) => {
+                    handleUpdateSeedWord(newText.trim(), index);
+                  }}
+                />
+              </View>
+            );
+          })}
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          {seedList.slice(3, 6).map((word, index) => {
+            return (
+              <View
+                style={{ flex: 1, paddingHorizontal: 4, paddingVertical: 6 }}
+                key={`seed-${index + 3}`}
+              >
+                <TextInput
+                  value={word}
+                  autoCapitalize="none"
+                  placeholder={`${index + 4}.`}
+                  placeholderTextColor={preferenceTheme.text.primary}
+                  style={{textAlign: "left"}}
+                  onChangeText={(newText) => {
+                    handleUpdateSeedWord(newText.trim(), index + 4);
+                  }}
+                />
+              </View>
+            );
+          })}
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          {seedList.slice(6, 9).map((word, index) => {
+            return (
+              <View
+                style={{ flex: 1, paddingHorizontal: 4, paddingVertical: 6 }}
+                key={`seed-${index + 6}`}
+              >
+                <TextInput
+                  value={word}
+                  autoCapitalize="none"
+                  placeholder={`${index + 7}.`}
+                  placeholderTextColor={preferenceTheme.text.primary}
+                  style={{ textAlign: "left" }}
+                  onChangeText={(newText) => {
+                    handleUpdateSeedWord(newText.trim(), index + 8);
+                  }}
+                />
+              </View>
+            );
+          })}
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          {seedList.slice(9, 12).map((word, index) => {
+            return (
+              <View
+                style={{ flex: 1, paddingHorizontal: 4, paddingVertical: 6 }}
+                key={`seed-${index + 9}`}
+              >
+                <TextInput
+                  value={word}
+                  autoCapitalize="none"
+                  placeholder={`${index + 10}.`}
+                  placeholderTextColor={preferenceTheme.text.primary}
+                  style={{ textAlign: "left" }}
+                  onChangeText={(newText) => {
+                    handleUpdateSeedWord(newText.trim(), index + 8);
+                  }}
+                />
+              </View>
+            );
+          })}
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          {seedList.slice(12, 15).map((word, index) => {
+            return (
+              <View
+                style={{ flex: 1, paddingHorizontal: 4, paddingVertical: 6 }}
+                key={`seed-${index + 12}`}
+              >
+                <TextInput
+                  value={word}
+                  autoCapitalize="none"
+                  placeholder={`${index + 13}.`}
+                  placeholderTextColor={preferenceTheme.text.primary}
+                  style={{ textAlign: "left" }}
+                  onChangeText={(newText) => {
+                    handleUpdateSeedWord(newText.trim(), index + 8);
+                  }}
+                />
+              </View>
+            );
+          })}
+        </View>
+      </>
+    )
+  }
+
+  return (
+    <KeyboardAvoidingView 
+      style={styles.passwordContainer}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={24}
+    >
+      <Text style={styles.welcomeTitle}>
+        {t("seedPhraseSignIn")}
+      </Text>
+      <Text style={styles.instructionText}>
+        {t("seedPhraseSignInDescription", {wordCount: `${seedLength}`})}{"\n"}
+        {t("enterSeedPhrase")}
+      </Text>
+      <ScrollView style={{ width: "100%" }} contentContainerStyle={{paddingBottom: 20}} bounces={false}>
+        {seedLength === 12 ? renderMode12() : renderMode15()}
         <Button
           type="text"
           style={{

@@ -14,7 +14,7 @@
   "phraseWarning": "Never share these words. Anyone who learns them can steal all of your assets. U2U will never ask you for them.",
   "phraseDescription": "The 12 words below are your wallet's recovery phrase. This phrase lets you recover your wallet if you lose your device. Back up it to somewhere safe.",
   "seedPhraseSignIn": "Sign in with recovery phrase",
-  "seedPhraseSignInDescription": "This is a 12 words phrase you were given when you created you wallet",
+  "seedPhraseSignInDescription": "This is a {{wordCount}} words phrase you were given when you created you wallet",
   "enterSeedPhrase": "Please enter those words.",
   "receiveToken": "Receive token",
   "receiveTokenDescriptionPre": "This address can only accept assets on ",
