@@ -11,8 +11,10 @@ const Step1 = ({onChange, nextStep}: {
 }) => {
   const { t } = useTranslation<string>()
   const handleChange = (code: string) => {
-    onChange(code)
-    if (code.length === 6) nextStep()
+    if (code.length === 6) {
+      onChange(code)
+      nextStep()
+    }
   }
 
   return (

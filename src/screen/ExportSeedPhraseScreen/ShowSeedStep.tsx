@@ -25,7 +25,7 @@ const ShowSeedStep = ({onBack}: {
     Clipboard.setString(wallet.mnemonic);
     Toast.show({
       type: "simpleNoti",
-      text1: "Copied to clipboard",
+      text1: t('msgCopied'),
       props: {
         width: '45%'
       }

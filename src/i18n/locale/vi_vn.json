@@ -152,6 +152,7 @@
   "transactionHash" : "Mã giao dịch",
   "block" : "Khối",
   "msgCopied" : "Đã sao chép",
+  "copyToClipboard": "Sao chép",
   "balance" : "Số dư",
   "invalidAddress": "Địa chỉ không hợp lệ",
   "active": "Hoạt động",
@@ -239,5 +240,8 @@
   "transferSubmitted": "Đã gửi giao dịch",
   "msgPleaseWaitAMomentOrSkipToCheckTransactionStatus": "Vui lòng đợi trong giây lát hoặc bỏ qua để kiểm tra trạng thái giao dịch",
   "skip": "Bỏ qua",
-  "passwordRetryReached": "Vượt quá 5 lần mở khoá, vui lòng thử lại sau 30 phút"
+  "passwordRetryReached": "Vượt quá 5 lần mở khoá, vui lòng thử lại sau 30 phút",
+  "detail": "Chi tiết",
+  "passConfirmNotMatch": "Xác nhận mật khẩu không khớp",
+  "paste": "Dán"
 }

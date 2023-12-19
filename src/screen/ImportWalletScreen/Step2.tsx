@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import OtpInputs from 'react-native-otp-inputs';
 import { styles } from './styles';
 import { View } from 'react-native';
 import Text from '../../component/Text';
 import { useTranslation } from 'react-i18next';
+import ErrorTextInput from '../../component/TextInput/ErrorTextInput';
 
-const Step2 = ({password, onChange, nextStep}: {
+const Step2 = ({password, nextStep}: {
   password: string;
-  onChange: (newPassword: string) => void;
   nextStep: () => void;
 }) => {
-  const { t } = useTranslation<string>()
+  const { t } = useTranslation<string>();
+  const [error, setError] = useState("");
+
   const handleChange = (code: string) => {
-    onChange(code)
-    if (password === code) nextStep()
+    if (code.length === 6) {
+      if (password === code) {
+        setError("")
+        nextStep()
+        return
+      }
+      setError("passConfirmNotMatch")
+    }
   }
 
   return (
@@ -34,6 +42,7 @@ const Step2 = ({password, onChange, nextStep}: {
         style={styles.otpContainer}
         inputStyles={styles.otpInput}
       />
+      {error && <ErrorTextInput error={t(error)} style={{justifyContent: 'center', marginVertical: 10}}/>}
     </View>
   )
 };

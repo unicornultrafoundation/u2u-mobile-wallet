@@ -21,7 +21,6 @@ const CreateWalletScreen = () => {
 
   const [currentStep, setCurrentStep] = useState(0)
   const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
 
   const handleBack = () => {
     if (currentStep === 0) {
@@ -37,7 +36,6 @@ const CreateWalletScreen = () => {
     } else if (currentStep === 1) {
       return (
         <Step2
-          onChange={setConfirmPassword}
           password={password}
           nextStep={() => {
             savePassword(password)

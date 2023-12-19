@@ -68,6 +68,7 @@ function App(): JSX.Element {
   const { type, isConnected } = useNetInfo();
   const {darkMode: isDarkMode, language} = usePreferenceStore()
   const preferenceTheme = isDarkMode ? darkTheme : lightTheme
+  const {t} = useTranslation()
 
   const {blockExplorer, chainId} = useNetwork()
   const networkStore = useNetworkStore()
@@ -133,7 +134,7 @@ function App(): JSX.Element {
                       }
                     ]}
                   >
-                    Detail
+                    {t('detail')}
                   </Text>
                   <Icon name="chevron-right" width={18} height={18} />
                 </TouchableOpacity>
@@ -226,7 +227,7 @@ function App(): JSX.Element {
                       }
                     ]}
                   >
-                    Detail
+                    {t('detail')}
                   </Text>
                   <Icon name="chevron-right" width={18} height={18} />
                 </TouchableOpacity>

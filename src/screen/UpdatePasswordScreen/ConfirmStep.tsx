@@ -10,6 +10,7 @@ import { useLocalStore } from '../../state/local';
 import Button from '../../component/Button';
 import Toast from 'react-native-toast-message';
 import { usePreference } from '../../hook/usePreference';
+import ErrorTextInput from '../../component/TextInput/ErrorTextInput';
 
 const ConfirmStep = ({onNextStep, onBack, passwordToConfirm}: {
   onNextStep: () => void;
@@ -27,7 +28,7 @@ const ConfirmStep = ({onNextStep, onBack, passwordToConfirm}: {
   const handleContinue = () => {
     setError('')
     if (internalPassword != passwordToConfirm) {
-      setError(t('incorrectPassword'))
+      setError(t('passConfirmNotMatch'))
       return
     }
     savePassword(internalPassword)
@@ -77,20 +78,7 @@ const ConfirmStep = ({onNextStep, onBack, passwordToConfirm}: {
             style={styles.otpContainer}
             inputStyles={styles.otpInput}
           />
-          {error && (
-            <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center'}}>
-              <Icon name='error' width={18} height={18} />
-              <Text style={[
-                theme.typography.caption2.regular,
-                {
-                  color: theme.accentColor.error.normal,
-                  paddingLeft: 4
-                }
-              ]}>
-                {error}
-              </Text>
-            </View>
-          )}
+          {error && <ErrorTextInput error={error} style={{justifyContent: 'center', marginVertical: 10}}/>}
         </View>
 
         <Button
