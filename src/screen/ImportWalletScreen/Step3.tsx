@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { KeyboardAvoidingView, Platform, View } from "react-native";
 import { styles } from "./styles";
 import Text from "../../component/Text";
 import { useTranslation } from "react-i18next";
@@ -9,6 +9,9 @@ import { useWallet } from "../../hook/useWallet";
 import { usePreferenceStore } from "../../state/preferences";
 import { darkTheme, lightTheme } from "../../theme/color";
 import ErrorTextInput from "../../component/TextInput/ErrorTextInput";
+import Clipboard from "@react-native-clipboard/clipboard";
+import { ScrollView } from "react-native";
+import Icon from "../../component/Icon";
 
 const Step3 = () => {
   const { t } = useTranslation<string>();
@@ -16,7 +19,8 @@ const Step3 = () => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const { accessWallet } = useWallet();
 
-  const [seedList, setSeedList] = useState(Array(12).fill(""));
+  const SEED_LENGTH = 12;
+  const [seedList, setSeedList] = useState(Array(SEED_LENGTH).fill(""));
   const [errorSeed, setErrorSeed] = useState('')
   const [loading, setLoading] = useState(false);
 
@@ -37,7 +41,18 @@ const Step3 = () => {
     return true
   }
 
-  const handleSaveSeed = () => {    
+  const pasteRecoveryPhrase = async () => {
+    const content = await Clipboard.getString();
+    const contentLi = content.trim().split(/\s+/)
+    const newSeedLi = Array(SEED_LENGTH).fill("")
+    const len = Math.min(contentLi.length, SEED_LENGTH)
+    for (var i = 0; i < len; ++i) {
+      newSeedLi[i] = contentLi[i]
+    }
+    setSeedList(newSeedLi)
+  }
+
+  const handleSaveSeed = async () => {    
     const isOK = validateSeed();
     if (isOK) {
       setLoading(true);
@@ -53,7 +68,11 @@ const Step3 = () => {
   };
 
   return (
-    <View style={styles.passwordContainer}>
+    <KeyboardAvoidingView 
+      style={styles.passwordContainer}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={24}
+    >
       <Text style={styles.welcomeTitle}>
         {t("seedPhraseSignIn")}
       </Text>
@@ -61,7 +80,7 @@ const Step3 = () => {
         {t("seedPhraseSignInDescription")}{"\n"}
         {t("enterSeedPhrase")}
       </Text>
-      <View style={{ width: "100%", flex: 1 }}>
+      <ScrollView style={{ width: "100%", flex: 1 }} contentContainerStyle={{paddingBottom: 20}} bounces={false}>
         <View style={{ flexDirection: "row" }}>
           {seedList.slice(0, 4).map((word, index) => {
             return (
@@ -125,18 +144,37 @@ const Step3 = () => {
             );
           })}
         </View>
+        <Button
+          type="text"
+          style={{
+            alignItems: "center",
+            justifyContent: "flex-start",
+            marginTop: 12,
+            paddingHorizontal: 8
+          }}
+          textStyle={{
+            color: preferenceTheme.text.title,
+          }}
+          onPress={pasteRecoveryPhrase}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Icon name="copy" width={16} height={16} style={{ marginRight: 4 }} />
+            <Text style={{ fontWeight: "500", fontSize: 14 }}>{t('paste')}</Text>
+          </View>
+        </Button>
         {errorSeed && <ErrorTextInput error={t(errorSeed)} style={{marginVertical: 10, justifyContent: 'center'}}/>}
-      </View>
+      </ScrollView>
       <Button
         fullWidth
         style={{
-          borderRadius: 60
+          borderRadius: 60,
+          marginTop: 10,
         }}
         onPress={handleSaveSeed}
       >
         {t('continue')}
       </Button>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

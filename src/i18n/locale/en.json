@@ -152,6 +152,7 @@
   "transactionHash" : "Transaction Hash",
   "block" : "Block",
   "msgCopied" : "Copied to clipboard",
+  "copyToClipboard": "Copy to clipboard",
   "balance" : "Balance",
   "invalidAddress": "Invalid Address",
   "active": "Active",
@@ -239,5 +240,8 @@
   "transferSubmitted": "Transfer submitted",
   "msgPleaseWaitAMomentOrSkipToCheckTransactionStatus": "Please wait a moment or skip to check transaction status",
   "skip": "Skip",
-  "passwordRetryReached": "Already tried 5 times, please try again after 30 minutes"
+  "passwordRetryReached": "Already tried 5 times, please try again after 30 minutes",
+  "detail": "Detail",
+  "passConfirmNotMatch": "Password confirmation doesn't match",
+  "paste": "Paste"
 }

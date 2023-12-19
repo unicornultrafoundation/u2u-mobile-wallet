@@ -12,6 +12,7 @@ import { usePreference } from '../../hook/usePreference';
 import { getPhonePaddingBottom } from '../../util/platform';
 import { useGlobalStore } from '../../state/global';
 import { APP_PASSWORD_RETRY_MAX } from '../../config/constant';
+import ErrorTextInput from '../../component/TextInput/ErrorTextInput';
 
 const AuthStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -94,20 +95,7 @@ const AuthStep = ({onNextStep, onBack}: {
               style={styles.otpContainer}
               inputStyles={styles.otpInput}
             />
-            {error && (
-              <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center'}}>
-                <Icon name='error' width={18} height={18} />
-                <Text style={[
-                  theme.typography.caption2.regular,
-                  {
-                    color: theme.accentColor.error.normal,
-                    paddingLeft: 4
-                  }
-                ]}>
-                  {error}
-                </Text>
-              </View>
-            )}
+            {error && <ErrorTextInput error={error} style={{justifyContent: 'center', marginVertical: 10}}/>}
           </View>
 
           <Button

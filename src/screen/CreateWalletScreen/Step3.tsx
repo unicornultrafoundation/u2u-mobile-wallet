@@ -41,7 +41,7 @@ const Step3 = () => {
     Clipboard.setString(seed);
     Toast.show({
       type: "simpleNoti",
-      text1: "Copied to clipboard",
+      text1: t('msgCopied'),
       props: {
         width: "45%"
       }
@@ -111,7 +111,7 @@ const Step3 = () => {
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Icon name="copy" width={16} height={16} style={{ marginRight: 4 }} />
-              <Text style={{ fontWeight: "500", fontSize: 14 }}>Copy to clipboard</Text>
+              <Text style={{ fontWeight: "500", fontSize: 14 }}>{t('copyToClipboard')}</Text>
             </View>
           </Button>
         )}
@@ -125,7 +125,7 @@ const Step3 = () => {
           onPress={handleSaveSeed}
           loading={loading}
         >
-          Continue
+          {t('continue')}
         </Button>
       )}
     </View>

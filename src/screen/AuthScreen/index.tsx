@@ -19,11 +19,9 @@ const AuthScreen = () => {
 
   const {password, increasePasswordTry, passwordTry, setPasswordTry, lockedUntil, setLockedUntil} = useLocalStore()
   const {setUnlocked} = useGlobalStore()
-
-  const [internalPassword, setInternalPassword] = useState('')
   const [error, setError] = useState('')
 
-  const handleContinue = () => {
+  const handleContinue = (pass: string) => {
     setError('')
 
     if (Date.now() <= lockedUntil) {
@@ -31,13 +29,14 @@ const AuthScreen = () => {
       return
     }
 
-    if (internalPassword != password) {
+    if (pass != password) {
       if (passwordTry >= APP_PASSWORD_RETRY_MAX) {
         setUnlocked(false)
         setError(t('passwordRetryReached'))
         return
       }
 
+    if (pass != password) {
       setError(t('incorrectPassword'))
       increasePasswordTry()
       return
@@ -49,12 +48,6 @@ const AuthScreen = () => {
       setUnlocked(true)
     }, 100)
   }
-
-  useEffect(() => {
-    if (internalPassword.length === 6) {
-      handleContinue()
-    }
-  }, [internalPassword])
 
   return (
     <ImageBackground
@@ -87,7 +80,11 @@ const AuthScreen = () => {
       </Text>
       <OtpInputs
         autofillFromClipboard={false}
-        handleChange={setInternalPassword}
+        handleChange={(value) => {
+          if (value.length === 6) {
+            handleContinue(value)
+          }
+        }}
         numberOfInputs={6}
         autoFocus={true}
         keyboardType={"numeric" as any}
