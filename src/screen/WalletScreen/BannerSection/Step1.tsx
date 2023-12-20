@@ -12,12 +12,13 @@ import { isValidDevice } from '../../../util/platform';
 import { usePreference } from '../../../hook/usePreference';
 import { useWallet } from '../../../hook/useWallet';
 import { useTracking } from '../../../hook/useTracking';
+import { useNetwork } from '../../../hook/useNetwork';
 
 const Step1 = () => {
   const {preferenceTheme} = usePreference()
 
   const { t } = useTranslation();
-  const { submitClaimRequest, claimRequest } = useClaimMembershipNFT()
+  const { submitClaimRequest, claimRequest, fetchingClaimRequest } = useClaimMembershipNFT()
   const { deviceID } = useTracking()
   const { wallet } = useWallet()
 
@@ -50,11 +51,18 @@ const Step1 = () => {
     setLoading(false)
     if (rs.id) {
       setAlreadySubmitted(true)
+    } else {
+      if (rs.message === "already request") {
+        setAlreadySubmitted(true)
+      }
     }
   }
 
   useEffect(() => {
-    if (!claimRequest.id) return
+    if (!claimRequest.id) {
+      setAlreadySubmitted(false)
+      return
+    }
     if (claimRequest.id) setAlreadySubmitted(true)
 
     if (claimRequest.walletToReceive === wallet.address) {

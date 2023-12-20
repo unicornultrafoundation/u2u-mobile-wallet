@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { StyleProp, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+import Text from '../Text'
 import styles from './styles';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { usePreferenceStore } from '../../state/preferences';
@@ -57,7 +58,8 @@ const Tab = ({selectedTab, onChange, tabs, tabStyle, tabTextStyle, containerStyl
             ]}
             onPress={() => onChange && onChange(tabItem.value)}
           >
-            <Text style={[
+            <Text
+              style={[
               styles.tabTitle,
               {color: isActive ? preferenceTheme.text.title : theme.color.neutral[500]},
               {fontWeight: isActive ? '700' : '500'},
