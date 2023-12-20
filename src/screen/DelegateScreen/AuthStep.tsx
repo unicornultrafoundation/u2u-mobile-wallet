@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, TouchableOpacity, View } from 'react-native';
 import Icon from '../../component/Icon';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,10 @@ import theme from '../../theme';
 import Button from '../../component/Button';
 import { useLocalStore } from '../../state/local';
 import { usePreference } from '../../hook/usePreference';
+import { APP_PASSWORD_RETRY_MAX } from '../../config/constant';
+import { useGlobalStore } from '../../state/global';
+import ErrorTextInput from '../../component/TextInput/ErrorTextInput';
+import { getPhonePaddingBottom } from '../../util/platform';
 
 const AuthStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -17,23 +21,43 @@ const AuthStep = ({onNextStep, onBack}: {
   const {preferenceTheme} = usePreference()
 
   const { t } = useTranslation<string>()
-  const {password} = useLocalStore()
+  const {password, increasePasswordTry, passwordTry, setPasswordTry, lockedUntil, setLockedUntil} = useLocalStore()
+  const { setUnlocked } = useGlobalStore()
 
   const [internalPassword, setInternalPassword] = useState('')
   const [error, setError] = useState('')
 
   const handleContinue = () => {
     setError('')
-    if (internalPassword != password) {
-      setError(t('incorrectPassword'))
+
+    if (Date.now() <= lockedUntil) {
+      setError(t('passwordRetryReached'))
       return
     }
 
+    if (internalPassword != password) {
+      if (passwordTry >= APP_PASSWORD_RETRY_MAX) {
+        setUnlocked(false)
+        setError(t('passwordRetryReached'))
+        return
+      }
+      
+      setError(t('incorrectPassword'))
+      increasePasswordTry()
+      return
+    }
+
+    setPasswordTry(0)
+    setLockedUntil(0)
     onNextStep()
   }
 
   return (
-    <View style={{flex: 1}}>
+    <KeyboardAvoidingView 
+      style={{flex: 1, paddingBottom: getPhonePaddingBottom()}}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={24}
+    >
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={onBack}>
           <Icon name="arrow-left" width={24} height={24} />
@@ -70,20 +94,7 @@ const AuthStep = ({onNextStep, onBack}: {
             style={styles.otpContainer}
             inputStyles={styles.otpInput}
           />
-          {error && (
-            <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center'}}>
-              <Icon name='error' width={18} height={18} />
-              <Text style={[
-                theme.typography.caption2.regular,
-                {
-                  color: theme.accentColor.error.normal,
-                  paddingLeft: 4
-                }
-              ]}>
-                {error}
-              </Text>
-            </View>
-          )}
+          {error && <ErrorTextInput error={error} style={{justifyContent: 'center', marginVertical: 10}}/>}
         </View>
 
         <Button
@@ -94,7 +105,7 @@ const AuthStep = ({onNextStep, onBack}: {
           {t('confirm')}
         </Button>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 };
 

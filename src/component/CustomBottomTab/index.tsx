@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { Platform, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import Icon from '../Icon';
 import styles from './styles';
 import { usePreferenceStore } from '../../state/preferences';
@@ -37,7 +37,7 @@ export default ({ state, descriptors, navigation }: any) => {
         justifyContent: 'center',
         alignItems: 'flex-start',
         flexDirection: 'row', 
-        height: TABBAR_HEIGHT,
+        height: Platform.OS === "ios" ? TABBAR_HEIGHT : TABBAR_ITEM_HEIGHT,
         width: viewportWidth,
         backgroundColor: darkMode ? '#181818' : '#FFFFFF',
         position: 'absolute',

@@ -111,7 +111,7 @@ const NFTDetailsScreen = () => {
             <Tab
               tabs={[
                 { label: t('details'), value: 'details' },
-                { label: t('history'), value: 'history' },
+                // { label: t('history'), value: 'history' },
               ]}
               selectedTab={tab}
               onChange={v => setTab(v)}

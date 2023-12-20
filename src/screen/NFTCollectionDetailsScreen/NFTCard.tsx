@@ -21,7 +21,7 @@ const NFTCard = ({nftCollection, item}: {
 
   return (
     <TouchableOpacity
-      style={{flex: 1}}
+      style={{flex: 0.5}}
       onPress={() => navigation.navigate('NFTDetails', {nftCollection, item, metadata: data})}
     >
       {data.image && (
