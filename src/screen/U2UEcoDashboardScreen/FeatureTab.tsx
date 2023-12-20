@@ -16,13 +16,13 @@ const FeatureTab = () => {
         <ActivityIndicator />
       ) : (
         <>
-          <BannerSection renderItemComponent={ImageItem} data={DATA} />
+          <BannerSection renderItemComponent={ImageItem} data={DATA.filter((i) => i.featured)} />
           {/* <BannerSection renderItemComponent={AnnouncementItem} data={DATA} /> */}
         </>
       )}
       <TopDapp />
       <Upcoming />
-      <Trading />
+      {/* <Trading /> */}
     </ScrollView>
   );
 };
