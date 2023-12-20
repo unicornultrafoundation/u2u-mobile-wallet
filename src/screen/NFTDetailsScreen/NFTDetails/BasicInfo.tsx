@@ -100,7 +100,7 @@ const NFTBasicInfo = ({item, nftCollection}: {
       </View>
       <View style={styles.txRowContainer}>
         {renderItem({label: 'blockchain', value: networkConfig?.name ?? '--', flex: 2})}
-        {renderItem({label: 'tokenStandard', value: 'ERC-721'})}
+        {renderItem({label: 'tokenStandard', value: 'URC-721'})}
       </View>
       {/* <View style={styles.txRowContainer}>
         {renderItem({label: 'time', value: 'dd/MM/yyyy, HH:mm:ss'})}

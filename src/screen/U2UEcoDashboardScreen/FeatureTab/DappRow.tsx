@@ -5,12 +5,15 @@ import Text from '../../../component/Text';
 import Button from '../../../component/Button';
 import theme from '../../../theme';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 const DappRow = ({dappMeta}: {dappMeta: any}) => {
   const navigation = useNavigation<any>();
   const handlePressDetail = () => {
     navigation.navigate('DAppWebView', {url: dappMeta.url});
   };
+
+  const {t} = useTranslation()
 
   return (
     <View style={styles.tokenContainer}>
@@ -37,7 +40,7 @@ const DappRow = ({dappMeta}: {dappMeta: any}) => {
           style={styles.openButton}
           onPress={handlePressDetail}
         >
-          Open
+          {t('open')}
         </Button>
       </View>
     </View>

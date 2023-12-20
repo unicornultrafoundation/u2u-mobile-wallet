@@ -1,10 +1,25 @@
 import { useEffect, useState } from "react"
-import { useWalletStore } from "../state/wallet"
+import { WALLET_STORE_KEY, useWalletStore } from "../state/wallet"
 import { useLocalStore } from "../state/local"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import EncryptedStorage from "react-native-encrypted-storage"
 
 export const useHydration = () => {
   const [hydratedWallet, setHydratedWallet] = useState(false)
   const [hydratedAppSetting, setHydratedAppSetting] = useState(false)
+
+  const migrateWalletData = async () => {
+    const newData = await EncryptedStorage.getItem(WALLET_STORE_KEY)
+
+    if (newData) return;
+
+    const oldData = await AsyncStorage.getItem(WALLET_STORE_KEY)
+    if (!oldData) return;
+    console.log('start wallet data migration')
+    await EncryptedStorage.setItem(WALLET_STORE_KEY, oldData)
+    console.log('wallet data migration success')
+    await useWalletStore.persist.rehydrate()
+  }
 
   useEffect(() => {
     // Wallet
@@ -16,6 +31,8 @@ export const useHydration = () => {
     const unsubHydrateAppSetting = useLocalStore.persist.onHydrate(() => setHydratedAppSetting(false))
     const unsubFinishHydrationAppSetting = useLocalStore.persist.onFinishHydration(() => setHydratedAppSetting(true))
     setHydratedAppSetting(useLocalStore.persist.hasHydrated())
+
+    migrateWalletData()
 
     return () => {
       unsubHydrateWallet()

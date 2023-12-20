@@ -21,9 +21,10 @@ const DAppWebView = () => {
 
   const { setRouteName } = useGlobalStore();
   const {preferenceTheme} = usePreference()
-  const navigation = useNavigation<any>()
+  const navigation = useNavigation()
+  const route = useRoute<any>();
 
-  const appURL = 'https://testnet-staking.uniultra.xyz/'
+  const appURL = route.params?.url || ""
   const [resource, setResource] = useState('')
   const [loading, setLoading] = useState(true)
   const [requestIdForCallback, setRequestIdForCallback] = useState(0)
@@ -37,8 +38,6 @@ const DAppWebView = () => {
   const {networkConfig} = useNetwork()
 
   const isFocused = useIsFocused()
-
-  const route = useRoute();
 
   useFocusEffect(
     useCallback(() => {

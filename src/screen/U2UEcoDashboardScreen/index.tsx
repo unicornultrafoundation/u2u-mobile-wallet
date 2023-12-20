@@ -54,10 +54,10 @@ const U2UEcoDashboardScreen = () => {
             label: 'Explore',
             value: 'explore',
           },
-          {
-            label: 'Favorites',
-            value: 'favorites',
-          },
+          // {
+          //   label: 'Favorites',
+          //   value: 'favorites',
+          // },
         ]}
         selectedTab={selectedTab}
         onChange={v => setSelectedTab(v)}

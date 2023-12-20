@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: getPhonePaddingTop() + 8,
+    paddingTop: getPhonePaddingTop() + 24,
     paddingHorizontal: 16
   },
   passwordContainer: {

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
-import { Platform, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { Platform, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import Icon from '../Icon';
+import Text from '../Text';
 import styles from './styles';
 import { usePreferenceStore } from '../../state/preferences';
 import { color } from '../../theme/color';

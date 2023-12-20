@@ -17,7 +17,7 @@
   "phraseWarning": "Bất kỳ ai có cụm từ khôi phục của bạn sẽ có quyền truy cập vào ví của bạn. Tuyệt đối không chia sẻ cụm từ khôi phục với bất kỳ ai. U2U sẽ không bao giờ hỏi mật khẩu khôi phục của bạn",
   "phraseDescription": "Chuỗi 12 từ dưới đây là cụm từ khôi phục cho ví của bạn. Chúng sẽ giúp bạn khôi phục lại ví nếu bạn mất truy cập vào ví của mình. Chúng tôi khuyên bạn nên lưu chúng ở một nơi an toàn.",
   "seedPhraseSignIn": "Đăng nhập với cụm từ khôi phục",
-  "seedPhraseSignInDescription": "Đây là chuỗi 12 từ được cung cấp khi bạn tạo ví của mình",
+  "seedPhraseSignInDescription": "Đây là chuỗi {{wordCount}} từ được cung cấp khi bạn tạo ví của mình",
   "enterSeedPhrase": "Hãy nhập 12 từ ấy tại đây.",
   "receiveToken": "Nhận token",
   "receiveTokenDescriptionPre": "Địa chỉ này chỉ nhận token ở trên ",
@@ -243,5 +243,6 @@
   "passwordRetryReached": "Vượt quá 5 lần mở khoá, vui lòng thử lại sau 30 phút",
   "detail": "Chi tiết",
   "passConfirmNotMatch": "Xác nhận mật khẩu không khớp",
-  "paste": "Dán"
+  "paste": "Dán",
+  "switchSeedLength": "Sử dụng cụm {{seedLength}} từ khôi phục"
 }

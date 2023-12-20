@@ -56,7 +56,7 @@ const SelectDappModal = ({
           </View>
           <View style={{flex: 1, paddingHorizontal: 8}}>
             <Text style={[theme.typography.label.bold]}>{title}</Text>
-            <Text style={[theme.typography.caption1.regular]}>{t('filter')}</Text>
+            {/* <Text style={[theme.typography.caption1.regular]}>{t('filter')}</Text> */}
           </View>
           <StarButton
             isFavorite={
