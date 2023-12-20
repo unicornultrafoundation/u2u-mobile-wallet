@@ -72,7 +72,7 @@ const Step3 = () => {
     return (
       <>
         <View style={{ flexDirection: "row" }}>
-          {seedList.slice(0, 4).map((word, index) => {
+          {seedList.slice(0, 3).map((word, index) => {
             return (
               <View
                 style={{ flex: 1, paddingHorizontal: 4, paddingVertical: 6 }}
@@ -93,16 +93,16 @@ const Step3 = () => {
           })}
         </View>
         <View style={{ flexDirection: "row" }}>
-          {seedList.slice(4, 8).map((word, index) => {
+          {seedList.slice(3, 6).map((word, index) => {
             return (
               <View
                 style={{ flex: 1, paddingHorizontal: 4, paddingVertical: 6 }}
-                key={`seed-${index + 5}`}
+                key={`seed-${index + 3}`}
               >
                 <TextInput
                   value={word}
                   autoCapitalize="none"
-                  placeholder={`${index + 5}.`}
+                  placeholder={`${index + 4}.`}
                   placeholderTextColor={preferenceTheme.text.primary}
                   style={{textAlign: "left"}}
                   onChangeText={(newText) => {
@@ -114,16 +114,37 @@ const Step3 = () => {
           })}
         </View>
         <View style={{ flexDirection: "row" }}>
-          {seedList.slice(8, 12).map((word, index) => {
+          {seedList.slice(6, 9).map((word, index) => {
             return (
               <View
                 style={{ flex: 1, paddingHorizontal: 4, paddingVertical: 6 }}
-                key={`seed-${index + 8}`}
+                key={`seed-${index + 6}`}
               >
                 <TextInput
                   value={word}
                   autoCapitalize="none"
-                  placeholder={`${index + 9}.`}
+                  placeholder={`${index + 7}.`}
+                  placeholderTextColor={preferenceTheme.text.primary}
+                  style={{ textAlign: "left" }}
+                  onChangeText={(newText) => {
+                    handleUpdateSeedWord(newText.trim(), index + 8);
+                  }}
+                />
+              </View>
+            );
+          })}
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          {seedList.slice(9, 12).map((word, index) => {
+            return (
+              <View
+                style={{ flex: 1, paddingHorizontal: 4, paddingVertical: 6 }}
+                key={`seed-${index + 9}`}
+              >
+                <TextInput
+                  value={word}
+                  autoCapitalize="none"
+                  placeholder={`${index + 10}.`}
                   placeholderTextColor={preferenceTheme.text.primary}
                   style={{ textAlign: "left" }}
                   onChangeText={(newText) => {
@@ -282,6 +303,20 @@ const Step3 = () => {
             <Icon name="copy" width={16} height={16} style={{ marginRight: 4 }} />
             <Text style={{ fontWeight: "500", fontSize: 14 }}>{t('paste')}</Text>
           </View>
+        </Button>
+        <Button
+          type="text"
+          textStyle={{
+            color: preferenceTheme.text.title,
+            textDecorationLine: "underline"
+          }}
+          onPress={() => {
+            const newSeedLength = seedLength === 12 ? 15 : 12
+            setSeedList(Array(newSeedLength).fill(""))
+            setSeedLength(newSeedLength)
+          }}
+        >
+          {seedLength === 12 ? t('switchSeedLength', {seedLength: 15}) : t('switchSeedLength', {seedLength: 12})}
         </Button>
         {errorSeed && <ErrorTextInput error={t(errorSeed)} style={{marginVertical: 10, justifyContent: 'center'}}/>}
       </ScrollView>

@@ -243,5 +243,6 @@
   "passwordRetryReached": "Already tried 5 times, please try again after 30 minutes",
   "detail": "Detail",
   "passConfirmNotMatch": "Password confirmation doesn't match",
-  "paste": "Paste"
+  "paste": "Paste",
+  "switchSeedLength": "Switch to {{seedLength}} words seed phrase"
 }
