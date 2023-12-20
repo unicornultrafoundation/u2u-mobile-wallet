@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { getWalletFromMnemonic } from '../util/wallet';
 import { getPathIndex } from '../util/string';
@@ -27,6 +26,8 @@ interface WalletState {
   updateWallet: (name: string) => void;
   deleteWallet: (wallet: Wallet) => void;
 }
+
+export const WALLET_STORE_KEY = 'wallet-storage'
 
 export const useWalletStore = create(
   persist<WalletState>(
@@ -126,7 +127,7 @@ export const useWalletStore = create(
       },
     }),
     {
-      name: 'wallet-storage', // unique name
+      name: WALLET_STORE_KEY, // unique name
       storage: createJSONStorage(() => EncryptedStorage),
     },
   ),
