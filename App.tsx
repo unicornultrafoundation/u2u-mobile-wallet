@@ -11,8 +11,8 @@ import 'event-target-polyfill'
 import React, { useEffect, useMemo } from 'react';
 import { Linking, StatusBar, TouchableOpacity, View } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
-
+import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
+import analytics from '@react-native-firebase/analytics';
 import "./src/i18n"
 import { useWallet } from './src/hook/useWallet';
 import OnboardingStackScreen from './src/stack/OnboardingStack';
@@ -72,6 +72,9 @@ function App(): JSX.Element {
 
   const {blockExplorer, chainId} = useNetwork()
   const networkStore = useNetworkStore()
+
+  const routeNameRef = React.useRef<string>();
+  const navigationRef = React.useRef<NavigationContainerRef<any>>(null);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? darkTheme.background.background : lightTheme.background.background,
@@ -264,7 +267,28 @@ function App(): JSX.Element {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <MenuProvider>
         <QueryClientProvider client={queryClient}>
-          <NavigationContainer>
+          <NavigationContainer
+            ref={navigationRef}
+            onReady={() => {
+              if (!navigationRef || !navigationRef.current) return
+              routeNameRef.current = navigationRef.current.getCurrentRoute()?.name;
+            }}
+            onStateChange={async () => {
+              if (!navigationRef || !navigationRef.current) return
+              const previousRouteName = routeNameRef.current;
+              const currentRouteName = navigationRef.current.getCurrentRoute()?.name;
+
+              if (!currentRouteName) return
+      
+              if (previousRouteName !== currentRouteName) {
+                await analytics().logScreenView({
+                  screen_name: currentRouteName,
+                  screen_class: currentRouteName,
+                });
+              }
+              routeNameRef.current = currentRouteName;
+            }}
+          >
             <BottomSheetModalProvider>
               <StatusBar
                 barStyle={isDarkMode ? 'light-content' : 'dark-content'}

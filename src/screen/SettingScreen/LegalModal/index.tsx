@@ -1,7 +1,7 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next';
-import { TouchableOpacity, View } from 'react-native';
+import { Linking, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
@@ -21,6 +21,16 @@ const LegalModal = ({trigger}: {
 
   // variables
   const snapPoints = useMemo(() => ['35%'], []);
+
+  const handleTermsPress = () => {
+    // Xử lý khi người dùng nhấn vào "Terms"
+    Linking.openURL('https://docs.uniultra.xyz/services/wallets/u2u-super-app/policy');
+  };
+
+  const handlePrivacyPress = () => {
+    // Xử lý khi người dùng nhấn vào "Privacy Policy"
+    Linking.openURL('https://docs.uniultra.xyz/services/wallets/u2u-super-app/policy');
+  };
   
   return (
     <CustomBottomSheetModal
@@ -29,7 +39,7 @@ const LegalModal = ({trigger}: {
       trigger={trigger()} 
       triggerModal={
         <View>
-          <TouchableOpacity style={[styles.settingItem]}>
+          <TouchableOpacity style={[styles.settingItem]} onPress={handlePrivacyPress}>
             <Text style={[theme.typography.footnote.medium, {flex: 1}]}>{t('privacyPolicy')}</Text>
             <Icon
               name='chevron-right'
@@ -38,7 +48,7 @@ const LegalModal = ({trigger}: {
               color={preferenceTheme.text.disabled}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.settingItem}>
+          <TouchableOpacity style={styles.settingItem} onPress={handleTermsPress}>
             <Text style={[theme.typography.footnote.medium, {flex: 1}]}>{t('termsOfService')}</Text>
             <Icon
               name='chevron-right'

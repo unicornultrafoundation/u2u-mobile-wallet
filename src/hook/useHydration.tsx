@@ -16,10 +16,14 @@ export const useHydration = () => {
       if (newData === oldData) {
         await AsyncStorage.removeItem(WALLET_STORE_KEY)
       }
+      setHydratedWallet(true)
       return
     };
     
-    if (!oldData) return;
+    if (!oldData) {
+      setHydratedWallet(true)
+      return;
+    }
     console.log('start wallet data migration')
     await EncryptedStorage.setItem(WALLET_STORE_KEY, oldData)
     console.log('wallet data migration success')

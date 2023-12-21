@@ -5,9 +5,9 @@ import Text from '../../component/Text';
 import Icon from '../../component/Icon';
 import { color } from '../../theme/color';
 import { useMemo } from 'react';
-import {Article} from "./index";
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Article } from '../../hook/useNews';
 
 interface Props {
   news: Article[]

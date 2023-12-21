@@ -23,18 +23,9 @@ import Icon from '../../component/Icon';
 import {useTranslation} from 'react-i18next';
 import {color} from '../../theme/color';
 import {useNavigation} from '@react-navigation/native';
+import { Article, useNews } from '../../hook/useNews';
 
 type Props = NativeStackScreenProps<DiscoverStackParamList, 'Home'>;
-
-export interface Article {
-  id: number;
-  title: string;
-  description: string;
-  date: string;
-  category: string;
-  thumbnail: string;
-  content: string;
-}
 
 type SearchResult = {
   // id: number;
@@ -45,8 +36,7 @@ const DiscoverScreen = ({route}: Props) => {
   const styles = useStyles();
   const {setRouteName} = useGlobalStore();
   const [currentCategory, setCurrentCategory] = useState<string | undefined>();
-  const [loading, setLoading] = useState(true);
-  const [news, setNews] = useState<Article[]>([]);
+  
   const navigation = useNavigation<any>();
 
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -57,6 +47,8 @@ const DiscoverScreen = ({route}: Props) => {
 
   const [tab, setTab] = useState('featured');
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
+  const {news, fetchNextPage, isFetching} = useNews()
 
   const tabs = [
     {label: t('Featured'), value: 'featured'},
@@ -80,11 +72,12 @@ const DiscoverScreen = ({route}: Props) => {
   }, [route.params]);
 
   const handleSearch = () => {
+    setResults([])
     // Perform the search logic based on the searchQuery
-    const filteredResults = news.filter(item =>
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
-    setResults(filteredResults);
+    // const filteredResults = news.filter(item =>
+    //   item.title.toLowerCase().includes(searchQuery.toLowerCase()),
+    // );
+    // setResults(filteredResults);
   };
 
   useEffect(() => {
@@ -103,28 +96,28 @@ const DiscoverScreen = ({route}: Props) => {
     }, [route]),
   );
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch(
-          'https://raw.githubusercontent.com/unicornultrafoundation/static-news/main/news.json',
-          {
-            method: 'GET',
-            redirect: 'follow',
-          },
-        );
-        const data = await res.json();
-        setNews(data);
-      } catch (e) {
-        console.log(e);
-        setNews([]);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const res = await fetch(
+  //         'https://raw.githubusercontent.com/unicornultrafoundation/static-news/main/news.json',
+  //         {
+  //           method: 'GET',
+  //           redirect: 'follow',
+  //         },
+  //       );
+  //       const data = await res.json();
+  //       setNews(data);
+  //     } catch (e) {
+  //       console.log(e);
+  //       setNews([]);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   })();
+  // }, []);
 
-  if (loading) {
+  if (isFetching) {
     return (
       <View style={styles.container}>
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -242,10 +235,10 @@ const DiscoverScreen = ({route}: Props) => {
             }}
           />
           {tab === 'featured' && (
-            <FeaturedNews news={news} onViewCategory={handleViewCategory} />
+            <FeaturedNews news={news?.pages.flat() || []} onViewCategory={handleViewCategory} />
           )}
           {tab === 'latest' && (
-            <LatestNews news={news} initialTab={currentCategory} />
+            <LatestNews initialTab={currentCategory} />
           )}
         </ScrollView>
       )}
