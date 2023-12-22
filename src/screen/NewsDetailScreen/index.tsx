@@ -31,7 +31,6 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const styles = useStyles();
-  const [loading, setLoading] = useState(true)
 
   const actions = [
     { name: 'twitter', url: '', icon: 'twitter-circle' },
@@ -44,7 +43,7 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
 
   const article: Article = route.params.article || {};
 
-  const {news: pagedNews} = useNewsByCategory(article.category)
+  const {news: pagedNews, isFetching} = useNewsByCategory(article.category)
   
   const news = useMemo(() => {
     if (!pagedNews) return [] as Article[]
@@ -90,7 +89,7 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
     }, [route]),
   );
 
-  if (loading) {
+  if (isFetching) {
     return (
       <View style={[styles.container, { padding: 16 }]}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

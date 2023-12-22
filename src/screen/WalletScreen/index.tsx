@@ -43,27 +43,27 @@ const WalletScreen = () => {
 
   const { registerWallet } = useTracking()
 
-  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const currentOffset = event.nativeEvent.contentOffset.y;
-    setScrollOffset(currentOffset);
+  // const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+  //   const currentOffset = event.nativeEvent.contentOffset.y;
+  //   setScrollOffset(currentOffset);
 
-    if (scrollOffset > 200 && !collapsed) {
-      setCollapsed(true);
-      scrollViewRef.current?.scrollTo({ y: 0, animated: true });
-    }
-  };
+  //   if (scrollOffset > 200 && !collapsed) {
+  //     setCollapsed(true);
+  //     scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+  //   }
+  // };
 
   // Handle Swipe event
-  const onScrollEndDrag = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (e.nativeEvent.contentOffset.y === 0 && firstTouch === 0 && collapsed) {
-      setCollapsed(false);
-      scrollViewRef.current?.scrollTo({ y: 0, animated: true });
-    }
-  };
+  // const onScrollEndDrag = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+  //   if (e.nativeEvent.contentOffset.y === 0 && firstTouch === 0 && collapsed) {
+  //     setCollapsed(false);
+  //     scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+  //   }
+  // };
 
-  const onScrollBeginDrag = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    setFirstTouch(e.nativeEvent.contentOffset.y);
-  };
+  // const onScrollBeginDrag = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+  //   setFirstTouch(e.nativeEvent.contentOffset.y);
+  // };
 
   useFocusEffect(
     useCallback(() => {
@@ -89,12 +89,13 @@ const WalletScreen = () => {
           { backgroundColor: preferenceTheme.background.background },
         ]}>
         <ScrollView
-          onScroll={handleScroll}
+          // onScroll={handleScroll}
           scrollEventThrottle={100}
           nestedScrollEnabled={true}
-          onScrollBeginDrag={e => onScrollBeginDrag(e)}
-          onScrollEndDrag={e => onScrollEndDrag(e)}
+          // onScrollBeginDrag={e => onScrollBeginDrag(e)}
+          // onScrollEndDrag={e => onScrollEndDrag(e)}
           ref={scrollViewRef}
+          stickyHeaderIndices={[0]}
         >
           <WalletHeader onGoBack={() => setCollapsed(false)} collapsed={collapsed} action={tab} />
           <BalanceCard collapsed={collapsed} />
