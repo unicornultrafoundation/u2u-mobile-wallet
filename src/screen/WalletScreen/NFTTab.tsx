@@ -110,8 +110,10 @@ const NFTTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onResetP
           </View>
         )}
 
-
-        <FlatList
+        {dataWithBalance.map((item) => {
+          return <NFTRow key={`nft-${item.id}`} nftCollection={item} open={expandedItem === item.id} handleExpandItem={handleExpandItem} />
+        })}
+        {/* <FlatList
           nestedScrollEnabled={true}
           style={{ minHeight: 500 }}
           onScrollBeginDrag={e => onScrollBeginDrag(e)}
@@ -119,7 +121,7 @@ const NFTTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onResetP
           data={dataWithBalance}
           renderItem={({ item }) => <NFTRow key={`nft-${item.id}`} nftCollection={item} open={expandedItem === item.id} handleExpandItem={handleExpandItem} />}
           keyExtractor={item => item.id}
-        />
+        /> */}
       </View>
     );
   }

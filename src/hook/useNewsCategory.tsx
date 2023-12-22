@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import { fetchNewsCategory } from "../service/news";
+import { useCallback } from "react";
 
-interface NewsCategory {
+export interface NewsCategory {
   id: string;
   name: string;
   slug: string;
@@ -30,7 +31,13 @@ export const useNewsCategory = () => {
     initialData: [] as NewsCategory[]
   })
 
+  const findCategory = useCallback((categoryID: string) => {
+    const catItem = categoryData.find((i) => i.id === categoryID)
+    return catItem
+  }, [categoryData])
+
   return {
-    categories: categoryData
+    categories: categoryData,
+    findCategory
   }
 }

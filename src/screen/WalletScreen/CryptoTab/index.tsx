@@ -80,16 +80,21 @@ const CryptoTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onRes
     </ScrollView>
   } else {
     return (
-      <FlatList
-        nestedScrollEnabled={true}
-        style={{ minHeight: 500, flexGrow: 0, }}
-        onScrollBeginDrag={e => onScrollBeginDrag(e)}
-        onScrollEndDrag={e => onScrollEndDrag(e)}
-        data={assetsToShow}
-        renderItem={({ item }) => <TokenRow tokenObj={item} key={`token-asset-${item}`} />}
-        keyExtractor={item => `token-asset-${item.symbol}-${item.name}`}
-      />
+      assetsToShow.map((item) => {
+        return <TokenRow tokenObj={item} key={`token-asset-${item}`} />
+      })
     )
+    // return (
+    //   <FlatList
+    //     nestedScrollEnabled={true}
+    //     style={{ minHeight: 500, flexGrow: 0, }}
+    //     onScrollBeginDrag={e => onScrollBeginDrag(e)}
+    //     onScrollEndDrag={e => onScrollEndDrag(e)}
+    //     data={assetsToShow}
+    //     renderItem={({ item }) => <TokenRow tokenObj={item} key={`token-asset-${item}`} />}
+    //     keyExtractor={item => `token-asset-${item.symbol}-${item.name}`}
+    //   />
+    // )
   }
 }
 

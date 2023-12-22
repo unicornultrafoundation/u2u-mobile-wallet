@@ -10,6 +10,7 @@ export const APP_LOCK_TIME = 30 * 60 * 1000 // 30 minutes
 
 export const NEWS_CATEGORY_ENDPOINT = `https://uniultra.xyz/api/v1/categories`
 export const ALL_NEWS_ENDPOINT = `https://uniultra.xyz/api/v1/blog`
+export const NEWS_BY_CATEGORY_ENDPOINT = `https://uniultra.xyz/api/v1/blog/categories/`
 
 export const APP_FLYERS_DEV_KEY = Config.APP_FLYERS_DEV_KEY
 export const APP_FLYERS_IOS_APP_ID = Config.APP_FLYERS_IOS_APP_ID

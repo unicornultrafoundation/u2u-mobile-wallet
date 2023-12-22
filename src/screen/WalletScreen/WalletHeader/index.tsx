@@ -35,7 +35,7 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
   }
 
   return (
-    <View style={styles.headerSection}>
+    <View style={[styles.headerSection, {backgroundColor: preferenceTheme.background.background}]}>
       <View
         style={{
           flexDirection: 'row',

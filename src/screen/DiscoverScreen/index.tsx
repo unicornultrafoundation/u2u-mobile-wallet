@@ -35,7 +35,7 @@ type SearchResult = {
 const DiscoverScreen = ({route}: Props) => {
   const styles = useStyles();
   const {setRouteName} = useGlobalStore();
-  const [currentCategory, setCurrentCategory] = useState<string | undefined>();
+  const [currentCategory, setCurrentCategory] = useState<string>("");
   
   const navigation = useNavigation<any>();
 
@@ -55,14 +55,14 @@ const DiscoverScreen = ({route}: Props) => {
     {label: t('Latest'), value: 'latest'},
   ];
 
-  const handleViewCategory = (category: string) => {
+  const handleViewCategory = (categoryID: string) => {
     setTab('latest');
-    setCurrentCategory(category);
+    setCurrentCategory(categoryID);
   };
 
   const handleChangeTab = (t: string) => {
     setTab(t);
-    setCurrentCategory(undefined);
+    setCurrentCategory("");
   };
 
   useEffect(() => {
@@ -96,27 +96,6 @@ const DiscoverScreen = ({route}: Props) => {
     }, [route]),
   );
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const res = await fetch(
-  //         'https://raw.githubusercontent.com/unicornultrafoundation/static-news/main/news.json',
-  //         {
-  //           method: 'GET',
-  //           redirect: 'follow',
-  //         },
-  //       );
-  //       const data = await res.json();
-  //       setNews(data);
-  //     } catch (e) {
-  //       console.log(e);
-  //       setNews([]);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   })();
-  // }, []);
-
   if (isFetching) {
     return (
       <View style={styles.container}>
@@ -129,7 +108,7 @@ const DiscoverScreen = ({route}: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.searchContainer}>
+      {/* <View style={styles.searchContainer}>
         <TextInput
           containerStyle={{height: 48}}
           placeholder={t('Search articles')}
@@ -149,7 +128,7 @@ const DiscoverScreen = ({route}: Props) => {
             );
           }}
         />
-      </View>
+      </View> */}
       {searching ? (
         // Display search results
         <ScrollView style={{paddingTop: 20, paddingLeft: 16, paddingRight: 16}}>

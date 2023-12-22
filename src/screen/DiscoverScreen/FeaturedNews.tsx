@@ -8,30 +8,19 @@ import { useMemo } from 'react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Article } from '../../hook/useNews';
+import { useNewsCategory } from '../../hook/useNewsCategory';
+import NewsByCategory from './NewsByCategory';
 
 interface Props {
   news: Article[]
-  onViewCategory: (categoryName: string) => void
+  onViewCategory: (categoryID: string) => void
 }
 
 const FeaturedNews = ({ onViewCategory, news }: Props) => {
   const { t } = useTranslation();
 
   const styles = useStyles();
-  const categories = useMemo(() => {
-    return news.reduce((a, b) => {
-      const categoryIndex = a.findIndex(item => item.name === b.category);
-      if (categoryIndex < 0) {
-        a.push({
-          name: b.category,
-          items: [b],
-        });
-        return a;
-      }
-      a[categoryIndex].items.push(b);
-      return a;
-    }, [] as any[]);
-  }, [news]);
+  const {categories} = useNewsCategory()
 
   const featuredNews = news.slice(0, 4);
 
@@ -41,24 +30,7 @@ const FeaturedNews = ({ onViewCategory, news }: Props) => {
 
       {categories.map(category => {
         return (
-          <View key={category.name}>
-            <View style={[styles.row, { marginBottom: 16 }]}>
-              <Text style={styles.title} fontSize={16} letterSpacing={0.06}>
-                {t(category.name)}
-              </Text>
-
-              <TouchableOpacity onPress={() => onViewCategory(category.name)}>
-                <Icon
-                  name="arrow-right"
-                  width={24}
-                  height={24}
-                  color={color.neutral[500]}
-                />
-              </TouchableOpacity>
-            </View>
-
-            <NewsList news={category.items.slice(0, 4)} />
-          </View>
+          <NewsByCategory category={category} key={category.name} onViewCategory={onViewCategory} />
         );
       })}
     </View>

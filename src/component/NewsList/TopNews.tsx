@@ -2,6 +2,7 @@ import { Image, TouchableOpacity, View } from 'react-native';
 import { useStyles } from './styles';
 import Text from '../Text';
 import { color } from '../../theme/color';
+import { useNewsCategory } from '../../hook/useNewsCategory';
 
 interface Props {
   data: any;
@@ -10,6 +11,7 @@ interface Props {
 
 const TopNews = ({ data, onView }: Props) => {
   const styles = useStyles();
+  const {findCategory} = useNewsCategory()
 
   if (!data) {
     return null
@@ -31,7 +33,7 @@ const TopNews = ({ data, onView }: Props) => {
         <Text numberOfLines={3} ellipsizeMode="tail" style={styles.description}>{data.description}</Text>
 
         <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
-          <Text style={styles.caption}>{data.category}</Text>
+          <Text style={styles.caption}>{findCategory(data.category)?.name}</Text>
           <View
             style={{
               width: 4,

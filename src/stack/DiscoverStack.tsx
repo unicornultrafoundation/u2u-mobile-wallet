@@ -1,10 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DiscoverScreen from '../screen/DiscoverScreen';
 import NewsDetailScreen from '../screen/NewsDetailScreen';
+import { Article } from '../hook/useNews';
 
 export type DiscoverStackParamList = {
   Home: { defaultTab: string };
-  NewsDetails: { id: number };
+  NewsDetails: { article: Article };
 };
 
 const DiscoverStack = createNativeStackNavigator<DiscoverStackParamList>();
