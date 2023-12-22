@@ -4,6 +4,7 @@ import Tab from '../../component/Tab';
 import NewsList from '../../component/NewsList';
 import { useNewsCategory } from '../../hook/useNewsCategory';
 import { Article } from '../../hook/useNews';
+import { useNewsByCategory } from '../../hook/useNewsByCategory';
 
 interface Props {
   initialTab?: string
@@ -19,15 +20,12 @@ const LatestNews = ({ initialTab }: Props) => {
     return categories.map(c => ({ label: c.name, value: c.name }));
   }, [categories]);
 
-  // const newsByCategory = useMemo(() => {
-  //   const category = categories.find(c => c.name === tab);
-  //   if (!category) {
-  //     return [];
-  //   }
-  //   return category.items;
-  // }, [tab, categories]);
+  const {news} = useNewsByCategory(categories.find((i) => i.name === tab)?.id || "")
 
-  const newsByCategory: any[] = []
+  const newsByCategory = useMemo(() => {
+    if (!news) return [] as Article[]
+    return news.pages.flat()
+  }, [news])
 
   useEffect(() => {
     if (initialTab) {

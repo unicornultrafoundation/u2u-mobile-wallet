@@ -6,9 +6,11 @@ import Text from '../Text';
 import { color } from '../../theme/color';
 import { useNavigation } from '@react-navigation/native';
 import { useMemo } from 'react';
+import { useNewsCategory } from '../../hook/useNewsCategory';
+import { Article } from '../../hook/useNews';
 
 interface Props {
-  news: any[];
+  news: Article[];
   hideTopNews?: boolean;
 }
 
@@ -17,12 +19,14 @@ const NewsList = ({ news, hideTopNews = false }: Props) => {
   const [topNews, ...rest] = news;
   const navigation = useNavigation<any>();
 
+  const {findCategory} = useNewsCategory()
+
   const newsList = useMemo(() => {
     return hideTopNews ? news : rest;
   }, [news, rest]);
 
-  const handleViewArticle = (id: number) => {
-    navigation.navigate('NewsDetails', { id });
+  const handleViewArticle = (article: Article) => {
+    navigation.navigate('NewsDetails', { article });
   };
 
   return (
@@ -31,7 +35,7 @@ const NewsList = ({ news, hideTopNews = false }: Props) => {
         <>
           <TopNews
             data={topNews}
-            onView={() => handleViewArticle(topNews.id)}
+            onView={() => handleViewArticle(topNews)}
           />
           <Separator style={{ borderBottomWidth: 1, marginVertical: 16 }}/>
         </>
@@ -42,7 +46,7 @@ const NewsList = ({ news, hideTopNews = false }: Props) => {
           return (
             <TouchableOpacity
               key={item.id}
-              onPress={() => handleViewArticle(item.id)}>
+              onPress={() => handleViewArticle(item)}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -69,7 +73,7 @@ const NewsList = ({ news, hideTopNews = false }: Props) => {
                       gap: 4,
                       alignItems: 'center',
                     }}>
-                    <Text style={styles.caption}>{item.category}</Text>
+                    <Text style={styles.caption}>{findCategory(item.category)?.name}</Text>
                     <View
                       style={{
                         width: 4,

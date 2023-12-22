@@ -21,7 +21,8 @@ import Icon from '../../component/Icon';
 import NewsList from '../../component/NewsList';
 import { useFocusEffect } from "@react-navigation/native";
 import { useGlobalStore } from "../../state/global";
-import { Article } from "../DiscoverScreen";
+import { Article } from '../../hook/useNews';
+import { useNewsByCategory } from '../../hook/useNewsByCategory';
 
 type Props = NativeStackScreenProps<DiscoverStackParamList, 'NewsDetails'>;
 
@@ -31,8 +32,6 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const styles = useStyles();
   const [loading, setLoading] = useState(true)
-  const [news, setNews] = useState<Article[]>([])
-
 
   const actions = [
     { name: 'twitter', url: '', icon: 'twitter-circle' },
@@ -43,9 +42,14 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
     { name: 'website', url: '', icon: 'website' },
   ];
 
-  const article = useMemo(() => {
-    return news.find(item => item.id === route.params?.id);
-  }, [route.params, news]);
+  const article: Article = route.params.article || {};
+
+  const {news: pagedNews} = useNewsByCategory(article.category)
+  
+  const news = useMemo(() => {
+    if (!pagedNews) return [] as Article[]
+    return pagedNews.pages.flat()
+  }, [pagedNews])
 
   const htmlSource = useMemo(() => {
     return { html: article?.content || '' }
@@ -85,20 +89,6 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
       setRouteName(route.name);
     }, [route]),
   );
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch('https://raw.githubusercontent.com/unicornultrafoundation/static-news/main/news.json')
-        const data = await res.json()
-        setNews(data)
-      } catch (e) {
-        setNews([])
-      } finally {
-        setLoading(false)
-      }
-    })()
-  }, []);
 
   if (loading) {
     return (

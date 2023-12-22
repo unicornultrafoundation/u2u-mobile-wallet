@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
-import { fetchAllNews, fetchNewsCategory } from "../service/news";
+import { fetchAllNews, fetchNewsByCategory, fetchNewsCategory } from "../service/news";
 import { formatDate } from "../util/date";
 
 export interface Article {
