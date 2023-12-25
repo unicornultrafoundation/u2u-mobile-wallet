@@ -44,7 +44,7 @@ const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
       return
     }
     setErrorAddress('')
-    setReceiveAddress(value)
+    setReceiveAddress(nftMeta.nftCollection.id)
 
     const txData = await encodeTxData({
       contractAddress: nftMeta.nftCollection.id,

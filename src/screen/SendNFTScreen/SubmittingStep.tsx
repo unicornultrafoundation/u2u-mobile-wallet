@@ -12,7 +12,7 @@ import theme from '../../theme';
 
 const NFTTransferSubmittingStep = ({ onNextStep, onBack }: StepProps) => {
   const navigation = useNavigation<any>()
-  const {submitRawTx, txStatus, txHash, resetTxState} = useTransaction()
+  const {submitRawTx, txStatus, txHash, resetTxState, nftMeta} = useTransaction()
   const {t} = useTranslation()
 
   const handleSkipResult = () => {
@@ -23,7 +23,7 @@ const NFTTransferSubmittingStep = ({ onNextStep, onBack }: StepProps) => {
   useEffect(() => {
     (async () => {
       try {
-        const txHash = await submitRawTx()
+        const txHash = await submitRawTx({receiveAddress: nftMeta.nftCollection.id})
         console.log('sented', txHash)
       } catch (error) {
         console.log(error)
