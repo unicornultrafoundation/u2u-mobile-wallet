@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { KeyboardAvoidingView, Platform, SafeAreaView, View } from "react-native";
+import { Keyboard, KeyboardAvoidingView, Platform, SafeAreaView, TouchableWithoutFeedback, View } from "react-native";
 import { styles } from "./styles";
 import Text from "../../component/Text";
 import { useTranslation } from "react-i18next";
@@ -12,12 +12,15 @@ import ErrorTextInput from "../../component/TextInput/ErrorTextInput";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { ScrollView } from "react-native";
 import Icon from "../../component/Icon";
+import useIsKeyboardShown from "../../hook/useIsKeyboardShown";
 
 const Step3 = () => {
   const { t } = useTranslation<string>();
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
   const { accessWallet } = useWallet();
+
+  const isKeyboardShown = useIsKeyboardShown()
 
   // const SEED_LENGTH = 12;
   const [seedLength, setSeedLength] = useState(12)
@@ -272,65 +275,75 @@ const Step3 = () => {
   }
 
   return (
-    <KeyboardAvoidingView 
-      style={styles.passwordContainer}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={24}
-    >
-      <Text style={styles.welcomeTitle}>
-        {t("seedPhraseSignIn")}
-      </Text>
-      <Text style={styles.instructionText}>
-        {t("seedPhraseSignInDescription", {wordCount: `${seedLength}`})}{"\n"}
-        {t("enterSeedPhrase")}
-      </Text>
-      <ScrollView style={{ width: "100%" }} contentContainerStyle={{paddingBottom: 20}} bounces={false}>
-        {seedLength === 12 ? renderMode12() : renderMode15()}
-        <Button
-          type="text"
-          style={{
-            alignItems: "center",
-            justifyContent: "flex-start",
-            marginTop: 12,
-            paddingHorizontal: 8
-          }}
-          textStyle={{
-            color: preferenceTheme.text.title,
-          }}
-          onPress={pasteRecoveryPhrase}
-        >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Icon name="copy" width={16} height={16} style={{ marginRight: 4 }} />
-            <Text style={{ fontWeight: "500", fontSize: 14 }}>{t('paste')}</Text>
-          </View>
-        </Button>
-        <Button
-          type="text"
-          textStyle={{
-            color: preferenceTheme.text.title,
-            textDecorationLine: "underline"
-          }}
-          onPress={() => {
-            const newSeedLength = seedLength === 12 ? 15 : 12
-            setSeedList(Array(newSeedLength).fill(""))
-            setSeedLength(newSeedLength)
-          }}
-        >
-          {seedLength === 12 ? t('switchSeedLength', {seedLength: 15}) : t('switchSeedLength', {seedLength: 12})}
-        </Button>
-        {errorSeed && <ErrorTextInput error={t(errorSeed)} style={{marginVertical: 10, justifyContent: 'center'}}/>}
-      </ScrollView>
-      <Button
-        fullWidth
-        style={{
-          borderRadius: 60,
-          marginTop: 10,
-        }}
-        onPress={handleSaveSeed}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View
+        style={styles.passwordContainer}
       >
-        {t('continue')}
-      </Button>
-    </KeyboardAvoidingView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={24}
+          style={{flex: 1, width: '100%', alignItems: 'center'}}
+        >
+          {!isKeyboardShown && (
+            <>
+              <Text style={styles.welcomeTitle}>
+                {t("seedPhraseSignIn")}
+              </Text>
+              <Text style={styles.instructionText}>
+                {t("seedPhraseSignInDescription", {wordCount: `${seedLength}`})}{"\n"}
+                {t("enterSeedPhrase")}
+              </Text>
+            </>
+          )}
+          <ScrollView style={{ width: "100%" }} contentContainerStyle={{paddingBottom: 20}} bounces={false}>
+            {seedLength === 12 ? renderMode12() : renderMode15()}
+            <Button
+              type="text"
+              style={{
+                alignItems: "center",
+                justifyContent: "flex-start",
+                marginTop: 12,
+                paddingHorizontal: 8
+              }}
+              textStyle={{
+                color: preferenceTheme.text.title,
+              }}
+              onPress={pasteRecoveryPhrase}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Icon name="copy" width={16} height={16} style={{ marginRight: 4 }} />
+                <Text style={{ fontWeight: "500", fontSize: 14 }}>{t('paste')}</Text>
+              </View>
+            </Button>
+            <Button
+              type="text"
+              textStyle={{
+                color: preferenceTheme.text.title,
+                textDecorationLine: "underline"
+              }}
+              onPress={() => {
+                const newSeedLength = seedLength === 12 ? 15 : 12
+                setSeedList(Array(newSeedLength).fill(""))
+                setSeedLength(newSeedLength)
+              }}
+            >
+              {seedLength === 12 ? t('switchSeedLength', {seedLength: 15}) : t('switchSeedLength', {seedLength: 12})}
+            </Button>
+            {errorSeed && <ErrorTextInput error={t(errorSeed)} style={{marginVertical: 10, justifyContent: 'center'}}/>}
+          </ScrollView>
+        </KeyboardAvoidingView>
+        <Button
+          fullWidth
+          style={{
+            borderRadius: 60,
+            marginTop: 10,
+          }}
+          onPress={handleSaveSeed}
+        >
+          {t('continue')}
+        </Button>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
