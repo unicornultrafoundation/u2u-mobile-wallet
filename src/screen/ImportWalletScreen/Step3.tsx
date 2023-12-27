@@ -29,8 +29,10 @@ const Step3 = () => {
   const [loading, setLoading] = useState(false);
 
   const handleUpdateSeedWord = (value: string, index: number) => {
+    console.log('aaa', value, index)
     const newSeed = [...seedList]
     newSeed[index] = value
+    console.log(newSeed)
     setSeedList(newSeed)
   };
 
@@ -109,7 +111,7 @@ const Step3 = () => {
                   placeholderTextColor={preferenceTheme.text.primary}
                   style={{textAlign: "left"}}
                   onChangeText={(newText) => {
-                    handleUpdateSeedWord(newText.trim(), index + 4);
+                    handleUpdateSeedWord(newText.trim(), index + 3);
                   }}
                 />
               </View>
@@ -130,7 +132,7 @@ const Step3 = () => {
                   placeholderTextColor={preferenceTheme.text.primary}
                   style={{ textAlign: "left" }}
                   onChangeText={(newText) => {
-                    handleUpdateSeedWord(newText.trim(), index + 8);
+                    handleUpdateSeedWord(newText.trim(), index + 6);
                   }}
                 />
               </View>
@@ -151,7 +153,7 @@ const Step3 = () => {
                   placeholderTextColor={preferenceTheme.text.primary}
                   style={{ textAlign: "left" }}
                   onChangeText={(newText) => {
-                    handleUpdateSeedWord(newText.trim(), index + 8);
+                    handleUpdateSeedWord(newText.trim(), index + 9);
                   }}
                 />
               </View>
@@ -200,7 +202,7 @@ const Step3 = () => {
                   placeholderTextColor={preferenceTheme.text.primary}
                   style={{textAlign: "left"}}
                   onChangeText={(newText) => {
-                    handleUpdateSeedWord(newText.trim(), index + 4);
+                    handleUpdateSeedWord(newText.trim(), index + 3);
                   }}
                 />
               </View>
@@ -221,7 +223,7 @@ const Step3 = () => {
                   placeholderTextColor={preferenceTheme.text.primary}
                   style={{ textAlign: "left" }}
                   onChangeText={(newText) => {
-                    handleUpdateSeedWord(newText.trim(), index + 8);
+                    handleUpdateSeedWord(newText.trim(), index + 6);
                   }}
                 />
               </View>
@@ -242,7 +244,7 @@ const Step3 = () => {
                   placeholderTextColor={preferenceTheme.text.primary}
                   style={{ textAlign: "left" }}
                   onChangeText={(newText) => {
-                    handleUpdateSeedWord(newText.trim(), index + 8);
+                    handleUpdateSeedWord(newText.trim(), index + 9);
                   }}
                 />
               </View>
@@ -263,7 +265,7 @@ const Step3 = () => {
                   placeholderTextColor={preferenceTheme.text.primary}
                   style={{ textAlign: "left" }}
                   onChangeText={(newText) => {
-                    handleUpdateSeedWord(newText.trim(), index + 8);
+                    handleUpdateSeedWord(newText.trim(), index + 12);
                   }}
                 />
               </View>
