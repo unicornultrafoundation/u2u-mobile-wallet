@@ -29,10 +29,8 @@ const Step3 = () => {
   const [loading, setLoading] = useState(false);
 
   const handleUpdateSeedWord = (value: string, index: number) => {
-    console.log('aaa', value, index)
     const newSeed = [...seedList]
     newSeed[index] = value
-    console.log(newSeed)
     setSeedList(newSeed)
   };
 
