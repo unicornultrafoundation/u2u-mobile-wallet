@@ -1,5 +1,6 @@
 import React from 'react'
 import { TouchableOpacity, View } from 'react-native';
+import { CachedImage } from '@georstat/react-native-image-cache';
 import { styles } from './styles';
 import { SvgUri } from 'react-native-svg';
 import Text from '../../../component/Text';
@@ -15,15 +16,31 @@ const TokenRow = ({tokenObj}: {
     navigation.navigate('TokenDetail', {tokenMeta: tokenObj})
   }
 
+  const renderTokenLogo = (uri: string) => {
+    if (uri.endsWith(".png")) {
+      return (
+        <CachedImage
+          source={uri}
+          style={{ width: 28, height: 28 }}
+          thumbnailSource="https://via.placeholder.com/28x28"
+        />
+      )
+    } else {
+      return (
+        <SvgUri
+          uri={tokenObj.logo}
+          width="100%"
+          height="100%"
+        />
+      )
+    }
+  }
+
   return (
     <TouchableOpacity style={styles.tokenContainer} onPress={handlePressDetail}>
       <View style={{width: 28, height: 28}}>
         {tokenObj.logo ? (
-          <SvgUri
-            uri={tokenObj.logo}
-            width="100%"
-            height="100%"
-          />
+          renderTokenLogo(tokenObj.logo)
         ) : (
           <Icon
             name='anonymous-token'

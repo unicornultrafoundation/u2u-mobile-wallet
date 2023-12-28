@@ -16,6 +16,7 @@
   "dependencies": {
     "@apollo/client": "^3.8.6",
     "@ethersproject/shims": "^5.7.0",
+    "@georstat/react-native-image-cache": "^3.1.0",
     "@gorhom/bottom-sheet": "^4.5.1",
     "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-native-clipboard/clipboard": "^1.11.2",
@@ -53,6 +54,7 @@
     "react-native-crypto": "^2.2.0",
     "react-native-device-info": "^10.11.0",
     "react-native-encrypted-storage": "^4.0.3",
+    "react-native-file-access": "^3.0.4",
     "react-native-gesture-handler": "^2.13.1",
     "react-native-jazzicon": "^0.1.2",
     "react-native-linear-gradient": "^2.8.3",

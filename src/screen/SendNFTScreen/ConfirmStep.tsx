@@ -21,7 +21,7 @@ const NFTTransferConfirmStep = ({ onNextStep, onBack }: StepProps) => {
   const styles = useStyles();
 
   const {networkConfig} = useNetwork()
-  const {nftMeta, receiveAddress, maxFee, estimatedFee, estimateGasLimit} = useTransaction()
+  const {nftMeta, receiveAddress, maxFee, estimatedFee, estimateGasLimit, setGasLimit} = useTransaction()
 
   const {t} = useTranslation()
 
@@ -31,7 +31,10 @@ const NFTTransferConfirmStep = ({ onNextStep, onBack }: StepProps) => {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    estimateGasLimit()
+    (async () => {
+      const estimated = await estimateGasLimit()
+      setGasLimit(estimated)
+    })()
   }, [])
 
   const handleConfirm = () => {

@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react'
 import { TouchableOpacity, View, Image } from 'react-native';
+import { CachedImage } from '@georstat/react-native-image-cache';
 import Text from '../../component/Text';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
@@ -32,9 +33,14 @@ const NFTCard = ({nftCollection, item}: {
             overflow: 'hidden',
             marginBottom: 4,
           }}>
-          <Image
+          {/* <Image
             source={{ uri: parseIPFSFile(data.image) }}
             style={{ width: '100%', height: 171 }}
+          /> */}
+          <CachedImage
+            source={parseIPFSFile(data.image)}
+            style={{ width: '100%', height: 171 }}
+            thumbnailSource="https://via.placeholder.com/171x171"
           />
         </View>
       )}
