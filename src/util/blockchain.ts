@@ -7,8 +7,9 @@ export const estimateGasPriceUtil = async (rpc: string) => {
 }
 
 export const estimateGasLimitUtil = async (txObject: Record<string, any>, rpc: string) => {
+  const {gasPrice, ...rest} = txObject
   const provider = new ethers.JsonRpcProvider(rpc)
-  const rs = await provider.estimateGas(txObject)
+  const rs = await provider.estimateGas(rest)
 
   return rs.toString()
 }
