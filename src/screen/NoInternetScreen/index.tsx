@@ -1,10 +1,11 @@
 import React from 'react'
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, Image } from 'react-native';
 import { styles } from './styles';
 import Text from '../../component/Text';
 import { useTranslation } from 'react-i18next';
 import { usePreference } from '../../hook/usePreference';
 import { typography } from '../../theme/typography';
+import NO_INTERNET from '../../asset/images/no_internet.png'
 
 const NoInternetScreen = () => {
   const { t } = useTranslation()
@@ -20,14 +21,25 @@ const NoInternetScreen = () => {
     >
       <Text
         style={[
-          typography.headline.medium,
+          typography.title3.bold,
           {
-            color: preferenceTheme.text.primary
+            color: preferenceTheme.text.primary,
+            marginBottom: 44
           }
         ]}
       >
         {t('noInternetConnection')}
       </Text>
+      <Image
+        source={NO_INTERNET}
+        resizeMode="contain"
+        width={100}
+        height={124}
+        style={{
+          width: 100,
+          height: 124,
+        }}
+      />
     </SafeAreaView>
   )
 }
