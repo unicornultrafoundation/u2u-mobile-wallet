@@ -1,6 +1,7 @@
 import React from 'react'
 import { OwnedNFT } from '../../../hook/useOwnedNFT';
 import { TouchableOpacity, Image } from 'react-native';
+import { CachedImage } from '@georstat/react-native-image-cache';
 import { useNFTMetadata } from '../../../hook/useNFTMetadata';
 import { parseIPFSFile } from '../../../util/string';
 
@@ -17,7 +18,7 @@ const NFTItem = ({item, onClick}: {
       style={{ width: 111, height: 111 }}
       onPress={onClick}
     >
-      <Image
+      {/* <Image
         source={{ uri: parseIPFSFile(data.image) }}
         style={{
           width: '100%',
@@ -25,6 +26,16 @@ const NFTItem = ({item, onClick}: {
           objectFit: 'cover',
           borderRadius: 8,
         }}
+      /> */}
+      <CachedImage
+        source={parseIPFSFile(data.image)}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          borderRadius: 8,
+        }}
+        thumbnailSource="https://via.placeholder.com/111x111"
       />
     </TouchableOpacity>
   )
