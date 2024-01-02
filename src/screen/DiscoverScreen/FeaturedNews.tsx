@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { Article } from '../../hook/useNews';
 import { useNewsCategory } from '../../hook/useNewsCategory';
 import NewsByCategory from './NewsByCategory';
+import { useFeaturedNews } from '../../hook/useFeaturedNews';
 
 interface Props {
   news: Article[]
@@ -21,8 +22,7 @@ const FeaturedNews = ({ onViewCategory, news }: Props) => {
 
   const styles = useStyles();
   const {categories} = useNewsCategory()
-
-  const featuredNews = news.slice(0, 4);
+  const {featuredNews} = useFeaturedNews()
 
   return (
     <View style={{ gap: 24 }}>
