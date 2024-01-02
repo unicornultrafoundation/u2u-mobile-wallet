@@ -32,7 +32,7 @@ export const useHydration = () => {
 
   useEffect(() => {
     (async () => {
-      await migrateWalletData()
+      // await migrateWalletData()
 
       // Wallet
       const unsubHydrateWallet = useWalletStore.persist.onHydrate(() => setHydratedWallet(false))
@@ -43,6 +43,8 @@ export const useHydration = () => {
       const unsubHydrateAppSetting = useLocalStore.persist.onHydrate(() => setHydratedAppSetting(false))
       const unsubFinishHydrationAppSetting = useLocalStore.persist.onFinishHydration(() => setHydratedAppSetting(true))
       setHydratedAppSetting(useLocalStore.persist.hasHydrated())
+      
+      // migrateWalletData()
 
       return () => {
         unsubHydrateWallet()
