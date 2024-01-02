@@ -31,25 +31,27 @@ export const useHydration = () => {
   }
 
   useEffect(() => {
-    // Wallet
-    const unsubHydrateWallet = useWalletStore.persist.onHydrate(() => setHydratedWallet(false))
-    const unsubFinishHydrationWallet = useWalletStore.persist.onFinishHydration(() => setHydratedWallet(true))
-    setHydratedWallet(useWalletStore.persist.hasHydrated())
+    (async () => {
+      await migrateWalletData()
 
-    // App setting
-    const unsubHydrateAppSetting = useLocalStore.persist.onHydrate(() => setHydratedAppSetting(false))
-    const unsubFinishHydrationAppSetting = useLocalStore.persist.onFinishHydration(() => setHydratedAppSetting(true))
-    setHydratedAppSetting(useLocalStore.persist.hasHydrated())
+      // Wallet
+      const unsubHydrateWallet = useWalletStore.persist.onHydrate(() => setHydratedWallet(false))
+      const unsubFinishHydrationWallet = useWalletStore.persist.onFinishHydration(() => setHydratedWallet(true))
+      setHydratedWallet(useWalletStore.persist.hasHydrated())
 
-    migrateWalletData()
+      // App setting
+      const unsubHydrateAppSetting = useLocalStore.persist.onHydrate(() => setHydratedAppSetting(false))
+      const unsubFinishHydrationAppSetting = useLocalStore.persist.onFinishHydration(() => setHydratedAppSetting(true))
+      setHydratedAppSetting(useLocalStore.persist.hasHydrated())
 
-    return () => {
-      unsubHydrateWallet()
-      unsubFinishHydrationWallet()
+      return () => {
+        unsubHydrateWallet()
+        unsubFinishHydrationWallet()
 
-      unsubHydrateAppSetting()
-      unsubFinishHydrationAppSetting()
-    }
+        unsubHydrateAppSetting()
+        unsubFinishHydrationAppSetting()
+      }
+    })()
   }, [])
 
   return {
