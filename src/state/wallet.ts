@@ -129,8 +129,8 @@ export const useWalletStore = create(
     }),
     {
       name: WALLET_STORE_KEY, // unique name
-      // storage: createJSONStorage(() => EncryptedStorage),
-      storage: createJSONStorage(() => AsyncStorage)
+      storage: createJSONStorage(() => EncryptedStorage),
+      // storage: createJSONStorage(() => AsyncStorage)
     },
   ),
 );

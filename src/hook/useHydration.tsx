@@ -11,13 +11,16 @@ export const useHydration = () => {
   const migrateWalletData = async () => {
     const newData = await EncryptedStorage.getItem(WALLET_STORE_KEY)
     const oldData = await AsyncStorage.getItem(WALLET_STORE_KEY)
-
     if (newData) {
       if (newData === oldData) {
         await AsyncStorage.removeItem(WALLET_STORE_KEY)
       }
-      setHydratedWallet(true)
-      return
+
+      const newDataObj = JSON.parse(newData)
+      if (newDataObj.state.seedPhrase) {
+        setHydratedWallet(true)
+        return
+      }
     };
     
     if (!oldData) {
@@ -32,7 +35,7 @@ export const useHydration = () => {
 
   useEffect(() => {
     (async () => {
-      // await migrateWalletData()
+      await migrateWalletData()
 
       // Wallet
       const unsubHydrateWallet = useWalletStore.persist.onHydrate(() => setHydratedWallet(false))
