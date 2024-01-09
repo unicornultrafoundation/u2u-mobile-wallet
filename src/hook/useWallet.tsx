@@ -15,15 +15,19 @@ export function useWallet() {
     updateWallet,
     deleteWallet,
     walletMetadata,
+    walletOrder,
+    setWalletOrder,
+    savePKIndex
   } = useWalletStore();
 
   const getWalletMetadata = useCallback((w?: Wallet) => {
     if (!w) {
-      return { name: '' };
+      return { name: '', address: '' };
     }
-    const walletIndex = getPathIndex(w.path);
-    if (walletIndex == null) return { name: '' }
-    return walletMetadata[walletIndex] || { name: '' };
+    // const walletIndex = getPathIndex(w.path);
+    const walletIndex = walletMetadata.findIndex((i) => i.address === w.address);
+    if (walletIndex === -1) return { name: '', address: '' }
+    return walletMetadata[walletIndex];
   }, [walletMetadata]);
 
   return {
@@ -38,5 +42,8 @@ export function useWallet() {
     updateWallet,
     deleteWallet,
     getWalletMetadata,
+    walletOrder,
+    setWalletOrder,
+    savePKIndex
   };
 }
