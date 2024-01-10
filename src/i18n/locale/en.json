@@ -244,5 +244,10 @@
   "detail": "Detail",
   "passConfirmNotMatch": "Password confirmation doesn't match",
   "paste": "Paste",
-  "switchSeedLength": "Switch to {{seedLength}} words seed phrase"
+  "switchSeedLength": "Switch to {{seedLength}} words seed phrase",
+  "generateNewU2UWallet": "Generate a new U2U wallet",
+  "importWallet": "Import wallet",
+  "importWithPrivateKey": "Import with private key",
+  "enterPrivateKey": "Enter your private key, it will only be saved on this device",
+  "enterPrivateKeyShort": "Enter your private key"
 }

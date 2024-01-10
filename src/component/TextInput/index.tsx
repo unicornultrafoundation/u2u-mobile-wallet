@@ -10,13 +10,14 @@ import { usePreference } from '../../hook/usePreference';
 
 interface Props extends TextInputProps {
   containerStyle?: StyleProp<ViewStyle>
+  textWrapperStyle?: StyleProp<ViewStyle>
   placeholderTextColor?: string,
   error?: string
   postIcon?: () => JSX.Element
   insideModal?: boolean
 }
 
-const TextInput = ({style, containerStyle, placeholderTextColor, error, postIcon, insideModal = false, ...rest}: Props) => {
+const TextInput = ({style, textWrapperStyle, containerStyle, placeholderTextColor, error, postIcon, insideModal = false, ...rest}: Props) => {
 
   const {preferenceTheme} = usePreference()
 
@@ -45,12 +46,13 @@ const TextInput = ({style, containerStyle, placeholderTextColor, error, postIcon
     >
       <View
         style={[
+          textWrapperStyle,
           styles.container,
           {
             backgroundColor: preferenceTheme.background.surface,
             borderColor: focused ? theme.accentColor.primary.normal : preferenceTheme.background.surface,
             width: "100%"
-          },
+          }
         ]}
       >
         {insideModal ? (

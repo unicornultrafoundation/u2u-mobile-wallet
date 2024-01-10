@@ -244,5 +244,10 @@
   "detail": "Chi tiết",
   "passConfirmNotMatch": "Xác nhận mật khẩu không khớp",
   "paste": "Dán",
-  "switchSeedLength": "Sử dụng cụm {{seedLength}} từ khôi phục"
+  "switchSeedLength": "Sử dụng cụm {{seedLength}} từ khôi phục",
+  "generateNewU2UWallet": "Tạo ví U2U mới",
+  "importWallet": "Thêm ví",
+  "importWithPrivateKey": "Thêm ví từ private key",
+  "enterPrivateKey": "Nhập private key ở dưới, private key của bạn sẽ chỉ được lưu trên thiết bị này",
+  "enterPrivateKeyShort": "Nhập private key"
 }
