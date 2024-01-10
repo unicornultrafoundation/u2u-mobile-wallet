@@ -1,4 +1,4 @@
-import { ALL_NEWS_ENDPOINT, NEWS_BY_CATEGORY_ENDPOINT, NEWS_CATEGORY_ENDPOINT } from "../config/constant"
+import { ALL_NEWS_ENDPOINT, FEATURED_NEWS_ENDPOINT, NEWS_BY_CATEGORY_ENDPOINT, NEWS_CATEGORY_ENDPOINT } from "../config/constant"
 
 export const fetchNewsCategory = async () => {
   const rs = await fetch(NEWS_CATEGORY_ENDPOINT)
@@ -6,8 +6,20 @@ export const fetchNewsCategory = async () => {
   return rsJSON
 }
 
-export const fetchAllNews = async (page: number) => {
-  const rs = await fetch(`${ALL_NEWS_ENDPOINT}?page=${page}`)
+export const fetchFeaturedNews = async () => {
+  const rs = await fetch(FEATURED_NEWS_ENDPOINT)
+  const rsJSON = await rs.json()
+  return rsJSON
+}
+
+export const fetchAllNews = async (page: number, keyword = '') => {
+  let url = `${ALL_NEWS_ENDPOINT}?page=${page}`
+
+  if (keyword) {
+    url += `&keyword=${keyword}`
+  }
+
+  const rs = await fetch(url)
   const rsJSON = await rs.json()
   return rsJSON
 }
