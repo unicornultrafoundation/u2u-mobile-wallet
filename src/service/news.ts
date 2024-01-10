@@ -12,8 +12,14 @@ export const fetchFeaturedNews = async () => {
   return rsJSON
 }
 
-export const fetchAllNews = async (page: number) => {
-  const rs = await fetch(`${ALL_NEWS_ENDPOINT}?page=${page}`)
+export const fetchAllNews = async (page: number, keyword = '') => {
+  let url = `${ALL_NEWS_ENDPOINT}?page=${page}`
+
+  if (keyword) {
+    url += `&keyword=${keyword}`
+  }
+
+  const rs = await fetch(url)
   const rsJSON = await rs.json()
   return rsJSON
 }

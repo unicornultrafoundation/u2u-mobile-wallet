@@ -71,5 +71,7 @@ export const getWalletFromPrivateKey = (privateKey: string) => {
   return {
     address: wl.address,
     privateKey,
+    mnemonic: '',
+    path: ''
   };
 }

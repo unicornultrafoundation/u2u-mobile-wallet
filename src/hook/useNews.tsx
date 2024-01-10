@@ -1,6 +1,8 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { fetchAllNews, fetchNewsByCategory, fetchNewsCategory } from "../service/news";
 import { formatDate } from "../util/date";
+import { useState } from "react";
+import { useDebounce } from "./useDebounce";
 
 export interface Article {
   id: number;
@@ -13,10 +15,13 @@ export interface Article {
 }
 
 export const useNews = () => {
+  const [keyword, setKeyword] = useState('')
+  const debouncedSearchQuery = useDebounce(keyword, 300);
+
   const {data, fetchNextPage, isFetching} = useInfiniteQuery({
-    queryKey: ['all-news'],
+    queryKey: ['all-news', debouncedSearchQuery],
     queryFn: async ({pageParam = 1}) => {
-      const rs = await fetchAllNews(pageParam)
+      const rs = await fetchAllNews(pageParam, debouncedSearchQuery)
 
       return rs.data.map((rawNews: any) => {
         const dateUnixNumber = Number(rawNews.create_at)
@@ -40,6 +45,9 @@ export const useNews = () => {
   return {
     news: data,
     isFetching,
-    fetchNextPage
+    fetchNextPage,
+    setKeyword,
+    keyword,
+    debouncedSearchQuery
   }
 }

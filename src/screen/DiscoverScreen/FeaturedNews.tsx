@@ -13,11 +13,10 @@ import NewsByCategory from './NewsByCategory';
 import { useFeaturedNews } from '../../hook/useFeaturedNews';
 
 interface Props {
-  news: Article[]
   onViewCategory: (categoryID: string) => void
 }
 
-const FeaturedNews = ({ onViewCategory, news }: Props) => {
+const FeaturedNews = ({ onViewCategory }: Props) => {
   const { t } = useTranslation();
 
   const styles = useStyles();
