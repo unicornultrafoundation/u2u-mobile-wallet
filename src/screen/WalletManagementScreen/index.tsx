@@ -12,7 +12,7 @@ import { typography } from "../../theme/typography";
 import Separator from "../../component/Separator";
 import WalletRow from "./WalletRow";
 import { useWallet } from "../../hook/useWallet";
-import { getWalletFromMnemonic } from "../../util/wallet";
+import { getWalletFromMnemonic, getWalletFromPrivateKey } from "../../util/wallet";
 import { getPathIndex } from "../../util/string";
 import Toast from "react-native-toast-message";
 import { Wallet } from "../../state/wallet";
@@ -53,7 +53,9 @@ export default function WalletManagementScreen() {
     setEditingWallet,
     deleteWallet,
     walletOrder,
-    setWalletOrder
+    setWalletOrder,
+    privateKeys,
+    removePrivateKey
   } = useWallet();
 
   // const walletList = useMemo(() => {
@@ -68,10 +70,19 @@ export default function WalletManagementScreen() {
       const value = generatedPath.map(path => {
         return getWalletFromMnemonic(seedPhrase, path);
       })
+
+      privateKeys.forEach((key) => {
+        value.push({
+          ...getWalletFromPrivateKey(key),
+          mnemonic: '',
+          path: ''
+        })
+      })
+
       setWalletList(value)
       setLoading(false)
     }, 100)
-  }, generatedPath)
+  }, [generatedPath, privateKeys])
 
   const sortedWalletList = useMemo(() => {
     if (walletOrder.length === 0) return walletList
@@ -107,7 +118,7 @@ export default function WalletManagementScreen() {
   };
 
   const handleDeleteWallet = (w: Wallet) => {
-    if (generatedPath.length === 1) {
+    if (generatedPath.length === 1 && w.path !== '') {
       Toast.show({
         type: 'error',
         text1: t('removeWalletFail'),
@@ -118,7 +129,11 @@ export default function WalletManagementScreen() {
 
     setLoading(true)
     setTimeout(() => {
-      deleteWallet(w)
+      if (w.path === '') {
+        removePrivateKey(w.privateKey)
+      } else {
+        deleteWallet(w)
+      }
       // bottomSheetModalRef.current?.close();
       setLoading(false)
     }, 100)

@@ -14,6 +14,7 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { useState } from "react";
 import { getWalletFromPrivateKey } from "../../util/wallet";
 import theme from "../../theme";
+import { useWallet } from "../../hook/useWallet";
 
 export default function ImportWithPrivateKeyScreen() {
   const navigation = useNavigation<any>()
@@ -21,9 +22,11 @@ export default function ImportWithPrivateKeyScreen() {
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
   const [privateKey, setPrivateKey] = useState('')
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   const isKeyboardShown = useIsKeyboardShown()
+  const {addPrivateKey} = useWallet()
 
   const {t} = useTranslation()
 
@@ -35,12 +38,16 @@ export default function ImportWithPrivateKeyScreen() {
   const handleImport = async () => {
     try {
       setError('')
+      setLoading(true)
       const _pk = privateKey.includes('0x') ? privateKey : `0x${privateKey}`
 
       const wallet = getWalletFromPrivateKey(_pk)
-      console.log(wallet)
+      addPrivateKey(_pk)
+      setLoading(false)
+      navigation.goBack()
     } catch (err) {
       console.log(err)
+      setLoading(false)
       setError('Invalid private key')
     }
   }
@@ -133,6 +140,7 @@ export default function ImportWithPrivateKeyScreen() {
           </Button>
         </View> 
         <Button
+          loading={loading}
           fullWidth
           style={{
             borderRadius: 60

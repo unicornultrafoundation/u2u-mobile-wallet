@@ -17,7 +17,10 @@ export function useWallet() {
     walletMetadata,
     walletOrder,
     setWalletOrder,
-    savePKIndex
+    savePKIndex,
+    addPrivateKey,
+    privateKeys,
+    removePrivateKey
   } = useWalletStore();
 
   const getWalletMetadata = useCallback((w?: Wallet) => {
@@ -44,6 +47,9 @@ export function useWallet() {
     getWalletMetadata,
     walletOrder,
     setWalletOrder,
-    savePKIndex
+    savePKIndex,
+    addPrivateKey,
+    privateKeys,
+    removePrivateKey
   };
 }

@@ -158,6 +158,9 @@ export const useWalletStore = create(
       privateKeys: [],
       addPrivateKey: (pk: string) => {
         const current = [...get().privateKeys]
+        if (current.includes(pk)) {
+          return
+        }
         current.push(pk)
 
         const _wallet = getWalletFromPrivateKey(pk)
@@ -218,6 +221,8 @@ export const useWalletStore = create(
             walletOrder: newOrder
           }
         }
+
+        newState.walletMetadata = [...get().walletMetadata].filter((i) => i.address !== walletToRemove.address)
 
         set(newState)
       },
