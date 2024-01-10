@@ -96,6 +96,10 @@ const DiscoverScreen = ({route}: Props) => {
     }, [route]),
   );
 
+  const handleViewArticle = (id: number) => {
+    navigation.navigate('NewsDetails', {id});
+  };
+
   if (isFetching) {
     return (
       <View style={styles.container}>
@@ -224,9 +228,7 @@ const DiscoverScreen = ({route}: Props) => {
     </SafeAreaView>
   );
 
-  const handleViewArticle = (id: number) => {
-    navigation.navigate('NewsDetails', {id});
-  };
+  
 };
 
 export default DiscoverScreen;

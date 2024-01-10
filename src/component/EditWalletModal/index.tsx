@@ -26,10 +26,12 @@ const EditWalletModal = ({ onRequestClose, visible, onCancelEdit }: Props) => {
   const inputRef = useRef<TextInput>(null);
 
   const handleUpdateWallet = () => {
-    updateWallet(name.trim())
+    if (!editingWallet?.address) return
+    updateWallet(name.trim(), editingWallet.address)
     setName('')
     onRequestClose();
   };
+
   const handleCancelEdit = () => {
     onRequestClose()
     setName('')
