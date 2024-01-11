@@ -99,7 +99,7 @@ export default function WalletManagementScreen() {
       const tempOrder = walletList.map((i) => i.address)
       setWalletOrder(tempOrder)
     }
-  }, [walletOrder, walletList])
+  }, [walletList])
 
   const handleCreateWallet = () => {
     setLoading(true);
@@ -168,8 +168,8 @@ export default function WalletManagementScreen() {
         </Text>
         <View />
       </View>
-      <View
-        style={[
+      <ScrollView
+        contentContainerStyle={[
           styles.contentContainer,
         ]}>
         {loading && (
@@ -191,7 +191,6 @@ export default function WalletManagementScreen() {
             <Text>{t('loading')}...</Text>
           </View>
         )}
-        {/* <ScrollView style={{ width: '100%' }} bounces={false}> */}
         {sortedWalletList.map(item => {
           const selected = wallet.address === item.address;
           return (
@@ -225,7 +224,6 @@ export default function WalletManagementScreen() {
             />
           );
         })}
-        {/* </ScrollView> */}
         <Separator style={{ width: '100%' }}/>
         <TouchableOpacity
           style={{
@@ -271,7 +269,7 @@ export default function WalletManagementScreen() {
           </View>
           <Icon name="chevron-right" width={24} height={24}/>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
       <EditWalletModal
         visible={editWalletModalVisible}
         onRequestClose={() => {

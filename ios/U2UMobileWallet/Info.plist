@@ -59,5 +59,7 @@
 	<false/>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) wants to access your camera to scan QR code</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Allow $(PRODUCT_NAME) to use FaceID</string>
 </dict>
 </plist>

@@ -10,7 +10,7 @@ import { useLocalStore } from '../../state/local';
 import Button from '../../component/Button';
 import { usePreference } from '../../hook/usePreference';
 import { useGlobalStore } from '../../state/global';
-import { APP_PASSWORD_RETRY_MAX } from '../../config/constant';
+import { APP_LOCK_TIME, APP_PASSWORD_RETRY_MAX } from '../../config/constant';
 import ErrorTextInput from '../../component/TextInput/ErrorTextInput';
 
 const AuthStep = ({onNextStep, onBack}: {
@@ -38,6 +38,7 @@ const AuthStep = ({onNextStep, onBack}: {
       if (passwordTry >= APP_PASSWORD_RETRY_MAX) {
         setUnlocked(false)
         setError(t('passwordRetryReached'))
+        setLockedUntil(Date.now() + APP_LOCK_TIME)
         return
       }
 
