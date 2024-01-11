@@ -83,9 +83,7 @@ export const useWalletStore = create(
           newPath += 1;
         }
         const _wallet = getWalletFromMnemonic(get().seedPhrase, newPath);
-        if (newPath >= currentMetadata.length) {
-          currentMetadata.push({name: '', address: _wallet.address})
-        }
+        currentMetadata.push({name: '', address: _wallet.address})
 
         const newOrder = [...get().walletOrder]
         newOrder.push(_wallet.address)
