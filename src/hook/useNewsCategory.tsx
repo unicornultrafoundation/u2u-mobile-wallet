@@ -15,7 +15,6 @@ export const useNewsCategory = () => {
     queryFn: async () => {
       try {
         const newsCateRs = await fetchNewsCategory()
-        console.log(newsCateRs)
         return newsCateRs.data.map((i: any) => {
           return {
             id: i.categories_id,

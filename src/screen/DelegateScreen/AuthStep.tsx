@@ -9,7 +9,7 @@ import theme from '../../theme';
 import Button from '../../component/Button';
 import { useLocalStore } from '../../state/local';
 import { usePreference } from '../../hook/usePreference';
-import { APP_PASSWORD_RETRY_MAX } from '../../config/constant';
+import { APP_LOCK_TIME, APP_PASSWORD_RETRY_MAX } from '../../config/constant';
 import { useGlobalStore } from '../../state/global';
 import ErrorTextInput from '../../component/TextInput/ErrorTextInput';
 import { getPhonePaddingBottom } from '../../util/platform';
@@ -39,6 +39,7 @@ const AuthStep = ({onNextStep, onBack}: {
       if (passwordTry >= APP_PASSWORD_RETRY_MAX) {
         setUnlocked(false)
         setError(t('passwordRetryReached'))
+        setLockedUntil(Date.now() + APP_LOCK_TIME)
         return
       }
       

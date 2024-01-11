@@ -87,7 +87,9 @@
     "viem": "^1.21.4",
     "wagmi": "^1.4.12",
     "whatwg-fetch": "^3.6.19",
-    "zustand": "^4.4.1"
+    "zustand": "^4.4.1",
+    "expo": ">=49.0.0-0 <50.0.0",
+    "expo-local-authentication": "~13.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

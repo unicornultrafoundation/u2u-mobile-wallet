@@ -11,7 +11,7 @@ export const useFeaturedNews = () => {
         // const rs = await fetchFeaturedNews()
         const rs = await fetchAllNews(1)
         if (!rs.data) return [] as Article[]
-        return rs.slice(0, 4).data.map((rawNews: any) => {
+        return rs.data.slice(0, 4).map((rawNews: any) => {
           const dateUnixNumber = Number(rawNews.create_at)
           return {
             id: rawNews.news_id,

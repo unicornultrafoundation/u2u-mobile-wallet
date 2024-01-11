@@ -99,7 +99,7 @@ export default function WalletManagementScreen() {
       const tempOrder = walletList.map((i) => i.address)
       setWalletOrder(tempOrder)
     }
-  }, [walletOrder, walletList])
+  }, [walletList])
 
   const handleCreateWallet = () => {
     setLoading(true);
