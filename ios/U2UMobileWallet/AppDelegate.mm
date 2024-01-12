@@ -33,7 +33,7 @@ static void ClearKeychainIfNecessary() {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  ClearKeychainIfNecessary();
+  // ClearKeychainIfNecessary();
   [RNFBAppCheckModule sharedInstance];
   [FIRApp configure];
   self.moduleName = @"U2UMobileWallet";
