@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
+import { parseIPFSFile } from '../util/string'
 
 const fetchNFTMetadata = async (tokenURI: string) => {
   try {
-    const rs = await fetch(tokenURI)
+    const rs = await fetch(parseIPFSFile(tokenURI))
     return rs.json()
   } catch (error) {
     console.log('fetchNFTMetadata error')

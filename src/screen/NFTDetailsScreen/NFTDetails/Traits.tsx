@@ -15,6 +15,10 @@ const NFTTraits = ({metadata}: {
 
   const traits = metadata.attributes
 
+  if (!traits) {
+    return null
+  }
+
   return (
     <View>
       <Text

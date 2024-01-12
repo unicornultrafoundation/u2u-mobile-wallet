@@ -30,10 +30,11 @@ export function useSupportedNFT() {
   const query = useQuery<NFTCollectionMeta[]>({
     queryKey: ['supported-nft', chainId, networkConfigItem],
     queryFn: () => fetchSupportedTokens(networkConfigItem!.suppoted_nfts_endpoint),
+    initialData: [] as NFTCollectionMeta []
   })
   
   return {
     loading: query.isLoading,
-    supportedNFT: query.data || [] as NFTCollectionMeta[]
+    supportedNFT: query.data
   }
 };
