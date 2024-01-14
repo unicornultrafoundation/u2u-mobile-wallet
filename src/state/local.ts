@@ -3,6 +3,8 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 import { toChecksumAddress } from 'ethereum-checksum-address'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+export const LOCAL_STORE_KEY = 'local-storage'
+
 interface TokenMeta {
   name: string,
   symbol: string,
@@ -106,7 +108,7 @@ export const useLocalStore = create<LocalState>()(
       }
     }),
     {
-      name: "local-storage", // unique name
+      name: LOCAL_STORE_KEY, // unique name
       storage: createJSONStorage(() => AsyncStorage)
     }
   )

@@ -4,12 +4,30 @@ import { useLocalStore } from "../state/local"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import EncryptedStorage from "react-native-encrypted-storage"
 import { Platform } from "react-native"
+import { isAlreadyInited } from "../util/platform"
 
 export const useHydration = () => {
   const [hydratedWallet, setHydratedWallet] = useState(false)
   const [hydratedAppSetting, setHydratedAppSetting] = useState(false)
 
   const migrateWalletData = async () => {
+    if (!(await isAlreadyInited())) {
+      try {
+        const oldWalletData = await EncryptedStorage.getItem(WALLET_STORE_KEY)
+        
+        if (oldWalletData) {
+          await EncryptedStorage.removeItem(WALLET_STORE_KEY)
+        }
+      } catch (error) {
+        console.log(error)
+        // @ts-ignore
+        console.log(error.code)
+      }
+      await useWalletStore.persist.rehydrate()
+      setHydratedWallet(true) 
+      return;
+    }
+
     const newData = await EncryptedStorage.getItem(WALLET_STORE_KEY)
     const oldData = await AsyncStorage.getItem(WALLET_STORE_KEY)
     if (newData) {
