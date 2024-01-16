@@ -70,7 +70,7 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
-      case 'arrowRight':
+      case 'arrow-right':
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg
@@ -690,6 +690,16 @@ const Icon = ({name, width, height, color, style}: {
                   <Rect width="20" height="20" fill="white" transform="translate(4 4)"/>
                 </ClipPath>
               </Defs>
+            </Svg>
+          </View>
+        )
+      case 'import':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path d="M12.1226 15.436L12.1226 3.39502" stroke={color || "#D8D8D8"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M15.0383 12.5083L12.1223 15.4363L9.20633 12.5083" stroke={color || "#D8D8D8"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M16.7553 8.12793H17.6883C19.7233 8.12793 21.3723 9.77693 21.3723 11.8129V16.6969C21.3723 18.7269 19.7273 20.3719 17.6973 20.3719L6.55731 20.3719C4.52231 20.3719 2.87231 18.7219 2.87231 16.6869V11.8019C2.87231 9.77293 4.51831 8.12793 6.54731 8.12793L7.48931 8.12793" stroke={color || "#D8D8D8"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
             </Svg>
           </View>
         )

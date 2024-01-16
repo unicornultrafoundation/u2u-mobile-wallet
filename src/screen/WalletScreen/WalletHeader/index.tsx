@@ -15,6 +15,7 @@ import { darkTheme, lightTheme } from '../../../theme/color';
 import SelectWalletModal from '../../../component/SelectWalletModal';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   collapsed: boolean;
@@ -23,6 +24,7 @@ interface Props {
 }
 
 const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
+  const navigation = useNavigation<any>()
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
@@ -42,13 +44,18 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
           alignItems: 'center',
           gap: 8
         }}>
-        <SelectWalletModal
+        {/* <SelectWalletModal
           trigger={() => {
             return (
               <Jazzicon size={28} address={wallet.address}/>
             )
           }}
-        />
+        /> */}
+        <TouchableOpacity
+          onPress={() => navigation.navigate('WalletManagement')}
+        >
+          <Jazzicon size={28} address={wallet.address}/>
+        </TouchableOpacity>
         <View style={{flex: 1, flexDirection: 'row', gap: 6}}>
           <Text type="subheadline-medium" color="title" style={{flexShrink: 1}}>
             {getWalletMetadata(wallet).name || getDefaultWalletName(wallet)}

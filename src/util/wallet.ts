@@ -1,5 +1,5 @@
 // import '@ethersproject/shims';
-import { ethers } from 'ethers';
+import { Wallet, ethers } from 'ethers';
 
 export const getWalletFromMnemonic = (
   mnemonic: string,
@@ -63,4 +63,15 @@ export const getNonce = async (rpc: string, address: string) => {
   const provider = new ethers.JsonRpcProvider(rpc)
   const rs = await provider.getTransactionCount(address)
   return rs.toString()
+}
+
+export const getWalletFromPrivateKey = (privateKey: string) => {
+  const wl = new Wallet(privateKey)
+
+  return {
+    address: wl.address,
+    privateKey,
+    mnemonic: '',
+    path: ''
+  };
 }

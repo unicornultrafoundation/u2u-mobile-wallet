@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useMemo, useState } from 'react';
+import React, { useCallback, useRef, useMemo, useState, useEffect } from 'react';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import styles from './styles';
 import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
@@ -22,6 +22,7 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
   const [editWalletModalVisible, setEditWalletModalVisible] = useState(false);
+  const [showAddWalletOptions, setShowAddWalletOptions] = useState(false)
   const { t } = useTranslation<string>();
 
   const {
@@ -31,7 +32,9 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
     generateNewPath,
     savePathIndex,
     setEditingWallet,
-    deleteWallet
+    deleteWallet,
+    walletOrder,
+    setWalletOrder
   } = useWallet();
   const [loading, setLoading] = useState(false);
 
@@ -51,6 +54,23 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
       return getWalletFromMnemonic(seedPhrase, path);
     });
   }, [generatedPath]);
+
+  const sortedWalletList = useMemo(() => {
+    if (walletOrder.length === 0) return walletList
+    return walletList.sort((a, b) => {
+      const indexA = walletOrder.findIndex((i) => i === a.address)
+      const indexB = walletOrder.findIndex((i) => i === b.address)
+      return indexA - indexB
+    })
+
+  }, [walletList, walletOrder])
+
+  useEffect(() => {
+    if (walletOrder.length === 0) {
+      const tempOrder = walletList.map((i) => i.address)
+      setWalletOrder(tempOrder)
+    }
+  }, [walletOrder, walletList])
 
   const handleCreateWallet = () => {
     setLoading(true);
@@ -112,7 +132,7 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
           </View>
         )}
         <BottomSheetScrollView style={{ flex: 1 }} bounces={false}>
-          {walletList.map(item => {
+          {sortedWalletList.map(item => {
             const selected = wallet.address === item.address;
             return (
               <WalletRow

@@ -15,9 +15,11 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		84433B462B1E09B8008D3E41 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84433B452B1E09B8008D3E41 /* GoogleService-Info.plist */; };
 		BCADB4987AA88219EC27569F /* libPods-U2UMobileWallet-U2UMobileWalletTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 411BF79DE5E101238AAC912C /* libPods-U2UMobileWallet-U2UMobileWalletTests.a */; };
+		C4ECE22A754E9F1AA499CCC7 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D46D957CC665CEE34043C30 /* ExpoModulesProvider.swift */; };
 		CE37C9EC2AB4096500F247C1 /* FontAwesome6_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE37C9E92AB4096500F247C1 /* FontAwesome6_Solid.ttf */; };
 		CE37C9ED2AB4096500F247C1 /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE37C9EA2AB4096500F247C1 /* FontAwesome6_Brands.ttf */; };
 		CE37C9EE2AB4096500F247C1 /* FontAwesome6_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE37C9EB2AB4096500F247C1 /* FontAwesome6_Regular.ttf */; };
+		F8C61A204DE1D3C1BCA4358D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4153B33C48C74D0A3C19A4F /* ExpoModulesProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,10 @@
 		75632645493571DD098F79CC /* Pods-U2UMobileWallet-U2UMobileWalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-U2UMobileWallet-U2UMobileWalletTests.debug.xcconfig"; path = "Target Support Files/Pods-U2UMobileWallet-U2UMobileWalletTests/Pods-U2UMobileWallet-U2UMobileWalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = U2UMobileWallet/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84433B452B1E09B8008D3E41 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		846B77D72B53F3F300126D34 /* U2UMobileWalletRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = U2UMobileWalletRelease.entitlements; path = U2UMobileWallet/U2UMobileWalletRelease.entitlements; sourceTree = "<group>"; };
+		846B77D82B53F3F700126D34 /* U2UMobileWalletDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = U2UMobileWalletDebug.entitlements; path = U2UMobileWallet/U2UMobileWalletDebug.entitlements; sourceTree = "<group>"; };
+		8D46D957CC665CEE34043C30 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-U2UMobileWallet/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		C4153B33C48C74D0A3C19A4F /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-U2UMobileWallet-U2UMobileWalletTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		CE37C9E92AB4096500F247C1 /* FontAwesome6_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome6_Solid.ttf"; sourceTree = "<group>"; };
 		CE37C9EA2AB4096500F247C1 /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome6_Brands.ttf"; sourceTree = "<group>"; };
 		CE37C9EB2AB4096500F247C1 /* FontAwesome6_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome6_Regular.ttf"; sourceTree = "<group>"; };
@@ -94,6 +100,8 @@
 		13B07FAE1A68108700A75B9A /* U2UMobileWallet */ = {
 			isa = PBXGroup;
 			children = (
+				846B77D82B53F3F700126D34 /* U2UMobileWalletDebug.entitlements */,
+				846B77D72B53F3F300126D34 /* U2UMobileWalletRelease.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -134,6 +142,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				B84CA3B666AA78B59E8957E1 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -149,6 +158,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		B84CA3B666AA78B59E8957E1 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				CBDEB2782FCCCF4200ADFE50 /* U2UMobileWallet */,
+				BC34AA8D85193015970F328C /* U2UMobileWalletTests */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +178,22 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		BC34AA8D85193015970F328C /* U2UMobileWalletTests */ = {
+			isa = PBXGroup;
+			children = (
+				C4153B33C48C74D0A3C19A4F /* ExpoModulesProvider.swift */,
+			);
+			name = U2UMobileWalletTests;
+			sourceTree = "<group>";
+		};
+		CBDEB2782FCCCF4200ADFE50 /* U2UMobileWallet */ = {
+			isa = PBXGroup;
+			children = (
+				8D46D957CC665CEE34043C30 /* ExpoModulesProvider.swift */,
+			);
+			name = U2UMobileWallet;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -168,6 +202,7 @@
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "U2UMobileWalletTests" */;
 			buildPhases = (
 				EB6B4AEF09C5A69E38592A88 /* [CP] Check Pods Manifest.lock */,
+				71113530BA36B6E359A3E3B7 /* [Expo] Configure project */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -190,6 +225,7 @@
 			buildPhases = (
 				ABB9D76E8B6FCA91AC8252FF /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
+				8B89F79AC91247A17ECB548A /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
@@ -334,6 +370,44 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-U2UMobileWallet-U2UMobileWalletTests/Pods-U2UMobileWallet-U2UMobileWalletTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		71113530BA36B6E359A3E3B7 /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-U2UMobileWallet-U2UMobileWalletTests/expo-configure-project.sh\"\n";
+		};
+		8B89F79AC91247A17ECB548A /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-U2UMobileWallet/expo-configure-project.sh\"\n";
+		};
 		ABB9D76E8B6FCA91AC8252FF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -435,6 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* U2UMobileWalletTests.m in Sources */,
+				F8C61A204DE1D3C1BCA4358D /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +519,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				C4ECE22A754E9F1AA499CCC7 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,7 +545,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = U2UMobileWalletTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -480,6 +556,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/U2UMobileWallet.app/U2UMobileWallet";
@@ -494,7 +571,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				INFOPLIST_FILE = U2UMobileWalletTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -505,10 +582,11 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d833b5cd-580c-4403-98d0-17ff3ed1d1a9";
-				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore 1702357503";
+				PROVISIONING_PROFILE = "896fb568-3502-4260-bff6-50975046fdfb";
+				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/U2UMobileWallet.app/U2UMobileWallet";
 			};
 			name = Release;
@@ -519,9 +597,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = U2UMobileWallet/U2UMobileWalletDebug.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 66;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = U2UMobileWallet/Info.plist;
@@ -530,12 +609,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10;
+				MARKETING_VERSION = 1.11;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.uniultra.superapp.--PRODUCT-NAME-rfc1034identifier-";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.uniultra.superapp;
 				PRODUCT_NAME = U2UMobileWallet;
@@ -552,9 +632,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = U2UMobileWallet/U2UMobileWalletRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 66;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				INFOPLIST_FILE = U2UMobileWallet/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "U2U Super App";
@@ -562,17 +643,18 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10;
+				MARKETING_VERSION = 1.11;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.uniultra.superapp.--PRODUCT-NAME-rfc1034identifier-";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.uniultra.superapp;
 				PRODUCT_NAME = U2UMobileWallet;
-				PROVISIONING_PROFILE = "d833b5cd-580c-4403-98d0-17ff3ed1d1a9";
-				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore 1702357503";
+				PROVISIONING_PROFILE = "896fb568-3502-4260-bff6-50975046fdfb";
+				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -627,7 +709,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -693,7 +775,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",

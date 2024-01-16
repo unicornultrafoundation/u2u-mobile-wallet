@@ -1,6 +1,8 @@
 import ReactNative, { Appearance, Dimensions, NativeModules, Platform, ScaledSize } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import JailMonkey from 'jail-monkey'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LOCAL_STORE_KEY } from '../state/local';
 const { UIManager } = NativeModules;
 
 interface DimensionProps {
@@ -115,6 +117,20 @@ export const isValidDevice = async () => {
     return false
   }
 
+  return true
+}
+
+export const isAlreadyInited = async () => {
+  const currentLocalData = await AsyncStorage.getItem(LOCAL_STORE_KEY)
+  if (!currentLocalData) {
+    return false
+  }
+
+  const localDataObj = JSON.parse(currentLocalData)
+  if (!localDataObj.password) {
+    return false
+  }
+  console.log('here 123123')
   return true
 }
 

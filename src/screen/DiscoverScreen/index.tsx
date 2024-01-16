@@ -24,6 +24,7 @@ import {useTranslation} from 'react-i18next';
 import {color} from '../../theme/color';
 import {useNavigation} from '@react-navigation/native';
 import { Article, useNews } from '../../hook/useNews';
+import { TABBAR_HEIGHT, TABBAR_ITEM_HEIGHT } from '../../component/CustomBottomTab';
 
 type Props = NativeStackScreenProps<DiscoverStackParamList, 'Home'>;
 
@@ -39,16 +40,16 @@ const DiscoverScreen = ({route}: Props) => {
   
   const navigation = useNavigation<any>();
 
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  // const [searchQuery, setSearchQuery] = useState<string>('');
   const [results, setResults] = useState<Article[]>([]);
   const [searching, setSearching] = useState(false);
 
   const {t} = useTranslation();
 
   const [tab, setTab] = useState('featured');
-  const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  const {news, fetchNextPage, isFetching} = useNews()
+  const {news, fetchNextPage, debouncedSearchQuery, keyword, setKeyword, isFetching} = useNews()
+  // const debouncedSearchQuery = useDebounce(keyword, 300);
 
   const tabs = [
     {label: t('Featured'), value: 'featured'},
@@ -71,19 +72,19 @@ const DiscoverScreen = ({route}: Props) => {
     }
   }, [route.params]);
 
-  const handleSearch = () => {
-    setResults([])
-    // Perform the search logic based on the searchQuery
-    // const filteredResults = news.filter(item =>
-    //   item.title.toLowerCase().includes(searchQuery.toLowerCase()),
-    // );
-    // setResults(filteredResults);
-  };
+  // const handleSearch = () => {
+  //   setResults([])
+  //   // Perform the search logic based on the searchQuery
+  //   // const filteredResults = news.filter(item =>
+  //   //   item.title.toLowerCase().includes(searchQuery.toLowerCase()),
+  //   // );
+  //   // setResults(filteredResults);
+  // };
 
   useEffect(() => {
     if (debouncedSearchQuery) {
       setSearching(true);
-      handleSearch();
+      // handleSearch();
     } else {
       setSearching(false);
       setResults([]);
@@ -112,32 +113,32 @@ const DiscoverScreen = ({route}: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <View style={styles.searchContainer}>
+      <View style={styles.searchContainer}>
         <TextInput
           containerStyle={{height: 48}}
           placeholder={t('Search articles')}
           placeholderTextColor={'#363636'}
           onChangeText={text => {
-            setSearchQuery(text);
+            setKeyword(text);
           }}
-          value={searchQuery}
+          value={keyword}
           postIcon={() => {
             return (
               <TouchableOpacity
                 onPress={() => {
-                  setSearchQuery('');
+                  setKeyword('');
                 }}>
                 <Icon name="close" width={24} height={24} />
               </TouchableOpacity>
             );
           }}
         />
-      </View> */}
+      </View>
       {searching ? (
         // Display search results
-        <ScrollView style={{paddingTop: 20, paddingLeft: 16, paddingRight: 16}}>
+        <ScrollView contentContainerStyle={{paddingTop: 20, paddingBottom: TABBAR_ITEM_HEIGHT, paddingLeft: 16, paddingRight: 16}}>
           <View style={{gap: 12}}>
-            {results.map(item => {
+            {news && news.pages.flat().map(item => {
               return (
                 <TouchableOpacity
                   key={item.id}
@@ -218,7 +219,7 @@ const DiscoverScreen = ({route}: Props) => {
             }}
           />
           {tab === 'featured' && (
-            <FeaturedNews news={news?.pages.flat() || []} onViewCategory={handleViewCategory} />
+            <FeaturedNews onViewCategory={handleViewCategory} />
           )}
           {tab === 'latest' && (
             <LatestNews initialTab={currentCategory} />

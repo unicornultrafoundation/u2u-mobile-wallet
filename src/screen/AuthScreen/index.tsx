@@ -10,7 +10,8 @@ import theme from '../../theme';
 import { useGlobalStore } from '../../state/global';
 import { useTranslation } from 'react-i18next';
 import { usePreference } from '../../hook/usePreference';
-import { APP_PASSWORD_RETRY_MAX } from '../../config/constant';
+import { APP_LOCK_TIME, APP_PASSWORD_RETRY_MAX } from '../../config/constant';
+import BiometricAuth from '../../component/BiometricAuth';
 
 const AuthScreen = () => {
   const {preferenceTheme} = usePreference()
@@ -21,31 +22,40 @@ const AuthScreen = () => {
   const {setUnlocked} = useGlobalStore()
   const [error, setError] = useState('')
 
+  const handleSuccess = () => {
+    setTimeout(() => {
+      setPasswordTry(0)
+      setLockedUntil(0)
+      setUnlocked(true)
+    }, 100)
+  }
+
+  const handleFail = () => {
+    if (passwordTry >= APP_PASSWORD_RETRY_MAX) {
+      setUnlocked(false)
+      setError(t('passwordRetryReached'))
+      setLockedUntil(Date.now() + APP_LOCK_TIME)
+      return
+    }
+
+    setError(t('incorrectPassword'))
+    increasePasswordTry()
+    return
+  }
+
   const handleContinue = (pass: string) => {
     setError('')
-
     if (Date.now() <= lockedUntil) {
       setError(t('passwordRetryReached'))
       return
     }
 
     if (pass != password) {
-      if (passwordTry >= APP_PASSWORD_RETRY_MAX) {
-        setUnlocked(false)
-        setError(t('passwordRetryReached'))
-        return
-      }
-
-      setError(t('incorrectPassword'))
-      increasePasswordTry()
+      handleFail()
       return
     }
 
-    setTimeout(() => {
-      setPasswordTry(0)
-      setLockedUntil(0)
-      setUnlocked(true)
-    }, 100)
+    handleSuccess()
   }
 
   return (
@@ -92,6 +102,7 @@ const AuthScreen = () => {
         style={styles.otpContainer}
         inputStyles={styles.otpInput}
       />
+      <BiometricAuth onSuccess={handleSuccess} onFail={handleFail} />
       {passwordTry === APP_PASSWORD_RETRY_MAX && (
         <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center'}}>
           <Icon name='error' width={18} height={18} />
