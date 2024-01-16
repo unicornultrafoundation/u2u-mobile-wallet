@@ -25,6 +25,7 @@ const DAppWebView = () => {
   const route = useRoute<any>();
 
   const appURL = route.params?.url || ""
+  // const appURL = "https://metamask.github.io/test-dapp/"
   const [resource, setResource] = useState('')
   const [loading, setLoading] = useState(true)
   const [requestIdForCallback, setRequestIdForCallback] = useState(0)
@@ -128,6 +129,7 @@ const DAppWebView = () => {
 
   const handleRPC = async (requestId: number, method: string, params: Record<string, any>) => {
     if (!method) return
+    console.log('method', method)
     switch (method) {
       case 'signPersonalMessage':
         if (!wallet.privateKey) return;
@@ -142,6 +144,7 @@ const DAppWebView = () => {
         break;
       case 'requestAccounts':
         const codeToRun = parseRun(requestId, [wallet.address])
+        console.log(codeToRun)
         if (webRef && webRef.current) {
           webRef.current.injectJavaScript(codeToRun);
         }
