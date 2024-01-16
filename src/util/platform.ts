@@ -127,10 +127,10 @@ export const isAlreadyInited = async () => {
   }
 
   const localDataObj = JSON.parse(currentLocalData)
-  if (!localDataObj.password) {
+  if (!localDataObj.password && !localDataObj.state.password) {
     return false
   }
-  console.log('here 123123')
+
   return true
 }
 
