@@ -25,7 +25,6 @@ const DAppWebView = () => {
   const route = useRoute<any>();
 
   const appURL = route.params?.url || ""
-  // const appURL = "https://metamask.github.io/test-dapp/"
   const [resource, setResource] = useState('')
   const [loading, setLoading] = useState(true)
   const [requestIdForCallback, setRequestIdForCallback] = useState(0)
@@ -101,6 +100,7 @@ const DAppWebView = () => {
           myResourceContent
             .replace('{{RPC_URL}}', networkConfig?.rpc)
             .replace('{{WALLET_ADDRESS}}', wallet.address)
+            .replace('{{CHAIN_ID}}', networkConfig?.chainID)
         )
         setLoading(false)
       }
@@ -123,13 +123,14 @@ const DAppWebView = () => {
 
   const handleLog = (logData: any) => {
     if (logData.type === 'error') {
+      console.log('Error from frame', logData.data)
+    } else if (logData.type === 'log') {
       console.log('Log from frame', logData.data)
     }
   }
 
   const handleRPC = async (requestId: number, method: string, params: Record<string, any>) => {
     if (!method) return
-    console.log('method', method)
     switch (method) {
       case 'signPersonalMessage':
         if (!wallet.privateKey) return;
