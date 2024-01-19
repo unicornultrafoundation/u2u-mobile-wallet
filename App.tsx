@@ -40,6 +40,7 @@ import { APP_FLYERS_DEV_KEY, APP_FLYERS_IOS_APP_ID } from './src/config/constant
 import NoInternetScreen from './src/screen/NoInternetScreen';
 import { useTracking } from './src/hook/useTracking';
 import MainTabNav from './src/stack/MainTab';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 //@ts-ignore
 global.CustomEvent = global.Event
@@ -265,49 +266,51 @@ function App(): JSX.Element {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <MenuProvider>
-        <QueryClientProvider client={queryClient}>
-          <NavigationContainer
-            ref={navigationRef}
-            onReady={() => {
-              if (!navigationRef || !navigationRef.current) return
-              routeNameRef.current = navigationRef.current.getCurrentRoute()?.name;
-            }}
-            onStateChange={async () => {
-              if (!navigationRef || !navigationRef.current) return
-              const previousRouteName = routeNameRef.current;
-              const currentRouteName = navigationRef.current.getCurrentRoute()?.name;
+      <SafeAreaProvider>
+        <MenuProvider>
+          <QueryClientProvider client={queryClient}>
+            <NavigationContainer
+              ref={navigationRef}
+              onReady={() => {
+                if (!navigationRef || !navigationRef.current) return
+                routeNameRef.current = navigationRef.current.getCurrentRoute()?.name;
+              }}
+              onStateChange={async () => {
+                if (!navigationRef || !navigationRef.current) return
+                const previousRouteName = routeNameRef.current;
+                const currentRouteName = navigationRef.current.getCurrentRoute()?.name;
 
-              if (!currentRouteName) return
-      
-              if (previousRouteName !== currentRouteName) {
-                await analytics().logScreenView({
-                  screen_name: currentRouteName,
-                  screen_class: currentRouteName,
-                });
-              }
-              routeNameRef.current = currentRouteName;
-            }}
-          >
-            <BottomSheetModalProvider>
-              <StatusBar
-                barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-                backgroundColor={backgroundStyle.backgroundColor}
-                // backgroundColor="transparent"
-              />
-              {wallet.address === "" ? (
-                <OnboardingStackScreen />
-              ) : (
-                <>
-                  <MainTabNav />
-                  {!unlocked && (<AuthScreen />)}
-                </>
-              )}
-            </BottomSheetModalProvider>
-          </NavigationContainer>
-        </QueryClientProvider>
-      </MenuProvider>
-      <Toast config={toastConfig} />
+                if (!currentRouteName) return
+        
+                if (previousRouteName !== currentRouteName) {
+                  await analytics().logScreenView({
+                    screen_name: currentRouteName,
+                    screen_class: currentRouteName,
+                  });
+                }
+                routeNameRef.current = currentRouteName;
+              }}
+            >
+              <BottomSheetModalProvider>
+                <StatusBar
+                  barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+                  backgroundColor={backgroundStyle.backgroundColor}
+                  // backgroundColor="transparent"
+                />
+                {wallet.address === "" ? (
+                  <OnboardingStackScreen />
+                ) : (
+                  <>
+                    <MainTabNav />
+                    {!unlocked && (<AuthScreen />)}
+                  </>
+                )}
+              </BottomSheetModalProvider>
+            </NavigationContainer>
+          </QueryClientProvider>
+        </MenuProvider>
+        <Toast config={toastConfig} />
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }

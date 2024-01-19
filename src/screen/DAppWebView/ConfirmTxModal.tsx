@@ -19,6 +19,7 @@ import { useWallet } from '../../hook/useWallet';
 import Button from '../../component/Button';
 import { useNativeBalance } from '../../hook/useNativeBalance';
 import BigNumber from 'bignumber.js';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
   onCloseModal: () => void;
@@ -28,6 +29,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
 }) => {
   // ref
   const ref = useRef<BottomSheetModal>(null);
+  const insets = useSafeAreaInsets();
   const {estimateGasLimit, estimatedGasLimit, estimateGasPrice, gasPrice, estimatedFee, maxFee, submitRawTx} = useTransaction()
 
   const {name: networkName} = useNetwork()
@@ -37,6 +39,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
   const {darkMode} = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   // variables
   const snapPoints = useMemo(() => ['90%'], []);
@@ -63,7 +66,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
       }
 
       txObj.gasLimit = estimatedGasLimit
-
+      setLoading(true)
       const tx = await submitRawTx({
         gasLimit: estimatedGasLimit,
         receiveAddress: txObj.to,
@@ -71,6 +74,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
         txData: txObj.data,
         gasPrice: gasPrice
       })
+      setLoading(false)
 
       if (!tx) {
         setError('Insufficient balance for transaction fee')
@@ -80,7 +84,8 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
       console.log('sented', tx?.hash)
       onConfirm(tx?.hash)
     } catch (error) {
-      console.log("error")
+      setLoading(false)
+      console.log("error", error)
       setError("Transaction failed")
     }
   }
@@ -106,6 +111,10 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
       snapPoints={snapPoints}
       onChange={handleSheetChanges}
       enablePanDownToClose
+      backgroundStyle={{
+        backgroundColor: preferenceTheme.background.background,
+      }}
+      topInset={insets.top + 60}
       handleStyle={{
         backgroundColor: preferenceTheme.background.background,
         borderTopLeftRadius: 16,
@@ -148,7 +157,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
               />
             </View>
             <Text style={[theme.typography.footnote.medium, {paddingHorizontal: 8}]}>
-              {parseFromRaw(txObj.value, 18, true)} U2U
+              {txObj.value ? parseFromRaw(txObj.value, 18, true) : 0} U2U
             </Text>
           </View>
           <Separator />
@@ -181,7 +190,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
           </View>
         </View>
         {error && (
-          <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center'}}>
+          <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center', justifyContent: 'flex-start', width: '100%'}}>
             <Icon name='error' width={18} height={18} />
             <Text style={[
               theme.typography.caption2.regular,
@@ -194,7 +203,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
             </Text>
           </View>
         )}
-        <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface}]}>
+        <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface, width: '100%'}]}>
           <View style={styles.cardRow}>
             <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('from')}</Text>
             <Text style={[theme.typography.footnote.regular]}>{shortenAddress(wallet.address, 8, 8)}</Text>
@@ -211,9 +220,10 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
         </View>
       </View>
       <Button
-        style={{borderRadius: 60}}
+        style={{borderRadius: 60, marginBottom: insets.bottom}}
         textStyle={theme.typography.label.medium}
         onPress={handleConfirm}
+        loading={loading}
       >
         {t('confirm')}
       </Button>
