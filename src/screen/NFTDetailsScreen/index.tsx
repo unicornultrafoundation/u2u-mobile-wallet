@@ -111,7 +111,7 @@ const NFTDetailsScreen = () => {
             <Tab
               tabs={[
                 { label: t('details'), value: 'details' },
-                // { label: t('history'), value: 'history' },
+                { label: t('history'), value: 'history' },
               ]}
               selectedTab={tab}
               onChange={v => setTab(v)}
@@ -126,7 +126,7 @@ const NFTDetailsScreen = () => {
 
           <View style={{ marginTop: 16 }}>
             {tab === 'details' && <NFTDetails item={item} nftCollection={nftCollection} metadata={metadata} />}
-            {tab === 'history' && <NFTHistory/>}
+            {tab === 'history' && <NFTHistory item={item} nftCollection={nftCollection} />}
           </View>
         </ScrollView>
       </View>
