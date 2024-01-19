@@ -59,7 +59,8 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
       setError("")
 
       const balanceBN = BigNumber(balance)
-      const rawAmount = txObj.value
+      const rawAmount = BigNumber(txObj.value).dividedBy(10 ** 18)
+
       if (balanceBN.minus(estimatedFee).minus(rawAmount).lt(0)) {
         setError('Insufficient balance for transaction fee')
         return;
