@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {ScrollView, View, Dimensions, ActivityIndicator} from 'react-native';
 import Header from '../Header';
 import SelectDappModal from '../../../component/SelectDappModal';
@@ -6,9 +6,13 @@ import DappRow from './DappRow';
 import useFetchDappList from '../../../hook/useFetchDappList';
 import { useTranslation } from 'react-i18next';
 
+const SLIDE_WIDTH = Dimensions.get('window').width - 16 * 2
+
 const TopDapp = () => {
   const {data, loading} = useFetchDappList();
   const { t } = useTranslation();
+
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   const groupData = useMemo(() => {
     const rs: any[][] = [];
@@ -24,7 +28,14 @@ const TopDapp = () => {
   return (
     <View>
       {data && data.length > 0 && <Header text={t('topDApps')} />}
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        // scrollEventThrottle={100}
+        onMomentumScrollEnd={(e) => {
+          setSelectedIndex(Math.floor(e.nativeEvent.contentOffset.x / SLIDE_WIDTH))
+        }}
+      >
         {/* {DATA.map((tokenObj: any, index) => {
           return (
             <SelectDappModal
@@ -44,7 +55,7 @@ const TopDapp = () => {
             <View
               key={`top-group-${groupIndex}`}
               style={{
-                width: Dimensions.get('window').width * 0.85,
+                width: Dimensions.get('window').width - 16 * 2,
               }}>
               {group.map((item, index) => (
                 <View
@@ -64,6 +75,13 @@ const TopDapp = () => {
           ))
         )}
       </ScrollView>
+      <View style={{flexDirection: 'row', gap: 6, justifyContent: 'center'}}>
+        {groupData.map((item, index) => {
+          return (
+            <View style={{width: 10, height: 10, borderRadius: 5, backgroundColor: index === selectedIndex ? '#FFFFFF' : '#363636'}}></View>
+          )
+        })}
+      </View>
     </View>
   );
 };

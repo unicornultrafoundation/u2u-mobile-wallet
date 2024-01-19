@@ -6,62 +6,70 @@ import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
 import { useTranslation } from 'react-i18next';
+import { OwnedNFT } from '../../hook/useOwnedNFT';
+import { NFTCollectionMeta } from '../../hook/useSupportedNFT';
+import { useNFTHistory } from '../../hook/useNFTHistory';
+import { formatDate } from '../../util/date';
+import { shortenAddress } from '../../util/string';
+import { ZeroAddress } from 'ethers';
 
-const NFTHistory = () => {
+const NFTHistory = ({item, nftCollection}: {item: OwnedNFT, nftCollection: NFTCollectionMeta;}) => {
   const { darkMode } = usePreferenceStore();
   const { t } = useTranslation();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
-  const history = [
-    {
-      type: 'Receive',
-      date: '2023-10-01',
-      from: '0xad2313...ac124',
-      to: '0xad2313...ac124',
-    },
-    {
-      type: 'Send',
-      date: '2023-10-01',
-      from: '0xad2313...ac124',
-      to: '0xad2313...ac124',
-    },
-    {
-      type: 'Receive',
-      date: '2023-10-01',
-      from: '0xad2313...ac124',
-      to: '0xad2313...ac124',
-    },
-    {
-      type: 'Send',
-      date: '2023-10-01',
-      from: '0xad2313...ac124',
-      to: '0xad2313...ac124',
-    },
-    {
-      type: 'Receive',
-      date: '2023-10-01',
-      from: '0xad2313...ac124',
-      to: '0xad2313...ac124',
-    },
-    {
-      type: 'Send',
-      date: '2023-10-01',
-      from: '0xad2313...ac124',
-      to: '0xad2313...ac124',
-    },
-    {
-      type: 'Receive',
-      date: '2023-10-01',
-      from: '0xad2313...ac124',
-      to: '0xad2313...ac124',
-    },
-    {
-      type: 'Send',
-      date: '2023-10-01',
-      from: '0xad2313...ac124',
-      to: '0xad2313...ac124',
-    },
-  ];
+  // const history = [
+  //   {
+  //     type: 'Receive',
+  //     date: '2023-10-01',
+  //     from: '0xad2313...ac124',
+  //     to: '0xad2313...ac124',
+  //   },
+  //   {
+  //     type: 'Send',
+  //     date: '2023-10-01',
+  //     from: '0xad2313...ac124',
+  //     to: '0xad2313...ac124',
+  //   },
+  //   {
+  //     type: 'Receive',
+  //     date: '2023-10-01',
+  //     from: '0xad2313...ac124',
+  //     to: '0xad2313...ac124',
+  //   },
+  //   {
+  //     type: 'Send',
+  //     date: '2023-10-01',
+  //     from: '0xad2313...ac124',
+  //     to: '0xad2313...ac124',
+  //   },
+  //   {
+  //     type: 'Receive',
+  //     date: '2023-10-01',
+  //     from: '0xad2313...ac124',
+  //     to: '0xad2313...ac124',
+  //   },
+  //   {
+  //     type: 'Send',
+  //     date: '2023-10-01',
+  //     from: '0xad2313...ac124',
+  //     to: '0xad2313...ac124',
+  //   },
+  //   {
+  //     type: 'Receive',
+  //     date: '2023-10-01',
+  //     from: '0xad2313...ac124',
+  //     to: '0xad2313...ac124',
+  //   },
+  //   {
+  //     type: 'Send',
+  //     date: '2023-10-01',
+  //     from: '0xad2313...ac124',
+  //     to: '0xad2313...ac124',
+  //   },
+  // ];
+
+  const {history} = useNFTHistory(item, nftCollection)
 
   const renderAddress = (label: string, address: string) => {
     return (
@@ -69,8 +77,8 @@ const NFTHistory = () => {
         theme.typography.caption2.regular,
         {color: preferenceTheme.text.disabled, textAlign: 'right'}
       ]}>
-        {t(label)}
-        <Text style={{color: preferenceTheme.text.title, textAlign: 'right'}}> {address}</Text>
+        {t(label)}{' '}
+        <Text style={{color: preferenceTheme.text.title, textAlign: 'right'}}>{shortenAddress(address, 6, 6)}</Text>
       </Text>
     )
   }
@@ -78,36 +86,37 @@ const NFTHistory = () => {
   return (
     <View>
       {history.map((item, index) =>  {
-        const isReceive = item.type.toLowerCase() === 'receive'
-        const color = isReceive ? theme.accentColor.tertiary.normal : theme.accentColor.error.normal
+        const type = item.from.id === ZeroAddress ? "Mint" : (item.to.id === ZeroAddress ? "Burn" : "Transfer")
+        // const isReceive = true
+        // const color = isReceive ? theme.accentColor.tertiary.normal : theme.accentColor.error.normal
         return (
           <View 
             style={styles.txHistoryContainer} 
             key={index}
           >
-            <Icon
+            {/* <Icon
               name={isReceive ? 'arrow-down-circle' : 'arrow-up-circle'}
               color={color}
               width={20}
               height={20}
-            />
+            /> */}
             <View style={{flexDirection: 'column', gap: 2}}>
               <Text style={[ 
                 theme.typography.caption1.medium,
                 {color: preferenceTheme.text.primary}
               ]}>
-                {item.type}
+                {type}
               </Text>
               <Text style={[
                 theme.typography.caption2.regular,
                 {color: preferenceTheme.text.disabled}
               ]}>
-                {item.date}
+                {formatDate(new Date(Number(item.transferAt) * 1000), "MMMM dd, yyyy")}
               </Text>
             </View>
             <View style={{flex: 1, flexDirection: 'column', gap: 2}}>
-              {renderAddress('from', item.from)}
-              {renderAddress('to', item.to)}
+              {renderAddress('from', item.from.id)}
+              {renderAddress('to', item.to.id)}
             </View>
           </View>
         )

@@ -25,12 +25,14 @@ const DAppWebView = () => {
   const route = useRoute<any>();
 
   const appURL = route.params?.url || ""
+  const [url, setURL] = useState(appURL)
   const [resource, setResource] = useState('')
   const [loading, setLoading] = useState(true)
   const [requestIdForCallback, setRequestIdForCallback] = useState(0)
   const [txObj, setTxObj] = useState<Record<string, any>>({})
   const [confirmModalVisible, setConfirmModalVisible] = useState(false)
   const [loadingURL, setLoadingURL] = useState(false)
+  const [alreadyInited, setAlreadyInited] = useState(false)
   const [error, setError] = useState('')
 
   const webRef = useRef<any>()
@@ -145,7 +147,6 @@ const DAppWebView = () => {
         break;
       case 'requestAccounts':
         const codeToRun = parseRun(requestId, [wallet.address])
-        console.log(codeToRun)
         if (webRef && webRef.current) {
           webRef.current.injectJavaScript(codeToRun);
         }
@@ -226,11 +227,25 @@ const DAppWebView = () => {
           javaScriptEnabled={true}
           automaticallyAdjustContentInsets={false}
           injectedJavaScriptBeforeContentLoaded={ resource }
-          // injectedJavaScript={ viewMode === 'DESKTOP' ? SCALE_FOR_DESKTOP : '' }
+          // injectedJavaScript={ Platform.OS === 'android' ? historyAPIShim : '' }
           onMessage={onMessage}
-          onLoadStart={() => setLoadingURL(true)}
-          onLoadEnd={() => setLoadingURL(false)}
-          source={{ uri: appURL }}
+          onNavigationStateChange={(nativeEvent) => {
+            if (Platform.OS === 'ios') {
+              return
+            }
+            if (nativeEvent.url !== url) {
+              setURL(nativeEvent.url)
+              webRef.current.reload()
+            }
+          }}
+          onLoadStart={() => !alreadyInited && setLoadingURL(true)}
+          onLoadEnd={() => {
+            setLoadingURL(false)
+            if (!alreadyInited) {
+              setAlreadyInited(true)
+            }
+          }}
+          source={{ uri: url }}
           style={styles.webview}
           containerStyle={{
             flex: loadingURL || error !== '' ? 0 : 1,

@@ -271,6 +271,26 @@ export const Schema = () => {
         }
       }
     `,
+    NFT_HISTORY: minimalGQL`
+      query NFTHistory($tokenID: String!) {
+        transferHistories(
+          where: {
+            tokenID: $tokenID
+          }
+        ) {
+          id
+          txHash
+          from {
+            id
+          }
+          to {
+            id
+          }
+          tokenID
+          transferAt
+        }
+      }
+    `,
     ALL_NFT: minimalGQL`
       query AllNFT($first: Int!, $skip: Int!) {
         items(
