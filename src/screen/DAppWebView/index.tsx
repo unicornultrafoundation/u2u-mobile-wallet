@@ -11,8 +11,9 @@ import Icon from '../../component/Icon';
 import Text from '../../component/Text';
 import ConfirmTxModal from './ConfirmTxModal';
 import { useGlobalStore } from '../../state/global';
-import { Wallet } from 'ethers';
+import { Wallet, isHexString } from 'ethers';
 import { usePreference } from '../../hook/usePreference';
+import { hexToString } from '../../util/string';
 
 const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `
@@ -138,7 +139,8 @@ const DAppWebView = () => {
         if (!wallet.privateKey) return;
 
         const signer = new Wallet(wallet.privateKey)
-        const signature = await signer.signMessage(params.data);
+        const rawMessage = isHexString(params.data) ? hexToString(params.data.replace("0x", "")) : params.data
+        const signature = await signer.signMessage(rawMessage);
 
         const rs = parseRun(requestId, signature)
         if (webRef && webRef.current) {
@@ -202,17 +204,41 @@ const DAppWebView = () => {
         }
       ]}
     >
-      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', padding: 16}}>
+      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 16}}>
         <TouchableOpacity
-          onPress={() => navigation.goBack()}
+          onPress={() => webRef.current.goBack()}
         >
           <Icon
             style={{paddingRight: 0}}
             width={24}
             height={24}
-            name="close"
+            name="arrow-left"
+            color="#8D8D8D"
           />
         </TouchableOpacity>
+        <View style={{flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 8}}>
+          <TouchableOpacity
+            onPress={() => webRef.current.reload()}
+          >
+            {/* <Icon
+              style={{paddingRight: 0}}
+              width={24}
+              height={24}
+              name="close"
+            /> */}
+            <Text type="caption1-medium" color="title">Reload</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+          >
+            <Icon
+              style={{paddingRight: 0}}
+              width={24}
+              height={24}
+              name="close"
+            />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={{flex: 1}}>
         <WebView
