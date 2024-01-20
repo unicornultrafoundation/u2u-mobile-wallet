@@ -71,7 +71,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
       const tx = await submitRawTx({
         gasLimit: estimatedGasLimit,
         receiveAddress: txObj.to,
-        amount: txObj.value,
+        amount: rawAmount,
         txData: txObj.data,
         gasPrice: gasPrice
       })
