@@ -703,6 +703,51 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'transfer':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path d="M3.83584 16.8396L17.4536 16.8396" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M7.93188 20.9173L3.83522 16.8395L7.93188 12.7617" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M20.1672 6.91115L6.54946 6.91115" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M16.0711 2.8335L20.1677 6.91127L16.0711 10.9891" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'burn':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path d="M15 9.35669C15 8.42062 16.2633 8.1725 16.5985 9.04836C17.4093 11.167 18 13.0623 18 14.087C18 17.3527 15.3137 20 12 20C8.68629 20 6 17.3527 6 14.087C6 12.9861 6.68187 10.8803 7.58587 8.57226C8.75691 5.58242 9.34243 4.0875 10.0652 4.00698C10.2965 3.98121 10.5488 4.02754 10.7551 4.13365C11.4 4.46526 11.4 6.09574 11.4 9.35669C11.4 10.3364 12.2059 11.1306 13.2 11.1306C14.1941 11.1306 15 10.3364 15 9.35669Z" stroke={color || "#8D8D8D"} strokeWidth="1.5"/>
+              <Path d="M11 20L10.6077 18.823C10.2243 17.6728 10.3934 16.4099 11.0659 15.4011V15.4011C11.5103 14.7346 12.4897 14.7346 12.9341 15.4011V15.4011C13.6066 16.4099 13.7757 17.6728 13.3923 18.823L13 20" stroke={color || "#8D8D8D"} strokeWidth="1.5"/>
+            </Svg>
+          </View>
+        )
+      case 'mint':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path fillRule="evenodd" clipRule="evenodd" d="M17.8572 20.4168C19.7322 20.4168 21.2502 18.8978 21.2502 17.0238V14.3238C20.0102 14.3238 19.0102 13.3238 19.0102 12.0848C19.0102 10.8448 20.0102 9.84576 21.2502 9.84576L21.2482 7.14276C21.2482 5.26876 19.7302 3.74976 17.8562 3.74976H6.14424C4.27024 3.74976 2.75124 5.26876 2.75124 7.14276L2.75024 9.93276C3.98924 9.93276 4.98924 10.8448 4.98924 12.0848C4.98924 13.3238 3.98924 14.3238 2.75024 14.3238V17.0238C2.75024 18.8978 4.26824 20.4168 6.14224 20.4168H17.8572Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path fillRule="evenodd" clipRule="evenodd" d="M11.9998 13.8543L13.7398 14.7693C13.9028 14.8543 14.0938 14.7163 14.0628 14.5353L13.7298 12.5963L15.1388 11.2253C15.2708 11.0963 15.1978 10.8733 15.0158 10.8463L13.0698 10.5633L12.1988 8.79929C12.1178 8.63429 11.8828 8.63429 11.8008 8.79929L10.9298 10.5633L8.98481 10.8463C8.80281 10.8733 8.72981 11.0963 8.86181 11.2253L10.2698 12.5963L9.93681 14.5353C9.90581 14.7163 10.0968 14.8543 10.2598 14.7693L11.9998 13.8543Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View> 
+        )
+      case 'fingerprint':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path d="M18 16V9.5C18 7.01472 15.9853 5 13.5 5C11.0147 5 9 7.01472 9 9.5V17.5C9 18.3284 9.67157 19 10.5 19C11.3284 19 12 18.3284 12 17.5V9.5C12 8.67157 12.6716 8 13.5 8C14.3284 8 15 8.67157 15 9.5V17.5C15 19.9853 12.9853 22 10.5 22C8.01472 22 6 19.9853 6 17.5V8C6 4.68629 8.68629 2 12 2" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round"/>
+            </Svg>
+          </View>
+        )
+      case 'reload':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path d="M14 16H19V21M10 8H5V3M19.4176 9.0034C18.8569 7.61566 17.9181 6.41304 16.708 5.53223C15.4979 4.65141 14.0652 4.12752 12.5723 4.02051C11.0794 3.9135 9.58606 4.2274 8.2627 4.92661C6.93933 5.62582 5.83882 6.68254 5.08594 7.97612M4.58203 14.9971C5.14272 16.3848 6.08146 17.5874 7.29157 18.4682C8.50169 19.3491 9.93588 19.8723 11.4288 19.9793C12.9217 20.0863 14.4138 19.7725 15.7371 19.0732C17.0605 18.374 18.1603 17.3175 18.9131 16.0239" stroke={color || "#8D8D8D"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
       default:
         return null
     }

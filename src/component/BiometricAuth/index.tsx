@@ -1,6 +1,10 @@
 import { useTranslation } from "react-i18next";
 import { useBiometric } from "../../hook/useBiometric";
 import Button from "../Button";
+import Icon from "../Icon";
+import { color } from "../../theme/color";
+import { TouchableOpacity } from "react-native";
+import Text from "../Text";
 
 interface Props {
   onSuccess: () => void;
@@ -24,8 +28,18 @@ export default function BiometricAuth({onSuccess, onFail}: Props) {
   }
 
   return (
-    <Button type="text" onPress={handleTrigger}>
-      {t('useFingerPrintOrFaceID')}
-    </Button>
+    <TouchableOpacity onPress={handleTrigger} style={{flexDirection: 'row', gap: 6, alignItems: 'center'}}>
+      <Icon
+        name={'fingerprint'}
+        width={24}
+        height={24}
+        color={color.primary[500]}
+      />
+      <Text
+        style={{color: color.primary[500]}}
+      >
+        {t('useFingerPrintOrFaceID')}
+      </Text>
+    </TouchableOpacity>
   )
 }
