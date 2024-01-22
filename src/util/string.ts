@@ -106,6 +106,9 @@ export const getPathIndex = (path: string) => {
 }
 
 export const getDefaultWalletName = (wallet: Wallet) => {
+  if (wallet.mnemonic === '') {
+    return `Imported wallet ${shortenAddress(wallet.address, 3, 3)}`
+  }
   return `Address ${getPathIndex(wallet.path) ?? '--'}`
 }
 
