@@ -117,7 +117,7 @@ export const useTransaction = () => {
       data: overrideTx.txData || txStore.txData,
       value: getDigit(
         BigNumber(overrideTx.amount || txStore.amount).multipliedBy(10 ** 18).toFormat()
-      )
+      ) || "0"
     }
 
     const signedTx = await signTransaction(rawTxObj, wallet.privateKey, rpc)

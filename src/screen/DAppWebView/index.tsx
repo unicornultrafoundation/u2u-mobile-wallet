@@ -220,13 +220,12 @@ const DAppWebView = () => {
           <TouchableOpacity
             onPress={() => webRef.current.reload()}
           >
-            {/* <Icon
+            <Icon
               style={{paddingRight: 0}}
               width={24}
               height={24}
-              name="close"
-            /> */}
-            <Text type="caption1-medium" color="title">Reload</Text>
+              name="reload"
+            />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.goBack()}

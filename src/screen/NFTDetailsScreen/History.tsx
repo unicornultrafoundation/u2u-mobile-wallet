@@ -87,19 +87,16 @@ const NFTHistory = ({item, nftCollection}: {item: OwnedNFT, nftCollection: NFTCo
     <View>
       {history.map((item, index) =>  {
         const type = item.from.id === ZeroAddress ? "Mint" : (item.to.id === ZeroAddress ? "Burn" : "Transfer")
-        // const isReceive = true
-        // const color = isReceive ? theme.accentColor.tertiary.normal : theme.accentColor.error.normal
         return (
           <View 
             style={styles.txHistoryContainer} 
             key={index}
           >
-            {/* <Icon
-              name={isReceive ? 'arrow-down-circle' : 'arrow-up-circle'}
-              color={color}
+            <Icon
+              name={type === 'Transfer' ? 'transfer' : (type === 'Burn' ? 'burn' : 'mint')}
               width={20}
               height={20}
-            /> */}
+            />
             <View style={{flexDirection: 'column', gap: 2}}>
               <Text style={[ 
                 theme.typography.caption1.medium,
