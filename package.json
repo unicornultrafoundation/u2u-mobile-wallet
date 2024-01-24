@@ -28,6 +28,7 @@
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
+    "@sentry/react-native": "^5.17.0",
     "@tanstack/react-query": "^4.35.3",
     "@walletconnect/react-native-compat": "^2.11.0",
     "@web3modal/wagmi-react-native": "^1.0.1",
@@ -38,6 +39,8 @@
     "ethers": "^6.7.1",
     "event-target-polyfill": "^0.0.3",
     "events": "^3.3.0",
+    "expo": ">=49.0.0-0 <50.0.0",
+    "expo-local-authentication": "~13.4.1",
     "fast-text-encoding": "^1.0.6",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
@@ -47,6 +50,7 @@
     "jazzicon": "^1.5.0",
     "lottie-react-native": "^6.4.0",
     "process": "^0.11.10",
+    "promise.allsettled": "^1.0.7",
     "react": "18.2.0",
     "react-i18next": "^13.2.2",
     "react-native": "0.72.4",
@@ -87,9 +91,7 @@
     "viem": "^1.21.4",
     "wagmi": "^1.4.12",
     "whatwg-fetch": "^3.6.19",
-    "zustand": "^4.4.1",
-    "expo": ">=49.0.0-0 <50.0.0",
-    "expo-local-authentication": "~13.4.1"
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -101,6 +103,7 @@
     "@react-native/metro-config": "^0.72.11",
     "@tsconfig/react-native": "^3.0.0",
     "@types/ethereum-checksum-address": "^0.0.2",
+    "@types/promise.allsettled": "^1.0.6",
     "@types/react": "^18.0.24",
     "@types/react-native-vector-icons": "^6.4.14",
     "@types/react-test-renderer": "^18.0.0",

@@ -41,6 +41,13 @@ import NoInternetScreen from './src/screen/NoInternetScreen';
 import { useTracking } from './src/hook/useTracking';
 import MainTabNav from './src/stack/MainTab';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import * as Sentry from '@sentry/react-native';
+// import allSettled from "promise.allsettled";
+
+// Sentry.init({
+//   dsn: 'https://b1a44e799c721d65c5460721fab16289@o4506624618594304.ingest.sentry.io/4506625767571456',
+// });
+// allSettled.shim();
 
 //@ts-ignore
 global.CustomEvent = global.Event
@@ -315,4 +322,4 @@ function App(): JSX.Element {
   );
 }
 
-export default App;
+export default Sentry.wrap(App);
