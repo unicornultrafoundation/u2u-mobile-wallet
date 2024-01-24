@@ -79,7 +79,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
       setLoading(false)
 
       if (!tx) {
-        setError('Insufficient balance for transaction fee')
+        setError('Can not send transaction, please try again later')
         return
       }
 
