@@ -21,11 +21,12 @@ import { useNativeBalance } from '../../hook/useNativeBalance';
 import BigNumber from 'bignumber.js';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
+const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
   onCloseModal: () => void;
   showModal: boolean;
   txObj: Record<string, any>
   onConfirm: (txHash: string) => void
+  onReject: () => void;
 }) => {
   // ref
   const ref = useRef<BottomSheetModal>(null);
@@ -89,6 +90,10 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
       console.log("error", error)
       setError("Transaction failed")
     }
+  }
+
+  const handleReject = () => {
+    onReject()
   }
 
   useEffect(() => {
@@ -221,12 +226,21 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
         </View>
       </View>
       <Button
-        style={{borderRadius: 60, marginBottom: insets.bottom}}
+        style={{borderRadius: 60, marginBottom: 12, marginHorizontal: 16}}
         textStyle={theme.typography.label.medium}
         onPress={handleConfirm}
         loading={loading}
       >
         {t('confirm')}
+      </Button>
+      <Button
+        style={{borderRadius: 60, marginBottom: insets.bottom, marginHorizontal: 16}}
+        textStyle={theme.typography.label.medium}
+        onPress={handleReject}
+        loading={loading}
+        color="tertiary"
+      >
+        {t('reject')}
       </Button>
     </BottomSheetModal>
   )
