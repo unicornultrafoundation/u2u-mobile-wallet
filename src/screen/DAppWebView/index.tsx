@@ -14,6 +14,7 @@ import { useGlobalStore } from '../../state/global';
 import { Wallet, isHexString } from 'ethers';
 import { usePreference } from '../../hook/usePreference';
 import { hexToString } from '../../util/string';
+import { useTransaction } from '../../hook/useTransaction';
 
 const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `
@@ -24,6 +25,7 @@ const DAppWebView = () => {
   const {preferenceTheme} = usePreference()
   const navigation = useNavigation()
   const route = useRoute<any>();
+  const {resetTxState} = useTransaction()
 
   const appURL = route.params?.url || ""
   const [url, setURL] = useState(appURL)
@@ -115,6 +117,7 @@ const DAppWebView = () => {
     if (webRef && webRef.current) {
       webRef.current.injectJavaScript(codeToRun);
     }
+    resetTxState()
   }
 
   const handleRejectTx = () => {
@@ -122,6 +125,7 @@ const DAppWebView = () => {
     if (webRef && webRef.current) {
       webRef.current.injectJavaScript(codeToRun);
     }
+    resetTxState()
   }
 
   const handleLog = (logData: any) => {
