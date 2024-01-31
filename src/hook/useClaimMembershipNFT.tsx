@@ -2,7 +2,7 @@ import { useCallback } from "react"
 import { useNetwork } from "./useNetwork"
 import { useWallet } from "./useWallet"
 import DeviceInfo from "react-native-device-info"
-import { FETCH_CLAIM_REQUEST_ENDPOINT, SUBMIT_CLAIM_REQUEST_ENDPOINT } from "../config/endpoint"
+import { FETCH_CLAIM_REQUEST_ENDPOINT, SUBMIT_CLAIM_JUPITER_REQUEST_ENDPOINT } from "../config/endpoint"
 import { useQuery } from "@tanstack/react-query"
 import { useTracking } from "./useTracking"
 
@@ -14,7 +14,7 @@ export const useClaimMembershipNFT = () => {
   const submitClaimRequest = useCallback(async () => {
     try {
       if (!networkConfig || !wallet || !networkConfig.api_endpoint) return
-      const endpoint = `${networkConfig.api_endpoint}${SUBMIT_CLAIM_REQUEST_ENDPOINT}`
+      const endpoint = `${networkConfig.api_endpoint}${SUBMIT_CLAIM_JUPITER_REQUEST_ENDPOINT}`
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       
@@ -29,11 +29,11 @@ export const useClaimMembershipNFT = () => {
         body: raw,
         redirect: 'follow'
       };
-
+      console.log(endpoint)
       const rs = await fetch(endpoint, requestOptions)
       return rs.json()
     } catch (error) {
-      console.log('submitClaimRequest error')
+      console.log('submitClaimRequest error', error)
       return 
     }
 
