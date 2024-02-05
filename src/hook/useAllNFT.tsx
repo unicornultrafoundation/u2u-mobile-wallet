@@ -1,5 +1,4 @@
 import React from 'react'
-import { useWallet } from './useWallet'
 import { NFTCollectionMeta } from './useSupportedNFT'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { request } from 'graphql-request'

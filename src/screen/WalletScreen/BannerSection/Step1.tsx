@@ -13,6 +13,7 @@ import { usePreference } from '../../../hook/usePreference';
 import { useWallet } from '../../../hook/useWallet';
 import { useTracking } from '../../../hook/useTracking';
 import { useNetwork } from '../../../hook/useNetwork';
+import { useRemoteConfig } from '../../../hook/useRemoteConfig';
 
 const Step1 = () => {
   const {preferenceTheme} = usePreference()
@@ -21,6 +22,7 @@ const Step1 = () => {
   const { submitClaimRequest, claimRequest, fetchingClaimRequest } = useClaimMembershipNFT()
   const { deviceID } = useTracking()
   const { wallet } = useWallet()
+  const { remoteConfig } = useRemoteConfig()
 
   const [alreadySubmitted, setAlreadySubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -100,7 +102,7 @@ const Step1 = () => {
         >
            {t('bannerContent1')}
         </Text>
-        {loading ? (
+        {loading && remoteConfig.allowClaimMembership ? (
           <ActivityIndicator />
         ) : (
           <Button
