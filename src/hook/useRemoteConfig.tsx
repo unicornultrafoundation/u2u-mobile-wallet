@@ -2,7 +2,13 @@ import { useQuery } from "@tanstack/react-query"
 import { fetchRemoteConfig } from "../service/remoteConfig"
 
 interface RemoteAppConfig {
-  versionInReview: string
+  versionInReview: string;
+  allowClaimMembership: boolean
+}
+
+const defaultConfig:RemoteAppConfig = {
+  versionInReview: "",
+  allowClaimMembership: true
 }
 
 export function useRemoteConfig() {
@@ -14,6 +20,6 @@ export function useRemoteConfig() {
   
   return {
     loading: query.isLoading,
-    remoteConfig: query.data || {} as RemoteAppConfig
+    remoteConfig: query.data || defaultConfig
   }
 };
