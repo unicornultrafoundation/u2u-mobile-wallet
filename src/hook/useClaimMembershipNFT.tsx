@@ -29,7 +29,7 @@ export const useClaimMembershipNFT = () => {
         body: raw,
         redirect: 'follow'
       };
-
+      
       const rs = await fetch(endpoint, requestOptions)
       return rs.json()
     } catch (error) {
@@ -39,7 +39,7 @@ export const useClaimMembershipNFT = () => {
 
   }, [networkConfig, wallet, deviceID])
 
-  const {data, isRefetching} = useQuery({
+  const {data, isRefetching, refetch} = useQuery({
     queryKey: ['fetchClaimNFTRequest', networkConfig],
     queryFn: async () => {
       try {
@@ -66,6 +66,7 @@ export const useClaimMembershipNFT = () => {
   return {
     submitClaimRequest,
     claimRequest: data && data[0] ? data[0] : {},
-    fetchingClaimRequest: isRefetching
+    fetchingClaimRequest: isRefetching,
+    refetchClaimRequest: refetch
   }
 }
