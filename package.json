@@ -34,10 +34,13 @@
     "bignumber.js": "^9.1.2",
     "crypto": "^1.0.1",
     "date-fns": "^2.30.0",
+    "deprecated-react-native-prop-types": "^5.0.0",
     "ethereum-checksum-address": "^0.0.8",
     "ethers": "^6.7.1",
     "event-target-polyfill": "^0.0.3",
     "events": "^3.3.0",
+    "expo": ">=49.0.0-0 <50.0.0",
+    "expo-local-authentication": "~13.4.1",
     "fast-text-encoding": "^1.0.6",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
@@ -87,9 +90,7 @@
     "viem": "^1.21.4",
     "wagmi": "^1.4.12",
     "whatwg-fetch": "^3.6.19",
-    "zustand": "^4.4.1",
-    "expo": ">=49.0.0-0 <50.0.0",
-    "expo-local-authentication": "~13.4.1"
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
