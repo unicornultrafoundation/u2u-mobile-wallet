@@ -24,7 +24,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useNetInfo } from "@react-native-community/netinfo";
-import appsFlyer from 'react-native-appsflyer';
+// import appsFlyer from 'react-native-appsflyer';
 import { MenuProvider } from 'react-native-popup-menu';
 import Toast from 'react-native-toast-message';
 import theme from './src/theme';
@@ -36,42 +36,37 @@ import AuthScreen from './src/screen/AuthScreen';
 import { useNetworkStore } from './src/state/network';
 import { SUPPORTED_CHAINS } from './src/config/chain';
 import { useTranslation } from 'react-i18next';
-import { APP_FLYERS_DEV_KEY, APP_FLYERS_IOS_APP_ID } from './src/config/constant';
+// import { APP_FLYERS_DEV_KEY, APP_FLYERS_IOS_APP_ID } from './src/config/constant';
 import NoInternetScreen from './src/screen/NoInternetScreen';
 import { useTracking } from './src/hook/useTracking';
 import MainTabNav from './src/stack/MainTab';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import * as Sentry from '@sentry/react-native';
-// import allSettled from "promise.allsettled";
-
-// Sentry.init({
-//   dsn: 'https://b1a44e799c721d65c5460721fab16289@o4506624618594304.ingest.sentry.io/4506625767571456',
-// });
-// allSettled.shim();
+import { useCrashlytics } from './src/hook/useCrashlytics';
 
 //@ts-ignore
 global.CustomEvent = global.Event
 
 const queryClient = new QueryClient()
 
-appsFlyer.initSdk(
-  {
-    devKey: APP_FLYERS_DEV_KEY!,
-    isDebug: true,
-    appId: APP_FLYERS_IOS_APP_ID,
-    onInstallConversionDataListener: true, //Optional
-    onDeepLinkListener: true, //Optional
-    timeToWaitForATTUserAuthorization: 10 //for iOS 14.5
-  },
-  (result) => {
-    console.log(result);
-  },
-  (error) => {
-    console.error(error);
-  }
-);
+// appsFlyer.initSdk(
+//   {
+//     devKey: APP_FLYERS_DEV_KEY!,
+//     isDebug: true,
+//     appId: APP_FLYERS_IOS_APP_ID,
+//     onInstallConversionDataListener: true, //Optional
+//     onDeepLinkListener: true, //Optional
+//     timeToWaitForATTUserAuthorization: 10 //for iOS 14.5
+//   },
+//   (result) => {
+//     console.log(result);
+//   },
+//   (error) => {
+//     console.error(error);
+//   }
+// );
 
 function App(): JSX.Element {
+  useCrashlytics()
   const {unlocked} = useGlobalStore()
   const { type, isConnected } = useNetInfo();
   const {darkMode: isDarkMode, language} = usePreferenceStore()
@@ -322,4 +317,4 @@ function App(): JSX.Element {
   );
 }
 
-export default Sentry.wrap(App);
+export default App;

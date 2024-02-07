@@ -21,11 +21,13 @@ import ERC20TxMetaSection from './ERC20TxMetaSection';
 import Toast from 'react-native-toast-message';
 import LoadingView from '../Common/loadingView';
 import { usePreference } from '../../hook/usePreference';
+import { useCrashlytics } from '../../hook/useCrashlytics';
 
 const TxDetail = ({txHash, onClose}: {
   txHash: string;
   onClose: () => void
 }) => {
+  const {logErrorForMonitoring} = useCrashlytics()
   const {wallet} = useWallet()
   const {name, blockExplorer} = useNetwork()
   const {preferenceTheme} = usePreference()
@@ -50,6 +52,7 @@ const TxDetail = ({txHash, onClose}: {
         setLoading(false)
       } catch (error) {
         setLoading(false)
+        logErrorForMonitoring(error as any)
         console.log(error)
       }
     })()

@@ -5,11 +5,13 @@ import DeviceInfo from "react-native-device-info"
 import { FETCH_CLAIM_REQUEST_ENDPOINT, SUBMIT_CLAIM_JUPITER_REQUEST_ENDPOINT } from "../config/endpoint"
 import { useQuery } from "@tanstack/react-query"
 import { useTracking } from "./useTracking"
+import { useCrashlytics } from "./useCrashlytics"
 
 export const useClaimMembershipNFT = () => {
   const { networkConfig } = useNetwork()
   const {wallet} = useWallet()
   const {deviceID} = useTracking()
+  const {logErrorForMonitoring} = useCrashlytics()
 
   const submitClaimRequest = useCallback(async () => {
     try {
@@ -34,6 +36,7 @@ export const useClaimMembershipNFT = () => {
       return rs.json()
     } catch (error) {
       console.log('submitClaimRequest error', error)
+      logErrorForMonitoring(error as any, 'submitClaimRequest error')
       return 
     }
 
@@ -56,6 +59,7 @@ export const useClaimMembershipNFT = () => {
         return rsJSON
       } catch (error) {
         console.log("error useClaimMembershipNFT", error)
+        logErrorForMonitoring(error as any, 'error useClaimMembershipNFT')
         return [] 
       }
     },
