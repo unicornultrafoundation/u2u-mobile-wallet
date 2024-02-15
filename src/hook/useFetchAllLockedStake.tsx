@@ -10,9 +10,9 @@ import { logErrorForMonitoring } from "./useCrashlytics"
 export const useFetchAllLockedStake = (delAddress: string) => {
   const {networkConfig} = useNetwork()
   const fetchAllLockedStake = useCallback(async () => {
-    if(!delAddress) return [] as LockedStake[]
+    if(!delAddress || !networkConfig) return [] as LockedStake[]
     try {
-      const {data} = await queryAllLockedStake(delAddress.toLowerCase())
+      const data = await queryAllLockedStake(delAddress.toLowerCase(), networkConfig.sfcSubgraph)
       if (data && data.lockedUps) {
         const mappedRs: LockedStake[] = data.lockedUps.map((i: Record<string, any>) => {
           return lockedStakeDataProcessor(i)

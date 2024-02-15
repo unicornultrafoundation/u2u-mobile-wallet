@@ -24,9 +24,8 @@ export const useFetchWithdrawRequest = (delegatorAddr: string) => {
   const {networkConfig} = useNetwork()
 
   const fetchAllWithdrawalRequest = useCallback(async () => {
-    console.log('fetchAllWithdrawalRequest')
     if (!delegatorAddr || !networkConfig) return []
-    const { data } = await queryAllWithdrawalRequest(delegatorAddr)
+    const data = await queryAllWithdrawalRequest(delegatorAddr, networkConfig.sfcSubgraph)
     if (data && data.withdrawalRequests.length > 0) {
       return data.withdrawalRequests.map((i: any) => withdrawalRequestDataProcessor(i, networkConfig.withdrawPeriodTime))
     }
