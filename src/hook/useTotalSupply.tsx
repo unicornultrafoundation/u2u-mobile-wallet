@@ -4,6 +4,7 @@ import { useNetwork } from "./useNetwork";
 import { fetchTotalSupply } from "../service/staking";
 import BigNumber from "bignumber.js";
 import { useQuery } from "@tanstack/react-query";
+import { logErrorForMonitoring } from "./useCrashlytics";
 
 export const useTotalSupply = (stakingContractOptions?: ContractOptions) => {
   const {rpc} = useNetwork()
@@ -17,7 +18,7 @@ export const useTotalSupply = (stakingContractOptions?: ContractOptions) => {
       const _rewards = await fetchTotalSupply(stakingContractOptions, rpc)
       return BigNumber(_rewards).dividedBy(10 ** 18).toFixed()
     } catch (error) {
-      console.log("fetch total supply fail", error)
+      logErrorForMonitoring(error as any, "fetch total supply fail")
       return "0"
     }
   }, [stakingContractOptions, rpc])

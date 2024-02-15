@@ -8,6 +8,7 @@ import { decodeTxData, findABIFragment } from '../../util/contract';
 import BigNumber from 'bignumber.js';
 import { ERC20_ABI } from '../../util/abis/erc20';
 import { usePreference } from '../../hook/usePreference';
+import { logErrorForMonitoring } from '../../hook/useCrashlytics';
 
 const TRANSFER_INPUT_ABI = [
   {
@@ -42,7 +43,7 @@ const ERC20TxMetaSection = ({tokenMeta, txDetail}: {
 
         setAmount(BigNumber(_amount as string).dividedBy(10 ** tokenMeta.decimals).toFormat())
       } catch (error) {
-        console.log(error)
+        logErrorForMonitoring(error as any, "Error ERC20TxMetaSection")
       }
     })()
   }, [txDetail])

@@ -3,6 +3,7 @@ import BigNumber from "bignumber.js"
 import { queryLockedStake } from "../service/staking"
 import { lockedStakeDataProcessor } from "../util/staking"
 import { useQuery } from "@tanstack/react-query"
+import { logErrorForMonitoring } from "./useCrashlytics"
 
 export interface LockedStake {
   delegator: string
@@ -15,7 +16,6 @@ export interface LockedStake {
 }
 
 const fetchLockedStake = async (delAddress: string, valId: number) => {
-  console.log('fetchLockedStake')
   if(!delAddress) return {} as LockedStake
   try {
     const vaIdlHex = `0x${valId.toString(16)}`
@@ -25,6 +25,7 @@ const fetchLockedStake = async (delAddress: string, valId: number) => {
     }
     return {} as LockedStake
   } catch (error) {
+    logErrorForMonitoring(error as any, "fetchLockedStake fail")
     return {} as LockedStake
   }
 }

@@ -44,9 +44,9 @@ const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoi
   const handleClose = useCallback(() => {
     bottomSheetModalRef.current?.close();
   }, []);
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
+  // const handleSheetChanges = useCallback((index: number) => {
+  //   console.log('handleSheetChanges', index);
+  // }, []);
 
   return (
     <>
@@ -61,7 +61,7 @@ const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoi
         ref={bottomSheetModalRef}
         index={0}
         snapPoints={snapPoints}
-        onChange={handleSheetChanges}
+        // onChange={handleSheetChanges}
         enablePanDownToClose={true}
         topInset={insets.top + 60}
         keyboardBlurBehavior={'restore'}

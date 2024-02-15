@@ -20,12 +20,14 @@ import Button from '../../component/Button';
 import { useNativeBalance } from '../../hook/useNativeBalance';
 import BigNumber from 'bignumber.js';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { logErrorForMonitoring } from '../../hook/useCrashlytics';
 
-const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
+const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
   onCloseModal: () => void;
   showModal: boolean;
   txObj: Record<string, any>
   onConfirm: (txHash: string) => void
+  onReject: () => void;
 }) => {
   // ref
   const ref = useRef<BottomSheetModal>(null);
@@ -78,7 +80,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
       setLoading(false)
 
       if (!tx) {
-        setError('Insufficient balance for transaction fee')
+        setError('Can not send transaction, please try again later')
         return
       }
 
@@ -86,9 +88,13 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
       onConfirm(tx?.hash)
     } catch (error) {
       setLoading(false)
-      console.log("error", error)
       setError("Transaction failed")
+      logErrorForMonitoring(error as any, "dApp confirm tx error")
     }
+  }
+
+  const handleReject = () => {
+    onReject()
   }
 
   useEffect(() => {
@@ -221,12 +227,21 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm}: {
         </View>
       </View>
       <Button
-        style={{borderRadius: 60, marginBottom: insets.bottom}}
+        style={{borderRadius: 60, marginBottom: 12, marginHorizontal: 16}}
         textStyle={theme.typography.label.medium}
         onPress={handleConfirm}
         loading={loading}
       >
         {t('confirm')}
+      </Button>
+      <Button
+        style={{borderRadius: 60, marginBottom: insets.bottom, marginHorizontal: 16}}
+        textStyle={theme.typography.label.medium}
+        onPress={handleReject}
+        loading={loading}
+        color="tertiary"
+      >
+        {t('reject')}
       </Button>
     </BottomSheetModal>
   )

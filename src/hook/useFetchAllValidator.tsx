@@ -3,6 +3,7 @@ import { queryValidators, queryStakingStats, queryValidatorsApr, Validator } fro
 import { validatorDataProcessor } from "../util/staking"
 import { useQuery } from "@tanstack/react-query"
 import { useNetwork } from "./useNetwork"
+import { logErrorForMonitoring } from "./useCrashlytics"
 
 export const useFetchAllValidator = () => {
   const fetchValidators = async () => {
@@ -18,7 +19,7 @@ export const useFetchAllValidator = () => {
           const { data } = await queryValidatorsApr(valIds)
           dataApr = data
         } catch (error) {
-          console.log("queryValidatorsApr fail")
+          logErrorForMonitoring(error as any, "queryValidatorsApr fail")
           return []
         }
         
@@ -33,7 +34,7 @@ export const useFetchAllValidator = () => {
       }
       return []
     } catch (error) {
-      console.log("fetch validators fail", error)
+      logErrorForMonitoring(error as any, "fetch validators fail")
       return []
     }
   }

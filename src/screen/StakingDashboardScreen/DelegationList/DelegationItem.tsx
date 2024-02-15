@@ -21,6 +21,7 @@ import { useFetchLockedStake } from '../../../hook/useFetchLockedStake';
 import BigNumber from 'bignumber.js';
 import LockModal from './LockModal';
 import { usePreference } from '../../../hook/usePreference';
+import { logErrorForMonitoring } from '../../../hook/useCrashlytics';
 
 const DelegationItem = ({item}: {
   item: Validation
@@ -89,7 +90,7 @@ const DelegationItem = ({item}: {
       })
     } catch (error) {
       setClaiming(false)
-      console.log(error)
+      logErrorForMonitoring(error as any, "claim rewards error")
       Toast.show({
         type: 'error',
         text1: 'Claim rewards fail',

@@ -4,7 +4,7 @@ import { useNetwork } from "./useNetwork"
 import { ContractOptions } from "../util/contract"
 import { useCurrentEpoch } from "./useCurrentEpoch"
 import { fetchCurrentEpochSnapShot } from "../service/staking"
-import { useQuery } from "@tanstack/react-query"
+import { logErrorForMonitoring } from "./useCrashlytics"
 
 const getEpochRewards = async (epoch: number, rpc: string, stakingContractOptions?: ContractOptions) => {
   if (!stakingContractOptions) {
@@ -21,6 +21,7 @@ const getEpochRewards = async (epoch: number, rpc: string, stakingContractOption
     return BigNumber(_u2uPerEpoch).dividedBy(10 ** 18).toFixed()
   } catch (error) {
     console.log("fetch epoch reward fail", error)
+    logErrorForMonitoring(error as any, "fetch epoch reward fail")
     return "0"
   }
 }

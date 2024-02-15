@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { fetchNewsCategory } from "../service/news";
 import { useCallback } from "react";
+import { logErrorForMonitoring } from "./useCrashlytics";
 
 export interface NewsCategory {
   id: string;
@@ -24,6 +25,7 @@ export const useNewsCategory = () => {
           }
         })
       } catch (error) {
+        logErrorForMonitoring(error as any, "get news category fail")
         return []
       }
     },

@@ -4,6 +4,7 @@ import BigNumber from "bignumber.js";
 import { fetchPendingRewards } from "../service/staking";
 import { useNetwork } from "./useNetwork";
 import { useQuery } from "@tanstack/react-query";
+import { logErrorForMonitoring } from "./useCrashlytics";
 
 interface Props {
   stakingContractOptions?: ContractOptions,
@@ -20,7 +21,7 @@ export const usePendingReward = ({stakingContractOptions, delegatorAddress, vali
       const _rewards = await fetchPendingRewards(stakingContractOptions, delegatorAddress, validatorId, rpc)
       return BigNumber(_rewards).dividedBy(10 ** 18).toFixed()
     } catch (error) {
-      console.log("get pending rewards fail")
+      logErrorForMonitoring(error as any, "get pending rewards fail")
       return "0"
     }
   }, [delegatorAddress, validatorId, stakingContractOptions, rpc])

@@ -14,6 +14,7 @@ import { useStaking } from '../../../hook/useStaking';
 import Toast from 'react-native-toast-message';
 import { useTransaction } from '../../../hook/useTransaction';
 import { useTranslation } from 'react-i18next';
+import { logErrorForMonitoring } from '../../../hook/useCrashlytics';
 
 const WRItem = ({item}: {
   item: WithdrawalRequest
@@ -57,7 +58,7 @@ const WRItem = ({item}: {
         }
       })
     } catch (error) {
-      console.log("error: ", error);
+      logErrorForMonitoring(error as any, "claim fail")
       setClaiming(false)
 
       Toast.show({

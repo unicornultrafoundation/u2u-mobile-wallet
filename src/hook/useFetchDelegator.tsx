@@ -3,6 +3,7 @@ import { Delegator, queryDelegatorDetail, queryStakingStats } from "../service/s
 import { delegatorDataProcessor } from "../util/staking"
 import { useQuery } from "@tanstack/react-query"
 import { useNetwork } from "./useNetwork"
+import { logErrorForMonitoring } from "./useCrashlytics"
 
 export const useFetchDelegator = (delAddress: string) => {
   const {networkConfig} = useNetwork()
@@ -19,7 +20,7 @@ export const useFetchDelegator = (delAddress: string) => {
       }
       return {} as Delegator
     } catch (error) {
-      console.log('fetchDelegator fail')
+      logErrorForMonitoring(error as any, "fetchDelegator fail")
       return {} as Delegator
     }
   }

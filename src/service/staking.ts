@@ -4,6 +4,7 @@ import { apolloClient, apolloStakingClient, apolloU2UNetworkClient } from "./gra
 import { Schema } from "./graph/schema";
 import { TABLE_LIMIT } from "../config/constant";
 import { LockedStake } from "../hook/useFetchLockedStake";
+import { logErrorForMonitoring } from "../hook/useCrashlytics";
 
 export interface Validation {
   id: string
@@ -164,6 +165,7 @@ export const fetchValidatorInfo = async (validatorAuth: string) => {
     const data = await response.json()
     return data
   } catch (error) {
+    logErrorForMonitoring(error as any, "fetchValidatorInfo error")
     return undefined
   }
 }
