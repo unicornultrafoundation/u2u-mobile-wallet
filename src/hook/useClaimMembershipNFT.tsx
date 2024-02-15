@@ -5,13 +5,12 @@ import DeviceInfo from "react-native-device-info"
 import { FETCH_CLAIM_REQUEST_ENDPOINT, SUBMIT_CLAIM_JUPITER_REQUEST_ENDPOINT } from "../config/endpoint"
 import { useQuery } from "@tanstack/react-query"
 import { useTracking } from "./useTracking"
-import { useCrashlytics } from "./useCrashlytics"
+import { logErrorForMonitoring, useCrashlytics } from "./useCrashlytics"
 
 export const useClaimMembershipNFT = () => {
   const { networkConfig } = useNetwork()
   const {wallet} = useWallet()
   const {deviceID} = useTracking()
-  const {logErrorForMonitoring} = useCrashlytics()
 
   const submitClaimRequest = useCallback(async () => {
     try {
