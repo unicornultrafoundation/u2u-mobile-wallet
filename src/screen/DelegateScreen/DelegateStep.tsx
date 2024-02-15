@@ -10,6 +10,7 @@ import { useTransaction } from '../../hook/useTransaction';
 import TxDetail from '../../component/TxDetail';
 import { useNavigation } from '@react-navigation/native';
 import { usePreference } from '../../hook/usePreference';
+import { logErrorForMonitoring } from '../../hook/useCrashlytics';
 
 const DelegateStep = ({onSkip}: {
   onSkip: () => void
@@ -33,6 +34,7 @@ const DelegateStep = ({onSkip}: {
         const txHash = await submitRawTx()
         console.log('sented', txHash)
       } catch (error) {
+        logErrorForMonitoring(error as any, "DelegateStep error")
         console.log(error)
       }
     })()

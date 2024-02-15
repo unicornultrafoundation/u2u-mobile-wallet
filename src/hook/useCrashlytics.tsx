@@ -4,6 +4,11 @@ import DeviceInfo from "react-native-device-info"
 import crashlytics from '@react-native-firebase/crashlytics';
 import { Platform } from "react-native";
 
+export const logErrorForMonitoring = (error: Error, jsErrorName?: string) => {
+  console.error(jsErrorName, error)
+  crashlytics().recordError(error, jsErrorName)
+}
+
 export const useCrashlytics = () => {
   const {wallet} = useWallet()
 
@@ -28,7 +33,7 @@ export const useCrashlytics = () => {
   }, [])
 
   return {
-    logErrorForMonitoring: crashlytics().recordError
+    logErrorForMonitoring
   }
 
 }

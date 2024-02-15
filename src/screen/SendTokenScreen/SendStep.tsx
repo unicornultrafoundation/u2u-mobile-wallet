@@ -13,6 +13,7 @@ import TxDetail from '../../component/TxDetail';
 import { useNavigation } from '@react-navigation/native';
 import { useLocalStore } from '../../state/local';
 import { usePreference } from '../../hook/usePreference';
+import { logErrorForMonitoring } from '../../hook/useCrashlytics';
 
 const SendStep = ({onSkip}: {
   onSkip: () => void
@@ -38,7 +39,7 @@ const SendStep = ({onSkip}: {
         const txHash = await submitTx()
         console.log('sented', txHash)
       } catch (error) {
-        console.log(error)
+        logErrorForMonitoring(error as any, "send token error")
       }
     })()
   }, [])

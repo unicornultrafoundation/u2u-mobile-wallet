@@ -11,6 +11,7 @@ import { useFetchAllValidator } from "./useFetchAllValidator";
 import { useDelegate } from "./useDelegate";
 import { useClaimRewards } from "./useClaimRewards";
 import { useUndelegate } from "./useUndelegate";
+import { logErrorForMonitoring } from "./useCrashlytics";
 
 export function useStaking() {
   const [allPendingRewards, setAllPendingRewards] = useState("0")
@@ -33,7 +34,7 @@ export function useStaking() {
       const _rewards = await fetchPendingRewards(stakingContractOptions, delegatorAddress, validatorId, rpc)
       return BigNumber(_rewards).dividedBy(10 ** 18).toFixed()
     } catch (error) {
-      console.log("get pending rewards fail")
+      logErrorForMonitoring(error as any, "get pending rewards fail")
       return "0"
     }
   }, [stakingContractOptions])
@@ -67,7 +68,7 @@ export function useStaking() {
           BigNumber(staked).dividedBy(10 ** 18).toFixed()
         )
       } catch (error) {
-        console.log("get all pending rewards fail", error)
+        logErrorForMonitoring(error as any, "get all pending rewards fail")
       }
     })()
   }, [validators, wallet])

@@ -20,6 +20,7 @@ import Button from '../../component/Button';
 import { useNativeBalance } from '../../hook/useNativeBalance';
 import BigNumber from 'bignumber.js';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { logErrorForMonitoring } from '../../hook/useCrashlytics';
 
 const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
   onCloseModal: () => void;
@@ -87,8 +88,8 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
       onConfirm(tx?.hash)
     } catch (error) {
       setLoading(false)
-      console.log("error", error)
       setError("Transaction failed")
+      logErrorForMonitoring(error as any, "dApp confirm tx error")
     }
   }
 

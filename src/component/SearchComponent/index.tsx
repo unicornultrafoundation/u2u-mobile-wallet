@@ -10,6 +10,7 @@ import Text from '../Text';
 import { useNetwork } from '../../hook/useNetwork';
 import { useTranslation } from 'react-i18next';
 import { usePreference } from '../../hook/usePreference';
+import { logErrorForMonitoring } from '../../hook/useCrashlytics';
 // Define the types
 type SearchResult = {
   // id: number;
@@ -54,7 +55,7 @@ const SearchComponent: React.FC = () => {
           setSearching(false)
         } catch (error) {
           setSearching(false)
-          console.error('Error fetching search results:', error);
+          logErrorForMonitoring(error as any, "Error fetching search results")
         }
       };
       fetchResults();

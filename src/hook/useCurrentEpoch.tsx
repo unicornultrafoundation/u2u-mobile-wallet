@@ -2,6 +2,7 @@ import { ContractOptions } from "../util/contract";
 import { useNetwork } from "./useNetwork";
 import { fetchCurrentEpoch } from "../service/staking";
 import BigNumber from "bignumber.js";
+import { logErrorForMonitoring } from "./useCrashlytics";
 
 const getCurrentEpoch = async (rpc: string, stakingContractOptions?: ContractOptions) => {
   if (!stakingContractOptions) {
@@ -12,7 +13,7 @@ const getCurrentEpoch = async (rpc: string, stakingContractOptions?: ContractOpt
     const rs = await fetchCurrentEpoch(stakingContractOptions, rpc)
     return BigNumber(rs).toNumber()
   } catch (error) {
-    console.log("fetch current epoch fail")
+    logErrorForMonitoring(error as any, 'fetch current epoch fail')
     return 0
   }
 }

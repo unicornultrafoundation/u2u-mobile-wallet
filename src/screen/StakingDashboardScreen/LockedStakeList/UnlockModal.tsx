@@ -20,6 +20,7 @@ import { useWallet } from '../../../hook/useWallet';
 import { useTranslation } from 'react-i18next';
 import { usePreference } from '../../../hook/usePreference';
 import CustomBottomSheetModal from '../../../component/CustomBottomSheetModal';
+import { logErrorForMonitoring } from '../../../hook/useCrashlytics';
 
 const UnlockModal = ({trigger, item}: {
   trigger: () => JSX.Element,
@@ -156,7 +157,7 @@ const UnlockModal = ({trigger, item}: {
       alertSuccess(tx);
 
     } catch (error) {
-      console.log('handleUnlock error')
+      logErrorForMonitoring(error as any, "handleUnlock error")
       setUnlocking(false)
 
       alertError(error)

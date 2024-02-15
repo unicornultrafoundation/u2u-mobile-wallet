@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { parseIPFSFile } from '../util/string'
+import { logErrorForMonitoring } from './useCrashlytics'
 
 const fetchNFTMetadata = async (tokenURI: string) => {
   try {
     const rs = await fetch(parseIPFSFile(tokenURI))
     return rs.json()
   } catch (error) {
-    console.log('fetchNFTMetadata error')
+    logErrorForMonitoring(error as any, "fetchNFTMetadata error")
     return {}
   }
 }

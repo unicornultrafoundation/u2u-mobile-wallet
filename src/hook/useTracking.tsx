@@ -7,6 +7,7 @@ import { useWallet } from "./useWallet"
 import { firebase } from "@react-native-firebase/app-check"
 import appsFlyer from "react-native-appsflyer"
 import { useQuery } from "@tanstack/react-query"
+import { logErrorForMonitoring } from "./useCrashlytics"
 
 export const useTracking = () => {
   const { networkConfig } = useNetwork()
@@ -62,6 +63,7 @@ export const useTracking = () => {
 
       return rs
     } catch (error) {
+      logErrorForMonitoring(error as any, "register wallet error")
       return
     }
   }, [networkConfig, wallet, registeredWallet])
@@ -72,7 +74,7 @@ export const useTracking = () => {
         const rs = await DeviceInfo.syncUniqueId();
         setDeviceID(rs)
       } catch (error) {
-        console.log("get device id error", error)
+        logErrorForMonitoring(error as any, "get device id error")
         setDeviceID("")
       }
     })()
@@ -107,7 +109,7 @@ export const useTracking = () => {
       // toggleAlreadySubmitDeviceID()
       return rs
     } catch (error) {
-      console.log('submit device id', error)
+      logErrorForMonitoring(error as any, "submite device id error")
       return
     }
   }, [

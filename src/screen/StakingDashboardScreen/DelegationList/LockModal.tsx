@@ -25,6 +25,7 @@ import { TransactionReceipt } from 'ethers';
 import { parseFromRaw } from '../../../util/bignum';
 import { usePreference } from '../../../hook/usePreference';
 import CustomBottomSheetModal from '../../../component/CustomBottomSheetModal';
+import { logErrorForMonitoring } from '../../../hook/useCrashlytics';
 
 const LockModal = ({trigger, item}: {
   trigger: () => JSX.Element,
@@ -193,7 +194,7 @@ const LockModal = ({trigger, item}: {
       alertSuccess(tx);
 
     } catch (error) {
-      console.log('handleLock error')
+      logErrorForMonitoring(error as any, "handleLock error")
       setLocking(false)
 
       alertError(error)
