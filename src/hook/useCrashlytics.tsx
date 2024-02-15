@@ -6,7 +6,7 @@ import { Platform } from "react-native";
 
 export const logErrorForMonitoring = (error: Error, jsErrorName?: string) => {
   console.error(jsErrorName, error)
-  crashlytics().recordError(error, jsErrorName)
+  !__DEV__ && crashlytics().recordError(error, jsErrorName)
 }
 
 export const useCrashlytics = () => {

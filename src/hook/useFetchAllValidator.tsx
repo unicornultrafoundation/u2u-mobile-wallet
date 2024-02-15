@@ -6,17 +6,18 @@ import { useNetwork } from "./useNetwork"
 import { logErrorForMonitoring } from "./useCrashlytics"
 
 export const useFetchAllValidator = () => {
+  const {networkConfig} = useNetwork()
   const fetchValidators = async () => {
     try {
-      console.log('fetchValidators')
-      const { data } = await queryValidators()
-      const { data: stakingStats } = await queryStakingStats()
+      if (!networkConfig) return []
+      const data = await queryValidators(networkConfig.sfcSubgraph)
+      const stakingStats = await queryStakingStats(networkConfig.sfcSubgraph)
       const totalNetworkStaked = stakingStats && stakingStats.stakings ? BigNumber(stakingStats.stakings[0].totalStaked || 0) : BigNumber(0)
       if (data && data.validators.length > 0) {
         let valIds: number[] = data.validators.map((v: any) => Number(v.validatorId))
         let dataApr: Record<string, any> = {}
         try {
-          const { data } = await queryValidatorsApr(valIds)
+          const data = await queryValidatorsApr(valIds, networkConfig.stakingGraphql)
           dataApr = data
         } catch (error) {
           logErrorForMonitoring(error as any, "queryValidatorsApr fail")
