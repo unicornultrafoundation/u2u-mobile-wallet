@@ -7,6 +7,7 @@ import { usePreferenceStore } from '../../state/preferences';
 import { color } from '../../theme/color';
 import { useGlobalStore } from '../../state/global';
 import { useTranslation } from 'react-i18next';
+import { useWalletConnect } from '../../hook/useWalletConnect';
 
 export const TABBAR_HEIGHT = 100
 export const TABBAR_ITEM_HEIGHT = 80
@@ -29,8 +30,9 @@ export default ({ state, descriptors, navigation }: any) => {
   }, [routeName])
 
   const {t} = useTranslation<string>()
+  const {showWCScanner} = useGlobalStore()
 
-  if (!showTabBar) return null
+  if (!showTabBar || showWCScanner) return null
 
   return (
     <View 

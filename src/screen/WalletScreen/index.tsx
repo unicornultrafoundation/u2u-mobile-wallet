@@ -25,6 +25,8 @@ import Icon from '../../component/Icon';
 import ManageTokenModal from '../../component/ManageTokenModal';
 import { useTranslation } from 'react-i18next';
 import { useTracking } from '../../hook/useTracking';
+import Scanner from '../../component/QRCodeScanner';
+import { useWalletConnect } from '../../hook/useWalletConnect';
 
 const WalletScreen = () => {
   const { t } = useTranslation()
@@ -39,9 +41,12 @@ const WalletScreen = () => {
   let touchY = 0;
 
   const route = useRoute();
-  const { setRouteName } = useGlobalStore();
-
+  const { setRouteName, showWCScanner, setShowWCScanner } = useGlobalStore();
   const { registerWallet } = useTracking()
+
+  const handleScanSuccess = () => {
+    console.log('success')
+  }
 
   // const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
   //   const currentOffset = event.nativeEvent.contentOffset.y;
@@ -75,9 +80,29 @@ const WalletScreen = () => {
     registerWallet()
   }, [registerWallet])
 
+  useEffect(() => {
+    console.log('showWCScanner', showWCScanner)
+  }, [showWCScanner])
+
   const resetCollapsed = () => {
     setCollapsed(false)
     setScrollOffset(0)
+  }
+
+  if (showWCScanner) {
+    return (
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor: preferenceTheme.background.background },
+        ]}
+      >
+        <Scanner
+          onCancel={() => setShowWCScanner(false)}
+          onSuccess={handleScanSuccess}
+        />
+      </SafeAreaView>
+    )
   }
 
 
