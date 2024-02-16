@@ -68,15 +68,27 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
         return;
       }
 
-      txObj.gasLimit = estimatedGasLimit
       setLoading(true)
-      const tx = await submitRawTx({
-        gasLimit: estimatedGasLimit,
+      const rawTx: Record<string, any> = {
         receiveAddress: txObj.to,
         amount: rawAmount,
         txData: txObj.data,
         gasPrice: gasPrice
-      })
+      }
+
+      if (txObj.gasLimit || txObj.gas) {
+        rawTx.gasLimit = txObj.gasLimit ? txObj.gasLimit : txObj.gas
+      } else {
+        rawTx.gasLimit = estimatedGasLimit
+      }
+
+      if (txObj.gasPrice) {
+        rawTx.gasPrice = txObj.gasPrice
+      } else {
+        rawTx.gasPrice = gasPrice
+      }
+
+      const tx = await submitRawTx(rawTx)
       setLoading(false)
 
       if (!tx) {
