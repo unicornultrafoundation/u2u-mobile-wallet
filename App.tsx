@@ -8,6 +8,7 @@
 import 'react-native-gesture-handler';
 import '@ethersproject/shims';
 import 'event-target-polyfill'
+import '@walletconnect/react-native-compat'
 import React, { useEffect, useMemo } from 'react';
 import { Linking, StatusBar, TouchableOpacity, View } from 'react-native';
 
@@ -42,6 +43,8 @@ import { useTracking } from './src/hook/useTracking';
 import MainTabNav from './src/stack/MainTab';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useCrashlytics } from './src/hook/useCrashlytics';
+import { useWalletConnect } from './src/hook/useWalletConnect';
+import WCSessionProposal from './src/screen/WCSessionProposalScreen';
 
 //@ts-ignore
 global.CustomEvent = global.Event
@@ -67,6 +70,7 @@ const queryClient = new QueryClient()
 
 function App(): JSX.Element {
   useCrashlytics()
+  useWalletConnect()
   const {unlocked} = useGlobalStore()
   const { type, isConnected } = useNetInfo();
   const {darkMode: isDarkMode, language} = usePreferenceStore()

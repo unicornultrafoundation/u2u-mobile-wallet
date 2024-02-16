@@ -6,6 +6,8 @@ interface GlobalState {
   setSearchKeyword: (searchKeyword: string) => void;
   unlocked: boolean;
   setUnlocked: (unlocked: boolean) => void;
+  showWCScanner: boolean;
+  setShowWCScanner: (showWCScanner: boolean) => void;
 }
 
 export const useGlobalStore = create<GlobalState>((set, get) => ({
@@ -20,5 +22,9 @@ export const useGlobalStore = create<GlobalState>((set, get) => ({
   unlocked: false,
   setUnlocked: (val: boolean) => {
     set({ unlocked: val })
-  }
+  },
+  showWCScanner: false,
+  setShowWCScanner: (val: boolean) => {
+    set({ showWCScanner: val })
+  },
 }))
