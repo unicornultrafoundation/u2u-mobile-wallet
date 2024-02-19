@@ -6,38 +6,44 @@ import { darkTheme, lightTheme } from "../../theme/color";
 import { usePreferenceStore } from "../../state/preferences";
 import { useEffect, useState } from "react";
 import { _pair, web3wallet } from "../../util/walletconnect";
+import { useRoute } from "@react-navigation/native";
 
 export default function WCSessionProposal() {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
-  const [uri, setURI] = useState('wc:68c64739152c2251997d98d09a07c7c12d0753748e465ed23c1d97a41b10fe5c@2?expiryTimestamp=1708076424&relay-protocol=irn&symKey=173f4394d7c1a020f6258ba3c4bdda27d146c42f3a76e9d2b181e775a2624e70')
 
-  const {initialized} = useWalletConnect()
+  const route = useRoute<any>();
+  const uri = route.params?.uri || ""
 
-  // useEffect(() => {
-  //   pair({uri})
-  // }, [])
+  // const [uri, setURI] = useState('wc:6504230a049bf196be1a66a5b86db4b4d58f7b45690e8211ab77b8809754d9be@2?relay-protocol=irn&symKey=936e8b1e733ad14881bc0487ca536dcf5d19167394db23fd771d5ddf7d1e4e4c')
 
-  const getSession = () => {
-    const sessions = web3wallet.getActiveSessions()
-    console.log(sessions)
+  const {initialized, approveSession, rejectSession} = useWalletConnect()
+
+  useEffect(() => {
+    uri !== "" && _pair({uri})
+  }, [uri])
+
+  if (!initialized) {
+    return null
   }
 
   return (
     <SafeAreaView
       style={[
-        { backgroundColor: preferenceTheme.background.background, flex: 1 },
+        { backgroundColor: preferenceTheme.background.background, flex: 1, padding: 20},
       ]}
     >
       <Text>
         URI: {uri}
       </Text>
-      <Button onPress={() => _pair({uri})}>
-        Approve
-      </Button>
-      <Button onPress={getSession}>
-        Get session
-      </Button>
+      <View style={{gap: 8, flexDirection: 'row'}}>
+        <Button onPress={approveSession}>
+          Approve
+        </Button>
+        <Button color="tertiary" onPress={rejectSession}>
+          Reject
+        </Button>
+      </View>
     </SafeAreaView>
   )
 }

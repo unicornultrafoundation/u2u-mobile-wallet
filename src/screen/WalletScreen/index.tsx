@@ -27,11 +27,13 @@ import { useTranslation } from 'react-i18next';
 import { useTracking } from '../../hook/useTracking';
 import Scanner from '../../component/QRCodeScanner';
 import { useWalletConnect } from '../../hook/useWalletConnect';
+import { useNavigation } from '@react-navigation/native';
 
 const WalletScreen = () => {
   const { t } = useTranslation()
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
+  const navigation = useNavigation<any>()
 
   const [tab, setTab] = useState('crypto');
   const [collapsed, setCollapsed] = useState(false);
@@ -44,8 +46,9 @@ const WalletScreen = () => {
   const { setRouteName, showWCScanner, setShowWCScanner } = useGlobalStore();
   const { registerWallet } = useTracking()
 
-  const handleScanSuccess = () => {
+  const handleScanSuccess = (uri: string) => {
     console.log('success')
+    navigation.navigate('WCSessionProposal', {uri})
   }
 
   // const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
