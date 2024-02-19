@@ -51,7 +51,6 @@ const AddressStep = ({onNextStep, onBack}: {
 
   const handleScanSuccess = (value: string) => {
     setErrorAddress('')
-    console.log(value)
     try {
       const dataObj = JSON.parse(value)
       if (!dataObj.address || !dataObj.amount || !dataObj.tokenMeta) {

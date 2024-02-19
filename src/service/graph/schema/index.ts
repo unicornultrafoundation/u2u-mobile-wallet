@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client"
+// import { gql } from "@apollo/client"
 import { gql as minimalGQL } from 'graphql-request'
 
 const DELEGATIONS_GQL = `
@@ -58,7 +58,7 @@ const EPOCH_OF_VAL_GQL = `
 
 export const Schema = () => {
   return {
-    STAKING_STATS: gql`
+    STAKING_STATS: minimalGQL`
       query StakingStats {
         stakings {
           id
@@ -70,12 +70,12 @@ export const Schema = () => {
         }
       }
     `,
-    VALIDATORS: gql`
+    VALIDATORS: minimalGQL`
       query Validators {
         validators {${VALIDATOR_GQL}}
       }
     `,
-    VALIDATOR_DETAIL: gql`
+    VALIDATOR_DETAIL: minimalGQL`
       query ValidatorDetail($valId: Int!) {
         validators(where:{
           validatorId: $valId
@@ -83,7 +83,7 @@ export const Schema = () => {
           {${VALIDATOR_GQL}}
       }
     `,
-    DELEGATOR_DETAIL: gql`
+    DELEGATOR_DETAIL: minimalGQL`
       query DelegatorDetail($delegatorAddress: String!) {
         delegators(where:{
         address: $delegatorAddress
@@ -97,7 +97,7 @@ export const Schema = () => {
         }
       }
     `,
-    WITHDRAWALREQUEST: gql`
+    WITHDRAWALREQUEST: minimalGQL`
       query WithdrawalRequest($delegatorAddress: String!, $validatorId: Int!) {
         withdrawalRequests (where:{
           delegatorAddress: $delegatorAddress
@@ -122,7 +122,7 @@ export const Schema = () => {
         }
       }
     `,
-    ALLWITHDRAWALREQUEST: gql`
+    ALLWITHDRAWALREQUEST: minimalGQL`
       query WithdrawalRequest($delegatorAddress: String!) {
         withdrawalRequests (where:{
           delegatorAddress: $delegatorAddress
@@ -146,7 +146,7 @@ export const Schema = () => {
         }
       }
     `,
-    LOCKED_STAKE: gql`
+    LOCKED_STAKE: minimalGQL`
       query LockedUp($delegatorAddress: String!, $valId: String!) {
         lockedUps (where:{
             delegator: $delegatorAddress
@@ -166,7 +166,7 @@ export const Schema = () => {
           }
       }
     `,
-    ALL_LOCKED_STAKE: gql`
+    ALL_LOCKED_STAKE: minimalGQL`
       query AllLockedUp($delegatorAddress: String!) {
         lockedUps (where:{
           delegator: $delegatorAddress
@@ -185,7 +185,7 @@ export const Schema = () => {
         }
       }
     `,
-    DELEGATIONS_PAGINATION: gql`
+    DELEGATIONS_PAGINATION: minimalGQL`
       query Delegations($validatorId: Int!, $skip: Int!, $limit: Int!) {
         delegations(where:{
             validatorId: $validatorId
@@ -196,7 +196,7 @@ export const Schema = () => {
         ) {${DELEGATIONS_GQL}}
       }
     `,
-    STAKING_APR: gql`
+    STAKING_APR: minimalGQL`
       query stakingApr($validatorId: Int!, $stakingAmount: String!) {
         apr0: calculateApr(
           validatorId: $validatorId
@@ -217,10 +217,9 @@ export const Schema = () => {
             `
       );
       queryString += "}";
-      // @ts-ignore
-      return gql(queryString);
+      return minimalGQL`${queryString}`;
     },
-    EPOCH_OF_VALIDATOR: gql`
+    EPOCH_OF_VALIDATOR: minimalGQL`
       query EpochOfValidator ($validatorId: Int!, $validatorIdHexString: String!, $skip: Int!, $limit: Int!) {
         validators(
         orderBy: epoch__block
@@ -239,7 +238,7 @@ export const Schema = () => {
           }
       }
     `,
-    LAST_EPOCH: gql`
+    LAST_EPOCH: minimalGQL`
       query LastEpoch {
         epoches (
         orderBy: epoch

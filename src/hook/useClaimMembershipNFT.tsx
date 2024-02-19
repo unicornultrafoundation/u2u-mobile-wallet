@@ -5,6 +5,7 @@ import DeviceInfo from "react-native-device-info"
 import { FETCH_CLAIM_REQUEST_ENDPOINT, SUBMIT_CLAIM_JUPITER_REQUEST_ENDPOINT } from "../config/endpoint"
 import { useQuery } from "@tanstack/react-query"
 import { useTracking } from "./useTracking"
+import { logErrorForMonitoring, useCrashlytics } from "./useCrashlytics"
 
 export const useClaimMembershipNFT = () => {
   const { networkConfig } = useNetwork()
@@ -29,17 +30,18 @@ export const useClaimMembershipNFT = () => {
         body: raw,
         redirect: 'follow'
       };
-      console.log(endpoint)
+      
       const rs = await fetch(endpoint, requestOptions)
       return rs.json()
     } catch (error) {
       console.log('submitClaimRequest error', error)
+      logErrorForMonitoring(error as any, 'submitClaimRequest error')
       return 
     }
 
   }, [networkConfig, wallet, deviceID])
 
-  const {data, isRefetching} = useQuery({
+  const {data, isRefetching, refetch} = useQuery({
     queryKey: ['fetchClaimNFTRequest', networkConfig],
     queryFn: async () => {
       try {
@@ -56,6 +58,7 @@ export const useClaimMembershipNFT = () => {
         return rsJSON
       } catch (error) {
         console.log("error useClaimMembershipNFT", error)
+        logErrorForMonitoring(error as any, 'error useClaimMembershipNFT')
         return [] 
       }
     },
@@ -66,6 +69,7 @@ export const useClaimMembershipNFT = () => {
   return {
     submitClaimRequest,
     claimRequest: data && data[0] ? data[0] : {},
-    fetchingClaimRequest: isRefetching
+    fetchingClaimRequest: isRefetching,
+    refetchClaimRequest: refetch
   }
 }

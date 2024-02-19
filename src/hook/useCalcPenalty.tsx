@@ -4,6 +4,7 @@ import { ContractOptions, contractCall } from "../util/contract";
 import BigNumber from "bignumber.js";
 import { useWallet } from "./useWallet";
 import { useNetwork } from "./useNetwork";
+import { logErrorForMonitoring } from "./useCrashlytics";
 
 export const useCalcPenalty = (stakingContractOptions?: ContractOptions) => {
   const {networkConfig} = useNetwork()
@@ -20,6 +21,7 @@ export const useCalcPenalty = (stakingContractOptions?: ContractOptions) => {
         return penalty.toFixed()
       }
     } catch (error) { 
+      logErrorForMonitoring(error as any, 'calcPen fail')
       return "0"
     }
   }, [stakingContractOptions, wallet, networkConfig])

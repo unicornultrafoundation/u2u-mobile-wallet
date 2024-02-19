@@ -2,6 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 import { fetchNewsByCategory } from "../service/news"
 import { formatDate } from "../util/date"
 import { Article } from "./useNews"
+import { logErrorForMonitoring } from "./useCrashlytics"
 
 export const useNewsByCategory = (categoryID: string) => {
   const {data, fetchNextPage, isFetching} = useInfiniteQuery({
@@ -23,7 +24,7 @@ export const useNewsByCategory = (categoryID: string) => {
           }
         })
       } catch (error) {
-        console.log(error)
+        logErrorForMonitoring(error as any, "get news by category fail")
         return [] as Article[]
       }
     },

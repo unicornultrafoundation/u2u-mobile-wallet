@@ -9,6 +9,7 @@ import TxDetail from '../../component/TxDetail';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import theme from '../../theme';
+import { logErrorForMonitoring } from '../../hook/useCrashlytics';
 
 const NFTTransferSubmittingStep = ({ onNextStep, onBack }: StepProps) => {
   const navigation = useNavigation<any>()
@@ -26,7 +27,7 @@ const NFTTransferSubmittingStep = ({ onNextStep, onBack }: StepProps) => {
         const txHash = await submitRawTx({receiveAddress: nftMeta.nftCollection.id})
         console.log('sented', txHash)
       } catch (error) {
-        console.log(error)
+        logErrorForMonitoring(error as any, "NFTTransferSubmittingStep error")
       }
     })()
   }, [])

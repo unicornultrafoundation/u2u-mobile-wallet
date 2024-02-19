@@ -3,22 +3,24 @@ import { queryValidators, queryStakingStats, queryValidatorsApr, Validator } fro
 import { validatorDataProcessor } from "../util/staking"
 import { useQuery } from "@tanstack/react-query"
 import { useNetwork } from "./useNetwork"
+import { logErrorForMonitoring } from "./useCrashlytics"
 
 export const useFetchAllValidator = () => {
+  const {networkConfig} = useNetwork()
   const fetchValidators = async () => {
     try {
-      console.log('fetchValidators')
-      const { data } = await queryValidators()
-      const { data: stakingStats } = await queryStakingStats()
+      if (!networkConfig) return []
+      const data = await queryValidators(networkConfig.sfcSubgraph)
+      const stakingStats = await queryStakingStats(networkConfig.sfcSubgraph)
       const totalNetworkStaked = stakingStats && stakingStats.stakings ? BigNumber(stakingStats.stakings[0].totalStaked || 0) : BigNumber(0)
       if (data && data.validators.length > 0) {
         let valIds: number[] = data.validators.map((v: any) => Number(v.validatorId))
         let dataApr: Record<string, any> = {}
         try {
-          const { data } = await queryValidatorsApr(valIds)
+          const data = await queryValidatorsApr(valIds, networkConfig.stakingGraphql)
           dataApr = data
         } catch (error) {
-          console.log("queryValidatorsApr fail")
+          logErrorForMonitoring(error as any, "queryValidatorsApr fail")
           return []
         }
         
@@ -33,7 +35,7 @@ export const useFetchAllValidator = () => {
       }
       return []
     } catch (error) {
-      console.log("fetch validators fail", error)
+      logErrorForMonitoring(error as any, "fetch validators fail")
       return []
     }
   }

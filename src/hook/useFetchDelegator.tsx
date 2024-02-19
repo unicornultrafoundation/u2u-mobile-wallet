@@ -3,23 +3,23 @@ import { Delegator, queryDelegatorDetail, queryStakingStats } from "../service/s
 import { delegatorDataProcessor } from "../util/staking"
 import { useQuery } from "@tanstack/react-query"
 import { useNetwork } from "./useNetwork"
+import { logErrorForMonitoring } from "./useCrashlytics"
 
 export const useFetchDelegator = (delAddress: string) => {
   const {networkConfig} = useNetwork()
   const fetchDelegator = async (address: string) => {
-    console.log('fetchDelegator')
-    if(!address) return {} as Delegator
+    if(!address || !networkConfig) return {} as Delegator
     try {
-      const {data} = await queryDelegatorDetail(address.toLowerCase())
+      const data = await queryDelegatorDetail(address.toLowerCase(), networkConfig.sfcSubgraph)
 
-      const {data: stakingStats} = await queryStakingStats()
+      const stakingStats = await queryStakingStats(networkConfig.sfcSubgraph)
       const totalNetworkStaked = stakingStats && stakingStats.stakings ? BigNumber(stakingStats.stakings[0].totalStaked || 0) : BigNumber(0)
       if (data && data?.delegators) {
         return await delegatorDataProcessor(data?.delegators[0], totalNetworkStaked)
       }
       return {} as Delegator
     } catch (error) {
-      console.log('fetchDelegator fail')
+      logErrorForMonitoring(error as any, "fetchDelegator fail")
       return {} as Delegator
     }
   }

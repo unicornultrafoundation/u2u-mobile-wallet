@@ -8,6 +8,7 @@ import { getNonce, sendSignedTransaction, signTransaction } from '../util/wallet
 import { getDigit } from '../util/string'
 import { encodeTxData } from '../util/contract'
 import { ERC20_ABI } from '../util/abis/erc20'
+import { logErrorForMonitoring } from './useCrashlytics'
 
 export const useTransaction = () => {
   const txStore = useTransactionStore()
@@ -22,7 +23,7 @@ export const useTransaction = () => {
       txStore.setGasPrice(rs.toString())
       return rs.toString() 
     } catch (error) {
-      console.log('estimateGasPrice fail', error)
+      logErrorForMonitoring(error as any, "estimateGasPrice fail")
       return "0"
     }
   }, [txStore])
@@ -45,8 +46,7 @@ export const useTransaction = () => {
       txStore.setEstimatedGasLimit(gasLimit.toString())
       return gasLimit.toString()
     } catch (error) {
-      console.log('mergedTxObject', mergedTxObject)
-      console.log('estimate gas limit error', error)
+      logErrorForMonitoring(error as any, "estimate gas limit error")
       return "0"
     }
   }, [txStore])

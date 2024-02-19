@@ -15,6 +15,7 @@ import { useUndelegate } from '../../../hook/useUndelegate';
 import Icon from '../../../component/Icon';
 import BigNumber from 'bignumber.js';
 import { usePreference } from '../../../hook/usePreference';
+import { logErrorForMonitoring } from '../../../hook/useCrashlytics';
 
 const UnstakeSection = ({onCancel, item, actualStakedAmount} : {
   onCancel: () => void
@@ -88,7 +89,7 @@ const UnstakeSection = ({onCancel, item, actualStakedAmount} : {
         }
       })
     } catch (error) {
-      console.log(error)
+      logErrorForMonitoring(error as any, "unstake error")
       setUnstaking(false)
       Toast.show({
         type: 'error',

@@ -21,6 +21,7 @@ import ERC20TxMetaSection from './ERC20TxMetaSection';
 import Toast from 'react-native-toast-message';
 import LoadingView from '../Common/loadingView';
 import { usePreference } from '../../hook/usePreference';
+import { logErrorForMonitoring, useCrashlytics } from '../../hook/useCrashlytics';
 
 const TxDetail = ({txHash, onClose}: {
   txHash: string;
@@ -50,7 +51,7 @@ const TxDetail = ({txHash, onClose}: {
         setLoading(false)
       } catch (error) {
         setLoading(false)
-        console.log(error)
+        logErrorForMonitoring(error as any, "TxDetail error")
       }
     })()
   }, [txHash])

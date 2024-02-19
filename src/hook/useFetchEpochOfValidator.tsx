@@ -1,6 +1,7 @@
 import { ValidatorEpochInfo, queryEpochOfValidator } from "../service/staking"
 import { epochOfvalidator } from "../util/staking"
 import { useQuery } from "@tanstack/react-query"
+import { useNetwork } from "./useNetwork";
 
 interface EpochOfValidatorResult {
   epoches: ValidatorEpochInfo[];
@@ -8,10 +9,9 @@ interface EpochOfValidatorResult {
 }
 
 export const useFetchEpochOfValidator = (valId: number, skip: number = 0) => {
-
+  const {networkConfig} = useNetwork()
   const fetchEpochOfValidator = async (): Promise<EpochOfValidatorResult> => {
-    console.log('fetchEpochOfValidator')
-    if (!valId) {
+    if (!valId || !networkConfig) {
       return {
         epoches: [] as ValidatorEpochInfo[],
         totalCount: 0
@@ -19,7 +19,7 @@ export const useFetchEpochOfValidator = (valId: number, skip: number = 0) => {
     }
     const vaIdlHex = `0x${valId.toString(16)}`
 
-    const { data } = await queryEpochOfValidator(valId, vaIdlHex, skip)
+    const data = await queryEpochOfValidator(valId, vaIdlHex, skip, networkConfig.u2uNetworkSubgraph)
 
     if (data && data.validators.length > 0) {
       return {

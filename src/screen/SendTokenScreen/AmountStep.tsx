@@ -16,6 +16,7 @@ import { encodeTxData } from '../../util/contract';
 import { ERC20_ABI } from '../../util/abis/erc20';
 import { getPhonePaddingBottom } from '../../util/platform';
 import { usePreference } from '../../hook/usePreference';
+import { logErrorForMonitoring } from '../../hook/useCrashlytics';
 
 const AmountStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -63,7 +64,7 @@ const AmountStep = ({onNextStep, onBack}: {
         console.log("data", data)
         setTxData(data)
       } catch (error) {
-        console.log(error)
+        logErrorForMonitoring(error as any, "encodeTxData error")
       }
     }
 

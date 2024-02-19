@@ -250,5 +250,6 @@
   "importWithPrivateKey": "Thêm ví từ private key",
   "enterPrivateKey": "Nhập private key ở dưới, private key của bạn sẽ chỉ được lưu trên thiết bị này",
   "enterPrivateKeyShort": "Nhập private key",
-  "useFingerPrintOrFaceID": "Mở khoá bằng vân tay / khuôn mặt"
+  "useFingerPrintOrFaceID": "Mở khoá bằng vân tay / khuôn mặt",
+  "reject": "Từ chối"
 }

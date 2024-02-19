@@ -19,7 +19,7 @@ const Step1 = () => {
   const {preferenceTheme} = usePreference()
 
   const { t } = useTranslation();
-  const { submitClaimRequest, claimRequest, fetchingClaimRequest } = useClaimMembershipNFT()
+  const { submitClaimRequest, claimRequest, refetchClaimRequest } = useClaimMembershipNFT()
   const { deviceID } = useTracking()
   const { wallet } = useWallet()
   const { remoteConfig } = useRemoteConfig()
@@ -27,7 +27,6 @@ const Step1 = () => {
   const [alreadySubmitted, setAlreadySubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [claimMessageKey, setClaimMessageKey] = useState('')
-
   const alertError = () => {
     Toast.show({
       type: 'error',
@@ -53,6 +52,7 @@ const Step1 = () => {
     setLoading(false)
     if (rs.id) {
       setAlreadySubmitted(true)
+      await refetchClaimRequest()
     } else {
       if (rs.message === "already request") {
         setAlreadySubmitted(true)

@@ -250,5 +250,6 @@
   "importWithPrivateKey": "Import with private key",
   "enterPrivateKey": "Enter your private key, it will only be saved on this device",
   "enterPrivateKeyShort": "Enter your private key",
-  "useFingerPrintOrFaceID": "Unlock with fingerprint / Face ID"
+  "useFingerPrintOrFaceID": "Unlock with fingerprint / Face ID",
+  "reject": "Reject"
 }

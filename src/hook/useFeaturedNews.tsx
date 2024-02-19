@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { fetchAllNews, fetchFeaturedNews } from "../service/news";
 import { Article } from "./useNews";
 import { formatDate } from "../util/date";
+import { logErrorForMonitoring } from "./useCrashlytics";
 
 export const useFeaturedNews = () => {
   const {data} = useQuery<Article[]>({
@@ -24,6 +25,7 @@ export const useFeaturedNews = () => {
           }
         })
       } catch (error) {
+        logErrorForMonitoring(error as any, 'fetch featured news fail')
         return [] as Article[]
       }
     },

@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import EncryptedStorage from "react-native-encrypted-storage"
 import { Platform } from "react-native"
 import { isAlreadyInited } from "../util/platform"
+import { logErrorForMonitoring } from "./useCrashlytics"
 
 export const useHydration = () => {
   const [hydratedWallet, setHydratedWallet] = useState(false)
@@ -22,6 +23,7 @@ export const useHydration = () => {
         console.log(error)
         // @ts-ignore
         console.log(error.code)
+        logErrorForMonitoring(error as any, "migrateWalletData fail")
       }
       await useWalletStore.persist.rehydrate()
       setHydratedWallet(true) 
