@@ -45,6 +45,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useCrashlytics } from './src/hook/useCrashlytics';
 import { useWalletConnect } from './src/hook/useWalletConnect';
 import WCSessionProposal from './src/screen/WCSessionProposalScreen';
+import WCSessionRequestScreen from './src/screen/WCSessionRequestScreen';
 
 //@ts-ignore
 global.CustomEvent = global.Event
@@ -70,7 +71,7 @@ const queryClient = new QueryClient()
 
 function App(): JSX.Element {
   useCrashlytics()
-  useWalletConnect()
+  const {request} = useWalletConnect()
   const {unlocked} = useGlobalStore()
   const { type, isConnected } = useNetInfo();
   const {darkMode: isDarkMode, language} = usePreferenceStore()
@@ -268,6 +269,10 @@ function App(): JSX.Element {
 
   if (!isConnected && type !== "unknown") {
     return <NoInternetScreen />
+  }
+
+  if (request) {
+    return <WCSessionRequestScreen />
   }
 
   return (

@@ -15,6 +15,7 @@ export function useWalletConnect() {
 
   const [initialized, setInitialized] = useState(false);
   const [pairedProposal, setPairedProposal] = useState<Web3WalletTypes.SessionProposal>();
+  const [request, setRequest] = useState<{method: string; params: any}>()
 
   const approveSession = async () => {
     if (!pairedProposal || !networkConfig) return
@@ -63,23 +64,25 @@ export function useWalletConnect() {
     const { topic, params, id } = event
     const { request } = params
 
-    switch (request.method) {
-      case 'signPersonalMessage':
+    setRequest(request)
 
-        if (!wallet.privateKey) return;
+    // switch (request.method) {
+    //   case 'signPersonalMessage':
 
-        const signer = new Wallet(wallet.privateKey)
-        const requestParamsMessage = request.params[0]
-        const rawMessage = isHexString(requestParamsMessage) ? hexToString(requestParamsMessage.replace("0x", "")) : requestParamsMessage
-        const signedMessage = await signer.signMessage(rawMessage);
+    //     if (!wallet.privateKey) return;
 
-        const response = { id, result: signedMessage, jsonrpc: '2.0' }
+    //     const signer = new Wallet(wallet.privateKey)
+    //     const requestParamsMessage = request.params[0]
+    //     const rawMessage = isHexString(requestParamsMessage) ? hexToString(requestParamsMessage.replace("0x", "")) : requestParamsMessage
+    //     const signedMessage = await signer.signMessage(rawMessage);
+
+    //     const response = { id, result: signedMessage, jsonrpc: '2.0' }
   
-        await web3wallet.respondSessionRequest({ topic, response })
-        break;
-      default:
-        return;
-    } 
+    //     await web3wallet.respondSessionRequest({ topic, response })
+    //     break;
+    //   default:
+    //     return;
+    // } 
   }
 
   const onInitialize = useCallback(async () => {
@@ -101,10 +104,12 @@ export function useWalletConnect() {
   }, [initialized, onInitialize]);
 
   useEffect(() => {
-    approveSession()
+    pairedProposal && console.log(pairedProposal.params.proposer.metadata)
   }, [pairedProposal])
 
   return {
+    request,
+    pairedProposal,
     initialized,
     approveSession,
     rejectSession
