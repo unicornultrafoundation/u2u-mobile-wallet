@@ -20,7 +20,7 @@ export default function WCSessionRequestScreen() {
         { backgroundColor: preferenceTheme.background.background, flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20},
       ]}
     >
-      <Text>Request</Text>
+      <Text>Request method: {request.method}</Text>
     </SafeAreaView>
   )
 }
