@@ -8,16 +8,16 @@ import { useNetwork } from './useNetwork';
 import { createWeb3Wallet, web3wallet } from '../util/walletconnect';
 import { hexToString } from '../util/string';
 import { Wallet, isHexString } from 'ethers';
+import { useGlobalStore } from '../state/global';
 
 export function useWalletConnect() {
   const {wallet} = useWallet()
   const {networkConfig} = useNetwork()
 
   const [initialized, setInitialized] = useState(false);
-  const [pairedProposal, setPairedProposal] = useState<Web3WalletTypes.SessionProposal>();
-  const [request, setRequest] = useState<{method: string; params: any}>()
+  const {pairedProposal, setPairedProposal, wcRequest, setWCRequest} = useGlobalStore();
 
-  const approveSession = async () => {
+  const approveSession = useCallback(async () => {
     if (!pairedProposal || !networkConfig) return
     const {id, params} = pairedProposal;
     // ------- namespaces builder util ------------ //
@@ -43,28 +43,27 @@ export function useWalletConnect() {
       namespaces: approvedNamespaces
     })
     console.log(session)
-  }
+  }, [pairedProposal, networkConfig])
 
-  const rejectSession = async () => {
+  const rejectSession = useCallback(async () => {
     if (!pairedProposal || !networkConfig) return
     await web3wallet.rejectSession({
       id: pairedProposal.id,
       reason: getSdkError('USER_REJECTED_METHODS')
     })
-  }
+  }, [pairedProposal, networkConfig])
 
-  const onSessionProposal = useCallback(
-    (proposal: Web3WalletTypes.SessionProposal) => {
-      setPairedProposal(proposal);
-    },
-    [],
-  );
+  const onSessionProposal = (proposal: Web3WalletTypes.SessionProposal) => {
+    console.log('found proposal', proposal)
+    console.log('pending proposal', web3wallet.getPendingSessionProposals())
+    setPairedProposal(proposal);
+  };
 
   const handleSessionRequest = async (event: Web3WalletTypes.SessionRequest) => {
     const { topic, params, id } = event
     const { request } = params
 
-    setRequest(request)
+    setWCRequest(request)
 
     // switch (request.method) {
     //   case 'signPersonalMessage':
@@ -103,15 +102,17 @@ export function useWalletConnect() {
     }
   }, [initialized, onInitialize]);
 
-  useEffect(() => {
-    pairedProposal && console.log(pairedProposal.params.proposer.metadata)
-  }, [pairedProposal])
+  const logPending = useCallback(() => {
+    if (!web3wallet) return {}
+    return web3wallet.getPendingSessionProposals()
+  }, [web3wallet])
 
   return {
-    request,
+    wcRequest,
     pairedProposal,
     initialized,
     approveSession,
-    rejectSession
+    rejectSession,
+    logPending
   }
 }

@@ -1,3 +1,4 @@
+import { Web3WalletTypes } from '@walletconnect/web3wallet';
 import { create } from 'zustand'
 interface GlobalState {
   routeName: string;
@@ -8,6 +9,10 @@ interface GlobalState {
   setUnlocked: (unlocked: boolean) => void;
   showWCScanner: boolean;
   setShowWCScanner: (showWCScanner: boolean) => void;
+  pairedProposal?: Web3WalletTypes.SessionProposal;
+  setPairedProposal: (pairedProposal: Web3WalletTypes.SessionProposal) => void;
+  wcRequest?: {method: string; params: any};
+  setWCRequest: (wcRequest: {method: string; params: any}) => void
 }
 
 export const useGlobalStore = create<GlobalState>((set, get) => ({
@@ -27,4 +32,12 @@ export const useGlobalStore = create<GlobalState>((set, get) => ({
   setShowWCScanner: (val: boolean) => {
     set({ showWCScanner: val })
   },
+  pairedProposal: undefined,
+  setPairedProposal: (pairedProposal: Web3WalletTypes.SessionProposal) => {
+    set({ pairedProposal })
+  },
+  wcRequest: undefined,
+  setWCRequest: (wcRequest: {method: string; params: any}) => {
+    set({ wcRequest })
+  }
 }))

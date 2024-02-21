@@ -8,11 +8,11 @@ export default function WCSessionRequestScreen() {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
-  const {initialized, request} = useWalletConnect()
+  const {initialized, wcRequest} = useWalletConnect()
 
-  if (!initialized || !request) return null
+  if (!initialized || !wcRequest) return null
 
-  console.log(request)
+  console.log(wcRequest)
 
   return (
     <SafeAreaView
@@ -20,7 +20,7 @@ export default function WCSessionRequestScreen() {
         { backgroundColor: preferenceTheme.background.background, flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20},
       ]}
     >
-      <Text>Request method: {request.method}</Text>
+      <Text>Request method: {wcRequest.method}</Text>
     </SafeAreaView>
   )
 }

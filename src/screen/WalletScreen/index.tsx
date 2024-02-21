@@ -47,7 +47,6 @@ const WalletScreen = () => {
   const { registerWallet } = useTracking()
 
   const handleScanSuccess = (uri: string) => {
-    console.log('success')
     navigation.navigate('WCSessionProposal', {uri})
   }
 
