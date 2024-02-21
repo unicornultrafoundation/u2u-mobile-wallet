@@ -27,7 +27,7 @@ export async function createWeb3Wallet() {
 export async function _pair(params: {uri: string}) {
   try {
     if (web3wallet) {
-      await web3wallet.core.pairing.pair({ uri: params.uri })
+      await web3wallet.core.pairing.pair({ uri: params.uri, activatePairing: true })
       return 
     }
     console.log('web3wallet undefined') 
