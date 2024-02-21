@@ -73,7 +73,10 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setShowWCScanner(true)
+              // setShowWCScanner(true)
+              navigation.navigate('WCSessionProposal', {
+                uri: 'wc:d7193dd160da68df1a3db8b85dc10c7bd8a4a20d20c1c147d224b4d7687903b8@2?relay-protocol=irn&symKey=b046b31405fd1f2a2f2eddfc1c3183fccb56f62dd9d0bbe70c66034a80ca3f52'
+              })
             }}
           >
             <Icon name="wallet-connect" width={16} height={16}/>
