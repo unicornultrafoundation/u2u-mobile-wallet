@@ -251,5 +251,6 @@
   "enterPrivateKey": "Enter your private key, it will only be saved on this device",
   "enterPrivateKeyShort": "Enter your private key",
   "useFingerPrintOrFaceID": "Unlock with fingerprint / Face ID",
-  "reject": "Reject"
+  "reject": "Reject",
+  "approve": "Approve"
 }
