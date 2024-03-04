@@ -9,7 +9,7 @@ export let core: ICore;
 export async function createWeb3Wallet() {
   core = new Core({
     // @notice: If you want the debugger / logs
-    // logger: 'debug',
+    // logger: 'info',
     projectId: WALLET_CONNECT_PROJECT_ID,
   });
 
@@ -27,7 +27,7 @@ export async function createWeb3Wallet() {
 export async function _pair(params: {uri: string}) {
   try {
     if (web3wallet) {
-      await web3wallet.core.pairing.pair({ uri: params.uri, activatePairing: true })
+      await web3wallet.pair({ uri: params.uri, activatePairing: true })
       return 
     }
     console.log('web3wallet undefined') 

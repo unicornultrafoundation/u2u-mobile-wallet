@@ -75,7 +75,7 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
             onPress={() => {
               // setShowWCScanner(true)
               navigation.navigate('WCSessionProposal', {
-                uri: 'wc:d7193dd160da68df1a3db8b85dc10c7bd8a4a20d20c1c147d224b4d7687903b8@2?relay-protocol=irn&symKey=b046b31405fd1f2a2f2eddfc1c3183fccb56f62dd9d0bbe70c66034a80ca3f52'
+                uri: 'wc:00ce5cd393a6b562595ba6826b6a5dfa888fc592850a8d0923418a8519fb56c6@2?relay-protocol=irn&symKey=c865e67c2ef1043d07674904aaf133c121d6e9878751183bede1aa7b03683b1e'
               })
             }}
           >

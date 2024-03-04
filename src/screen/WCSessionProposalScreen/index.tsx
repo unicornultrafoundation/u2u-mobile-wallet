@@ -31,7 +31,6 @@ export default function WCSessionProposal() {
 
   useEffect(() => {
     if (uri === "" || pairedProposal) return
-    console.log('start pair')
     _pair({uri})
   }, [uri, pairedProposal])
 
@@ -86,7 +85,11 @@ export default function WCSessionProposal() {
         <Button color="tertiary" onPress={handleReject}>
           {t('reject')}
         </Button>
-        <Button color="tertiary" onPress={() => console.log(logPending())}>
+        <Button
+          color="tertiary"
+          onPress={() => {
+            console.log(logPending())
+          }}>
           {t('pending')}
         </Button>
       </View>
