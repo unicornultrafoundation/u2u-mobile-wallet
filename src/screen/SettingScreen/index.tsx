@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { useGlobalStore } from '../../state/global';
 import { usePreference } from '../../hook/usePreference';
+import DarkModeToggle from '../../component/DarkModeToggle';
 
 const VERSION = DeviceInfo.getVersion()
 
@@ -153,6 +154,25 @@ const SettingScreen = () => {
             })
           }
         </TouchableOpacity>
+        <View style={styles.settingItem}>
+          <Icon name={'transfer'} width={20} height={20}/>
+          <View style={styles.settingItemTextContainer}>
+            <Text style={theme.typography.body.medium}>
+              {t('appearance')}
+            </Text>
+            <Text
+              style={[
+                theme.typography.caption1.medium,
+                {color: preferenceTheme.text.secondary}
+              ]}
+            >
+              {t('appearanceDescription')}
+            </Text>
+          </View>
+          <View>
+            <DarkModeToggle />
+          </View>
+        </View>
       </ScrollView>
       <Separator/>
       {renderFooter()}
