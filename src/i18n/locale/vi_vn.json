@@ -251,5 +251,7 @@
   "enterPrivateKey": "Nhập private key ở dưới, private key của bạn sẽ chỉ được lưu trên thiết bị này",
   "enterPrivateKeyShort": "Nhập private key",
   "useFingerPrintOrFaceID": "Mở khoá bằng vân tay / khuôn mặt",
-  "reject": "Từ chối"
+  "reject": "Từ chối",
+  "appearance": "Giao diện",
+  "appearanceDescription": "Chọn chế độ màu"
 }

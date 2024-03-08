@@ -9,8 +9,10 @@ const NFTItem = ({item, onClick}: {
   item: OwnedNFT;
   onClick: () => void
 }) => {
+  
   const {data} = useNFTMetadata(item.tokenURI)
-
+  console.log('item.tokenURI', item.tokenURI)
+  console.log(data)
   if (!data || !data.image) return null
 
   return (

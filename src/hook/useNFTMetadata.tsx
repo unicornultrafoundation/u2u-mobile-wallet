@@ -4,11 +4,20 @@ import { logErrorForMonitoring } from './useCrashlytics'
 
 const fetchNFTMetadata = async (tokenURI: string) => {
   try {
+    console.log('url', parseIPFSFile(tokenURI))
     const rs = await fetch(parseIPFSFile(tokenURI))
+    
     return rs.json()
   } catch (error) {
-    logErrorForMonitoring(error as any, "fetchNFTMetadata error")
-    return {}
+
+      try {
+        const rs = await fetch(parseIPFSFile(tokenURI))
+      
+        return JSON.parse((await rs.text()).replace(/[\u{0080}-\u{FFFF}]/gu, ""))
+      } catch (error) {
+        logErrorForMonitoring(error as any, "fetchNFTMetadata error")
+        return {}
+      }
   }
 }
 
