@@ -71,7 +71,7 @@ const queryClient = new QueryClient()
 
 function App(): JSX.Element {
   useCrashlytics()
-  const {request} = useWalletConnect()
+  const {wcRequest: request} = useWalletConnect()
   const {unlocked} = useGlobalStore()
   const { type, isConnected } = useNetInfo();
   const {darkMode: isDarkMode, language} = usePreferenceStore()
