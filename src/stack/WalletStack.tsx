@@ -11,6 +11,7 @@ import TxHistoryScreen from '../screen/TxHistoryScreen';
 import WalletManagementScreen from '../screen/WalletManagementScreen';
 import ImportWithPrivateKeyScreen from '../screen/ImportWithPrivateKeyScreen';
 import WCSessionProposal from '../screen/WCSessionProposalScreen';
+import ExportPrivateKeyScreen from '../screen/ExportPrivateKeyScreen';
 
 const WalletStack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ const WalletStackScreen = () => {
       <WalletStack.Screen name="WalletManagement" component={WalletManagementScreen} />
       <WalletStack.Screen name="ImportWithPrivateKey" component={ImportWithPrivateKeyScreen} />
       <WalletStack.Screen name="WCSessionProposal" component={WCSessionProposal} />
+      <WalletStack.Screen name="ExportPrivateKey" component={ExportPrivateKeyScreen} />
     </WalletStack.Navigator>
   );
 }

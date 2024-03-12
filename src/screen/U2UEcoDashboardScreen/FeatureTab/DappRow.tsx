@@ -6,8 +6,11 @@ import Button from '../../../component/Button';
 import theme from '../../../theme';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { usePreference } from '../../../hook/usePreference';
 
 const DappRow = ({dappMeta}: {dappMeta: any}) => {
+  const {preferenceTheme} = usePreference()
+
   const navigation = useNavigation<any>();
   const handlePressDetail = () => {
     navigation.navigate('DAppWebView', {url: dappMeta.url});
@@ -36,8 +39,8 @@ const DappRow = ({dappMeta}: {dappMeta: any}) => {
       <View>
         <Button
           type="text"
-          textStyle={{fontSize: 14, textAlign: 'center', color: '#B4B4B4'}}
-          style={styles.openButton}
+          textStyle={{fontSize: 14, textAlign: 'center', color: preferenceTheme.divider}}
+          style={[styles.openButton, {backgroundColor: preferenceTheme.background.surface}]}
           onPress={handlePressDetail}
         >
           {t('open')}
