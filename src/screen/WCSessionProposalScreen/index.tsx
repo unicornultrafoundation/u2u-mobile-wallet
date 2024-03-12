@@ -19,7 +19,7 @@ export default function WCSessionProposal() {
   const route = useRoute<any>();
   const uri = route.params?.uri || ""
 
-  const {initialized, approveSession, rejectSession, pairedProposal, logPending} = useWalletConnect()
+  const {initialized, approveSession, approvePendingSession, rejectSession, pairedProposal, logPending, clearProposal} = useWalletConnect()
   const {t} = useTranslation()
   const { setRouteName } = useGlobalStore();
 
@@ -36,7 +36,8 @@ export default function WCSessionProposal() {
 
   const handleApprove = async () => {
     try {
-      await approveSession()
+      // await approveSession()
+      await approvePendingSession()
       // navigation.goBack()
     } catch (error) {
       logErrorForMonitoring(error as any, 'approve wallet connect fail')
@@ -91,6 +92,11 @@ export default function WCSessionProposal() {
             console.log(logPending())
           }}>
           {t('pending')}
+        </Button>
+        <Button
+          color="tertiary"
+          onPress={clearProposal}>
+          {t('clear')}
         </Button>
       </View>
     </SafeAreaView>
