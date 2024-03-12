@@ -6,17 +6,20 @@ import { darkTheme, lightTheme } from '../../theme/color';
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { useGlobalStore } from '../../state/global';
 import AuthStep from './AuthStep';
-import ShowSeedStep from './ShowSeedStep';
+import ShowPKStep from './ShowPKStep';
+import { Wallet } from '../../state/wallet';
 
-const ExportSeedPhraseScreen = () => {
+const ExportPrivateKeyScreen = () => {
   const navigation = useNavigation<any>()
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
   const [step, setStep] = useState('auth')
 
-  const route = useRoute()
+  const route = useRoute<any>()
   const {setRouteName} = useGlobalStore()
+
+  const wallet: Wallet = route.params?.wallet
 
   useFocusEffect(
     useCallback(() => {
@@ -29,14 +32,15 @@ const ExportSeedPhraseScreen = () => {
       case 'auth':
         return (
           <AuthStep
-            onNextStep={() => setStep('show-seed')}
+            onNextStep={() => setStep('show-pk')}
             onBack={() => navigation.goBack()}
           />
         )
-      case 'show-seed':
+      case 'show-pk':
         return (
-          <ShowSeedStep
+          <ShowPKStep
             onBack={() => navigation.goBack()}
+            wallet={wallet}
           />
         )
       default:
@@ -60,4 +64,4 @@ const ExportSeedPhraseScreen = () => {
   )
 }
 
-export default ExportSeedPhraseScreen;
+export default ExportPrivateKeyScreen;
