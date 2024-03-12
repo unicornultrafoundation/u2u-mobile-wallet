@@ -1,3 +1,4 @@
+import '@walletconnect/react-native-compat'
 import {Core} from '@walletconnect/core';
 import {ICore} from '@walletconnect/types';
 import {Web3Wallet, IWeb3Wallet} from '@walletconnect/web3wallet';
@@ -27,7 +28,7 @@ export async function createWeb3Wallet() {
 export async function _pair(params: {uri: string}) {
   try {
     if (web3wallet) {
-      await web3wallet.pair({ uri: params.uri, activatePairing: true })
+      await web3wallet.pair({ uri: params.uri })
       return 
     }
     console.log('web3wallet undefined') 
