@@ -15,6 +15,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useWallet } from '../../hook/useWallet';
 import ConfirmationModal from '../../component/ConfirmationModal';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props extends ViewProps {
   item: Wallet;
@@ -26,32 +27,16 @@ interface Props extends ViewProps {
 }
 
 const WalletRow = ({ item, selected, disabled, onSelect, onEdit, onDelete, ...rest }: Props) => {
+  const navigation = useNavigation<any>()
   const { getWalletMetadata, generatedPath } = useWallet()
   const { t } = useTranslation<string>();
 
   const [visible, setVisible] = useState(false)
 
   const optionStyles = {
-    optionsContainer: {
-      padding: 24,
-      borderRadius: 8,
-      backgroundColor: '#181818',
-      shadowColor: 'rgba(0, 0, 0, 0.50)',
-      width: 220,
-      shadowOffset: {
-        width: 5,
-        height: 4
-      },
-      shadowRadius: 0,
-    },
-    optionWrapper: {
-      paddingHorizontal: 16,
-      paddingVertical: 12
-    },
-    optionTouchable: {
-      // underlayColor: '#FFFFFF',
-      // activeOpacity: 100,
-    },
+    optionsContainer: styles.optionsContainer,
+    optionWrapper: styles.optionWrapper,
+    optionTouchable: styles.optionTouchable,
   }
 
   const handleSelectMenuAction = (value: number) => {
@@ -59,6 +44,9 @@ const WalletRow = ({ item, selected, disabled, onSelect, onEdit, onDelete, ...re
       onEdit()
     }
     if (value === 2) {
+      navigation.navigate('ExportPrivateKey', {wallet: item})
+    }
+    if (value === 3) {
       setVisible(true)
       // onDelete()
     }
@@ -100,6 +88,14 @@ const WalletRow = ({ item, selected, disabled, onSelect, onEdit, onDelete, ...re
               </View>
             </MenuOption>
             <MenuOption value={2}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text color="title">
+                  {t('exportPrivateKey')}
+                </Text>
+                <Icon name="lock" color='#8D8D8D' width={24} height={24}/>
+              </View>
+            </MenuOption>
+            <MenuOption value={3}>
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Text style={{ color: 'red' }}>
                   {t('removeAddress')}

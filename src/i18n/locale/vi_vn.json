@@ -253,5 +253,8 @@
   "useFingerPrintOrFaceID": "Mở khoá bằng vân tay / khuôn mặt",
   "reject": "Từ chối",
   "appearance": "Giao diện",
-  "appearanceDescription": "Chọn chế độ màu"
+  "appearanceDescription": "Chọn chế độ màu",
+  "exportPrivateKey": "Xem khoá cá nhân",
+  "showPKTitle": "Xem khoá cá nhân",
+  "pkWarning": "Bất kỳ ai có khoá cá nhân của bạn sẽ có quyền truy cập vào ví của bạn. Tuyệt đối không chia sẻ khoá cá nhân với bất kỳ ai. U2U sẽ không bao giờ hỏi khoá cá nhân của bạn"
 }

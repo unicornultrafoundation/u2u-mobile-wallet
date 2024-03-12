@@ -29,4 +29,24 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 8,
   },
+  optionsContainer: {
+    padding: 12,
+    borderRadius: 8,
+    backgroundColor: '#181818',
+    shadowColor: 'rgba(0, 0, 0, 0.50)',
+    width: 220,
+    shadowOffset: {
+      width: 5,
+      height: 4
+    },
+    shadowRadius: 0,
+  },
+  optionWrapper: {
+    paddingHorizontal: 16,
+    paddingVertical: 12
+  },
+  optionTouchable: {
+    // underlayColor: '#FFFFFF',
+    // activeOpacity: 100,
+  },
 });
