@@ -12,15 +12,32 @@ import { useTranslation } from 'react-i18next';
 import theme from '../../../theme';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
+import { useMemo } from 'react';
+import { useWallet } from '../../../hook/useWallet';
 
 const NFTBasicInfo = ({item, nftCollection}: {
   item: OwnedNFT;
   nftCollection: NFTCollectionMeta
 }) => {
   const {networkConfig} = useNetwork()
+  const {wallet} = useWallet()
   const { t } = useTranslation();
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
+
+  const ownerRecord = useMemo(() => {
+    const record = item.owner.find((i) => i.id.includes(wallet.address.toLowerCase()))
+
+    if (!record) {
+      return {
+        id: `0-${wallet.address.toLowerCase()}`,
+        balance: 0
+      }
+    }
+
+    return record
+
+  }, [item, wallet])
   
   const renderItem = ({label, value, flex = 1} : {
     label: string,
@@ -100,8 +117,14 @@ const NFTBasicInfo = ({item, nftCollection}: {
       </View>
       <View style={styles.txRowContainer}>
         {renderItem({label: 'blockchain', value: networkConfig?.name ?? '--', flex: 2})}
-        {renderItem({label: 'tokenStandard', value: 'URC-721'})}
+        {renderItem({label: 'tokenStandard', value: nftCollection.is1155 ? 'URC-1155' : 'URC-721'})}
       </View>
+      {nftCollection.is1155 && (
+        <View style={styles.txRowContainer}>
+          {renderItem({label: 'totalMinted', value: `${item.balance}`, flex: 2})}
+          {renderItem({label: 'owned', value: `${ownerRecord.balance}`})}
+        </View>
+      )}
       {/* <View style={styles.txRowContainer}>
         {renderItem({label: 'time', value: 'dd/MM/yyyy, HH:mm:ss'})}
       </View> */}

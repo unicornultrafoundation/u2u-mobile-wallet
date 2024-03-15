@@ -89,7 +89,7 @@ export const parseFormatedNumberInput = (amount: string): string => {
 }
 
 export const parseIPFSFile = (rawURL: string) => {
-  if (rawURL.includes("ipfs://")) {
+  if (rawURL.startsWith("ipfs://")) {
     return rawURL.replace("ipfs://", "https://ipfs.io/ipfs/")
   }
   return rawURL

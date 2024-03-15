@@ -11,9 +11,11 @@ export interface OwnedNFT {
   id: string;
   tokenID: string;
   tokenURI: string;
+  balance: number;
   owner: {
-    id: string
-  };
+    id: string;
+    balance: number;
+  }[];
 }
 
 const PAGE_SIZE = 10
@@ -26,14 +28,28 @@ export const useOwnedNFT = (collection: NFTCollectionMeta, page = 1) => {
     queryFn: async ({pageParam = 1}) => {
       const rs = await request<{items: OwnedNFT[]}>(
         collection.graph,
-        Schema().OWNED_NFT, 
+        collection.is1155 ? Schema().OWNED_NFT_1155 : Schema().OWNED_NFT, 
         {
           address: wallet.address.toLowerCase(),
           first: PAGE_SIZE,
           skip: (pageParam - 1) * PAGE_SIZE
         }
       )
-      return rs.items
+      return rs.items.map((i) => {
+        if (!Array.isArray(i.owner)) {
+          i.owner = [i.owner]
+        }
+        if (collection.is1155) {
+          i.owner = i.owner.map((ownerItem) => {
+            return {
+              id: ownerItem.id.split('-')[1],
+              balance: ownerItem.balance ? Number(ownerItem.balance) : 1
+            }
+          })
+        }
+        i.balance = i.balance ? Number(i.balance) : 0
+        return i
+      })
     },
     getNextPageParam: (lastPage, pages) => {
       const nextPageParam = lastPage.length === 0 ? undefined : pages.length + 1
