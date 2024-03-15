@@ -10,19 +10,6 @@ import { ERC20_ABI } from '../../util/abis/erc20';
 import { usePreference } from '../../hook/usePreference';
 import { logErrorForMonitoring } from '../../hook/useCrashlytics';
 
-const TRANSFER_INPUT_ABI = [
-  {
-    "internalType": "address",
-    "name": "to",
-    "type": "address"
-  },
-  {
-    "internalType": "uint256",
-    "name": "amount",
-    "type": "uint256"
-  }
-]
-
 const ERC20TxMetaSection = ({tokenMeta, txDetail}: {
   tokenMeta: Record<string, any>;
   txDetail: TransactionResponse
