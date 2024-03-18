@@ -256,5 +256,9 @@
   "appearanceDescription": "Change your colors mode",
   "exportPrivateKey": "Export private key",
   "showPKTitle": "Export private key",
-  "pkWarning": "Never share this key. Anyone who learns them can steal all of your assets. U2U will never ask you for them."
+  "pkWarning": "Never share this key. Anyone who learns them can steal all of your assets. U2U will never ask you for them.",
+  "activity": "Activity",
+  "owned": "Owned",
+  "totalMinted": "Total minted",
+  "enterAmount": "Enter amount"
 }

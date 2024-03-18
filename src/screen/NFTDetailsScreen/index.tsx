@@ -55,7 +55,8 @@ const NFTDetailsScreen = () => {
   }
 
   const isOwner = useMemo(() => {
-    if (item.owner.id === wallet.address.toLowerCase()) return true
+    if (!item.owner[0]) return false
+    if (item.owner[0].id === wallet.address.toLowerCase()) return true
     return false
   }, [item])
 
@@ -111,7 +112,7 @@ const NFTDetailsScreen = () => {
             <Tab
               tabs={[
                 { label: t('details'), value: 'details' },
-                { label: t('history'), value: 'history' },
+                { label: nftCollection.is1155 ? t('activity') : t('history'), value: 'history' },
               ]}
               selectedTab={tab}
               onChange={v => setTab(v)}

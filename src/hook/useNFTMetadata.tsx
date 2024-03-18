@@ -4,7 +4,7 @@ import { logErrorForMonitoring } from './useCrashlytics'
 
 const fetchNFTMetadata = async (tokenURI: string) => {
   try {
-    console.log('url', parseIPFSFile(tokenURI))
+    if (!tokenURI) return {}
     const rs = await fetch(parseIPFSFile(tokenURI))
     
     return rs.json()

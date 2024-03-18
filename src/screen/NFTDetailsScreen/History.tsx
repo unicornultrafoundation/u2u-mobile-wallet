@@ -18,57 +18,6 @@ const NFTHistory = ({item, nftCollection}: {item: OwnedNFT, nftCollection: NFTCo
   const { t } = useTranslation();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
-  // const history = [
-  //   {
-  //     type: 'Receive',
-  //     date: '2023-10-01',
-  //     from: '0xad2313...ac124',
-  //     to: '0xad2313...ac124',
-  //   },
-  //   {
-  //     type: 'Send',
-  //     date: '2023-10-01',
-  //     from: '0xad2313...ac124',
-  //     to: '0xad2313...ac124',
-  //   },
-  //   {
-  //     type: 'Receive',
-  //     date: '2023-10-01',
-  //     from: '0xad2313...ac124',
-  //     to: '0xad2313...ac124',
-  //   },
-  //   {
-  //     type: 'Send',
-  //     date: '2023-10-01',
-  //     from: '0xad2313...ac124',
-  //     to: '0xad2313...ac124',
-  //   },
-  //   {
-  //     type: 'Receive',
-  //     date: '2023-10-01',
-  //     from: '0xad2313...ac124',
-  //     to: '0xad2313...ac124',
-  //   },
-  //   {
-  //     type: 'Send',
-  //     date: '2023-10-01',
-  //     from: '0xad2313...ac124',
-  //     to: '0xad2313...ac124',
-  //   },
-  //   {
-  //     type: 'Receive',
-  //     date: '2023-10-01',
-  //     from: '0xad2313...ac124',
-  //     to: '0xad2313...ac124',
-  //   },
-  //   {
-  //     type: 'Send',
-  //     date: '2023-10-01',
-  //     from: '0xad2313...ac124',
-  //     to: '0xad2313...ac124',
-  //   },
-  // ];
-
   const {history} = useNFTHistory(item, nftCollection)
 
   const renderAddress = (label: string, address: string) => {

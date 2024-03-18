@@ -18,6 +18,7 @@ import { isAddress } from 'ethers';
 import theme from '../../theme';
 import { getPhonePaddingBottom } from '../../util/platform';
 import ErrorTextInput from '../../component/TextInput/ErrorTextInput';
+import { ERC1155_ABI } from '../../util/abis/erc1155';
 
 const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
   const route = useRoute();
@@ -36,6 +37,10 @@ const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
 
   const [address, setAddress] = useState('')
   const [errorAddress, setErrorAddress] = useState('')
+
+  const [amount, setAmount] = useState('')
+  const [errorAmount, setErrorAmount] = useState('')
+
   const [showScanner, setShowScanner] = useState(false)
 
   const handleContinue = async (value: string) => {
@@ -46,10 +51,15 @@ const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
     setErrorAddress('')
     setReceiveAddress(nftMeta.nftCollection.id)
 
-    const txData = await encodeTxData({
-      contractAddress: nftMeta.nftCollection.id,
-      abi: ERC721_ABI
-    }, "transferFrom", [wallet.address, address, nftMeta.tokenID])
+    const txData = nftMeta.nftCollection.is1155 ?
+      await encodeTxData({
+        contractAddress: nftMeta.nftCollection.id,
+        abi: ERC1155_ABI
+      }, "safeTransferFrom", [wallet.address, address, nftMeta.tokenID, amount, "0x"]) : 
+      await encodeTxData({
+        contractAddress: nftMeta.nftCollection.id,
+        abi: ERC721_ABI
+      }, "transferFrom", [wallet.address, address, nftMeta.tokenID])
 
     setTxData(txData)
     onNextStep && onNextStep()
@@ -120,6 +130,19 @@ const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
           }}
         />
         {errorAddress && <ErrorTextInput error={t(errorAddress)} style={{justifyContent: 'center'}}/>}
+        {
+          nftMeta.nftCollection.is1155 && (
+            <>
+              <TextInput
+                containerStyle={{ height: 48, marginTop: 12, marginBottom: 8 }}
+                placeholder={t("enterAmount")}
+                value={amount}
+                onChangeText={(val) => setAmount(val)}
+              />
+              {errorAmount && <ErrorTextInput error={t(errorAmount)} style={{justifyContent: 'center'}}/>}
+            </>
+          )
+        }
       </View>
       <Button 
         style={{borderRadius: 60}}

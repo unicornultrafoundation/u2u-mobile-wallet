@@ -12,6 +12,7 @@ export interface NFTCollectionMeta {
   category: string;
   graph: string;
   description: string;
+  is1155: boolean;
 }
 
 export interface NFTItemMeta {

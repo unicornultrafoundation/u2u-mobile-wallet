@@ -270,6 +270,28 @@ export const Schema = () => {
         }
       }
     `,
+    OWNED_NFT_1155: minimalGQL`
+      query OwnedNFT($address: String!, $first: Int!, $skip: Int!) {
+        items(
+          where: {
+            owner_: {
+              owner_contains: $address
+            }
+          },
+          first: $first,
+          skip: $skip
+        ) {
+          id
+          tokenID
+          tokenURI
+          balance
+          owner {
+            id
+            balance
+          }
+        }
+      }
+    `,
     NFT_HISTORY: minimalGQL`
       query NFTHistory($tokenID: String!) {
         transferHistories(
@@ -299,6 +321,22 @@ export const Schema = () => {
           id
           tokenID
           tokenURI
+          owner {
+            id
+          }
+        }
+      }
+    `,
+    ALL_NFT_1155: minimalGQL`
+      query AllNFT($first: Int!, $skip: Int!) {
+        items(
+          first: $first,
+          skip: $skip
+        ) {
+          id
+          tokenID
+          tokenURI
+          balance
           owner {
             id
           }
