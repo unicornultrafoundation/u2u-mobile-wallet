@@ -15,6 +15,7 @@ const U2UEcoDashboardScreen = () => {
 
   const route = useRoute();
   const {setRouteName} = useGlobalStore();
+  const [selectedTab, setSelectedTab] = useState('feature');
 
   const renderScene = () => {
     switch (selectedTab) {
@@ -35,7 +36,7 @@ const U2UEcoDashboardScreen = () => {
     }, [route]),
   );
 
-  const [selectedTab, setSelectedTab] = useState('feature');
+  
   return (
     <View style={[
       styles.container,
