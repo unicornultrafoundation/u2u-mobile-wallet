@@ -260,5 +260,6 @@
   "activity": "Hoạt động",
   "owned": "Sỡ hữu",
   "totalMinted": "Số lượng đã mint",
-  "enterAmount": "Nhập số lượng"
+  "enterAmount": "Nhập số lượng",
+  "swap": "Swap"
 }

@@ -14,10 +14,11 @@ interface Props extends TextInputProps {
   placeholderTextColor?: string,
   error?: string
   postIcon?: () => JSX.Element
+  preIcon?: () => JSX.Element
   insideModal?: boolean
 }
 
-const TextInput = ({style, textWrapperStyle, containerStyle, placeholderTextColor, error, postIcon, insideModal = false, ...rest}: Props) => {
+const TextInput = ({style, textWrapperStyle, containerStyle, placeholderTextColor, error, postIcon, preIcon, insideModal = false, ...rest}: Props) => {
 
   const {preferenceTheme} = usePreference()
 
@@ -31,7 +32,7 @@ const TextInput = ({style, textWrapperStyle, containerStyle, placeholderTextColo
   }
 
   const renderPreIcon = () => {
-
+    return preIcon ? preIcon() : null
   }
 
   return (
@@ -55,6 +56,7 @@ const TextInput = ({style, textWrapperStyle, containerStyle, placeholderTextColo
           }
         ]}
       >
+        {renderPreIcon()}
         {insideModal ? (
           <BottomSheetTextInput
             {...rest}

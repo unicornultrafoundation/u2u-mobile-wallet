@@ -53,12 +53,12 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
+            gap: 32
           }}>
           <View
             style={{
               alignItems: 'center',
               justifyContent: 'center',
-              marginRight: 32,
             }}>
             <TouchableOpacity
               style={styles.balanceActionButton}
@@ -81,7 +81,6 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
             style={{
               alignItems: 'center',
               justifyContent: 'center',
-              marginRight: 32,
             }}>
             <TouchableOpacity
               style={styles.balanceActionButton}
@@ -110,6 +109,17 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
               <Icon name="paper" width={24} height={24} />
             </TouchableOpacity>
             <Text style={styles.balanceActionButtonText}>{t('transactionHistory')}</Text>
+          </View>
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <TouchableOpacity
+              style={[styles.balanceActionButton, {marginRight: 0}]}
+              onPress={() => {
+                navigation.navigate('Swap')
+              }}
+            >
+              <Icon name="transfer" width={24} height={24} color="#000000" />
+            </TouchableOpacity>
+            <Text style={styles.balanceActionButtonText}>{t('swap')}</Text>
           </View>
         </View>
       )}
