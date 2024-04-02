@@ -39,7 +39,7 @@ const DappRow = ({dappMeta}: {dappMeta: any}) => {
       <View>
         <Button
           type="text"
-          textStyle={{fontSize: 14, textAlign: 'center', color: preferenceTheme.divider}}
+          textStyle={{fontSize: 14, textAlign: 'center', color: preferenceTheme.text.secondary}}
           style={[styles.openButton, {backgroundColor: preferenceTheme.background.surface}]}
           onPress={handlePressDetail}
         >
