@@ -252,6 +252,7 @@
   "enterPrivateKeyShort": "Enter your private key",
   "useFingerPrintOrFaceID": "Unlock with fingerprint / Face ID",
   "reject": "Reject",
+  "approve": "Approve",
   "appearance": "Appearance",
   "appearanceDescription": "Change your colors mode",
   "exportPrivateKey": "Export private key",

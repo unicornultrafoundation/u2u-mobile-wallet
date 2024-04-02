@@ -252,6 +252,7 @@
   "enterPrivateKeyShort": "Nhập private key",
   "useFingerPrintOrFaceID": "Mở khoá bằng vân tay / khuôn mặt",
   "reject": "Từ chối",
+  "approve": "Đồng ý",
   "appearance": "Giao diện",
   "appearanceDescription": "Chọn chế độ màu",
   "exportPrivateKey": "Xem khoá cá nhân",
