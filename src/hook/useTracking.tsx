@@ -6,13 +6,13 @@ import { useLocalStore } from "../state/local"
 import { useWallet } from "./useWallet"
 import { firebase } from "@react-native-firebase/app-check"
 import appsFlyer from "react-native-appsflyer"
-import { useQuery } from "@tanstack/react-query"
+import messaging from '@react-native-firebase/messaging';
 import { logErrorForMonitoring } from "./useCrashlytics"
 
 export const useTracking = () => {
   const { networkConfig } = useNetwork()
   const {wallet} = useWallet()
-  const {alreadySubmitDeviceID, toggleAlreadySubmitDeviceID, registeredWallet, addRegisteredWalelt} = useLocalStore()
+  const {registeredWallet, addRegisteredWalelt} = useLocalStore()
 
   const [deviceID, setDeviceID] = useState("")
 
@@ -71,6 +71,8 @@ export const useTracking = () => {
   useEffect(() => {
     (async () => {
       try {
+        const token = await messaging().getToken();
+        console.log('device token', token)
         const rs = await DeviceInfo.syncUniqueId();
         setDeviceID(rs)
       } catch (error) {
@@ -118,8 +120,20 @@ export const useTracking = () => {
     // toggleAlreadySubmitDeviceID,
   ])
 
+  const submitDeviceNotiToken = useCallback(async () => {
+    try {
+      await messaging().registerDeviceForRemoteMessages();
+      const token = await messaging().getToken();
+      console.log('device token', token)
+      // TODO: send token to backend to register device
+    } catch (error) {
+      logErrorForMonitoring(error as any, "get device noti token error")
+    }
+  }, [])
+
   return {
     submitDeviceID,
+    submitDeviceNotiToken,
     registerWallet,
     getAppCheckToken,
     getAppFlyerUID,

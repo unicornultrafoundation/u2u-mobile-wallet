@@ -42,6 +42,7 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
   ];
 
   const article: Article = route.params.article || {};
+  const articleId = (route.params as any).id || 0;
 
   const {news: pagedNews, isFetching} = useNewsByCategory(article.category)
   

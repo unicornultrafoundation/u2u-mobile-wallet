@@ -37,6 +37,7 @@ import { useNetworkStore } from './src/state/network';
 import { SUPPORTED_CHAINS } from './src/config/chain';
 import { useTranslation } from 'react-i18next';
 // import { APP_FLYERS_DEV_KEY, APP_FLYERS_IOS_APP_ID } from './src/config/constant';
+import messaging from '@react-native-firebase/messaging';
 import NoInternetScreen from './src/screen/NoInternetScreen';
 import { useTracking } from './src/hook/useTracking';
 import MainTabNav from './src/stack/MainTab';
@@ -64,6 +65,74 @@ const queryClient = new QueryClient()
 //     console.error(error);
 //   }
 // );
+
+const NAVIGATION_IDS = ['discover'];
+function buildDeepLinkFromNotificationData(data: any): string | null {
+  const navigationId = data?.navigationId;
+  if (!NAVIGATION_IDS.includes(navigationId)) {
+    console.warn('Unverified navigationId', navigationId)
+    return null;
+  }
+  // if (navigationId === 'home') {
+  //   return 'u2umobilewallet://home';
+  // }
+  // if (navigationId === 'settings') {
+  //   return 'u2umobilewallet://settings';
+  // }
+  const url = data?.url;
+  if (typeof url === 'string') {
+    return `u2umobilewallet://ecosystem/${url}`
+  }
+  console.warn('Missing url')
+  return null
+}
+
+const linking = {
+  prefixes: ['u2umobilewallet://'],
+  config: {
+    // initialRouteName: 'WalletStack',
+    screens: {
+      // WalletStack: 'wallet',
+      EcosystemStack: {
+        screens: {
+          DAppWebView: 'ecosystem/:url'
+        }
+      },
+      // SettingStack: 'setting'
+    }
+  },
+  async getInitialURL() {
+    const url = await Linking.getInitialURL();
+    if (typeof url === 'string') {
+      return url;
+    }
+    //getInitialNotification: When the application is opened from a quit state.
+    const message = await messaging().getInitialNotification();
+    const deeplinkURL = buildDeepLinkFromNotificationData(message?.data);
+    if (typeof deeplinkURL === 'string') {
+      return deeplinkURL;
+    }
+  },
+  subscribe(listener: (url: string) => void) {
+    const onReceiveURL = ({url}: {url: string}) => listener(url);
+
+    // Listen to incoming links from deep linking
+    const linkingSubscription = Linking.addEventListener('url', onReceiveURL);
+
+    //onNotificationOpenedApp: When the application is running, but in the background.
+    const unsubscribe = messaging().onNotificationOpenedApp(remoteMessage => {
+      const url = buildDeepLinkFromNotificationData(remoteMessage.data)
+      if (typeof url === 'string') {
+        listener(url)
+      }
+    });
+
+    return () => {
+      linkingSubscription.remove();
+      unsubscribe();
+    };
+  },
+}
 
 function App(): JSX.Element {
   useCrashlytics()
@@ -272,6 +341,7 @@ function App(): JSX.Element {
         <MenuProvider>
           <QueryClientProvider client={queryClient}>
             <NavigationContainer
+              linking={linking}
               ref={navigationRef}
               onReady={() => {
                 if (!navigationRef || !navigationRef.current) return
