@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { SUBMIT_DEVICE_ID_ENDPOINT, SUBMIT_WALLET_ENDPOINT } from "../config/endpoint"
+import { SUBMIT_DEVICE_ID_ENDPOINT, SUBMIT_DEVICE_NOTIFICATION_TOKEN, SUBMIT_WALLET_ENDPOINT } from "../config/endpoint"
 import { useNetwork } from "./useNetwork"
 import DeviceInfo from "react-native-device-info"
 import { useLocalStore } from "../state/local"
@@ -122,14 +122,33 @@ export const useTracking = () => {
 
   const submitDeviceNotiToken = useCallback(async () => {
     try {
-      await messaging().registerDeviceForRemoteMessages();
+      if (!networkConfig || !networkConfig.api_endpoint) return
       const token = await messaging().getToken();
-      console.log('device token', token)
-      // TODO: send token to backend to register device
+
+      const endpoint = `${networkConfig.api_endpoint}${SUBMIT_DEVICE_NOTIFICATION_TOKEN}`
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      
+      const raw = JSON.stringify({
+        tokens: [token],
+        address: wallet.address
+      });
+      const requestOptions: Record<string, any> = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+      console.log('register device token', token)
+      const rs = await fetch(endpoint, requestOptions)
+      // toggleAlreadySubmitDeviceID()
+      return rs
+
     } catch (error) {
       logErrorForMonitoring(error as any, "get device noti token error")
     }
-  }, [])
+  }, [wallet])
 
   return {
     submitDeviceID,

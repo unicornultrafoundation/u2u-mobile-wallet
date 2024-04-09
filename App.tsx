@@ -158,11 +158,15 @@ function App(): JSX.Element {
 
   const {i18n} = useTranslation<string>()
 
-  const {submitDeviceID} = useTracking()
+  const {submitDeviceID, submitDeviceNotiToken} = useTracking()
   
   useEffect(() => {
     submitDeviceID()
   }, [submitDeviceID])
+
+  useEffect(() => {
+    submitDeviceNotiToken()
+  }, [wallet])
 
   const toastConfig = useMemo(() => {
     return {
