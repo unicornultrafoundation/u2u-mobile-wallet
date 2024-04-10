@@ -260,5 +260,9 @@
   "activity": "Activity",
   "owned": "Owned",
   "totalMinted": "Total minted",
-  "enterAmount": "Enter amount"
+  "enterAmount": "Enter amount",
+  "notification": "Notification",
+  "notificationSetting": "Receive notification on your device",
+  "dAppPromotion": "Ecosystem",
+  "dAppPromotionDesc": "Receive notification about new dApp in ecosystem"
 }

@@ -29,7 +29,7 @@ const DAppWebView = () => {
   const {resetTxState} = useTransaction()
 
   const appURL = route.params?.url || ""
-  const [url, setURL] = useState(appURL)
+  const [url, setURL] = useState(appURL.replace('{{slash}}', '/'))
   const [resource, setResource] = useState('')
   const [loading, setLoading] = useState(true)
   const [requestIdForCallback, setRequestIdForCallback] = useState(0)

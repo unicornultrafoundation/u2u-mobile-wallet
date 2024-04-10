@@ -68,6 +68,7 @@ const queryClient = new QueryClient()
 
 const NAVIGATION_IDS = ['discover'];
 function buildDeepLinkFromNotificationData(data: any): string | null {
+  console.log('in buildDeepLinkFromNotificationData', data)
   const navigationId = data?.navigationId;
   if (!NAVIGATION_IDS.includes(navigationId)) {
     console.warn('Unverified navigationId', navigationId)
