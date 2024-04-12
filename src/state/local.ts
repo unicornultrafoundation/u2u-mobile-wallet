@@ -108,7 +108,7 @@ export const useLocalStore = create<LocalState>()(
       setLockedUntil: (lockedUntil: number) => {
         set({ lockedUntil })
       },
-      subscribePromotion: false,
+      subscribePromotion: true,
       setSubscribePromotion: (subscribePromotion: boolean) => {
         set({ subscribePromotion })
       }
