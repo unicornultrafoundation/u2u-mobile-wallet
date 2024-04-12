@@ -68,10 +68,9 @@ const queryClient = new QueryClient()
 
 const NAVIGATION_IDS = ['discover'];
 function buildDeepLinkFromNotificationData(data: any): string | null {
-  console.log('in buildDeepLinkFromNotificationData', data)
   const navigationId = data?.navigationId;
   if (!NAVIGATION_IDS.includes(navigationId)) {
-    console.warn('Unverified navigationId', navigationId)
+    console.log('Unverified navigationId', navigationId)
     return null;
   }
   // if (navigationId === 'home') {
@@ -84,7 +83,7 @@ function buildDeepLinkFromNotificationData(data: any): string | null {
   if (typeof url === 'string') {
     return `u2umobilewallet://ecosystem/${url}`
   }
-  console.warn('Missing url')
+  console.log('Missing url')
   return null
 }
 
