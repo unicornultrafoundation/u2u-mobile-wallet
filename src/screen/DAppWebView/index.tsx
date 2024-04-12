@@ -15,6 +15,7 @@ import { Wallet, isHexString } from 'ethers';
 import { usePreference } from '../../hook/usePreference';
 import { hexToString } from '../../util/string';
 import { useTransaction } from '../../hook/useTransaction';
+import SelectNetworkModal from '../../component/SelectNetworkModal';
 
 const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `
@@ -28,7 +29,7 @@ const DAppWebView = () => {
   const {resetTxState} = useTransaction()
 
   const appURL = route.params?.url || ""
-  const [url, setURL] = useState(appURL)
+  const [url, setURL] = useState(appURL.replace('{{slash}}', '/'))
   const [resource, setResource] = useState('')
   const [loading, setLoading] = useState(true)
   const [requestIdForCallback, setRequestIdForCallback] = useState(0)
@@ -221,6 +222,16 @@ const DAppWebView = () => {
           />
         </TouchableOpacity>
         <View style={{flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 8}}>
+          <SelectNetworkModal
+            trigger={() => {
+              return (
+                <View style={[styles.networkContainer, { backgroundColor: preferenceTheme.background.surface }]}>
+                  <Text style={styles.networkText}>{networkConfig?.name}</Text>
+                  <Icon name="chevron-down" width={10} height={10}/>
+                </View>
+              )
+            }}
+          />
           <TouchableOpacity
             onPress={() => webRef.current.reload()}
           >

@@ -1,4 +1,5 @@
 export const SUBMIT_DEVICE_ID_ENDPOINT = '/devices'
+export const SUBMIT_DEVICE_NOTIFICATION_TOKEN = '/wallets/register-notification-devices'
 export const SUBMIT_WALLET_ENDPOINT = '/wallets'
 export const SUBMIT_CLAIM_REQUEST_ENDPOINT = '/membership-requests'
 export const SUBMIT_CLAIM_JUPITER_REQUEST_ENDPOINT = '/jupiter-membership-requests'

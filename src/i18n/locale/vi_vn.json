@@ -260,5 +260,9 @@
   "activity": "Hoạt động",
   "owned": "Sỡ hữu",
   "totalMinted": "Số lượng đã mint",
-  "enterAmount": "Nhập số lượng"
+  "enterAmount": "Nhập số lượng",
+  "notification": "Thông báo",
+  "notificationSetting": "Nhận thông báo trên thiết bị",
+  "dAppPromotion": "Hệ sinh thái",
+  "dAppPromotionDesc": "Nhận thông báo về dApp mới trong hệ sinh thái"
 }
