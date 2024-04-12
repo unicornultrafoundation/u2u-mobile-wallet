@@ -36,7 +36,9 @@ interface LocalState {
   setPasswordTry: (passwordTry: number) => void;
   increasePasswordTry: () => void;
   lockedUntil: number;
-  setLockedUntil: (lockedUntil: number) => void
+  setLockedUntil: (lockedUntil: number) => void;
+  subscribePromotion: boolean;
+  setSubscribePromotion: (subscribePromotion: boolean) => void;
 }
 
 export const useLocalStore = create<LocalState>()(
@@ -105,6 +107,10 @@ export const useLocalStore = create<LocalState>()(
       lockedUntil: 0,
       setLockedUntil: (lockedUntil: number) => {
         set({ lockedUntil })
+      },
+      subscribePromotion: false,
+      setSubscribePromotion: (subscribePromotion: boolean) => {
+        set({ subscribePromotion })
       }
     }),
     {
