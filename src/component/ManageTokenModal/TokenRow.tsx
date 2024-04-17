@@ -7,6 +7,7 @@ import { formatNumberString } from '../../util/string';
 import theme from '../../theme';
 import Icon from '../Icon';
 import { useLocalStore } from '../../state/local';
+import { CachedImage } from '@georstat/react-native-image-cache';
 
 const TokenRow = ({tokenObj}: {
   tokenObj: any
@@ -21,15 +22,31 @@ const TokenRow = ({tokenObj}: {
     toggleToken(tokenObj.address)
   }
 
+  const renderTokenLogo = (uri: string) => {
+    if (uri.endsWith(".png")) {
+      return (
+        <CachedImage
+          source={uri}
+          style={{ width: 28, height: 28, borderRadius: 14 }}
+          thumbnailSource="https://via.placeholder.com/28x28"
+        />
+      )
+    } else {
+      return (
+        <SvgUri
+          uri={tokenObj.logoURI}
+          width="100%"
+          height="100%"
+        />
+      )
+    }
+  }
+
   return (
     <View style={styles.tokenContainer}>
-      <View style={{width: 28, height: 28}}>
-        {tokenObj.logo ? (
-          <SvgUri
-            uri={tokenObj.logo}
-            width="100%"
-            height="100%"
-          />
+      <View style={{width: 28, height: 28, backgroundColor: 'transparent'}}>
+        {tokenObj.logoURI ? (
+          renderTokenLogo(tokenObj.logoURI)
         ) : (
           <Icon
             name='anonymous-token'

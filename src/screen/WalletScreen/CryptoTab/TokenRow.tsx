@@ -28,7 +28,7 @@ const TokenRow = ({tokenObj}: {
     } else {
       return (
         <SvgUri
-          uri={tokenObj.logo}
+          uri={tokenObj.logoURI}
           width="100%"
           height="100%"
         />
@@ -39,8 +39,8 @@ const TokenRow = ({tokenObj}: {
   return (
     <TouchableOpacity style={styles.tokenContainer} onPress={handlePressDetail}>
       <View style={{width: 28, height: 28}}>
-        {tokenObj.logo ? (
-          renderTokenLogo(tokenObj.logo)
+        {tokenObj.logoURI ? (
+          renderTokenLogo(tokenObj.logoURI)
         ) : (
           <Icon
             name='anonymous-token'

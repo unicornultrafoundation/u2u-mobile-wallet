@@ -12,12 +12,14 @@ import TokenRow from './TokenRow';
 import CustomTokenModal from '../CustomTokenModal';
 import { useLocalStore } from '../../state/local';
 import { usePreference } from '../../hook/usePreference';
+import { useDexTokens } from '../../hook/useDexTokens';
 
 const ModalContent = () => {
   const {preferenceTheme} = usePreference()
 
   const {t} = useTranslation()
-  const {supportedTokens} = useSupportedTokens()
+  // const {supportedTokens} = useSupportedTokens()
+  const {defaultTokens: supportedTokens} = useDexTokens()
   const {customTokenList} = useLocalStore()
 
   const [searchQuery, setSearchQuery] = useState('')
