@@ -29,3 +29,7 @@ export const fetchNewsByCategory = async (categoryID: string, page: number) => {
   const rsJSON = await rs.json()
   return rsJSON
 }
+
+export const fetchNewsDetail = async (newsID: string) => {
+  return {}
+}

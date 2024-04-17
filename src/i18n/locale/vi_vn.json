@@ -261,5 +261,9 @@
   "owned": "Sỡ hữu",
   "totalMinted": "Số lượng đã mint",
   "enterAmount": "Nhập số lượng",
-  "swap": "Swap"
+  "swap": "Swap",
+  "notification": "Thông báo",
+  "notificationSetting": "Nhận thông báo trên thiết bị",
+  "dAppPromotion": "Hệ sinh thái",
+  "dAppPromotionDesc": "Nhận thông báo về dApp mới trong hệ sinh thái"
 }

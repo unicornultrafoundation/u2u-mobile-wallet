@@ -154,6 +154,17 @@ const SettingScreen = () => {
             })
           }
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('NotificationSetting')}
+        >
+          {
+            renderTrigger({
+              icon: 'notification', 
+              title: 'notification', 
+              description: 'notificationSetting'
+            })
+          }
+        </TouchableOpacity>
         <View style={styles.settingItem}>
           <Icon name={'transfer'} width={20} height={20}/>
           <View style={styles.settingItemTextContainer}>
