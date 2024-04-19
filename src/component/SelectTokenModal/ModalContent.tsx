@@ -1,0 +1,51 @@
+import React, { useState } from 'react'
+import { FlatList, View } from 'react-native';
+import Text from '../../component/Text';
+import styles from './styles';
+import theme from '../../theme';
+import TextInput from '../TextInput';
+import { useTranslation } from 'react-i18next';
+import Separator from '../Separator';
+import Icon from '../Icon';
+import { useSupportedTokens } from '../../hook/useSupportedTokens';
+import TokenRow from './TokenRow';
+import CustomTokenModal from '../CustomTokenModal';
+import { useLocalStore } from '../../state/local';
+import { usePreference } from '../../hook/usePreference';
+import { useDexTokens } from '../../hook/useDexTokens';
+
+const ModalContent = ({onSelect}: {
+  onSelect: (tokenObj: any) => void;
+}) => {
+  const {preferenceTheme} = usePreference()
+
+  const {t} = useTranslation()
+  // const {supportedTokens} = useSupportedTokens()
+  const {defaultTokens: supportedTokens} = useDexTokens()
+  const {customTokenList} = useLocalStore()
+
+  const [searchQuery, setSearchQuery] = useState('')
+
+  return (
+    <View style={styles.contentContainer}>
+      <TextInput
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        placeholder={t('searchTokenPlaceholder')}
+        containerStyle={{width: '100%'}}
+      />
+      <FlatList
+        data={[...supportedTokens, ...customTokenList].filter((t: Record<string, any>) => t.address.includes(searchQuery) || t.symbol.includes(searchQuery) || t.name.includes(searchQuery))}
+        showsVerticalScrollIndicator={false}
+        renderItem={({item}) => {
+          return (
+            <TokenRow tokenObj={item} onSelect={onSelect} />
+          )
+        }}
+        style={{width: '100%'}}
+      />
+    </View>
+  )
+}
+
+export default ModalContent;

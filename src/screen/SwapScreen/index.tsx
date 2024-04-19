@@ -18,6 +18,8 @@ import { useWallet } from "../../hook/useWallet";
 import { useTokenBalance } from "../../hook/useTokenBalance";
 import { formatNumberString } from "../../util/string";
 import Button from "../../component/Button";
+import SelectTokenModal from "../../component/SelectTokenModal";
+import { useDexTokens } from "../../hook/useDexTokens";
 
 export default function SwapScreen() {
   const navigation = useNavigation<any>()
@@ -25,15 +27,17 @@ export default function SwapScreen() {
   const {t} = useTranslation()
   const {wallet} = useWallet()
 
-  const {getLogo} = useSupportedTokens()
+  // const {getLogo} = useSupportedTokens()
+  const {getLogo} = useDexTokens()
 
-  const [tokenFrom, setTokenFrom] = useState('0x')
+  const [tokenFrom, setTokenFrom] = useState('0x4ebbe24182e9c14e1d2e02ab9459190f39c43b6f')
   const [tokenFromValue, setTokenFromValue] = useState('')
   const {symbol: symbolFrom, decimals: decimalsFrom} = useURC20Metadata(tokenFrom)
   const {balance: balanceFrom} = useTokenBalance(wallet.address, tokenFrom, decimalsFrom)
 
-  const [tokenTo, setTokenTo] = useState('0x703c765f3d93FDAA96e49DA5932545aF37860B0E')
+  const [tokenTo, setTokenTo] = useState('0xdfae88f8610a038afcdf47a5bc77c0963c65087c')
   const [tokenToValue, setTokenToValue] = useState('')
+
   const {symbol: symbolTo, decimals: decimalsTo} = useURC20Metadata(tokenTo)
   const {balance: balanceTo} = useTokenBalance(wallet.address, tokenTo, decimalsTo)
 
@@ -49,7 +53,7 @@ export default function SwapScreen() {
   const renderTokenLogo = (uri: string) => {
     if (uri.endsWith(".svg")) {
       return (
-        <View style={{ width: 20, height: 20 }}>
+        <View style={{ width: 20, height: 20, borderRadius: 10 }}>
           <SvgUri
             uri={uri}
             width="100%"
@@ -61,7 +65,7 @@ export default function SwapScreen() {
       return (
         <CachedImage
           source={uri}
-          style={{ width: 20, height: 20 }}
+          style={{ width: 20, height: 20, borderRadius: 10 }}
           thumbnailSource="https://via.placeholder.com/20x20"
         />
       )
@@ -69,7 +73,6 @@ export default function SwapScreen() {
   }
 
   return (
-  
     <SafeAreaView style={[
       styles.container,
       {backgroundColor: preferenceTheme.background.background}
@@ -107,13 +110,22 @@ export default function SwapScreen() {
               containerStyle={{width: '100%'}}
               preIcon={() => {
                 return (
-                  <TouchableOpacity
-                    style={styles.tokenSelectorContainer}
-                  >
-                    {renderTokenLogo(getLogo(tokenFrom))}
-                    <Text>{symbolFrom}</Text>
-                    <Icon name="chevron-down" width={16} height={16} />
-                  </TouchableOpacity>
+                  <SelectTokenModal
+                    onSelect={(tokenObj: any) => {
+                      setTokenFrom(tokenObj.address)
+                    }}
+                    trigger={() => {
+                      return (
+                        <View
+                          style={styles.tokenSelectorContainer}
+                        >
+                          {renderTokenLogo(getLogo(tokenFrom))}
+                          <Text>{symbolFrom}</Text>
+                          <Icon name="chevron-down" width={16} height={16} />
+                        </View>
+                      )
+                    }}
+                  />
                 )
               }}
             />
@@ -129,13 +141,22 @@ export default function SwapScreen() {
               containerStyle={{width: '100%'}}
               preIcon={() => {
                 return (
-                  <TouchableOpacity
-                    style={styles.tokenSelectorContainer}
-                  >
-                    {renderTokenLogo(getLogo(tokenTo))}
-                    <Text>{symbolTo}</Text>
-                    <Icon name="chevron-down" width={16} height={16} />
-                  </TouchableOpacity>
+                  <SelectTokenModal
+                    onSelect={(tokenObj: any) => {
+                      setTokenTo(tokenObj.address)
+                    }}
+                    trigger={() => {
+                      return (
+                        <View
+                          style={styles.tokenSelectorContainer}
+                        >
+                          {renderTokenLogo(getLogo(tokenTo))}
+                          <Text>{symbolTo}</Text>
+                          <Icon name="chevron-down" width={16} height={16} />
+                        </View>
+                      )
+                    }}
+                  />
                 )
               }}
             />

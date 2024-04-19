@@ -5,10 +5,12 @@ import { useMemo } from "react";
 import { useNativeBalance } from "./useNativeBalance";
 import { parseFromRaw } from "../util/bignum";
 import { useLocalStore } from "../state/local";
+import { useDexTokens } from "./useDexTokens";
 
 export function useWalletAssets() {
   const {wallet} = useWallet()
-  const {supportedTokens, loading: loadingSupportedToken} = useSupportedTokens()
+  // const {supportedTokens, loading: loadingSupportedToken} = useSupportedTokens()
+  const {defaultTokens: supportedTokens} = useDexTokens()
   const {customTokenList, selectedToken} = useLocalStore()
   const {loading: loadingOwnedToken, ownedToken} = useOwnedToken(wallet.address)
   const {loading: loadingNativeBalance, balance} = useNativeBalance(wallet.address)
@@ -52,6 +54,6 @@ export function useWalletAssets() {
     supportedTokens,
     assets,
     assetsToShow,
-    loading: loadingSupportedToken || loadingOwnedToken || loadingNativeBalance
+    loading: loadingOwnedToken || loadingNativeBalance
   }
 }

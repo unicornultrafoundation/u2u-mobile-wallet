@@ -11,6 +11,14 @@ export const DEX_SUPPORTED_TOKEN: Record<number, DexToken[]> = {
   39: [],
   2484: [
     {
+      "name": "Unicorn Ultra",
+      "address": "0x",
+      "symbol": "U2U",
+      "decimals": 18,
+      "chainId": 2484,
+      "logoURI": "https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"
+    },
+    {
       "name": "USDT Token on U2U",
       "address": "0xdfae88f8610a038afcdf47a5bc77c0963c65087c",
       "symbol": "USDT",
