@@ -20,6 +20,8 @@ import { formatNumberString } from "../../util/string";
 import Button from "../../component/Button";
 import SelectTokenModal from "../../component/SelectTokenModal";
 import { useDexTokens } from "../../hook/useDexTokens";
+import { useDexPair } from "../../hook/useDexPair";
+import { useDexStore } from "../../state/dex";
 
 export default function SwapScreen() {
   const navigation = useNavigation<any>()
@@ -30,16 +32,17 @@ export default function SwapScreen() {
   // const {getLogo} = useSupportedTokens()
   const {getLogo} = useDexTokens()
 
-  const [tokenFrom, setTokenFrom] = useState('0x4ebbe24182e9c14e1d2e02ab9459190f39c43b6f')
+  const {tokenFrom, setTokenFrom, tokenTo, setTokenTo} = useDexStore()
   const [tokenFromValue, setTokenFromValue] = useState('')
   const {symbol: symbolFrom, decimals: decimalsFrom} = useURC20Metadata(tokenFrom)
   const {balance: balanceFrom} = useTokenBalance(wallet.address, tokenFrom, decimalsFrom)
 
-  const [tokenTo, setTokenTo] = useState('0xdfae88f8610a038afcdf47a5bc77c0963c65087c')
   const [tokenToValue, setTokenToValue] = useState('')
 
   const {symbol: symbolTo, decimals: decimalsTo} = useURC20Metadata(tokenTo)
   const {balance: balanceTo} = useTokenBalance(wallet.address, tokenTo, decimalsTo)
+
+  const {} = useDexPair()
 
   const route = useRoute()
   const {setRouteName} = useGlobalStore()

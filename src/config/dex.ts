@@ -108,3 +108,11 @@ export const DEX_SUPPORTED_TOKEN: Record<number, DexToken[]> = {
     }
   ]
 }
+
+export const FACTORY_ADDRESS_MAP: Record<number, `0x${string}`> = {
+  2484: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73',
+}
+
+export const INIT_CODE_HASH_MAP: Record<number, `0x${string}`> = {
+  2484: '0x34fe98aefc7b111647fe0dfe9c361b57b704a434f64c749daef6d539a8c086fc',
+}
