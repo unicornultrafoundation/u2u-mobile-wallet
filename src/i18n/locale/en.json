@@ -264,5 +264,8 @@
   "notification": "Notification",
   "notificationSetting": "Receive notification on your device",
   "dAppPromotion": "Ecosystem",
-  "dAppPromotionDesc": "Receive notification about new dApp in ecosystem"
+  "dAppPromotionDesc": "Receive notification about new dApp in ecosystem",
+  "nickname": "Wallet nickname",
+  "nicknameSetting": "Set wallet nickname for easy transaction",
+  "setYourWalletNickname": "Enter your nickname"
 }

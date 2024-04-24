@@ -264,5 +264,8 @@
   "notification": "Thông báo",
   "notificationSetting": "Nhận thông báo trên thiết bị",
   "dAppPromotion": "Hệ sinh thái",
-  "dAppPromotionDesc": "Nhận thông báo về dApp mới trong hệ sinh thái"
+  "dAppPromotionDesc": "Nhận thông báo về dApp mới trong hệ sinh thái",
+  "nickname": "Đặt tên ví",
+  "nicknameSetting": "Đặt tên ví để thực hiện giao dịch dễ dàng hơn",
+  "setYourWalletNickname": "Nhập tên bạn muốn chọn cho ví"
 }

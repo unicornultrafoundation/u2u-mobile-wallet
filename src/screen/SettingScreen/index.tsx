@@ -165,6 +165,17 @@ const SettingScreen = () => {
             })
           }
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Nickname')}
+        >
+          {
+            renderTrigger({
+              icon: 'user-tag', 
+              title: 'nickname', 
+              description: 'nicknameSetting'
+            })
+          }
+        </TouchableOpacity>
         <View style={styles.settingItem}>
           <Icon name={'transfer'} width={20} height={20}/>
           <View style={styles.settingItemTextContainer}>
