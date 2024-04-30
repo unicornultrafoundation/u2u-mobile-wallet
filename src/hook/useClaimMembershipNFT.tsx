@@ -5,7 +5,7 @@ import DeviceInfo from "react-native-device-info"
 import { FETCH_CLAIM_REQUEST_ENDPOINT, SUBMIT_CLAIM_JUPITER_REQUEST_ENDPOINT } from "../config/endpoint"
 import { useQuery } from "@tanstack/react-query"
 import { useTracking } from "./useTracking"
-import { logErrorForMonitoring, useCrashlytics } from "./useCrashlytics"
+import { logErrorForMonitoring } from "./useCrashlytics"
 
 export const useClaimMembershipNFT = () => {
   const { networkConfig } = useNetwork()

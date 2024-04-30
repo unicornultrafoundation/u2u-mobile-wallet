@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
   },
   body: {
     paddingHorizontal: 16,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    flex: 1
   }
 });

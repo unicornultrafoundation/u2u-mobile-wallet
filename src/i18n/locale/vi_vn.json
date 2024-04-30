@@ -267,5 +267,9 @@
   "dAppPromotionDesc": "Nhận thông báo về dApp mới trong hệ sinh thái",
   "nickname": "Đặt tên ví",
   "nicknameSetting": "Đặt tên ví để thực hiện giao dịch dễ dàng hơn",
-  "setYourWalletNickname": "Nhập tên bạn muốn chọn cho ví"
+  "setYourWalletNickname": "Nhập tên bạn muốn chọn cho ví",
+  "nicknameRules": "Tên ví chỉ được bao gồm ký tự và số, không được chứa ký tự đặc biệt",
+  "updateWalletNicknameFail": "Đặt tên ví thất bại",
+  "wallet_already_have_nickname": "Ví đã được đặt tên",
+  "updateWalletNicknameSuccess": "Đặt tên ví thành công"
 }
