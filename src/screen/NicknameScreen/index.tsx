@@ -13,13 +13,14 @@ import TextInput from "../../component/TextInput";
 import Button from "../../component/Button";
 import { useWalletNickname } from "../../hook/useWalletNickname";
 import Toast from "react-native-toast-message";
+import { typography } from "../../theme/typography";
 
 export default function NicknameScreen() {
   const {t} = useTranslation()
   const navigation = useNavigation()
   const {preferenceTheme} = usePreference()
 
-  const {submitWalletNickname} = useWalletNickname()
+  const {submitWalletNickname, nickname: currentNickname} = useWalletNickname()
 
   const route = useRoute()
   const {setRouteName} = useGlobalStore()
@@ -50,6 +51,49 @@ export default function NicknameScreen() {
     }
   }
 
+  const renderBody = () => {
+    if (currentNickname) {
+      return (
+        <View style={[styles.nicknameContainer, {backgroundColor: preferenceTheme.background.background}]}>
+          <Text style={[typography.footnote.regular, {color: preferenceTheme.text.primary}]}>{t('yourNickname')}</Text>
+          <Text style={[typography.title1.bold, {color: preferenceTheme.text.title}]}>{currentNickname}</Text>
+        </View>
+      )
+    }
+
+    return (
+      <>
+        <View>
+          <TextInput
+            value={nickname}
+            onChangeText={setNickname}
+            placeholder={t('setYourWalletNickname')}
+            autoCapitalize="none"
+          />
+          <Text 
+            style={{
+              fontSize: 11,
+              letterSpacing: 0.07,
+              lineHeight: 14,
+              paddingBottom: 12,
+              textAlign: 'left',
+              marginTop: 12
+            }}
+          >
+            {t('nicknameRules')}
+          </Text>
+        </View>
+        <Button
+          style={{borderRadius: 60}}
+          textStyle={theme.typography.label.medium}
+          onPress={handleSubmitNickname}
+        >
+          {t('confirm')}
+        </Button>
+      </>
+    )
+  }
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: preferenceTheme.background.background}}>
       <KeyboardAvoidingView
@@ -75,33 +119,7 @@ export default function NicknameScreen() {
           <View />
         </View>
         <View style={styles.body}>
-          <View>
-            <TextInput
-              value={nickname}
-              onChangeText={setNickname}
-              placeholder={t('setYourWalletNickname')}
-              autoCapitalize="none"
-            />
-            <Text 
-              style={{
-                fontSize: 11,
-                letterSpacing: 0.07,
-                lineHeight: 14,
-                paddingBottom: 12,
-                textAlign: 'left',
-                marginTop: 12
-              }}
-            >
-              {t('nicknameRules')}
-            </Text>
-          </View>
-          <Button
-            style={{borderRadius: 60}}
-            textStyle={theme.typography.label.medium}
-            onPress={handleSubmitNickname}
-          >
-            {t('confirm')}
-          </Button>
+          {renderBody()}
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>

@@ -15,12 +15,12 @@ export const useWalletNickname = () => {
     queryKey: ['wallet-nickname', wallet.address, networkConfig],
     queryFn: async () => {
       if (!networkConfig || !wallet || !networkConfig.api_endpoint) return
-      const endpoint = `${networkConfig.api_endpoint}${GET_WALLET_NICKNAME_ENDPOINT}`
+      const endpoint = `${networkConfig.api_endpoint}${GET_WALLET_NICKNAME_ENDPOINT}${wallet.address}`
       try {
         const rs = await fetch(endpoint)
         const rsJSON = await rs.json()
         
-        return rsJSON.nickname
+        return rsJSON.nickname || ''
       } catch (error) {
         console.log('getWalletNickname error', error)
         logErrorForMonitoring(error as any, 'getWalletNickname error')

@@ -271,5 +271,6 @@
   "nicknameRules": "Wallet nickname can only contain digit and character, no special character is allowed",
   "updateWalletNicknameFail": "Update wallet nickname fail",
   "wallet_already_have_nickname": "Wallet already have nickname",
-  "updateWalletNicknameSuccess": "Update wallet nickname success"
+  "updateWalletNicknameSuccess": "Update wallet nickname success",
+  "yourNickname": "Your nickname"
 }
