@@ -2,7 +2,7 @@ import { Wallet } from "ethers";
 import { useWallet } from "./useWallet";
 import { useNetwork } from "./useNetwork";
 import { useCallback } from "react";
-import { GET_WALLET_NICKNAME_ENDPOINT, SUBMIT_WALLET_NICKNAME_ENDPOINT } from "../config/endpoint";
+import { FIND_WALLET_BY_NICKNAME, GET_WALLET_NICKNAME_ENDPOINT, SUBMIT_WALLET_NICKNAME_ENDPOINT } from "../config/endpoint";
 import { logErrorForMonitoring } from "./useCrashlytics";
 import { useQuery } from "@tanstack/react-query";
 
@@ -68,8 +68,24 @@ export const useWalletNickname = () => {
     }
   }, [networkConfig, wallet])
 
+  const searchByNickname = useCallback(async (nickname: string) => {
+    if (!networkConfig || !wallet || !networkConfig.api_endpoint) return
+    const endpoint = `${networkConfig.api_endpoint}${FIND_WALLET_BY_NICKNAME}${nickname}`
+      try {
+        const rs = await fetch(endpoint)
+        const rsJSON = await rs.json()
+        
+        return rsJSON
+      } catch (error) {
+        console.log('searchByNickname error', error)
+        logErrorForMonitoring(error as any, 'searchByNickname error')
+        return undefined
+      }
+  }, [networkConfig])
+
   return {
     submitWalletNickname,
-    nickname
+    nickname,
+    searchByNickname
   }
 }
