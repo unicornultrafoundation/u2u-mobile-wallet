@@ -15,6 +15,7 @@ import RecentAddress from '../../component/RecentAddress';
 import { usePreference } from '../../hook/usePreference';
 import { getPhonePaddingBottom } from '../../util/platform';
 import ErrorTextInput from '../../component/TextInput/ErrorTextInput';
+import { useWalletNickname } from '../../hook/useWalletNickname';
 
 const AddressStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -29,22 +30,34 @@ const AddressStep = ({onNextStep, onBack}: {
   const [errorAddress, setErrorAddress] = useState('')
   const [showScanner, setShowScanner] = useState(false)
 
-  const validateAdress = (value: string) => {
+  const {searchByNickname} = useWalletNickname()
+
+  const validateAdress = async (value: string) => {
     if (value == wallet.address) {
       setErrorAddress('recipientAddressCannotBeTheSameAsSendingAddress')
       return false
     }
     if (!isAddress(value)) {
-      setErrorAddress('invalidAddress')
-      return false
+      const walletByNickname = await searchByNickname(value)
+      if (!walletByNickname) {
+        setErrorAddress('invalidAddress')
+        return false
+      }
     }
     setErrorAddress('')
     return true
   }
 
-  const handleConfirm = (value: string) => {
-    if (validateAdress(value)) {
-      setReceiveAddress(value)
+  const handleConfirm = async (value: string) => {
+    if (await validateAdress(value)) {
+      if (!isAddress(value)) {
+        const walletByNickname = await searchByNickname(value)
+        if (walletByNickname) {
+          setReceiveAddress(walletByNickname.address)
+        }
+      } else {
+        setReceiveAddress(value)
+      }
       onNextStep()
     }
   }
@@ -107,6 +120,7 @@ const AddressStep = ({onNextStep, onBack}: {
             placeholder={t('enterWalletAddress')}
             value={address}
             onChangeText={(val) => setAddress(val)}
+            autoCapitalize='none'
             postIcon={() => {
               return (
                 <TouchableOpacity onPress={() => setShowScanner(true)}>

@@ -615,16 +615,17 @@
 				CODE_SIGN_ENTITLEMENTS = U2UMobileWallet/U2UMobileWalletDebug.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 87;
+				CURRENT_PROJECT_VERSION = 88;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = U2UMobileWallet/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "U2U Super App";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.23;
+				MARKETING_VERSION = 1.24;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -650,15 +651,16 @@
 				CODE_SIGN_ENTITLEMENTS = U2UMobileWallet/U2UMobileWalletRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 87;
+				CURRENT_PROJECT_VERSION = 88;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				INFOPLIST_FILE = U2UMobileWallet/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "U2U Super App";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.23;
+				MARKETING_VERSION = 1.24;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

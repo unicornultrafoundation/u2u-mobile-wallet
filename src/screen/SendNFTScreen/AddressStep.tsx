@@ -19,6 +19,7 @@ import theme from '../../theme';
 import { getPhonePaddingBottom } from '../../util/platform';
 import ErrorTextInput from '../../component/TextInput/ErrorTextInput';
 import { ERC1155_ABI } from '../../util/abis/erc1155';
+import { useWalletNickname } from '../../hook/useWalletNickname';
 
 const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
   const route = useRoute();
@@ -43,10 +44,17 @@ const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
 
   const [showScanner, setShowScanner] = useState(false)
 
+  const {searchByNickname} = useWalletNickname()
+
   const handleContinue = async (value: string) => {
+    let finalValue = value
     if (!isAddress(value)) {
-      setErrorAddress('invalidAddress')
-      return
+      const walletByNickname = await searchByNickname(value)
+      if (!walletByNickname) {
+        setErrorAddress('invalidAddress')
+        return
+      }
+      finalValue = walletByNickname.address
     }
     setErrorAddress('')
     setReceiveAddress(nftMeta.nftCollection.id)
@@ -55,11 +63,11 @@ const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
       await encodeTxData({
         contractAddress: nftMeta.nftCollection.id,
         abi: ERC1155_ABI
-      }, "safeTransferFrom", [wallet.address, address, nftMeta.tokenID, amount, "0x"]) : 
+      }, "safeTransferFrom", [wallet.address, finalValue, nftMeta.tokenID, amount, "0x"]) : 
       await encodeTxData({
         contractAddress: nftMeta.nftCollection.id,
         abi: ERC721_ABI
-      }, "transferFrom", [wallet.address, address, nftMeta.tokenID])
+      }, "transferFrom", [wallet.address, finalValue, nftMeta.tokenID])
 
     setTxData(txData)
     onNextStep && onNextStep()
@@ -120,6 +128,7 @@ const NFTTransferAddressStep = ({ onNextStep, onBack }: StepProps) => {
           containerStyle={{ height: 48, marginTop: 24, marginBottom: 8 }}
           placeholder={t("enterWalletAddress")}
           value={address}
+          autoCapitalize='none'
           onChangeText={(val) => setAddress(val)}
           postIcon={() => {
             return (
