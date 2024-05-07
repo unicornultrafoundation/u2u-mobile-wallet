@@ -78,7 +78,11 @@ const TopDapp = () => {
       <View style={{flexDirection: 'row', gap: 6, justifyContent: 'center'}}>
         {groupData.map((item, index) => {
           return (
-            <View style={{width: 10, height: 10, borderRadius: 5, backgroundColor: index === selectedIndex ? '#FFFFFF' : '#363636'}}></View>
+            <View
+              style={{width: 10, height: 10, borderRadius: 5, backgroundColor: index === selectedIndex ? '#FFFFFF' : '#363636'}}
+              key={`group-${index}`}
+            >
+            </View>
           )
         })}
       </View>
