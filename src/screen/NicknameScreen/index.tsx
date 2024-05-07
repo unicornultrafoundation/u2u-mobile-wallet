@@ -20,7 +20,7 @@ export default function NicknameScreen() {
   const navigation = useNavigation()
   const {preferenceTheme} = usePreference()
 
-  const {submitWalletNickname, nickname: currentNickname} = useWalletNickname()
+  const {submitWalletNickname, nickname: currentNickname, refetch} = useWalletNickname()
 
   const route = useRoute()
   const {setRouteName} = useGlobalStore()
@@ -41,6 +41,8 @@ export default function NicknameScreen() {
         type: 'success',
         text1: t('updateWalletNicknameSuccess'),
       })
+      await refetch()
+      navigation.goBack()
     } catch (error: any) {
       console.log(error)
       Toast.show({

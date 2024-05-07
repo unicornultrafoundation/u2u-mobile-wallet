@@ -71,8 +71,8 @@ export const useTracking = () => {
   useEffect(() => {
     (async () => {
       try {
-        const token = await messaging().getToken();
-        console.log('device token', token)
+        // const token = await messaging().getToken();
+        // console.log('device token', token)
         const rs = await DeviceInfo.syncUniqueId();
         setDeviceID(rs)
       } catch (error) {
