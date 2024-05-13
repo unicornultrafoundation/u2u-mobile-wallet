@@ -29,7 +29,7 @@ const DAppWebView = () => {
   const {resetTxState} = useTransaction()
 
   const appURL = route.params?.url || ""
-  // const appURL = 'http://172.20.42.180:3000'
+  // const appURL = 'http://192.168.1.38:3000'
   const [url, setURL] = useState(appURL.replace('{{slash}}', '/'))
   const [resource, setResource] = useState('')
   const [loading, setLoading] = useState(true)
