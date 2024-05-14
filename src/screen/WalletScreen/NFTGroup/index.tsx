@@ -83,13 +83,12 @@ export default function NFTGroups({groupItem}: {
           marginVertical: 8,
         }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-          {/* <Image
+          <Image
             source={{ uri: groupItem.image }}
             width={28}
             height={28}
-            alt=""
             borderRadius={14}
-          /> */}
+          />
           <Text
             style={{ fontSize: 14, fontWeight: '500', letterSpacing: 0.06 }}>
             {groupItem.name}

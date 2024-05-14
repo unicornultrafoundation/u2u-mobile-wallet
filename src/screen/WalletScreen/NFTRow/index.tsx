@@ -30,7 +30,9 @@ const NFTRow = ({nftCollection, open, handleExpandItem, style}: {
       // open={expandedItem === id}
       open={open}
       handler={() => handleExpandItem(nftCollection.id)}
-      style={style}
+      style={[{
+        backgroundColor: open ? preferenceTheme.background.surfaceHover : 'transparent',
+      }, style]}
       expandedSection={
         isLoading ? (
           <ActivityIndicator />

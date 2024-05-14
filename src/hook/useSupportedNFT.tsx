@@ -19,7 +19,8 @@ export interface NFTCollectionMeta {
 export interface NFTCollectionGroups {
   isGroup: boolean;
   name: string;
-  collections: NFTCollectionMeta[]
+  collections: NFTCollectionMeta[];
+  image: string;
 }
 
 export interface NFTItemMeta {
