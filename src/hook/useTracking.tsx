@@ -57,7 +57,7 @@ export const useTracking = () => {
         body: raw,
         redirect: 'follow'
       };
-      console.log('register wallet', wallet.address)
+
       const rs = await fetch(endpoint, requestOptions)
       addRegisteredWalelt(wallet.address)
 
@@ -71,8 +71,6 @@ export const useTracking = () => {
   useEffect(() => {
     (async () => {
       try {
-        // const token = await messaging().getToken();
-        // console.log('device token', token)
         const rs = await DeviceInfo.syncUniqueId();
         setDeviceID(rs)
       } catch (error) {
@@ -148,7 +146,7 @@ export const useTracking = () => {
     } catch (error) {
       logErrorForMonitoring(error as any, "get device noti token error")
     }
-  }, [wallet])
+  }, [wallet, networkConfig])
 
   return {
     submitDeviceID,
