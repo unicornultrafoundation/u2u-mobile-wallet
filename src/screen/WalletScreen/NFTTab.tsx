@@ -7,13 +7,13 @@ import {
   NativeSyntheticEvent,
 } from 'react-native';
 import Text from '../../component/Text';
-import { useSupportedNFT } from '../../hook/useSupportedNFT';
+import { NFTCollectionGroups, NFTCollectionMeta, useSupportedNFT } from '../../hook/useSupportedNFT';
 import { useGlobalStore } from '../../state/global';
 import NFTRow from './NFTRow';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
-import { FlatList } from 'react-native';
 import { useMultipleTokenBalance } from '../../hook/useTokenBalance';
+import NFTGroups from './NFTGroup';
 
 const NFTTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onResetParentView: () => void; }) => {
   const { t } = useTranslation()
@@ -23,8 +23,21 @@ const NFTTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onResetP
   const { supportedNFT: data } = useSupportedNFT()
 
   const [expandedItem, setExpandedItem] = useState("");
+
+  const flatData = useMemo(() => {
+    let rs: NFTCollectionMeta[] = []
+    data.forEach((i) => {
+      if (i.isGroup) {
+        rs = [...rs, ...(i as NFTCollectionGroups).collections]
+      } else {
+        rs.push(i as NFTCollectionMeta)
+      }
+    })
+    return rs
+  }, [data])
+
   const nftsBalance = useMultipleTokenBalance(
-    data.map((i) => {
+    flatData.map((i) => {
       return {
         tokenAddress: i.id,
         decimals: 0
@@ -33,12 +46,12 @@ const NFTTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onResetP
   )
 
   const dataWithBalance = useMemo(() => {
-    return data.filter((i) => {
+    return flatData.filter((i) => {
       const balanceItem = nftsBalance.find((item) => item.address === i.id)
       if (!balanceItem) return false
       return balanceItem.balance !== "0"
     })
-  }, [data, nftsBalance])
+  }, [flatData, nftsBalance])
 
   const handleExpandItem = (id: string) => {
     if (id === expandedItem) {
@@ -110,9 +123,33 @@ const NFTTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onResetP
           </View>
         )}
 
-        {dataWithBalance.map((item) => {
-          return <NFTRow key={`nft-${item.id}`} nftCollection={item} open={expandedItem === item.id} handleExpandItem={handleExpandItem} />
+        {data.map((item) => {
+          if (item.isGroup) {
+            return (
+              <NFTGroups groupItem={item as NFTCollectionGroups} />
+            )
+          } else {
+            const itemWithBalance = dataWithBalance.find((i) => i.id === (item as NFTCollectionMeta).id)
+            if (!itemWithBalance) return null
+            return (
+              <NFTRow
+                key={`nft-${itemWithBalance.id}`}
+                nftCollection={itemWithBalance}
+                open={expandedItem === itemWithBalance.id}
+                handleExpandItem={handleExpandItem}
+                style={{
+                  paddingHorizontal: 10,
+                  paddingVertical: 8,
+                  borderRadius: 12
+                }}
+              />
+            )
+          }
         })}
+
+        {/* {dataWithBalance.map((item) => {
+          return <NFTRow key={`nft-${item.id}`} nftCollection={item} open={expandedItem === item.id} handleExpandItem={handleExpandItem} />
+        })} */}
         {/* <FlatList
           nestedScrollEnabled={true}
           style={{ minHeight: 500 }}
