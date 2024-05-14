@@ -600,8 +600,8 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9bdaa25d-bf0c-4919-94ea-c180f8d68bd1";
-				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore 1710735097";
+				PROVISIONING_PROFILE = "58c2ec27-8afd-4fa4-b4ce-1c8ba70587b7";
+				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore 1715680115";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/U2UMobileWallet.app/U2UMobileWallet";
 			};
 			name = Release;
@@ -615,7 +615,7 @@
 				CODE_SIGN_ENTITLEMENTS = U2UMobileWallet/U2UMobileWalletDebug.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 91;
+				CURRENT_PROJECT_VERSION = 94;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = U2UMobileWallet/Info.plist;
@@ -651,7 +651,7 @@
 				CODE_SIGN_ENTITLEMENTS = U2UMobileWallet/U2UMobileWalletRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 91;
+				CURRENT_PROJECT_VERSION = 94;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				INFOPLIST_FILE = U2UMobileWallet/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "U2U Super App";
@@ -670,8 +670,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.uniultra.superapp.--PRODUCT-NAME-rfc1034identifier-";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.uniultra.superapp;
 				PRODUCT_NAME = U2UMobileWallet;
-				PROVISIONING_PROFILE = "9bdaa25d-bf0c-4919-94ea-c180f8d68bd1";
-				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore 1710735097";
+				PROVISIONING_PROFILE = "58c2ec27-8afd-4fa4-b4ce-1c8ba70587b7";
+				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore 1715680115";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
