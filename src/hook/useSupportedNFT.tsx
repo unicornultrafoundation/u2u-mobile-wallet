@@ -13,6 +13,13 @@ export interface NFTCollectionMeta {
   graph: string;
   description: string;
   is1155: boolean;
+  isGroup: boolean;
+}
+
+export interface NFTCollectionGroups {
+  isGroup: boolean;
+  name: string;
+  collections: NFTCollectionMeta[]
 }
 
 export interface NFTItemMeta {
@@ -28,10 +35,10 @@ export function useSupportedNFT() {
     return SUPPORTED_CHAINS.find((i) => i.chainID === chainId)
   }, [chainId])
 
-  const query = useQuery<NFTCollectionMeta[]>({
+  const query = useQuery<(NFTCollectionMeta | NFTCollectionGroups)[]>({
     queryKey: ['supported-nft', chainId, networkConfigItem],
     queryFn: () => fetchSupportedTokens(networkConfigItem!.suppoted_nfts_endpoint),
-    initialData: [] as NFTCollectionMeta []
+    initialData: [] as (NFTCollectionMeta | NFTCollectionGroups)[]
   })
   
   return {
