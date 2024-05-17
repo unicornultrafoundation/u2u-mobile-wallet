@@ -43,6 +43,7 @@ import { useTracking } from './src/hook/useTracking';
 import MainTabNav from './src/stack/MainTab';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useCrashlytics } from './src/hook/useCrashlytics';
+import { useNotifications } from './src/hook/useNotifications';
 
 //@ts-ignore
 global.CustomEvent = global.Event
@@ -136,6 +137,8 @@ const linking = {
 
 function App(): JSX.Element {
   useCrashlytics()
+  useNotifications()
+
   const {unlocked} = useGlobalStore()
   const { type, isConnected } = useNetInfo();
   const {darkMode: isDarkMode, language} = usePreferenceStore()
@@ -166,7 +169,7 @@ function App(): JSX.Element {
 
   useEffect(() => {
     submitDeviceNotiToken()
-  }, [wallet])
+  }, [submitDeviceNotiToken])
 
   const toastConfig = useMemo(() => {
     return {
