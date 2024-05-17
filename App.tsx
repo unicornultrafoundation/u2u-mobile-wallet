@@ -67,8 +67,9 @@ const queryClient = new QueryClient()
 //   }
 // );
 
-const NAVIGATION_IDS = ['discover'];
+const NAVIGATION_IDS = ['discover', 'external-sign'];
 function buildDeepLinkFromNotificationData(data: any): string | null {
+  console.log('buildDeepLinkFromNotificationData', data)
   const navigationId = data?.navigationId;
   if (!NAVIGATION_IDS.includes(navigationId)) {
     console.log('Unverified navigationId', navigationId)
@@ -76,6 +77,7 @@ function buildDeepLinkFromNotificationData(data: any): string | null {
   }
   if (navigationId === 'external-sign') {
     const signRequestID = data?.signRequestId
+    console.log('here ', `u2umobilewallet://wallet/external-sign/${signRequestID}`)
     return `u2umobilewallet://wallet/external-sign/${signRequestID}`;
   }
   // if (navigationId === 'settings') {

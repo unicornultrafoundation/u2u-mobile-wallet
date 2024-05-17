@@ -27,9 +27,11 @@ export default function SignExternalRequestScreen() {
     }, [route]),
   );
   const signRequestID = route.params?.signRequestID || ""
-
+  console.log('signRequestID', signRequestID)
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={[styles.container, {backgroundColor: preferenceTheme.background.background}]}
+    >
       <View style={[styles.screenHeader, {paddingTop: 16, paddingBottom: 16}]}>
         <Text
           style={[

@@ -274,5 +274,6 @@
   "updateWalletNicknameSuccess": "Đặt tên ví thành công",
   "yourNickname": "Tên ví",
   "approvalSession": "Xác thực phiên đăng nhập",
-  "approveSessionSuccess": "Xác thực thành công"
+  "approveSessionSuccess": "Xác thực thành công",
+  "signExternalRequest": "Xác thực "
 }
