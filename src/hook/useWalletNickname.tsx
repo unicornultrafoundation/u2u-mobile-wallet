@@ -11,7 +11,7 @@ export const useWalletNickname = () => {
   const {wallet} = useWallet()
   const {networkConfig} = useNetwork()
 
-  const {data: nickname} = useQuery({
+  const {data: nickname, refetch} = useQuery({
     queryKey: ['wallet-nickname', wallet.address, networkConfig],
     queryFn: async () => {
       if (!networkConfig || !wallet || !networkConfig.api_endpoint) return
@@ -86,6 +86,7 @@ export const useWalletNickname = () => {
   return {
     submitWalletNickname,
     nickname,
+    refetch,
     searchByNickname
   }
 }

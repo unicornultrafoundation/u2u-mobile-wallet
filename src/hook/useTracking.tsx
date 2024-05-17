@@ -38,7 +38,7 @@ export const useTracking = () => {
     try {
       if (!networkConfig || !networkConfig.api_endpoint || !wallet) return
 
-      if (registeredWallet.includes(wallet.address)) return
+      // if (registeredWallet.includes(wallet.address)) return
 
       const deviceID = await DeviceInfo.syncUniqueId();
       const endpoint = `${networkConfig?.api_endpoint}${SUBMIT_WALLET_ENDPOINT}`
@@ -71,8 +71,8 @@ export const useTracking = () => {
   useEffect(() => {
     (async () => {
       try {
-        const token = await messaging().getToken();
-        console.log('device token', token)
+        // const token = await messaging().getToken();
+        // console.log('device token', token)
         const rs = await DeviceInfo.syncUniqueId();
         setDeviceID(rs)
       } catch (error) {

@@ -1,10 +1,10 @@
-import {TouchableOpacity, View, ViewStyle} from 'react-native';
+import {StyleProp, TouchableOpacity, View, ViewStyle} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import {color} from '../../theme/color';
 
 interface Props {
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   open?: boolean;
   handler?: () => void;
   expandedSection?: React.ReactNode;
