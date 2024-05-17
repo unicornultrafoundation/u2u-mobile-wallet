@@ -6,8 +6,6 @@ import Text from '../Text';
 import theme from '../../theme';
 import Button from '../Button';
 import { useTranslation } from 'react-i18next';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import { usePreference } from '../../hook/usePreference';
 
 const Scanner = ({onSuccess, onCancel}: {
@@ -26,7 +24,7 @@ const Scanner = ({onSuccess, onCancel}: {
         }}
         topContent={
           <Text style={[theme.typography.headline.medium, {paddingHorizontal: 24}]}>
-            Scan QR code from {' '}
+            Scan QR code for {' '}
             <Text style={theme.typography.headline.bold}>U2U super app</Text>
           </Text>
         }
