@@ -1,7 +1,7 @@
 import React from 'react'
 import Collapsible from '../../../component/Collapsible';
 import { NFTCollectionMeta } from '../../../hook/useSupportedNFT';
-import { ActivityIndicator, Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Dimensions, ScrollView, StyleProp, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { Image } from 'react-native';
 import Text from '../../../component/Text';
 import { usePreferenceStore } from '../../../state/preferences';
@@ -12,10 +12,11 @@ import { useNavigation } from '@react-navigation/native';
 import NFTItem from './NFTItem';
 import { useTokenBalance } from '../../../hook/useTokenBalance';
 
-const NFTRow = ({nftCollection, open, handleExpandItem}: {
+const NFTRow = ({nftCollection, open, handleExpandItem, style}: {
   nftCollection: NFTCollectionMeta
   open: boolean
-  handleExpandItem: (itemID: string) => void
+  handleExpandItem: (itemID: string) => void;
+  style?: StyleProp<ViewStyle>
 }) => {
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
@@ -26,10 +27,12 @@ const NFTRow = ({nftCollection, open, handleExpandItem}: {
 
   return (
     <Collapsible
-      key={nftCollection.id}
       // open={expandedItem === id}
       open={open}
       handler={() => handleExpandItem(nftCollection.id)}
+      style={[{
+        backgroundColor: open ? preferenceTheme.background.surfaceHover : 'transparent',
+      }, style]}
       expandedSection={
         isLoading ? (
           <ActivityIndicator />
@@ -47,13 +50,16 @@ const NFTRow = ({nftCollection, open, handleExpandItem}: {
               marginBottom: 12,
             }}
           >
-            {items?.pages.flat().map(item => (
-              <NFTItem
-                key={`${nftCollection.id}-item-${item.id}`}
-                item={item}
-                onClick={() => navigation.navigate('NFTCollection', {nftCollection})}
-              />
-            ))}
+            {items?.pages.flat().map(item => {
+              nftCollection.id === '0xCDC79A0FCf71fE6b4167F48C5bda3Ed369c29d15' && console.log(item)
+              return (
+                <NFTItem
+                  key={`${nftCollection.id}-item-${item.id}`}
+                  item={item}
+                  onClick={() => navigation.navigate('NFTCollection', {nftCollection})}
+                />
+              )
+            })}
           </ScrollView>
         )
       }>

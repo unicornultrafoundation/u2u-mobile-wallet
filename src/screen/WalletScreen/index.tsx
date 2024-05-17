@@ -96,6 +96,9 @@ const WalletScreen = () => {
           // onScrollEndDrag={e => onScrollEndDrag(e)}
           ref={scrollViewRef}
           stickyHeaderIndices={[0]}
+          contentContainerStyle={{
+            paddingBottom: TABBAR_HEIGHT,
+          }}
         >
           <WalletHeader onGoBack={() => setCollapsed(false)} collapsed={collapsed} action={tab} />
           <BalanceCard collapsed={collapsed} />
