@@ -13,6 +13,8 @@ import { SessionStatus, useSessionDetail } from "../../hook/useSessionDetail";
 import Button from "../../component/Button";
 import { SUPPORTED_CHAINS } from "../../config/chain";
 import Toast from "react-native-toast-message";
+import LottieView from "lottie-react-native";
+import { useNetwork } from "../../hook/useNetwork";
 
 export default function SessionApprovalScreen() {
   const navigation = useNavigation<any>()
@@ -20,11 +22,12 @@ export default function SessionApprovalScreen() {
   const {t} = useTranslation()
   const route = useRoute();
   const { setRouteName } = useGlobalStore();
+  const { switchNetwork, chainId } = useNetwork()
 
   const [sessionID, setSessionID] = useState('593dc919-6d98-4660-b9cc-6f17b60b69bb')
   const [loading, setLoading] = useState(false)
 
-  const {data: sessionDetail, approveSession} = useSessionDetail(sessionID)
+  const {data: sessionDetail, isLoading, approveSession} = useSessionDetail(sessionID)
 
   useFocusEffect(
     useCallback(() => {
@@ -38,8 +41,12 @@ export default function SessionApprovalScreen() {
 
   const handleConfirm = async () => {
     try {
+      if (!sessionDetail || !sessionDetail.dAppMetadata) return
       const rs = await approveSession()
       console.log(rs)
+      if (sessionDetail.dAppMetadata.chainId && Number(chainId) !== sessionDetail.dAppMetadata.chainId) {
+        switchNetwork(sessionDetail.dAppMetadata.chainId.toString())
+      }
       setSessionID('')
 
       Toast.show({
@@ -58,6 +65,19 @@ export default function SessionApprovalScreen() {
     navigation.goBack()
   }
 
+  if (isLoading) {
+    <SafeAreaView
+      style={[styles.container, {backgroundColor: preferenceTheme.background.background}]}
+    >
+      <LottieView
+        style={{ height:250, width: 400}}
+        source={require("../SplashScreen/loading.json")}
+        autoPlay
+        loop
+      />
+    </SafeAreaView>
+  }
+
   if (!sessionID || sessionID === '') {
     return (
       <SafeAreaView
@@ -66,6 +86,11 @@ export default function SessionApprovalScreen() {
         <Scanner
           onCancel={navigation.goBack}
           onSuccess={setSessionID}
+          topContent={(
+            <Text style={[theme.typography.headline.medium, {paddingHorizontal: 24}]}>
+              Scan QR code to connect
+            </Text>
+          )}
         />
       </SafeAreaView>
     )

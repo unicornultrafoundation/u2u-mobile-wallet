@@ -26,9 +26,9 @@ export interface Session {
   signerAddress: string;
   dAppMetadata: DAppMetadata;
   status: SessionStatus;
-  expiredAt: Date;
-  createdAt: Date;
-  updatedAt: Date
+  expiredAt: string;
+  createdAt: string;
+  updatedAt: string
 }
 
 export const useSessionDetail = (sessionID: string) => {
@@ -36,7 +36,7 @@ export const useSessionDetail = (sessionID: string) => {
   const {wallet} = useWallet()
 
   const {data, isLoading, error, isError} = useQuery<Session>({
-    queryKey: ['session-default', sessionID, networkConfig],
+    queryKey: ['session-detail', sessionID, networkConfig],
     queryFn: async () => {
       if (!networkConfig || !sessionID || sessionID === '') return {} as Session
       const url = `${networkConfig.api_endpoint}/sessions/${sessionID}`

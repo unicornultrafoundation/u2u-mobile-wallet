@@ -120,6 +120,8 @@ export const useTransaction = () => {
       ) || "0"
     }
 
+    console.log('rawTxObj', rawTxObj)
+
     const signedTx = await signTransaction(rawTxObj, wallet.privateKey, rpc)
     txStore.setTxStatus('sending')
     const rs = await sendSignedTransaction(rpc, signedTx)

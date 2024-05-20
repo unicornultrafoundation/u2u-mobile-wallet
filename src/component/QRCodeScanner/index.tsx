@@ -8,9 +8,10 @@ import Button from '../Button';
 import { useTranslation } from 'react-i18next';
 import { usePreference } from '../../hook/usePreference';
 
-const Scanner = ({onSuccess, onCancel}: {
+const Scanner = ({onSuccess, onCancel, topContent}: {
   onSuccess: (val: string) => void
   onCancel: () => void
+  topContent?: JSX.Element
 }) => {
   const {t} = useTranslation<string>()
 
@@ -23,10 +24,12 @@ const Scanner = ({onSuccess, onCancel}: {
           onSuccess(e.data)
         }}
         topContent={
-          <Text style={[theme.typography.headline.medium, {paddingHorizontal: 24}]}>
-            Scan QR code for {' '}
-            <Text style={theme.typography.headline.bold}>U2U super app</Text>
-          </Text>
+          topContent || (
+            <Text style={[theme.typography.headline.medium, {paddingHorizontal: 24}]}>
+              Scan QR code for {' '}
+              <Text style={theme.typography.headline.bold}>U2U super app</Text>
+            </Text>
+          )
         }
         bottomContent={
           <Button

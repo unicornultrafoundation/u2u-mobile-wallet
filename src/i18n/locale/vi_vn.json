@@ -275,5 +275,8 @@
   "yourNickname": "Tên ví",
   "approvalSession": "Xác thực phiên đăng nhập",
   "approveSessionSuccess": "Xác thực thành công",
-  "signExternalRequest": "Xác thực "
+  "signExternalRequest": "Xác thực yêu cầu",
+  "requestAlreadySigned": "Yêu cầu đã ký",
+  "requestAlreadyRejected": "Yêu cầu đã từ chối",
+  "requestExpired": "Yêu cầu hết hạn"
 }

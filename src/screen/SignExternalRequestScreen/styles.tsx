@@ -8,5 +8,10 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+  },
+  requestInfoContainer: {
+    borderRadius: 12,
+    padding: 16,
+    marginHorizontal: 20
   }
 })
