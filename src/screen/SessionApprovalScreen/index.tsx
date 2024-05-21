@@ -24,7 +24,7 @@ export default function SessionApprovalScreen() {
   const { setRouteName } = useGlobalStore();
   const { switchNetwork, chainId } = useNetwork()
 
-  const [sessionID, setSessionID] = useState('593dc919-6d98-4660-b9cc-6f17b60b69bb')
+  const [sessionID, setSessionID] = useState('')
   const [loading, setLoading] = useState(false)
 
   const {data: sessionDetail, isLoading, approveSession} = useSessionDetail(sessionID)
@@ -42,7 +42,9 @@ export default function SessionApprovalScreen() {
   const handleConfirm = async () => {
     try {
       if (!sessionDetail || !sessionDetail.dAppMetadata) return
+      setLoading(true)
       const rs = await approveSession()
+      setLoading(false)
       console.log(rs)
       if (sessionDetail.dAppMetadata.chainId && Number(chainId) !== sessionDetail.dAppMetadata.chainId) {
         switchNetwork(sessionDetail.dAppMetadata.chainId.toString())
