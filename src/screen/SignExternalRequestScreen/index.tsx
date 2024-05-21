@@ -34,7 +34,7 @@ export default function SignExternalRequestScreen() {
   );
   const signRequestID = route.params?.signRequestID || ""
 
-  const {data, isLoading, approveSignRequest} = useSignRequest(signRequestID)
+  const {data, isLoading, approveSignRequest, rejectRequest} = useSignRequest(signRequestID)
 
   const {chainId, switchNetwork} = useNetwork()
   const [loading, setLoading] = useState(false)
@@ -74,14 +74,33 @@ export default function SignExternalRequestScreen() {
       const rs = await approveSignRequest()
       setLoading(false)
       console.log(rs)
+
+      Toast.show({
+        type: 'success',
+        text1: t('signExternalRequestSuccess'),
+      })
+      navigation.goBack()
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
+      Toast.show({
+        type: 'error',
+        text1: t('signExternalRequestFail'),
+      })
+    }
+  }
+
+  const handleReject = async () => {
+    try {
+      setLoading(true)
+      const rs = await rejectRequest()
+      setLoading(false)
+      console.log(rs)
+      navigation.goBack()
     } catch (error) {
       setLoading(false)
       console.log(error)
     }
-  }
-
-  const handleReject = () => {
-
   }
 
   if (isLoading || !data || !data.rawData) {

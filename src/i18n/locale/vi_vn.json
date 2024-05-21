@@ -278,5 +278,7 @@
   "signExternalRequest": "Xác thực yêu cầu",
   "requestAlreadySigned": "Yêu cầu đã ký",
   "requestAlreadyRejected": "Yêu cầu đã từ chối",
-  "requestExpired": "Yêu cầu hết hạn"
+  "requestExpired": "Yêu cầu hết hạn",
+  "signExternalRequestSuccess": "Xác thực yêu cầu thành công",
+  "signExternalRequestFail": "Xác thực yêu cầu thất bại"
 }

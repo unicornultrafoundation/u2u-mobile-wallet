@@ -278,5 +278,7 @@
   "signExternalRequest": "Approve sign request",
   "requestAlreadySigned": "Request already signed",
   "requestAlreadyRejected": "Request already rejected",
-  "requestExpired": "Request expired"
+  "requestExpired": "Request expired",
+  "signExternalRequestSuccess": "Sign request success",
+  "signExternalRequestFail": "Sign request fail"
 }

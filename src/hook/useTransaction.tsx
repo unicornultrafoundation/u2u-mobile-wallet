@@ -132,6 +132,24 @@ export const useTransaction = () => {
     return rs
   }, [wallet.privateKey, wallet.address, rpc, txStore])
 
+  const signTx = useCallback(async (txObject: Record<string, any>) => {
+    const finalTx = {
+      ...txObject,
+      ...{
+        from: wallet.address,
+        nonce: await getNonce(rpc, wallet.address),
+        chainId,
+      }
+    }
+    console.log(finalTx)
+    const signedTx = await signTransaction(
+      finalTx,
+      wallet.privateKey,
+      rpc
+    )
+    return signedTx
+  }, [wallet.privateKey, wallet.address, rpc, chainId])
+
   const fetchTxReceipt = useCallback(async (hash: string) => {
     return getTxReceipt(hash, rpc)
   }, [rpc])
@@ -148,6 +166,7 @@ export const useTransaction = () => {
     estimateGasLimit,
     submitTx,
     submitRawTx,
+    signTx,
     fetchTxReceipt,
     fetchTxDetail
   }
