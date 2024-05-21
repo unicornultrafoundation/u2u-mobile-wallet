@@ -120,26 +120,29 @@ export const lightTheme: Record<string, any> = {
     background: "#FFFFFF",
     surface: "#f6f6f6",
     surfaceHover: "#e3e3e3",
-    surfaceActive: "#b4b4b4"
+    surfaceActive: "#b4b4b4",
+    surfaceDisable: "#A0A0A0"
   },
   text: {
     title: "#191B1E",
-    primary: "#272727",
-    secondary: "#363636",
+    primary: "#6C6A6A",
+    secondary: "#6F6F6F",
     placeholder: "#c6c6c6",
-    disabled: "#8D8D8D"
+    disabled: "#c6c6c6"
   },
-  divider: "#d8d8d8",
+  divider: "#FFFFFF",
   outline: "#e3e3e3",
-  shadow: "#c6c6c6"
+  shadow: "#c6c6c6",
+  onColor: "#292929"
 }
 
 export const darkTheme: Record<string, any> = {
   background: {
     background: "#181818",
-    surface: "#1F2225",
+    surface: "#191B1E",
     surfaceHover: "#343434",
-    surfaceActive: "#363636"
+    surfaceActive: "#363636",
+    surfaceDisable: "#8D8D8D"
   },
   text: {
     title: "#FFFFFF",
@@ -150,5 +153,6 @@ export const darkTheme: Record<string, any> = {
   },
   divider: "#272727",
   outline: "#363636",
-  shadow: "#272727"
+  shadow: "#272727",
+  onColor: "#FFFFFF"
 }
