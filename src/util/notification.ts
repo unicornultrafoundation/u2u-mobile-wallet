@@ -18,7 +18,9 @@ export const requestPermissionAndroid = async () => {
   const enabled =
     authStatus === 'granted';
 
-  if (enabled) {
-    console.log('Authorization status android:', authStatus);
-  }
+  // if (enabled) {
+  //   console.log('Authorization status android:', authStatus);
+  // }
+
+  return enabled
 }
