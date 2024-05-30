@@ -51,7 +51,6 @@ const NFTRow = ({nftCollection, open, handleExpandItem, style}: {
             }}
           >
             {items?.pages.flat().map(item => {
-              nftCollection.id === '0xCDC79A0FCf71fE6b4167F48C5bda3Ed369c29d15' && console.log(item)
               return (
                 <NFTItem
                   key={`${nftCollection.id}-item-${item.id}`}

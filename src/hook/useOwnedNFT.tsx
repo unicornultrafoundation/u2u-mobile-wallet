@@ -28,7 +28,7 @@ export const useOwnedNFT = (collection: NFTCollectionMeta, page = 1) => {
     queryFn: async ({pageParam = 1}) => {
       const rs = await request<{items: OwnedNFT[]}>(
         collection.graph,
-        collection.is1155 ? Schema().OWNED_NFT_1155 : Schema().OWNED_NFT, 
+        collection.is1155 ? Schema().OWNED_NFT_1155 : Schema().OWNED_NFT,
         {
           address: wallet.address.toLowerCase(),
           first: PAGE_SIZE,
