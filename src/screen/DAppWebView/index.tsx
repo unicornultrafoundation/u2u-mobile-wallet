@@ -13,7 +13,7 @@ import ConfirmTxModal from './ConfirmTxModal';
 import { useGlobalStore } from '../../state/global';
 import { Wallet, isHexString } from 'ethers';
 import { usePreference } from '../../hook/usePreference';
-import { addHTTPS, getSearchURL, hexToString, isDomain } from '../../util/string';
+import { addHTTPS, getPredictedURLTypeFromRaw, getSearchURL, hexToString, isDomain, isURL } from '../../util/string';
 import { useTransaction } from '../../hook/useTransaction';
 import SelectNetworkModal from '../../component/SelectNetworkModal';
 import TextInput from '../../component/TextInput';
@@ -118,8 +118,7 @@ const DAppWebView = () => {
   }, [wallet, networkConfig])
 
   useEffect(() => {
-    console.log('url change', url)
-    setInputURL(url)
+    setInputURL(getPredictedURLTypeFromRaw(url))
   }, [url])
 
   const handleConfirmTx = (txHash: string) => {
@@ -285,13 +284,9 @@ const DAppWebView = () => {
             // if (Platform.OS === 'ios') {
             //   return
             // }
+            
             if (nativeEvent.url !== inputURL) {
-              if (isDomain(nativeEvent.url)) {
-                setInputURL(addHTTPS(nativeEvent.url))
-              } else {
-                setInputURL(getSearchURL(nativeEvent.url))
-              }
-              // webRef.current.reload()
+              setInputURL(getPredictedURLTypeFromRaw(nativeEvent.url))
             }
           }}
           onLoadStart={() => !alreadyInited && setLoadingURL(true)}
@@ -301,7 +296,7 @@ const DAppWebView = () => {
               setAlreadyInited(true)
             }
           }}
-          source={{ uri: url }}
+          source={{ uri: getPredictedURLTypeFromRaw(url) }}
           style={styles.webview}
           containerStyle={{
             flex: loadingURL || error !== '' ? 0 : 1,

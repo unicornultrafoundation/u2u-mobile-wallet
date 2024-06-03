@@ -130,7 +130,11 @@ const SearchComponent: React.FC = () => {
             (results.length === 0 && searchQuery.length > 0) ? (
               <TouchableOpacity
                 onPress={() => {
+                  console.log(searchQuery)
+                  console.log(isDomain(searchQuery))
                   navigation.navigate('DAppWebView', {url: isDomain(searchQuery) ? addHTTPS(searchQuery) : getSearchURL(searchQuery)});
+                  setIsLayerVisible(false)
+                  setSearchQuery('')
                 }}
               >
                 <Text

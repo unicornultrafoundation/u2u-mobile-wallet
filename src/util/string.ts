@@ -122,8 +122,12 @@ export const hexToString = (hex: string) => {
   return str;
 }
 
+export const isURL = (str: string) => {
+  return /^(http|https):\/\//.test(str)
+}
+
 export const addHTTPS = (str: string) => {
-  if (/^(http|https):\/\//.test(str)) return str
+  if (isURL(str)) return str
   return `https://${str}`
 }
 
@@ -148,4 +152,14 @@ export const getDomain = (fullURL: string) => {
   }
 
   return domain
+}
+
+export const getPredictedURLTypeFromRaw = (url: string) => {
+  if (isDomain(url)) {
+    return addHTTPS(url)
+  } else if (!isURL(url)) {
+    return getSearchURL(url)
+  } else {
+    return url
+  }
 }
