@@ -600,8 +600,8 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "07b5fe20-c8ec-4b7b-9e74-0aafc19cda3e";
-				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore 1716023442";
+				PROVISIONING_PROFILE = "78c6121d-4c49-451b-8cf2-44147c808047";
+				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/U2UMobileWallet.app/U2UMobileWallet";
 			};
 			name = Release;
@@ -615,7 +615,7 @@
 				CODE_SIGN_ENTITLEMENTS = U2UMobileWallet/U2UMobileWalletDebug.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 97;
+				CURRENT_PROJECT_VERSION = 102;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = U2UMobileWallet/Info.plist;
@@ -625,7 +625,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.27;
+				MARKETING_VERSION = 1.28;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -650,9 +650,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = U2UMobileWallet/U2UMobileWalletRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 97;
+				CURRENT_PROJECT_VERSION = 102;
 				DEVELOPMENT_TEAM = 668U627Y5V;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 668U627Y5V;
 				INFOPLIST_FILE = U2UMobileWallet/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "U2U Super App";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -660,7 +662,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.27;
+				MARKETING_VERSION = 1.28;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -670,8 +672,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.uniultra.superapp.--PRODUCT-NAME-rfc1034identifier-";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.uniultra.superapp;
 				PRODUCT_NAME = U2UMobileWallet;
-				PROVISIONING_PROFILE = "07b5fe20-c8ec-4b7b-9e74-0aafc19cda3e";
-				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore 1716023442";
+				PROVISIONING_PROFILE = "78c6121d-4c49-451b-8cf2-44147c808047";
+				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "org.uniultra.superapp AppStore 1716023442";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

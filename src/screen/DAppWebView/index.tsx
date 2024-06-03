@@ -16,6 +16,7 @@ import { usePreference } from '../../hook/usePreference';
 import { hexToString } from '../../util/string';
 import { useTransaction } from '../../hook/useTransaction';
 import SelectNetworkModal from '../../component/SelectNetworkModal';
+import TextInput from '../../component/TextInput';
 
 const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `
@@ -31,6 +32,8 @@ const DAppWebView = () => {
   const appURL = route.params?.url || ""
   // const appURL = 'http://192.168.1.38:3000'
   const [url, setURL] = useState(appURL.replace('{{slash}}', '/'))
+  const [inputURL, setInputURL] = useState(url)
+
   const [resource, setResource] = useState('')
   const [loading, setLoading] = useState(true)
   const [requestIdForCallback, setRequestIdForCallback] = useState(0)
@@ -113,6 +116,11 @@ const DAppWebView = () => {
       }
     )
   }, [wallet, networkConfig])
+
+  useEffect(() => {
+    console.log('url change', url)
+    setInputURL(url)
+  }, [url])
 
   const handleConfirmTx = (txHash: string) => {
     const codeToRun = parseRun(requestIdForCallback, txHash)
@@ -222,6 +230,9 @@ const DAppWebView = () => {
             color="#8D8D8D"
           />
         </TouchableOpacity>
+        <View style={{flex: 1}}>
+          <TextInput value={inputURL} onChangeText={setInputURL} blurOnSubmit onSubmitEditing={() => setURL(inputURL)} />
+        </View>
         <View style={{flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 8}}>
           <SelectNetworkModal
             trigger={() => {
@@ -271,13 +282,13 @@ const DAppWebView = () => {
           // injectedJavaScript={ Platform.OS === 'android' ? historyAPIShim : '' }
           onMessage={onMessage}
           onNavigationStateChange={(nativeEvent) => {
-            if (Platform.OS === 'ios') {
-              return
-            }
-            // if (nativeEvent.url !== url) {
-            //   setURL(nativeEvent.url)
-            //   webRef.current.reload()
+            // if (Platform.OS === 'ios') {
+            //   return
             // }
+            if (nativeEvent.url !== inputURL) {
+              setInputURL(nativeEvent.url)
+              // webRef.current.reload()
+            }
           }}
           onLoadStart={() => !alreadyInited && setLoadingURL(true)}
           onLoadEnd={() => {

@@ -81,7 +81,7 @@ const CryptoTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onRes
   } else {
     return (
       assetsToShow.map((item) => {
-        return <TokenRow tokenObj={item} key={`token-asset-${item}`} />
+        return <TokenRow tokenObj={item} key={`token-asset-${item.symbol}-${item.name}`} />
       })
     )
     // return (
