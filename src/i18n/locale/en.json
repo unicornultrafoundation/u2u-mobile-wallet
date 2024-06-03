@@ -272,5 +272,6 @@
   "updateWalletNicknameFail": "Update wallet nickname fail",
   "wallet_already_have_nickname": "Wallet already have nickname",
   "updateWalletNicknameSuccess": "Update wallet nickname success",
-  "yourNickname": "Your nickname"
+  "yourNickname": "Your nickname",
+  "searchWeb": "Search"
 }

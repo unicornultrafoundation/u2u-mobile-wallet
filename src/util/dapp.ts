@@ -1,3 +1,5 @@
+import { getDomain } from "./string"
+
 export const parseRun = (id: any, result: any) => {
 	const parsedResult = typeof result === 'string' ? `'${result}'` : JSON.stringify(result)
 	return `
@@ -22,4 +24,13 @@ export const hardReload = () => {
 	return `
 		window.ethereum.replace(window.location.href + '?reload=${Date.now()}')
 	`
+}
+
+export const isListedDApp = (url: string, dappList: Record<string, any>[]) => {
+	if (!url || url === '') return false
+
+	const listedDomainList = dappList.map((i) => getDomain(i.url))
+	const domain = getDomain(url)
+
+	return listedDomainList.includes(domain)
 }

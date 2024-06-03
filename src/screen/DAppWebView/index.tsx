@@ -13,7 +13,7 @@ import ConfirmTxModal from './ConfirmTxModal';
 import { useGlobalStore } from '../../state/global';
 import { Wallet, isHexString } from 'ethers';
 import { usePreference } from '../../hook/usePreference';
-import { hexToString } from '../../util/string';
+import { addHTTPS, getSearchURL, hexToString, isDomain } from '../../util/string';
 import { useTransaction } from '../../hook/useTransaction';
 import SelectNetworkModal from '../../component/SelectNetworkModal';
 import TextInput from '../../component/TextInput';
@@ -286,7 +286,11 @@ const DAppWebView = () => {
             //   return
             // }
             if (nativeEvent.url !== inputURL) {
-              setInputURL(nativeEvent.url)
+              if (isDomain(nativeEvent.url)) {
+                setInputURL(addHTTPS(nativeEvent.url))
+              } else {
+                setInputURL(getSearchURL(nativeEvent.url))
+              }
               // webRef.current.reload()
             }
           }}

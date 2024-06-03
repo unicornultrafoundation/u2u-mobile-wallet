@@ -272,5 +272,6 @@
   "updateWalletNicknameFail": "Đặt tên ví thất bại",
   "wallet_already_have_nickname": "Ví đã được đặt tên",
   "updateWalletNicknameSuccess": "Đặt tên ví thành công",
-  "yourNickname": "Tên ví"
+  "yourNickname": "Tên ví",
+  "searchWeb": "Tìm kiếm"
 }

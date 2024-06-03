@@ -56,20 +56,3 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     // api_endpoint: "http://192.168.1.38:3000"
   }
 ]
-
-// {
-//     isGroup: true,
-//     name: 'Group name',
-//     image: '',
-//     collections: [
-//         {
-//             "id": "0x34AdaCBbb61AB0345094fFdFe2a6a737530BF155",
-//             "name": "The Solar Adventure",
-//             "image": "https://u2-adv-assets-dev.s3.ap-southeast-1.amazonaws.com/logo.png",
-//             "banner": "https://u2-adv-assets-dev.s3.ap-southeast-1.amazonaws.com/banner.png",
-//             "category": "Membership",
-//             "graph": "https://subgraph.uniultra.xyz/subgraphs/name/u2u/solar_adventure",
-//             "description": "Congratulations to all early supporters of Unicorn Ultra’s Adventure"
-//         }
-//     ]
-// },

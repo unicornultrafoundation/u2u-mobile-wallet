@@ -121,3 +121,31 @@ export const hexToString = (hex: string) => {
   }
   return str;
 }
+
+export const addHTTPS = (str: string) => {
+  if (/^(http|https):\/\//.test(str)) return str
+  return `https://${str}`
+}
+
+export const getSearchURL = (str: string) => {
+  return `https://www.google.com/search?q=${str}`
+}
+
+export const isDomain = (str: string) => {
+  const regex = new RegExp(/^(?!-)[A-Za-z0-9-]+([\-\.]{1}[a-z0-9]+)*\.[A-Za-z]{2,6}$/);
+  return regex.test(str)
+}
+
+export const getDomain = (fullURL: string) => {
+  let domain
+  //find & remove protocol (http, ftp, etc.) and get domain
+  if (fullURL.indexOf('://') > -1) {
+    domain = fullURL.split('/')[2];
+  } if (fullURL.indexOf('//') === 0) {
+    domain = fullURL.split('/')[2];
+  } else {
+    domain = fullURL.split('/')[0];
+  }
+
+  return domain
+}
