@@ -17,6 +17,7 @@ import { addHTTPS, getPredictedURLTypeFromRaw, getSearchURL, hexToString, isDoma
 import { useTransaction } from '../../hook/useTransaction';
 import SelectNetworkModal from '../../component/SelectNetworkModal';
 import TextInput from '../../component/TextInput';
+import WarningModal from './WarningModal';
 
 const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `
@@ -33,6 +34,7 @@ const DAppWebView = () => {
   // const appURL = 'http://192.168.1.38:3000'
   const [url, setURL] = useState(appURL.replace('{{slash}}', '/'))
   const [inputURL, setInputURL] = useState(url)
+  const [modalVisible, setModalVisible] = useState(true);
 
   const [resource, setResource] = useState('')
   const [loading, setLoading] = useState(true)
@@ -217,6 +219,7 @@ const DAppWebView = () => {
         }
       ]}
     >
+      <WarningModal modalVisible={modalVisible} onClose={() => setModalVisible(false)} />
       <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 16}}>
         <TouchableOpacity
           onPress={() => webRef.current.goBack()}
