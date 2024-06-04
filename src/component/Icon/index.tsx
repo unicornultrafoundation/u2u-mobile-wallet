@@ -805,6 +805,14 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'check':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 16 16" fill="none">
+              <Path d="M4.29658 8.44483C4.06785 8.20506 3.68805 8.19612 3.44829 8.42486C3.20853 8.65359 3.19959 9.03339 3.42832 9.27315L5.81004 11.7697C6.05528 12.0268 6.46895 12.0156 6.69998 11.7457L12.4274 5.05463C12.6429 4.80289 12.6135 4.42413 12.3617 4.20865C12.11 3.99316 11.7312 4.02256 11.5158 4.2743L6.50785 10.1248C6.35383 10.3048 6.07805 10.3122 5.91455 10.1408L4.29658 8.44483Z" fill={color || "white"}/>
+            </Svg>
+          </View>
+        )
       default:
         return null
     }

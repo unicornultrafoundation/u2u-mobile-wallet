@@ -56,8 +56,14 @@ export default function WarningModal({modalVisible, onClose}: {
           <Text style={[typography.footnote.medium, {color: preferenceTheme.text.primary, marginVertical: 32}]}>
             {t('safetyDescription')}
           </Text>
-          <View style={{flexDirection: 'row'}}>
-            <CheckBox checked={false} onToggle={() => {}} />
+          <View style={{flexDirection: 'row', width: '100%', gap: 16}}>
+            <CheckBox checked={acceptTerm} onToggle={() => setAcceptTerm(!acceptTerm)} />
+            <View style={{flexShrink: 1}}>
+              <Text style={[typography.body2.medium, {color: preferenceTheme.text.primary}]}>I accept responsibility</Text>
+              <Text style={[typography.caption1.regular, {flexWrap: 'wrap', flexShrink: 1, color: preferenceTheme.text.secondary}]}>
+                I understand that opening a DApp from a URL may carry risks, and I take responsibility for this action.
+              </Text>
+            </View>
           </View>
         </View>
       </View>

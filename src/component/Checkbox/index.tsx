@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { StyleProp, TouchableOpacity, ViewStyle } from "react-native";
 import styles from "./styles";
+import Icon from "../Icon";
 
 export default function CheckBox({checked, onToggle, style}: {
   checked: boolean;
@@ -26,7 +27,9 @@ export default function CheckBox({checked, onToggle, style}: {
       onPress={onToggle}
       style={[styles.container, componentStyle, style]}
     >
-
+      {checked && (
+        <Icon name="check" />
+      )}
     </TouchableOpacity>
   )
 }
