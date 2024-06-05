@@ -1,4 +1,4 @@
-import { Image, Modal, View } from "react-native";
+import { Image, Modal, TouchableOpacity, View } from "react-native";
 import Text from "../../component/Text";
 import { usePreference } from "../../hook/usePreference";
 import { useTranslation } from "react-i18next";
@@ -6,15 +6,33 @@ import { typography } from "../../theme/typography";
 import ILLUS from "../../asset/images/safety_illus.png"
 import { useState } from "react";
 import CheckBox from "../../component/Checkbox";
+import Separator from "../../component/Separator";
+import TextButton from "../../component/Button/TextButton";
+import { useNavigation } from "@react-navigation/native";
 
 export default function WarningModal({modalVisible, onClose}: {
   modalVisible: boolean;
   onClose: () => void
 }) {
+  const navigation = useNavigation<any>()
   const {t} = useTranslation()
-  const {preferenceTheme} = usePreference()
+  const {preferenceTheme, setShowSafetyWarning, showSafetyWarning} = usePreference()
 
   const [acceptTerm, setAcceptTerm] = useState(false)
+  const [showWarning, setShowWarning] = useState(true)
+
+  const handleBack = () => {
+    navigation.goBack()
+  }
+
+  const handleAccept = () => {
+    if (!acceptTerm) return
+    setShowSafetyWarning(showWarning)
+
+    onClose()
+  }
+
+  if (!showSafetyWarning) return null
 
   return (
     <Modal
@@ -56,15 +74,34 @@ export default function WarningModal({modalVisible, onClose}: {
           <Text style={[typography.footnote.medium, {color: preferenceTheme.text.primary, marginVertical: 32}]}>
             {t('safetyDescription')}
           </Text>
-          <View style={{flexDirection: 'row', width: '100%', gap: 16}}>
+          <View style={{flexDirection: 'row', width: '100%', gap: 16, marginBottom: 16}}>
             <CheckBox checked={acceptTerm} onToggle={() => setAcceptTerm(!acceptTerm)} />
             <View style={{flexShrink: 1}}>
-              <Text style={[typography.body2.medium, {color: preferenceTheme.text.primary}]}>I accept responsibility</Text>
+              <Text style={[typography.body2.medium, {color: preferenceTheme.text.primary}]}>
+                {t('acceptResponsibility')}
+              </Text>
               <Text style={[typography.caption1.regular, {flexWrap: 'wrap', flexShrink: 1, color: preferenceTheme.text.secondary}]}>
-                I understand that opening a DApp from a URL may carry risks, and I take responsibility for this action.
+                {t('acceptResponsibilityDetail')}
               </Text>
             </View>
           </View>
+          <View style={{flexDirection: 'row', width: '100%', gap: 16, marginBottom: 16}}>
+            <CheckBox checked={!showWarning} onToggle={() => setShowWarning(!showWarning)} />
+            <View style={{flexShrink: 1}}>
+              <Text style={[typography.body2.medium, {color: preferenceTheme.text.primary}]}>
+                {t('doNotShowMessage')}
+              </Text>
+            </View>
+          </View>
+
+          <Separator style={{width: '100%'}} />
+          <TextButton onPress={handleAccept}>
+            {t('continue')}
+          </TextButton>
+          <Separator style={{width: '100%'}} />
+          <TextButton color="tertiary" onPress={handleBack}>
+            {t('cancel')}
+          </TextButton>
         </View>
       </View>
     </Modal>

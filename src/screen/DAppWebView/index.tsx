@@ -6,7 +6,7 @@ import { useWallet } from '../../hook/useWallet';
 import { useFocusEffect, useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { useNetwork } from '../../hook/useNetwork';
 import loadLocalResource from 'react-native-local-resource';
-import { parseError, parseRun } from '../../util/dapp';
+import { isListedDApp, parseError, parseRun } from '../../util/dapp';
 import Icon from '../../component/Icon';
 import Text from '../../component/Text';
 import ConfirmTxModal from './ConfirmTxModal';
@@ -18,6 +18,7 @@ import { useTransaction } from '../../hook/useTransaction';
 import SelectNetworkModal from '../../component/SelectNetworkModal';
 import TextInput from '../../component/TextInput';
 import WarningModal from './WarningModal';
+import useFetchDappList from '../../hook/useFetchDappList';
 
 const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `
@@ -29,6 +30,7 @@ const DAppWebView = () => {
   const navigation = useNavigation()
   const route = useRoute<any>();
   const {resetTxState} = useTransaction()
+  const {data: dappList} = useFetchDappList();
 
   const appURL = route.params?.url || ""
   // const appURL = 'http://192.168.1.38:3000'
@@ -219,7 +221,10 @@ const DAppWebView = () => {
         }
       ]}
     >
-      <WarningModal modalVisible={modalVisible} onClose={() => setModalVisible(false)} />
+      <WarningModal
+        modalVisible={modalVisible && !isListedDApp(url, dappList)}
+        onClose={() => setModalVisible(false)}
+      />
       <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 16}}>
         <TouchableOpacity
           onPress={() => webRef.current.goBack()}

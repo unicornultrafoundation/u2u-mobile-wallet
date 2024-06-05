@@ -31,6 +31,8 @@ export const isListedDApp = (url: string, dappList: Record<string, any>[]) => {
 
 	const listedDomainList = dappList.map((i) => getDomain(i.url))
 	const domain = getDomain(url)
+	console.log('url', url)
+	console.log('domain', domain)
 
 	return listedDomainList.includes(domain)
 }

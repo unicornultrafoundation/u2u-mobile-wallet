@@ -145,7 +145,7 @@ export const getDomain = (fullURL: string) => {
   //find & remove protocol (http, ftp, etc.) and get domain
   if (fullURL.indexOf('://') > -1) {
     domain = fullURL.split('/')[2];
-  } if (fullURL.indexOf('//') === 0) {
+  } else if (fullURL.indexOf('//') === 0) {
     domain = fullURL.split('/')[2];
   } else {
     domain = fullURL.split('/')[0];

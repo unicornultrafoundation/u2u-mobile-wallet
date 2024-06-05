@@ -95,6 +95,7 @@ const SearchComponent: React.FC = () => {
         containerStyle={{height: 48}}
         placeholder= {t('searchForDAppsOrEnterURL')}
         placeholderTextColor={'#363636'}
+        autoCapitalize='none'
         onTouchStart={() => setIsLayerVisible(true)}
         onChangeText={text => setSearchQuery(text)}
         onBlur={() => setIsLayerVisible(false)}
