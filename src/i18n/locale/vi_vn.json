@@ -278,5 +278,7 @@
   "safetyDescription": "Bạn đang cố gắng mở DApp từ URL không rõ nguồn gốc. Hành động này có thể có tiềm ẩn rủi ro về bảo mật và lừa đảo. Hãy đảm bảo rằng bạn đã xác minh rõ nguồn gốc và tin tưởng URL này trước khi tiếp tục.",
   "acceptResponsibility": "Đồng ý",
   "acceptResponsibilityDetail": "Tôi hiểu rằng việc mở DApp từ URL có thể mang lại rủi ro và tôi hoàn toàn chịu trách nhiệm về hành động này.",
-  "doNotShowMessage": "Không hiển thị thông báo này nữa."
+  "doNotShowMessage": "Không hiển thị thông báo này nữa.",
+  "showSafetyWarning": "Hiển thị cảnh báo",
+  "showSafetyWarningDescription": "Hiển thị cảnh báo khi truy cập dApp lạ"
 }

@@ -100,6 +100,14 @@ const SearchComponent: React.FC = () => {
         onChangeText={text => setSearchQuery(text)}
         onBlur={() => setIsLayerVisible(false)}
         value={searchQuery}
+        onSubmitEditing={() => {
+          if (results.length === 0 && searchQuery.length > 0) {
+            setIsLayerVisible(false)
+            setSearchQuery('')
+            navigation.navigate('DAppWebView', {url: isDomain(searchQuery) ? addHTTPS(searchQuery) : getSearchURL(searchQuery)});
+          }
+        }}
+        blurOnSubmit
         postIcon={() => {
           return (
             <TouchableOpacity
@@ -131,11 +139,9 @@ const SearchComponent: React.FC = () => {
             (results.length === 0 && searchQuery.length > 0) ? (
               <TouchableOpacity
                 onPress={() => {
-                  console.log(searchQuery)
-                  console.log(isDomain(searchQuery))
-                  navigation.navigate('DAppWebView', {url: isDomain(searchQuery) ? addHTTPS(searchQuery) : getSearchURL(searchQuery)});
                   setIsLayerVisible(false)
                   setSearchQuery('')
+                  navigation.navigate('DAppWebView', {url: isDomain(searchQuery) ? addHTTPS(searchQuery) : getSearchURL(searchQuery)});
                 }}
               >
                 <Text
