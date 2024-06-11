@@ -141,7 +141,7 @@ export const useTransaction = () => {
         chainId,
       }
     }
-    console.log(finalTx)
+
     const signedTx = await signTransaction(
       finalTx,
       wallet.privateKey,

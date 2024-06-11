@@ -33,7 +33,8 @@ export default function SignExternalRequestScreen() {
     }, [route]),
   );
   const signRequestID = route.params?.signRequestID || ""
-
+  
+  console.log('signRequestID', signRequestID)
   const {data, isLoading, approveSignRequest, rejectRequest} = useSignRequest(signRequestID)
 
   const {chainId, switchNetwork} = useNetwork()
@@ -145,20 +146,22 @@ export default function SignExternalRequestScreen() {
               {shortenAddress(data.rawData.to, 15, 15)}
             </Text>
           </View>
-          <View style={{flexDirection: 'row', paddingVertical: 6, alignItems: 'center', justifyContent: 'space-between'}}>
-            <Text>
-              Value:
-            </Text>
-            <Text>
-              {formatNumberString(formatEther(data.rawData.value).toString())} U2U
-            </Text>
-          </View>
+          {data.rawData.value && (
+            <View style={{flexDirection: 'row', paddingVertical: 6, alignItems: 'center', justifyContent: 'space-between'}}>
+              <Text>
+                Value:
+              </Text>
+              <Text>
+                {formatNumberString(formatEther(data.rawData.value).toString())} U2U
+              </Text>
+            </View>
+          )}
           <View style={{flexDirection: 'row', paddingVertical: 6, alignItems: 'center', justifyContent: 'space-between'}}>
             <Text>
               Data:
             </Text>
             <Text>
-              {data.rawData.data ? shortenAddress(data.rawData.data, 15, 15) : '--'}
+              {data.rawData.data ? shortenAddress(data.rawData.data, 15, 15) : (data.rawData.message || '--')}
             </Text>
           </View>
         </View>

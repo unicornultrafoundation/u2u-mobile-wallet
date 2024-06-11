@@ -24,7 +24,7 @@ export default function SessionApprovalScreen() {
   const { setRouteName } = useGlobalStore();
   const { switchNetwork, chainId } = useNetwork()
 
-  const [sessionID, setSessionID] = useState('')
+  const [sessionID, setSessionID] = useState('b7c530c7-f9a6-4ca9-9a5c-19ec3ff42e10')
   const [loading, setLoading] = useState(false)
 
   const {data: sessionDetail, isLoading, approveSession} = useSessionDetail(sessionID)
