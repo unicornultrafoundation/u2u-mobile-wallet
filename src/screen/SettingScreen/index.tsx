@@ -13,12 +13,13 @@ import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/nativ
 import { useGlobalStore } from '../../state/global';
 import { usePreference } from '../../hook/usePreference';
 import DarkModeToggle from '../../component/DarkModeToggle';
+import Toggle from '../../component/Toggle';
 
 const VERSION = DeviceInfo.getVersion()
 
 const SettingScreen = () => {
   const navigation = useNavigation<any>()
-  const {preferenceTheme} = usePreference()
+  const {preferenceTheme, showSafetyWarning, setShowSafetyWarning} = usePreference()
 
   const { setRouteName } = useGlobalStore();
 
@@ -193,6 +194,30 @@ const SettingScreen = () => {
           </View>
           <View>
             <DarkModeToggle />
+          </View>
+        </View>
+        <View style={styles.settingItem}>
+          <Icon name={'warning'} width={20} height={20}/>
+          <View style={styles.settingItemTextContainer}>
+            <Text style={theme.typography.body.medium}>
+              {t('showSafetyWarning')}
+            </Text>
+            <Text
+              style={[
+                theme.typography.caption1.medium,
+                {color: preferenceTheme.text.secondary}
+              ]}
+            >
+              {t('showSafetyWarningDescription')}
+            </Text>
+          </View>
+          <View>
+            <Toggle
+              isOn={showSafetyWarning}
+              onToggle={() => {
+                setShowSafetyWarning(!showSafetyWarning)
+              }}
+            />
           </View>
         </View>
       </ScrollView>

@@ -1,9 +1,9 @@
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { usePreferenceStore } from "../state/preferences"
 import { darkTheme, lightTheme } from "../theme/color"
 
 export const usePreference = () => {
-  const {darkMode, toggleDarkMode} = usePreferenceStore()
+  const {darkMode, toggleDarkMode, showSafetyWarning, setShowSafetyWarning} = usePreferenceStore()
 
   const preferenceTheme = useMemo(() => {
     return darkMode ? darkTheme : lightTheme
@@ -12,6 +12,8 @@ export const usePreference = () => {
   return {
     darkMode,
     preferenceTheme,
-    toggleDarkMode
+    toggleDarkMode,
+    showSafetyWarning,
+    setShowSafetyWarning
   }
 }

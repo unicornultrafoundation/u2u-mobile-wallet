@@ -272,5 +272,13 @@
   "updateWalletNicknameFail": "Update wallet nickname fail",
   "wallet_already_have_nickname": "Wallet already have nickname",
   "updateWalletNicknameSuccess": "Update wallet nickname success",
-  "yourNickname": "Your nickname"
+  "yourNickname": "Your nickname",
+  "searchWeb": "Search",
+  "safetyWarning": "Safety warning",
+  "safetyDescription": "You are attempting to open a DApp from an unknown URL. This action may pose security risks and potential scams. Please ensure that you have verified this URL and trust the source before proceeding.",
+  "acceptResponsibility": "I accept responsibility",
+  "acceptResponsibilityDetail": "I understand that opening a DApp from a URL may carry risks, and I take responsibility for this action.",
+  "doNotShowMessage": "Don't show this message again",
+  "showSafetyWarning": "Popup warnings",
+  "showSafetyWarningDescription": "Show warning when access unknown dApp"
 }

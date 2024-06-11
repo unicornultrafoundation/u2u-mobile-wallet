@@ -6,17 +6,19 @@ import { useWallet } from '../../hook/useWallet';
 import { useFocusEffect, useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { useNetwork } from '../../hook/useNetwork';
 import loadLocalResource from 'react-native-local-resource';
-import { parseError, parseRun } from '../../util/dapp';
+import { isListedDApp, parseError, parseRun } from '../../util/dapp';
 import Icon from '../../component/Icon';
 import Text from '../../component/Text';
 import ConfirmTxModal from './ConfirmTxModal';
 import { useGlobalStore } from '../../state/global';
 import { Wallet, isHexString } from 'ethers';
 import { usePreference } from '../../hook/usePreference';
-import { hexToString } from '../../util/string';
+import { addHTTPS, getPredictedURLTypeFromRaw, getSearchURL, hexToString, isDomain, isURL } from '../../util/string';
 import { useTransaction } from '../../hook/useTransaction';
 import SelectNetworkModal from '../../component/SelectNetworkModal';
 import TextInput from '../../component/TextInput';
+import WarningModal from './WarningModal';
+import useFetchDappList from '../../hook/useFetchDappList';
 
 const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `
@@ -28,11 +30,13 @@ const DAppWebView = () => {
   const navigation = useNavigation()
   const route = useRoute<any>();
   const {resetTxState} = useTransaction()
+  const {data: dappList} = useFetchDappList();
 
   const appURL = route.params?.url || ""
   // const appURL = 'http://192.168.1.38:3000'
   const [url, setURL] = useState(appURL.replace('{{slash}}', '/'))
   const [inputURL, setInputURL] = useState(url)
+  const [modalVisible, setModalVisible] = useState(true);
 
   const [resource, setResource] = useState('')
   const [loading, setLoading] = useState(true)
@@ -118,8 +122,7 @@ const DAppWebView = () => {
   }, [wallet, networkConfig])
 
   useEffect(() => {
-    console.log('url change', url)
-    setInputURL(url)
+    setInputURL(getPredictedURLTypeFromRaw(url))
   }, [url])
 
   const handleConfirmTx = (txHash: string) => {
@@ -218,6 +221,10 @@ const DAppWebView = () => {
         }
       ]}
     >
+      <WarningModal
+        modalVisible={modalVisible && !isListedDApp(url, dappList)}
+        onClose={() => setModalVisible(false)}
+      />
       <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 16}}>
         <TouchableOpacity
           onPress={() => webRef.current.goBack()}
@@ -285,9 +292,9 @@ const DAppWebView = () => {
             // if (Platform.OS === 'ios') {
             //   return
             // }
+            
             if (nativeEvent.url !== inputURL) {
-              setInputURL(nativeEvent.url)
-              // webRef.current.reload()
+              setInputURL(getPredictedURLTypeFromRaw(nativeEvent.url))
             }
           }}
           onLoadStart={() => !alreadyInited && setLoadingURL(true)}
@@ -297,7 +304,7 @@ const DAppWebView = () => {
               setAlreadyInited(true)
             }
           }}
-          source={{ uri: url }}
+          source={{ uri: getPredictedURLTypeFromRaw(url) }}
           style={styles.webview}
           containerStyle={{
             flex: loadingURL || error !== '' ? 0 : 1,
