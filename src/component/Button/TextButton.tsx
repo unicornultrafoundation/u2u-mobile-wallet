@@ -12,7 +12,7 @@ const TextButton = ({color, fullWidth, children, style, textStyle, ...rest}: Bas
       case 'secondary':
         return colorConfig.secondary[500]
       case 'tertiary':
-        return colorConfig.neutral[800]
+        return colorConfig.neutral[500]
       case 'error':
         return colorConfig.error[300]
       default:

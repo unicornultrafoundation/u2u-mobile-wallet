@@ -8,7 +8,9 @@ interface PreferenceState {
   showBalance: boolean;
   toggleShowBalance: () => void
   language: string;
-  setLangauge: (langKey: string) => void
+  setLangauge: (langKey: string) => void;
+  showSafetyWarning: boolean;
+  setShowSafetyWarning: (showSafetyWarning: boolean) => void;
 }
 
 export const usePreferenceStore = create<PreferenceState>()(
@@ -19,7 +21,9 @@ export const usePreferenceStore = create<PreferenceState>()(
       showBalance: true,
       toggleShowBalance: () => set({ showBalance: !(get().showBalance) }),
       language: "en",
-      setLangauge: (langKey: string) => set({ language: langKey })
+      setLangauge: (langKey: string) => set({ language: langKey }),
+      showSafetyWarning: true,
+      setShowSafetyWarning: (showSafetyWarning: boolean) => set({ showSafetyWarning }),
     }),
     {
       name: "preference-storage", // unique name

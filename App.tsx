@@ -67,7 +67,8 @@ const queryClient = new QueryClient()
 //   }
 // );
 
-const NAVIGATION_IDS = ['discover', 'external-sign'];
+const NAVIGATION_IDS = ['discover', 'ecosystem', 'external-sign'];
+
 function buildDeepLinkFromNotificationData(data: any): string | null {
   console.log('buildDeepLinkFromNotificationData', data)
   const navigationId = data?.navigationId;
@@ -83,6 +84,12 @@ function buildDeepLinkFromNotificationData(data: any): string | null {
   // if (navigationId === 'settings') {
   //   return 'u2umobilewallet://settings';
   // }
+  // if (navigationId === 'home') {
+  //   return 'u2umobilewallet://home';
+  // }
+  if (navigationId === 'discover') {
+    return 'u2umobilewallet://discover-dashboard';
+  }
   const url = data?.url;
   if (typeof url === 'string') {
     return `u2umobilewallet://ecosystem/${url}`
@@ -106,7 +113,11 @@ const linking = {
           DAppWebView: 'ecosystem/:url'
         }
       },
-      // SettingStack: 'setting'
+      DiscoverStack: {
+        screens: {
+          Home: 'discover-dashboard'
+        }
+      }
     }
   },
   async getInitialURL() {

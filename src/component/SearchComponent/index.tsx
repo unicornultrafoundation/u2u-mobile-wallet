@@ -11,6 +11,8 @@ import { useNetwork } from '../../hook/useNetwork';
 import { useTranslation } from 'react-i18next';
 import { usePreference } from '../../hook/usePreference';
 import { logErrorForMonitoring } from '../../hook/useCrashlytics';
+import { addHTTPS, getSearchURL, isDomain } from '../../util/string';
+import { useNavigation } from '@react-navigation/native';
 // Define the types
 type SearchResult = {
   // id: number;
@@ -31,6 +33,7 @@ type APIResponse = {
 // };
 
 const SearchComponent: React.FC = () => {
+  const navigation = useNavigation<any>();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLayerVisible, setIsLayerVisible] = useState<boolean>(false);
@@ -92,10 +95,19 @@ const SearchComponent: React.FC = () => {
         containerStyle={{height: 48}}
         placeholder= {t('searchForDAppsOrEnterURL')}
         placeholderTextColor={'#363636'}
+        autoCapitalize='none'
         onTouchStart={() => setIsLayerVisible(true)}
         onChangeText={text => setSearchQuery(text)}
         onBlur={() => setIsLayerVisible(false)}
         value={searchQuery}
+        onSubmitEditing={() => {
+          if (results.length === 0 && searchQuery.length > 0) {
+            setIsLayerVisible(false)
+            setSearchQuery('')
+            navigation.navigate('DAppWebView', {url: isDomain(searchQuery) ? addHTTPS(searchQuery) : getSearchURL(searchQuery)});
+          }
+        }}
+        blurOnSubmit
         postIcon={() => {
           return (
             <TouchableOpacity
@@ -125,13 +137,22 @@ const SearchComponent: React.FC = () => {
             <ActivityIndicator />
           ) : (
             (results.length === 0 && searchQuery.length > 0) ? (
-              <Text
-                style={{
-                  marginHorizontal: 16
+              <TouchableOpacity
+                onPress={() => {
+                  setIsLayerVisible(false)
+                  setSearchQuery('')
+                  navigation.navigate('DAppWebView', {url: isDomain(searchQuery) ? addHTTPS(searchQuery) : getSearchURL(searchQuery)});
                 }}
               >
-                No data
-              </Text>
+                <Text
+                  style={{
+                    marginHorizontal: 16
+                  }}
+                >
+                  {isDomain(searchQuery) ? searchQuery : `${t('searchWeb')} ${searchQuery}`}
+                  {/* No data */}
+                </Text>
+              </TouchableOpacity>
             ) : (
               <FlatList
                 data={results}

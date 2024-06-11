@@ -50,6 +50,8 @@ export default function NFTGroups({groupItem}: {
     }
   };
 
+  if (totalGroupBalance === 0) return null
+
   return (
     <Collapsible
       // open={expandedItem === id}
