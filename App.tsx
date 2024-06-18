@@ -176,11 +176,15 @@ function App(): JSX.Element {
 
   const {i18n} = useTranslation<string>()
 
-  const {submitDeviceID, submitDeviceNotiToken} = useTracking()
+  const {submitDeviceID, submitDeviceNotiToken, subscribeSessionTopic} = useTracking()
   
   useEffect(() => {
     submitDeviceID()
   }, [submitDeviceID])
+
+  useEffect(() => {
+    subscribeSessionTopic()
+  }, [subscribeSessionTopic])
 
   useEffect(() => {
     submitDeviceNotiToken()
