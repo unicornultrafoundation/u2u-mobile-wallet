@@ -24,7 +24,7 @@ export const useMultipleTokenBalance = (tokenAddress: TokenMeta[]) => {
   const queries = useQueries({
     queries: tokenAddress.map((i) => {
       return {
-        queryKey: ["token-balance", i.tokenAddress, i.decimals],
+        queryKey: ["token-balance", address, blockExplorer, i.tokenAddress, i.decimals],
         queryFn: () => {
           if (i.tokenAddress !== '' && i.tokenAddress !== '0x') return fetchURC20Balance(blockExplorer, address, i.tokenAddress, i.decimals)
           return fetchNativeBalance(blockExplorer, address)
