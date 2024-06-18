@@ -8,7 +8,7 @@ import styles from './styles';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
-import { useTotalSupply } from '../../hook/useTotalSupply';
+import { useCirculatingSupply } from '../../hook/useCirculatingSupply';
 import { useEpochRewards } from '../../hook/useEpochRewards';
 import { useFetchAllValidator } from '../../hook/useFetchAllValidator';
 import { useCurrentEpoch } from '../../hook/useCurrentEpoch';
@@ -32,7 +32,7 @@ const StakingDataCard = () => {
   const { t } = useTranslation<string>()
   const { stakingContractOptions } = useStaking()
   const { validators } = useFetchAllValidator()
-  const { supply } = useTotalSupply(stakingContractOptions)
+  const { supply } = useCirculatingSupply(stakingContractOptions)
   const { fetchEpoch } = useCurrentEpoch(stakingContractOptions)
   const { fetchRewardsPerEpoch } = useEpochRewards(stakingContractOptions)
 
