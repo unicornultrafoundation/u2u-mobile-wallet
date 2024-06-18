@@ -95,7 +95,7 @@ const ValidatorDetailScreen = () => {
       <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:'center'}}>
         <View style={{width: 42, height: 42, paddingRight: 8}}>
           <SvgUri
-            uri="https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"
+            uri="https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg"
             width="100%"
             height="100%"
           />

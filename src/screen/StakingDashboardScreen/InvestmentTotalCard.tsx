@@ -46,7 +46,7 @@ const InvestmentTotalCard = () => {
           <Text>{value}</Text>
           <View style={{width: 22, height: 22, paddingLeft: 6}}>
             <SvgUri
-              uri="https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"
+              uri="https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg"
               width="100%"
               height="100%"
             />
