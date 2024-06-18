@@ -54,7 +54,7 @@ const SearchComponent: React.FC = () => {
             networkConfig.dappURL,
           );
           const data: SearchResult[] = await response.json();
-          setResults(data.filter((i) => i.title.includes(debouncedSearchQuery)));
+          setResults(data.filter((i) => i.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase())));
           setSearching(false)
         } catch (error) {
           setSearching(false)
