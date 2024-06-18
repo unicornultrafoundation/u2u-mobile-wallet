@@ -140,7 +140,7 @@ const UnstakeSection = ({onCancel, item, actualStakedAmount} : {
           return (
             <View style={{width: 18, height: 18}}>
               <SvgUri
-                uri={"https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"}
+                uri={"https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg"}
                 width="100%"
                 height="100%"
               />

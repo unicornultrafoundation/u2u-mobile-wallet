@@ -69,7 +69,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
                   symbol: 'U2U',
                   decimals: 18,
                   address: '0x',
-                  logo: 'https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg',
+                  logo: 'https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg',
                 });
                 navigation.navigate('SendToken');
               }}>
@@ -92,7 +92,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
                     symbol: 'U2U',
                     decimals: 18,
                     address: '0x',
-                    logo: 'https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg',
+                    logo: 'https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg',
                   },
                 });
               }}>

@@ -136,7 +136,7 @@ const DelegationItem = ({item}: {
       <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 4}}>
         <View style={{width: 34, height: 34, marginRight: 8}}>
           <SvgUri
-            uri={"https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"}
+            uri={"https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg"}
             width="100%"
             height="100%"
           />

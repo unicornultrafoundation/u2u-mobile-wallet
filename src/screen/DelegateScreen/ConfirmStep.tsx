@@ -63,7 +63,7 @@ const ConfirmStep = ({onNextStep, onBack}: {
             <View style={{flexDirection: 'row', alignItems: 'center', paddingTop: 8}}>
               <View style={{width: 24, height: 24}}>
                 <SvgUri
-                  uri={"https://raw.githubusercontent.com/phongnhat19/explorer-assets/master/public_assets/token_logos/u2u.svg"}
+                  uri={"https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg"}
                   width="100%"
                   height="100%"
                 />
