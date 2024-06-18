@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios --simulator='iPhone 15 Pro Max'",
+    "android": "RCT_METRO_PORT=8088 react-native run-android --port=8088",
+    "ios": "RCT_METRO_PORT=8088 react-native run-ios --simulator='iPhone 15 Pro Max' --port=8088",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
