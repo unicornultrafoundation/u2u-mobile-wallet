@@ -161,7 +161,7 @@ export const useTracking = () => {
       const rs = await fetch(endpoint, requestOptions)
       const rsJSON = await rs.json()
 
-      if (rsJSON.statusCode !== 200) return
+      if (rsJSON.statusCode && rsJSON.statusCode !== 200) return
       
       rsJSON.forEach(async (i: any) => {
         await messaging().subscribeToTopic(`u2u-connect-session-${i.id}`)

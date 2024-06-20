@@ -152,7 +152,6 @@ const linking = {
 
 function App(): JSX.Element {
   useCrashlytics()
-  useNotifications()
 
   const {unlocked} = useGlobalStore()
   const { type, isConnected } = useNetInfo();

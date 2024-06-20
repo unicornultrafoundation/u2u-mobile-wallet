@@ -55,7 +55,7 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     ecosystemSettingURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/ecosystem_setting.json",
     suppoted_nfts_endpoint: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/supported_nfts.json",
     genesisWallet: [],
-    api_endpoint: "https://sa-backend-dev.uniultra.xyz"
-    // api_endpoint: "http://192.168.1.38:3000",
+    // api_endpoint: "https://sa-backend-dev.uniultra.xyz"
+    api_endpoint: "http://192.168.1.38:3000",
   }
 ]

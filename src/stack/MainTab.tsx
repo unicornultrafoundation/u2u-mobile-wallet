@@ -7,10 +7,12 @@ import StakingStackScreen from "./StakingStack";
 import SettingStackScreen from "./SettingStack";
 import { useRemoteConfig } from "../hook/useRemoteConfig";
 import DeviceInfo from "react-native-device-info";
+import { useNotifications } from "../hook/useNotifications";
 
 const Tab = createBottomTabNavigator();
 
 export default function MainTabNav() {
+  useNotifications()
   const {remoteConfig} = useRemoteConfig()
 
   return (

@@ -275,7 +275,8 @@
   "yourNickname": "Your nickname",
   "approvalSession": "Session approval",
   "approveSessionSuccess": "Session approved",
-  "signExternalRequest": "Approve sign request",
+  "signExternalRequestMessage": "Signature Request",
+  "signExternalRequestTx": "Transaction Request",
   "requestAlreadySigned": "Request already signed",
   "requestAlreadyRejected": "Request already rejected",
   "requestExpired": "Request expired",
@@ -288,5 +289,8 @@
   "acceptResponsibilityDetail": "I understand that opening a DApp from a URL may carry risks, and I take responsibility for this action.",
   "doNotShowMessage": "Don't show this message again",
   "showSafetyWarning": "Popup warnings",
-  "showSafetyWarningDescription": "Show warning when access unknown dApp"
+  "showSafetyWarningDescription": "Show warning when access unknown dApp",
+  "message": "Message",
+  "signMessageWarning": "Please review the message carefully before signing.",
+  "txData": "Data"
 }

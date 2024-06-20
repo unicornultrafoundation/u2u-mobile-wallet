@@ -9,9 +9,19 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  dappInfoContainer: {
+    marginHorizontal: 20,
+    borderRadius: 20,
+    padding: 16,
+    marginBottom: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 12
+  },
   requestInfoContainer: {
+    borderWidth: 1,
     borderRadius: 12,
     padding: 16,
-    marginHorizontal: 20
+    marginTop: 16
   }
 })

@@ -3,19 +3,21 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Text from '../../component/Text';
 import { useGlobalStore } from "../../state/global";
 import { useCallback, useEffect, useState } from "react";
-import { ActivityIndicator, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, TouchableOpacity, View, Image } from "react-native";
 import { styles } from "./styles";
 import Icon from "../../component/Icon";
 import theme from "../../theme";
 import { usePreferenceStore } from "../../state/preferences";
 import { darkTheme, lightTheme } from "../../theme/color";
 import { useTranslation } from "react-i18next";
-import { SignRequestStatus, useSignRequest } from "../../hook/useSignRequest";
+import { SignRequestStatus, SignRequestType, useSignRequest } from "../../hook/useSignRequest";
 import Toast from "react-native-toast-message";
-import { formatNumberString, shortenAddress } from "../../util/string";
-import { formatEther } from "ethers";
 import { useNetwork } from "../../hook/useNetwork";
 import Button from "../../component/Button";
+import { typography } from "../../theme/typography";
+import SignMessageDetail from "./SignMessageDetail";
+import SignTxDetail from "./SignTxDetail";
+import { SvgUri } from "react-native-svg";
 
 export default function SignExternalRequestScreen() {
   const { darkMode } = usePreferenceStore();
@@ -34,9 +36,7 @@ export default function SignExternalRequestScreen() {
   );
   const signRequestID = route.params?.signRequestID || ""
   
-  console.log('signRequestID', signRequestID)
   const {data, isLoading, approveSignRequest, rejectRequest} = useSignRequest(signRequestID)
-
   const {chainId, switchNetwork} = useNetwork()
   const [loading, setLoading] = useState(false)
 
@@ -118,70 +118,67 @@ export default function SignExternalRequestScreen() {
     <SafeAreaView
       style={[styles.container, {backgroundColor: preferenceTheme.background.background}]}
     >
-      <View style={[styles.screenHeader, {paddingTop: 16, paddingBottom: 16}]}>
+      <View style={[styles.screenHeader, {paddingVertical: 16, paddingHorizontal: 20}]}>
+        <TouchableOpacity onPress={handleReject}>
+          <Icon name="arrow-left" width={24} height={24} />
+        </TouchableOpacity>
         <Text
           style={[
             theme.typography.title3.bold,
             { flex: 1, textAlign: 'center', color: preferenceTheme.text.title }
           ]}>
-          {t('signExternalRequest')}
+          {data.type === SignRequestType.SIGN_MESSAGE ? t('signExternalRequestMessage') : t('signExternalRequestTx') }
+        </Text>
+        <View style={{width: 24, height: 24}} />
+      </View>
+      <View style={[styles.dappInfoContainer, {backgroundColor: '#1F2225'}]}>
+        {data.session.dAppMetadata.logo ? (
+          data.session.dAppMetadata.logo.includes('.svg') ? (
+            <SvgUri
+              uri={data.session.dAppMetadata.logo}
+              width="100%"
+              height="100%"
+            />
+          ) : (
+            <Image source={{uri: data.session.dAppMetadata.logo}} style={{ width: 48, height: 48 }}/>
+          )
+        ) : (
+          <Icon
+            name='u2u'
+            width={48}
+            height={48}
+          />
+        )}
+        <Text style={[typography.title3.regular, {color: preferenceTheme.text.disabled}]}>
+          {data.session.dAppMetadata.name}
         </Text>
       </View>
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, marginHorizontal: 20}}>
+        <Text style={[typography.headline.bold, preferenceTheme.text.title]}>
+          {t('details')}
+        </Text>
         {/* Tx Info section */}
-        <View style={[styles.requestInfoContainer, {backgroundColor: preferenceTheme.background.surface}]}>
-          <View style={{flexDirection: 'row', paddingVertical: 6, alignItems: 'center', justifyContent: 'space-between'}}>
-            <Text>
-              From:
-            </Text>
-            <Text>
-              {shortenAddress(data.rawData.from, 15, 15)}
-            </Text>
-          </View>
-          <View style={{flexDirection: 'row', paddingVertical: 6, alignItems: 'center', justifyContent: 'space-between'}}>
-            <Text>
-              To:
-            </Text>
-            <Text>
-              {shortenAddress(data.rawData.to, 15, 15)}
-            </Text>
-          </View>
-          {data.rawData.value && (
-            <View style={{flexDirection: 'row', paddingVertical: 6, alignItems: 'center', justifyContent: 'space-between'}}>
-              <Text>
-                Value:
-              </Text>
-              <Text>
-                {formatNumberString(formatEther(data.rawData.value).toString())} U2U
-              </Text>
-            </View>
-          )}
-          <View style={{flexDirection: 'row', paddingVertical: 6, alignItems: 'center', justifyContent: 'space-between'}}>
-            <Text>
-              Data:
-            </Text>
-            <Text>
-              {data.rawData.data ? shortenAddress(data.rawData.data, 15, 15) : (data.rawData.message || '--')}
-            </Text>
-          </View>
-        </View>
+        {data.type === SignRequestType.SIGN_MESSAGE ? <SignMessageDetail data={data} /> : <SignTxDetail data={data} />}
       </View>
-      <View>
+      <View style={{flexDirection: 'row', gap: 10, paddingHorizontal: 20, paddingBottom: 32}}>
         <Button
-          style={{borderRadius: 60, marginBottom: 12, marginHorizontal: 16}}
+          style={{
+            borderRadius: 60,
+            flex: 1,
+            backgroundColor: '#1F2225',
+          }}
+          textStyle={theme.typography.label.medium}
+          onPress={handleReject}
+        >
+          {t('reject')}
+        </Button>
+        <Button
+          style={{borderRadius: 60, flex: 1}}
           textStyle={theme.typography.label.medium}
           onPress={handleConfirm}
           loading={loading}
         >
           {t('confirm')}
-        </Button>
-        <Button
-          style={{borderRadius: 60, marginHorizontal: 16}}
-          textStyle={theme.typography.label.medium}
-          onPress={handleReject}
-          color="tertiary"
-        >
-          {t('reject')}
         </Button>
       </View>
     </SafeAreaView>
