@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { SUBMIT_DEVICE_ID_ENDPOINT, SUBMIT_DEVICE_NOTIFICATION_TOKEN, SUBMIT_WALLET_ENDPOINT } from "../config/endpoint"
+import { GET_SESSION_BY_WALLET, SUBMIT_DEVICE_ID_ENDPOINT, SUBMIT_DEVICE_NOTIFICATION_TOKEN, SUBMIT_WALLET_ENDPOINT } from "../config/endpoint"
 import { useNetwork } from "./useNetwork"
 import DeviceInfo from "react-native-device-info"
 import { useLocalStore } from "../state/local"
@@ -148,12 +148,37 @@ export const useTracking = () => {
     }
   }, [wallet, networkConfig])
 
+  const subscribeSessionTopic = useCallback(async () => {
+    try {
+      if (!networkConfig || !networkConfig.api_endpoint) return
+
+      const endpoint = `${networkConfig.api_endpoint}${GET_SESSION_BY_WALLET}/${wallet.address}`
+
+      const requestOptions: Record<string, any> = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+      const rs = await fetch(endpoint, requestOptions)
+      const rsJSON = await rs.json()
+
+      if (rsJSON.statusCode !== 200) return
+      
+      rsJSON.forEach(async (i: any) => {
+        await messaging().subscribeToTopic(`u2u-connect-session-${i.id}`)
+      })
+
+    } catch (error) {
+      logErrorForMonitoring(error as any, "subscribeSessionTopic error")
+    }
+  }, [wallet, networkConfig])
+
   return {
     submitDeviceID,
     submitDeviceNotiToken,
     registerWallet,
     getAppCheckToken,
     getAppFlyerUID,
+    subscribeSessionTopic,
     deviceID
   }
 }

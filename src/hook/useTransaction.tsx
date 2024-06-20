@@ -120,6 +120,8 @@ export const useTransaction = () => {
       ) || "0"
     }
 
+    console.log('rawTxObj', rawTxObj)
+
     const signedTx = await signTransaction(rawTxObj, wallet.privateKey, rpc)
     txStore.setTxStatus('sending')
     const rs = await sendSignedTransaction(rpc, signedTx)
@@ -129,6 +131,24 @@ export const useTransaction = () => {
     txStore.setTxHash(rs.hash.toString())
     return rs
   }, [wallet.privateKey, wallet.address, rpc, txStore])
+
+  const signTx = useCallback(async (txObject: Record<string, any>) => {
+    const finalTx = {
+      ...txObject,
+      ...{
+        from: wallet.address,
+        nonce: await getNonce(rpc, wallet.address),
+        chainId,
+      }
+    }
+
+    const signedTx = await signTransaction(
+      finalTx,
+      wallet.privateKey,
+      rpc
+    )
+    return signedTx
+  }, [wallet.privateKey, wallet.address, rpc, chainId])
 
   const fetchTxReceipt = useCallback(async (hash: string) => {
     return getTxReceipt(hash, rpc)
@@ -146,6 +166,7 @@ export const useTransaction = () => {
     estimateGasLimit,
     submitTx,
     submitRawTx,
+    signTx,
     fetchTxReceipt,
     fetchTxDetail
   }

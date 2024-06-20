@@ -1,5 +1,6 @@
 export const SUBMIT_DEVICE_ID_ENDPOINT = '/devices'
 export const SUBMIT_DEVICE_NOTIFICATION_TOKEN = '/wallets/register-notification-devices'
+export const GET_SESSION_BY_WALLET = '/sessions/wallet'
 export const SUBMIT_WALLET_ENDPOINT = '/wallets'
 export const SUBMIT_WALLET_NICKNAME_ENDPOINT = '/wallets/nickname'
 export const GET_WALLET_NICKNAME_ENDPOINT = '/wallets/'
