@@ -13,7 +13,7 @@ import ConfirmTxModal from './ConfirmTxModal';
 import { useGlobalStore } from '../../state/global';
 import { Wallet, isHexString } from 'ethers';
 import { usePreference } from '../../hook/usePreference';
-import { addHTTPS, getPredictedURLTypeFromRaw, getSearchURL, hexToString, isDomain, isURL } from '../../util/string';
+import { getPredictedURLTypeFromRaw, hexToString } from '../../util/string';
 import { useTransaction } from '../../hook/useTransaction';
 import SelectNetworkModal from '../../component/SelectNetworkModal';
 import TextInput from '../../component/TextInput';

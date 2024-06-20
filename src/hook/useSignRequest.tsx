@@ -5,7 +5,8 @@ import { Session } from "./useSessionDetail";
 import { useCallback } from "react";
 import { useTransaction } from "./useTransaction";
 import BigNumber from "bignumber.js";
-import { Wallet } from "ethers";
+import { Wallet, isHexString } from "ethers";
+import { hexToString } from "../util/string";
 
 export enum SignRequestStatus {
   STATUS_PENDING = "pending",
@@ -55,7 +56,7 @@ export const useSignRequest = (requestID: string) => {
   const approveSignRequest = useCallback(async () => {
     if (!data || !data.rawData || !networkConfig) return
     if (data.type === SignRequestType.SIGN_MESSAGE) {
-      const rawMessage = data.rawData.message
+      const rawMessage = isHexString(data.rawData.message) ? hexToString(data.rawData.message.replace("0x", "")) : data.rawData.message
       const signer = new Wallet(wallet.privateKey)
       const signedData = await signer.signMessage(rawMessage)
 
