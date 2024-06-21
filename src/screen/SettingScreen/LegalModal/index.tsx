@@ -24,12 +24,12 @@ const LegalModal = ({trigger}: {
 
   const handleTermsPress = () => {
     // Xử lý khi người dùng nhấn vào "Terms"
-    Linking.openURL('https://docs.uniultra.xyz/services/wallets/u2u-super-app/policy');
+    Linking.openURL('https://docs.u2u.xyz/services/wallets/u2u-super-app/policy');
   };
 
   const handlePrivacyPress = () => {
     // Xử lý khi người dùng nhấn vào "Privacy Policy"
-    Linking.openURL('https://docs.uniultra.xyz/services/wallets/u2u-super-app/policy');
+    Linking.openURL('https://docs.u2u.xyz/services/wallets/u2u-super-app/policy');
   };
   
   return (
