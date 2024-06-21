@@ -20,7 +20,7 @@ export const useNetworkStore = create<NetworkState>()(
   persist<NetworkState>(
     (set) => ({
       name: "Testnet",
-      rpc: "https://rpc-nebulas-testnet.uniultra.xyz",
+      rpc: "https://rpc-nebulas-testnet.u2u.xyz",
       chainId: "2484",
       blockExplorer: "https://testnet.u2uscan.xyz",
       totalStakedAmount: "0",
@@ -30,7 +30,7 @@ export const useNetworkStore = create<NetworkState>()(
       resetToDefault: () => {
         set({
           name: "Testnet",
-          rpc: "https://rpc-nebulas-testnet.uniultra.xyz",
+          rpc: "https://rpc-nebulas-testnet.u2u.xyz",
           chainId: "2484",
           blockExplorer: "https://testnet.u2uscan.xyz",
           totalStakedAmount: "0",
