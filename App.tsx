@@ -78,9 +78,6 @@ function buildDeepLinkFromNotificationData(data: any): string | null {
     console.log('here ', `u2umobilewallet://wallet/external-sign/${signRequestID}`)
     return `u2umobilewallet://wallet/external-sign/${signRequestID}`;
   }
-  // if (navigationId === 'settings') {
-  //   return 'u2umobilewallet://settings';
-  // }
   // if (navigationId === 'home') {
   //   return 'u2umobilewallet://home';
   // }
@@ -102,7 +99,8 @@ const linking = {
     screens: {
       WalletStack: {
         screens: {
-          SignExternalRequest: 'wallet/external-sign/:signRequestID'
+          SignExternalRequest: 'wallet/external-sign/:signRequestID',
+          SessionApproval: 'wallet/session-approval/:sessionID'
         }
       },
       EcosystemStack: {

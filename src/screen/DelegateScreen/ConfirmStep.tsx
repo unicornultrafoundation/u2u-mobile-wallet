@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
 import Text from '../../component/Text';
 import Icon from '../../component/Icon';
@@ -45,7 +45,7 @@ const ConfirmStep = ({onNextStep, onBack}: {
   }
 
   return (
-    <View style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1}}>
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={onBack}>
           <Icon name="arrow-left" width={24} height={24} />
@@ -153,7 +153,7 @@ const ConfirmStep = ({onNextStep, onBack}: {
           {t('confirm')}
         </Button>
       </View>
-    </View>
+    </SafeAreaView>
   )
 };
 

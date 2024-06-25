@@ -20,11 +20,13 @@ export default function SessionApprovalScreen() {
   const navigation = useNavigation<any>()
   const {preferenceTheme} = usePreference()
   const {t} = useTranslation()
-  const route = useRoute();
+  const route = useRoute<any>();
   const { setRouteName } = useGlobalStore();
   const { switchNetwork, chainId } = useNetwork()
 
-  const [sessionID, setSessionID] = useState('')
+  const sessionIDFromPath = route.params?.sessionID || ""
+
+  const [sessionID, setSessionID] = useState(sessionIDFromPath)
   const [loading, setLoading] = useState(false)
 
   const {data: sessionDetail, isLoading, approveSession} = useSessionDetail(sessionID)
