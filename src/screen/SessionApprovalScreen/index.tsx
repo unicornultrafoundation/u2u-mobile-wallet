@@ -14,6 +14,7 @@ import Button from "../../component/Button";
 import { SUPPORTED_CHAINS } from "../../config/chain";
 import Toast from "react-native-toast-message";
 import LottieView from "lottie-react-native";
+import messaging from '@react-native-firebase/messaging';
 import { useNetwork } from "../../hook/useNetwork";
 
 export default function SessionApprovalScreen() {
@@ -47,10 +48,11 @@ export default function SessionApprovalScreen() {
       setLoading(true)
       const rs = await approveSession()
       setLoading(false)
-      console.log(rs)
+
       if (sessionDetail.dAppMetadata.chainId && Number(chainId) !== sessionDetail.dAppMetadata.chainId) {
         switchNetwork(sessionDetail.dAppMetadata.chainId.toString())
       }
+      await messaging().subscribeToTopic(`u2u-connect-session-${rs.id}`)
       setSessionID('')
 
       Toast.show({
@@ -58,7 +60,7 @@ export default function SessionApprovalScreen() {
         text1: t('approveSessionSuccess'),
       })
 
-      navigation.goBack()
+      navigation.navigate('Wallet')
     } catch (error) {
       console.log(error)
     }

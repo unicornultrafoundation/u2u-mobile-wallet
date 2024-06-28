@@ -80,7 +80,7 @@ export default function SignExternalRequestScreen() {
         type: 'success',
         text1: t('signExternalRequestSuccess'),
       })
-      navigation.goBack()
+      navigation.navigate('Wallet')
     } catch (error) {
       setLoading(false)
       console.log(error)
