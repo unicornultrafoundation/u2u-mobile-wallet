@@ -14,6 +14,7 @@ export interface NetworkConfig {
   withdrawPeriodTime: number;
   dappURL: string;
   ecosystemSettingURL: string;
+  genesisWallet: string[];
   api_endpoint: string;
 }
 
@@ -21,7 +22,7 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
   {
     chainID: "39",
     name: "Solaris Mainnet",
-    rpc: "https://rpc-mainnet.uniultra.xyz",
+    rpc: "https://rpc-mainnet.u2u.xyz",
     explorerURL: "https://u2uscan.xyz",
     currency: "U2U",
     suppoted_tokens_endpoint: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/supported_tokens_mainnet.json",
@@ -34,12 +35,13 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     dappURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/dapp_mainnet.json",
     ecosystemSettingURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/ecosystem_setting_mainnet.json",
     suppoted_nfts_endpoint: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/supported_nfts_mainnet.json",
-    api_endpoint: "https://sa-backend.uniultra.xyz"
+    genesisWallet: ["0xDa86486EA632c5A3b43c166c8799ca1Ca942Fe30", "0x131Bf53E6eCd05d46D418E970488Fc3DeA295D34"],
+    api_endpoint: "https://sa-backend.u2u.xyz"
   },
   {
     chainID: "2484",
     name: "Testnet",
-    rpc: "https://rpc-nebulas-testnet.uniultra.xyz",
+    rpc: "https://rpc-nebulas-testnet.u2u.xyz",
     explorerURL: "https://testnet.u2uscan.xyz",
     currency: "U2U",
     suppoted_tokens_endpoint: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/supported_tokens.json",
@@ -52,7 +54,8 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     dappURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/dapp.json",
     ecosystemSettingURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/ecosystem_setting.json",
     suppoted_nfts_endpoint: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/supported_nfts.json",
-    api_endpoint: "https://sa-backend-dev.uniultra.xyz"
-    // api_endpoint: "http://192.168.1.38:3000"
+    genesisWallet: [],
+    api_endpoint: "https://sa-backend-dev.u2u.xyz"
+    // api_endpoint: "http://192.168.1.38:3000",
   }
 ]

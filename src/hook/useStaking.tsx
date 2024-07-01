@@ -4,13 +4,7 @@ import { useNetwork } from "./useNetwork";
 import { useWallet } from "./useWallet";
 import { U2U_STAKING_ABI } from "../util/abis/staking";
 import BigNumber from "bignumber.js";
-import { useAPR } from "./useAPR";
-import { useTotalSupply } from "./useTotalSupply";
-import { useEpochRewards } from "./useEpochRewards";
 import { useFetchAllValidator } from "./useFetchAllValidator";
-import { useDelegate } from "./useDelegate";
-import { useClaimRewards } from "./useClaimRewards";
-import { useUndelegate } from "./useUndelegate";
 import { logErrorForMonitoring } from "./useCrashlytics";
 
 export function useStaking() {

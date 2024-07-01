@@ -177,6 +177,13 @@ export const typography: Record<string, any> = {
     }
   },
   label2: {
+    medium: {
+      fontSize: 14,
+      lineHeight: 21,
+      letterSpacing: 0.07,
+      fontWeight: "500",
+      fontFamily: 'Regular'
+    },
     bold: {
       fontSize: 14,
       lineHeight: 21,

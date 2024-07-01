@@ -273,6 +273,15 @@
   "wallet_already_have_nickname": "Ví đã được đặt tên",
   "updateWalletNicknameSuccess": "Đặt tên ví thành công",
   "yourNickname": "Tên ví",
+  "approvalSession": "Xác thực phiên đăng nhập",
+  "approveSessionSuccess": "Xác thực thành công",
+  "signExternalRequestMessage": "Yêu cầu chữ ký",
+  "signExternalRequestTx": "Xác thực giao dịch",
+  "requestAlreadySigned": "Yêu cầu đã ký",
+  "requestAlreadyRejected": "Yêu cầu đã từ chối",
+  "requestExpired": "Yêu cầu hết hạn",
+  "signExternalRequestSuccess": "Xác thực yêu cầu thành công",
+  "signExternalRequestFail": "Xác thực yêu cầu thất bại",
   "searchWeb": "Tìm kiếm",
   "safetyWarning": "Cảnh báo an toàn",
   "safetyDescription": "Bạn đang cố gắng mở DApp từ URL không rõ nguồn gốc. Hành động này có thể có tiềm ẩn rủi ro về bảo mật và lừa đảo. Hãy đảm bảo rằng bạn đã xác minh rõ nguồn gốc và tin tưởng URL này trước khi tiếp tục.",
@@ -280,5 +289,8 @@
   "acceptResponsibilityDetail": "Tôi hiểu rằng việc mở DApp từ URL có thể mang lại rủi ro và tôi hoàn toàn chịu trách nhiệm về hành động này.",
   "doNotShowMessage": "Không hiển thị thông báo này nữa.",
   "showSafetyWarning": "Hiển thị cảnh báo",
-  "showSafetyWarningDescription": "Hiển thị cảnh báo khi truy cập dApp lạ"
+  "showSafetyWarningDescription": "Hiển thị cảnh báo khi truy cập dApp lạ",
+  "message": "Nội dung",
+  "signMessageWarning": "Kiểm tra nội dung trước khi ký",
+  "txData": "Dữ liệu transaction"
 }

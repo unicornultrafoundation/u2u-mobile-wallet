@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { ScrollView, View, TouchableOpacity, Text } from 'react-native';
+import { ScrollView, View, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
@@ -8,6 +8,7 @@ import Tab from '../../component/Tab';
 import NFTDetails from './NFTDetails';
 import NFTHistory from './History';
 import Button from '../../component/Button';
+import Text from '../../component/Text';
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { useGlobalStore } from '../../state/global';
 import { getPhonePaddingBottom } from '../../util/platform';

@@ -77,6 +77,9 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
           >
             <Icon name="copy" width={16} height={16}/>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('SessionApproval')}>
+            <Icon name="scan" width={16} height={16} />
+          </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'row' }}>
           <SelectNetworkModal
@@ -91,9 +94,6 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
           />
           {/* <TouchableOpacity style={{marginHorizontal: 12}}>
             <Icon name="notification" width={24} height={24} />
-          </TouchableOpacity> */}
-          {/* <TouchableOpacity>
-            <Icon name="scan" width={24} height={24} />
           </TouchableOpacity> */}
         </View>
       </View>
