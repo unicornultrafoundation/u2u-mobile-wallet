@@ -292,5 +292,6 @@
   "showSafetyWarningDescription": "Show warning when access unknown dApp",
   "message": "Message",
   "signMessageWarning": "Please review the message carefully before signing.",
-  "txData": "Data"
+  "txData": "Data",
+  "notifications": "Notifications"
 }

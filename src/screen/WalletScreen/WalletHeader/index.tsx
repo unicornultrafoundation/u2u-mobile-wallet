@@ -92,9 +92,9 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
               )
             }}
           />
-          {/* <TouchableOpacity style={{marginHorizontal: 12}}>
+          <TouchableOpacity onPress={() => navigation.navigate('Notification')} style={{marginHorizontal: 12}}>
             <Icon name="notification" width={24} height={24} />
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
       </View>
     </View>

@@ -292,5 +292,6 @@
   "showSafetyWarningDescription": "Hiển thị cảnh báo khi truy cập dApp lạ",
   "message": "Nội dung",
   "signMessageWarning": "Kiểm tra nội dung trước khi ký",
-  "txData": "Dữ liệu transaction"
+  "txData": "Dữ liệu transaction",
+  "notifications": "Thông báo"
 }

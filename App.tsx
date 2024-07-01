@@ -75,7 +75,6 @@ function buildDeepLinkFromNotificationData(data: any): string | null {
   }
   if (navigationId === 'external-sign') {
     const signRequestID = data?.signRequestId
-    console.log('here ', `u2umobilewallet://wallet/external-sign/${signRequestID}`)
     return `u2umobilewallet://wallet/external-sign/${signRequestID}`;
   }
   // if (navigationId === 'home') {

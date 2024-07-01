@@ -164,3 +164,12 @@ export const getPredictedURLTypeFromRaw = (url: string) => {
     return url
   }
 }
+
+export const parseNotiTitle = (type: string) => {
+  switch (type) {
+    case 'dapp_promotion':
+      return 'DApp updates'
+    default:
+      return 'On-site notifications'
+  }
+}
