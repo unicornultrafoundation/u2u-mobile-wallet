@@ -1,11 +1,11 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query"
 import messaging from '@react-native-firebase/messaging';
 import { useEffect } from "react"
 import { Platform } from "react-native"
 import { requestUserPermissionIOS, requestPermissionAndroid } from "../util/notification";
 import { useNavigation } from "@react-navigation/native";
 import { useWallet } from "./useWallet";
-import { fetchAllNoti } from "../service/notifications";
+import { fetchAllNoti, markAllNotiRead } from "../service/notifications";
 import { useNetwork } from "./useNetwork";
 
 export interface Notifications {
@@ -18,7 +18,7 @@ export interface Notifications {
   updatedAt: Date;
 }
 
-export const useNotifications = () => {
+export const useNotifications = (status = 'all') => {
   const {networkConfig} = useNetwork()
   const {wallet, getAuthObj} = useWallet()
   const navigation = useNavigation<any>()
@@ -38,8 +38,8 @@ export const useNotifications = () => {
     return unsubscribe;
   }, [])
 
-  const {data: notifications, fetchNextPage, isFetching} = useInfiniteQuery({
-    queryKey: ['notification', wallet.address],
+  const {data: notifications, fetchNextPage, isFetching, refetch} = useInfiniteQuery({
+    queryKey: ['notification', wallet.address, networkConfig?.api_endpoint, status],
     queryFn: async ({pageParam = 1}): Promise<Notifications[]> => {
       if (!networkConfig) return []
       const authHeaders = await getAuthObj()
@@ -48,11 +48,11 @@ export const useNotifications = () => {
         {
           page: pageParam,
           limit: 10,
-          authObj: authHeaders
+          authObj: authHeaders,
+          status
         }
       )
       return rs.data.map((i: Record<string, any>) => {
-        console.log(i)
         i.createdAt = new Date(i.createdAt)
         i.updatedAt = new Date(i.updatedAt)
         return i
@@ -62,11 +62,44 @@ export const useNotifications = () => {
       const nextPageParam = lastPage.length === 0 ? undefined : pages.length + 1
       return nextPageParam
     },
+    refetchInterval: 5000
+  })
+
+  const {data: countUnread} = useQuery({
+    queryKey: ['count-unread', wallet.address, networkConfig?.api_endpoint],
+    queryFn: async () => {
+      if (!networkConfig) return 0
+      const authHeaders = await getAuthObj()
+      const rs = await fetchAllNoti(
+        networkConfig?.api_endpoint,
+        {
+          page: 1,
+          limit: 10,
+          authObj: authHeaders,
+          status: 'unread'
+        }
+      )
+      return rs.count
+    },
+    refetchInterval: 60000,
+    refetchOnWindowFocus: true
+  })
+
+  const {mutateAsync} = useMutation({
+    mutationKey: ['mark-noti-read', wallet.address, networkConfig?.api_endpoint],
+    mutationFn: async () => {
+      if (!networkConfig) return
+      const authHeaders = await getAuthObj()
+      return markAllNotiRead(networkConfig.api_endpoint, authHeaders)
+    }
   })
 
   return {
     notifications,
     fetchNextPage,
-    isFetching
+    isFetching,
+    countUnread,
+    refetchNoti: refetch,
+    markAsRead: mutateAsync
   }
 }

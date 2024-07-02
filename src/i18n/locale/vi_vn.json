@@ -293,5 +293,9 @@
   "message": "Nội dung",
   "signMessageWarning": "Kiểm tra nội dung trước khi ký",
   "txData": "Dữ liệu transaction",
-  "notifications": "Thông báo"
+  "notifications": "Thông báo",
+  "askMarkAllRead": "Đánh dấu đọc tất cả thông báo?",
+  "all": "Tất cả",
+  "unread": "Chưa xem",
+  "emptyNoti": "Không có thông báo"
 }

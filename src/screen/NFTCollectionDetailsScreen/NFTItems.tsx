@@ -67,7 +67,7 @@ const NFTItems = ({nftCollection}: {
           )
         }}
         onEndReached={handleLoadMore}
-        onEndReachedThreshold={.7}
+        onEndReachedThreshold={.3}
       />
     </View>
   );

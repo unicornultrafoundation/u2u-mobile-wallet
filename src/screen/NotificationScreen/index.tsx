@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, Image, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, TouchableOpacity, View } from "react-native";
 import Icon from "../../component/Icon";
 import Text from '../../component/Text';
 import { styles } from "./styles";
@@ -6,11 +6,14 @@ import { useTranslation } from "react-i18next";
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import { usePreference } from "../../hook/usePreference";
 import { useGlobalStore } from "../../state/global";
-import { useCallback, useMemo } from "react";
-import { Notifications, useNotifications } from "../../hook/useNotifications";
+import { useCallback, useState } from "react";
+import { useNotifications } from "../../hook/useNotifications";
+import WarningModal from "./WarningModal";
+import Tab from "../../component/Tab";
+import AllNoti from "./AllNoti";
+import UnreadNoti from "./UnreadNoti";
+import theme from "../../theme";
 import { typography } from "../../theme/typography";
-import { formatDate } from "../../util/date";
-import { parseNotiTitle } from "../../util/string";
 
 export default function NotificationScreen() {
   const navigation = useNavigation<any>()
@@ -25,52 +28,66 @@ export default function NotificationScreen() {
       setRouteName(route.name);
     }, [route]),
   );
-
-  const {notifications: pagedNotis, isFetching, fetchNextPage} = useNotifications()
-
-  const notifications = useMemo(() => {
-    if (!pagedNotis) return [] as Notifications[]
-    return pagedNotis.pages.flat()
-  }, [pagedNotis])
-
-  const handleLoadMore = () => {
-    if (isFetching) return;
-    fetchNextPage()
-  }
-
-  const renderLogo = (notiType: string) => {
-    switch (notiType) {
-      case 'general':
+  const {markAsRead, refetchNoti, countUnread} = useNotifications()
+  const [tab, setTab] = useState('all');
+  const tabs = [
+    { label: t('all'), value: 'all' },
+    { 
+      label: `${t('unread')} (${countUnread})`,
+      value: 'unread',
+      renderLabel: (isActive: boolean) => {
         return (
-          <Icon
-            name='u2u'
-            width={28}
-            height={28}
-          />
+          <>
+            <Text
+              style={[
+                typography.label2.medium,
+                {color: isActive ? theme.color.primary[500] : theme.color.neutral[500]},
+                {fontWeight: isActive ? '700' : '500'},
+                {marginRight: 6}
+              ]}
+            >
+              {t('unread')}
+            </Text>
+            {countUnread > 0 && (
+              <View
+                style={{
+                  backgroundColor: isActive ? '#D8F2FF' : '#F4F4F4',
+                  minWidth: 30,
+                  height: 20,
+                  borderRadius: 10,
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <Text
+                  style={[
+                    typography.caption2.medium,
+                    {
+                      color: isActive ? '#0050B3' : '#ACACAC'
+                    }
+                  ]}
+                >
+                  {countUnread}
+                </Text>
+              </View>
+            )}
+          </>
         )
-      default:
-        return (
-          <Icon
-            name='u2u'
-            width={28}
-            height={28}
-          />
-        )
-    }
+      }
+    },
+  ];
+
+  const [modalVisible, setModalVisible] = useState(false)
+
+  const handleMarkAllRead = async () => {
+    await markAsRead()
+    refetchNoti()
+    setModalVisible(false)
   }
 
-  const handleNotiPress = (notiObj: Notifications) => {
-    if (!notiObj.notificationData.navigationId) return
-
-    switch (notiObj.notificationData.navigationId) {
-      case 'discover':
-        navigation.navigate('DiscoverStack', {screen: 'Home'});
-        return;
-    
-      default:
-        break;
-    }
-  }
+  const handleChangeTab = (t: string) => {
+    setTab(t);
+  };
 
   return (
     <SafeAreaView
@@ -83,47 +100,45 @@ export default function NotificationScreen() {
         <View style={{flexDirection: 'row'}}>
           <Text style={styles.headerText}>{t('notifications')}</Text>
         </View>
-        <View />
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Icon name="double-check" width={24} height={24} />
+        </TouchableOpacity>
       </View>
-      <FlatList
-        onEndReached={handleLoadMore}
-        onEndReachedThreshold={.7}
-        data={notifications}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          gap: 12,
-          // paddingBottom: 450,
-          paddingHorizontal: 16
-        }}
-        renderItem={({item, index}) => {
-          return (
-            <TouchableOpacity
-              onPress={() => handleNotiPress(item)}
-              key={`notification-item-${index}`}
-              style={[styles.notiContainer, {backgroundColor: item.read ? 'transparent' : preferenceTheme.background.surface}]}
-            >
-              <View style={{flexDirection: 'row', gap: 8, alignItems: 'center'}}>
-                {item.notificationData.logo ? (
-                  <Image source={{uri: item.notificationData.logo}} style={{ width: 28, height: 28, borderRadius: 44 }}/>
-                ) : (
-                  renderLogo(item.type)
-                ) }
-                <Text style={[typography.body.bold, {color: preferenceTheme.text.title, flex: 1}]}>
-                  {parseNotiTitle(item.type)}
-                </Text>
-                <Text style={[typography.caption1.regular, {color: preferenceTheme.text.disabled}]}>
-                  {formatDate(item.createdAt, 'HH:mm dd/MM/yyyy')}
-                </Text>
-              </View>
-              <Text style={[typography.body2.bold, {color: preferenceTheme.text.title}]}>
-                {item.title}
-              </Text>
-              <Text style={[typography.caption1.regular, {color: preferenceTheme.text.secondary}]}>
-                {item.description}
-              </Text>
-            </TouchableOpacity>
-          )
-        }}
+      <View style={{paddingHorizontal: 16}}>
+        <Tab
+          tabs={tabs}
+          selectedTab={tab}
+          onChange={handleChangeTab}
+          tabStyle={{
+            // borderColor: 'transparent',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            flexDirection: 'row',
+            paddingLeft: 0,
+            paddingRight: 0,
+          }}
+          tabTextStyle={typography.label2.medium}
+          containerStyle={{
+            // borderColor: 'transparent',
+            marginBottom: 16,
+            gap: 12
+          }}
+        />
+      </View>
+      {
+        tab === 'all' && (
+          <AllNoti />
+        )
+      }
+      {
+        tab === 'unread' && (
+          <UnreadNoti />
+        )
+      }
+      <WarningModal
+        modalVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onConfirm={handleMarkAllRead}
       />
     </SafeAreaView>
   )
