@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { getPhonePaddingBottom, getPhonePaddingTop } from '../../util/platform';
-import theme from '../../theme';
 
 export const styles = StyleSheet.create({
   container: {
@@ -32,14 +31,16 @@ export const styles = StyleSheet.create({
   optionsContainer: {
     padding: 12,
     borderRadius: 8,
-    backgroundColor: '#181818',
     shadowColor: 'rgba(0, 0, 0, 0.50)',
     width: 220,
     shadowOffset: {
-      width: 5,
-      height: 4
+      width: 0,
+      height: 4,
     },
-    shadowRadius: 0,
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    
+    elevation: 9,
   },
   optionWrapper: {
     paddingHorizontal: 16,
