@@ -297,5 +297,9 @@
   "askMarkAllRead": "Đánh dấu đọc tất cả thông báo?",
   "all": "Tất cả",
   "unread": "Chưa xem",
-  "emptyNoti": "Không có thông báo"
+  "emptyNoti": "Không có thông báo",
+  "experimentalFeatures": "Tính năng thử nghiệm",
+  "experimentalFeaturesDescription": "Đóng góp để hoàn thiện các tính năng mới",
+  "u2uConnect": "U2U Connect",
+  "u2uConnectDesc": "Xác thực giao dịch từ bên ngoài Super App"
 }
