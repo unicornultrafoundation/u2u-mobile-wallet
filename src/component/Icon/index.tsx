@@ -823,6 +823,26 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'double-check':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 26 24" fill="none">
+              <Path d="M1.40002 12.2279L5.62792 16.4558L14.0987 8" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M10.7014 12.2279L14.9293 16.4558L23.4 8" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'menu':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path d="M3 7H21" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round"/>
+              <Path d="M9.48999 12H21" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round"/>
+              <Path d="M3 12H5.99" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round"/>
+              <Path d="M3 17H21" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round"/>
+            </Svg>
+          </View>
+        )
       default:
         return null
     }

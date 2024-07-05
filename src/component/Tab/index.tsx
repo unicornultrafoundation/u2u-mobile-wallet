@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 import Text from '../Text'
 import styles from './styles';
@@ -9,6 +9,7 @@ import theme from '../../theme';
 interface TabTitle {
   label: string;
   value: string;
+  renderLabel?: (isActive: boolean) => ReactNode
 }
 interface TabProps {
   selectedTab?: string;
@@ -58,13 +59,17 @@ const Tab = ({selectedTab, onChange, tabs, tabStyle, tabTextStyle, containerStyl
             ]}
             onPress={() => onChange && onChange(tabItem.value)}
           >
-            <Text
-              style={[
-              styles.tabTitle,
-              {color: isActive ? preferenceTheme.text.title : theme.color.neutral[500]},
-              {fontWeight: isActive ? '700' : '500'},
-              tabTextStyle
-            ]}>{tabItem.label}</Text>
+            {tabItem.renderLabel ? tabItem.renderLabel(isActive) : (
+              <Text
+                style={[
+                styles.tabTitle,
+                {color: isActive ? theme.color.primary[500] : theme.color.neutral[500]},
+                {fontWeight: isActive ? '700' : '500'},
+                tabTextStyle
+              ]}>
+                {tabItem.label}
+              </Text>
+            )}
           </TouchableOpacity>
         )
       })}
