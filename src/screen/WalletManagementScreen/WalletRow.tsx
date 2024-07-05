@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { useWallet } from '../../hook/useWallet';
 import ConfirmationModal from '../../component/ConfirmationModal';
 import { useNavigation } from '@react-navigation/native';
+import { usePreference } from '../../hook/usePreference';
 
 interface Props extends ViewProps {
   item: Wallet;
@@ -28,13 +29,14 @@ interface Props extends ViewProps {
 
 const WalletRow = ({ item, selected, disabled, onSelect, onEdit, onDelete, ...rest }: Props) => {
   const navigation = useNavigation<any>()
+  const {preferenceTheme} = usePreference()
   const { getWalletMetadata, generatedPath } = useWallet()
   const { t } = useTranslation<string>();
 
   const [visible, setVisible] = useState(false)
 
   const optionStyles = {
-    optionsContainer: styles.optionsContainer,
+    optionsContainer: [styles.optionsContainer, {backgroundColor: preferenceTheme.background.background}],
     optionWrapper: styles.optionWrapper,
     optionTouchable: styles.optionTouchable,
   }
