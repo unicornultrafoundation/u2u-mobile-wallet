@@ -39,6 +39,8 @@ interface LocalState {
   setLockedUntil: (lockedUntil: number) => void;
   subscribePromotion: boolean;
   setSubscribePromotion: (subscribePromotion: boolean) => void;
+  subscribeNews: boolean;
+  setSubscribeNews: (subscribeNews: boolean) => void;
   enableU2UConnect: boolean;
   setEnableU2UConnect: (enableU2UConnect: boolean) => void;
 }
@@ -113,6 +115,10 @@ export const useLocalStore = create<LocalState>()(
       subscribePromotion: true,
       setSubscribePromotion: (subscribePromotion: boolean) => {
         set({ subscribePromotion })
+      },
+      subscribeNews: true,
+      setSubscribeNews: (subscribeNews: boolean) => {
+        set({ subscribeNews })
       },
       enableU2UConnect: false,
       setEnableU2UConnect: (enableU2UConnect: boolean) => {

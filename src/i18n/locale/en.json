@@ -301,5 +301,7 @@
   "experimentalFeatures": "Experimental features",
   "experimentalFeaturesDescription": "Help make our new features safe",
   "u2uConnect": "U2U Connect",
-  "u2uConnectDesc": "Use U2U Super App for external sign request"
+  "u2uConnectDesc": "Use U2U Super App for external sign request",
+  "subscribeNews": "News",
+  "subscribeNewsDesc": "Subscribe to get latest news on U2U network"
 }
