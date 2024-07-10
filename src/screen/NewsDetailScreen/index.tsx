@@ -23,6 +23,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useGlobalStore } from "../../state/global";
 import { Article } from '../../hook/useNews';
 import { useNewsByCategory } from '../../hook/useNewsByCategory';
+import { useNewsDetail } from '../../hook/useNewsDetail';
 
 type Props = NativeStackScreenProps<DiscoverStackParamList, 'NewsDetails'>;
 
@@ -41,8 +42,11 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
     { name: 'website', url: '', icon: 'website' },
   ];
 
-  const article: Article = route.params.article || {};
+  const newsDetailFromParams: Article = route.params.article || {};
   const articleId = (route.params as any).id || 0;
+
+  const {data: newsDetailFromAPI} = useNewsDetail(articleId)
+  const article = newsDetailFromAPI || newsDetailFromParams
 
   const {news: pagedNews, isFetching} = useNewsByCategory(article.category)
   

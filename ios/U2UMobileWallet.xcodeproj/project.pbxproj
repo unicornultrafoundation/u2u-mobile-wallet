@@ -615,7 +615,7 @@
 				CODE_SIGN_ENTITLEMENTS = U2UMobileWallet/U2UMobileWalletDebug.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 111;
+				CURRENT_PROJECT_VERSION = 112;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 668U627Y5V;
 				ENABLE_BITCODE = NO;
@@ -654,7 +654,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 111;
+				CURRENT_PROJECT_VERSION = 112;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 668U627Y5V;
 				INFOPLIST_FILE = U2UMobileWallet/Info.plist;

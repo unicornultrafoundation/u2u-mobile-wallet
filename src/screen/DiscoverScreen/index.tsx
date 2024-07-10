@@ -98,6 +98,7 @@ const DiscoverScreen = ({route}: Props) => {
   );
 
   const handleViewArticle = (id: number) => {
+    console.log(id)
     navigation.navigate('NewsDetails', {id});
   };
 
