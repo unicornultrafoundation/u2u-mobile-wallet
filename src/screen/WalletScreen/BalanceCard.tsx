@@ -73,7 +73,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
                 });
                 navigation.navigate('SendToken');
               }}>
-              <Icon name="arrow-up" width={24} height={24} />
+              <Icon name="arrow-up" width={24} height={24} color={preferenceTheme.divider} />
             </TouchableOpacity>
             <Text style={styles.balanceActionButtonText}>{t('send')}</Text>
           </View>
@@ -96,7 +96,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
                   },
                 });
               }}>
-              <Icon name="arrow-down" width={24} height={24} />
+              <Icon name="arrow-down" width={24} height={24} color={preferenceTheme.divider} />
             </TouchableOpacity>
             <Text style={styles.balanceActionButtonText}>{t('receive')}</Text>
           </View>
@@ -107,7 +107,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
                 navigation.navigate('TxHistory')
               }}
             >
-              <Icon name="paper" width={24} height={24} />
+              <Icon name="paper" width={24} height={24} color={preferenceTheme.divider} />
             </TouchableOpacity>
             <Text style={styles.balanceActionButtonText}>{t('transactionHistory')}</Text>
           </View>

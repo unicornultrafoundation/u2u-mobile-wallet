@@ -8,3 +8,6 @@ export const FIND_WALLET_BY_NICKNAME = '/wallets/find-by-nickname/'
 export const SUBMIT_CLAIM_REQUEST_ENDPOINT = '/membership-requests'
 export const SUBMIT_CLAIM_JUPITER_REQUEST_ENDPOINT = '/jupiter-membership-requests'
 export const FETCH_CLAIM_REQUEST_ENDPOINT = '/membership-requests/request-from-device-or-wallet'
+
+export const ALL_NOTI_ENDPOINT = '/notifications/own-noti'
+export const MARK_ALL_NOTI_READ_ENDPOINT = '/notifications/read-all'

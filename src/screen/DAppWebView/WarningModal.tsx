@@ -1,4 +1,4 @@
-import { Image, Modal, TouchableOpacity, View } from "react-native";
+import { Image, Modal, View } from "react-native";
 import Text from "../../component/Text";
 import { usePreference } from "../../hook/usePreference";
 import { useTranslation } from "react-i18next";

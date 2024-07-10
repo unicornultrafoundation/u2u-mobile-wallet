@@ -10,12 +10,15 @@ import theme from "../../theme";
 import Icon from "../../component/Icon";
 import { usePreference } from "../../hook/usePreference";
 import { useLocalStore } from "../../state/local";
-import { DAPP_PROMOTION_NOTIFICATION_TOPIC } from "../../config/constant";
+import { DAPP_PROMOTION_NOTIFICATION_TOPIC, NEWS_NOTIFICATION_TOPIC } from "../../config/constant";
 
 export default function NotificationSettingScreen() {
   const {t} = useTranslation()
   const {preferenceTheme} = usePreference()
-  const {subscribePromotion, setSubscribePromotion} = useLocalStore()
+  const {
+    subscribePromotion, setSubscribePromotion,
+    subscribeNews, setSubscribeNews
+  } = useLocalStore()
 
   const navigation = useNavigation()
   const route = useRoute()
@@ -38,6 +41,18 @@ export default function NotificationSettingScreen() {
         .then(() => console.log('Unsubscribed fom the topic!'));
     }
   }, [subscribePromotion])
+
+  useEffect(() => {
+    if (subscribeNews) {
+      messaging()
+      .subscribeToTopic(NEWS_NOTIFICATION_TOPIC)
+      .then(() => console.log('Subscribed to topic!'));
+    } else {
+      messaging()
+        .unsubscribeFromTopic(NEWS_NOTIFICATION_TOPIC)
+        .then(() => console.log('Unsubscribed fom the topic!'));
+    }
+  }, [subscribeNews])
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: preferenceTheme.background.background}}>
@@ -79,6 +94,34 @@ export default function NotificationSettingScreen() {
               </View>
               <View style={[styles.toggleItem, {backgroundColor: subscribePromotion ? 'transparent' : theme.color.primary[600]}]}>
                 <Icon name='notification-off' width={16} height={16} color={subscribePromotion ? preferenceTheme.text.title : preferenceTheme.text.placeholder} />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.settingItem}>
+          <View style={styles.settingItemTextContainer}>
+            <Text style={theme.typography.body.medium}>
+              {t('subscribeNews')}
+            </Text>
+            <Text
+              style={[
+                theme.typography.caption1.medium,
+                {color: preferenceTheme.text.secondary}
+              ]}
+            >
+              {t('subscribeNewsDesc')}
+            </Text>
+          </View>
+          <View>
+            <TouchableOpacity
+              onPress={() => setSubscribeNews(!subscribeNews)}
+              style={[styles.toggleContainer, {backgroundColor: preferenceTheme.background.surface}]}
+            >
+              <View style={[styles.toggleItem, {backgroundColor: subscribeNews ? theme.color.primary[600] : 'transparent'}]}>
+                <Icon name='notification' width={16} height={16} color={subscribeNews ? preferenceTheme.text.placeholder : preferenceTheme.text.title} />
+              </View>
+              <View style={[styles.toggleItem, {backgroundColor: subscribeNews ? 'transparent' : theme.color.primary[600]}]}>
+                <Icon name='notification-off' width={16} height={16} color={subscribeNews ? preferenceTheme.text.title : preferenceTheme.text.placeholder} />
               </View>
             </TouchableOpacity>
           </View>

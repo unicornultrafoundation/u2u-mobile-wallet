@@ -1,6 +1,7 @@
 import { useWalletStore, Wallet } from '../state/wallet';
 import { useCallback } from 'react';
 import { getPathIndex } from '../util/string';
+import { signMessage } from '../util/wallet';
 
 export function useWallet() {
   const {
@@ -33,6 +34,20 @@ export function useWallet() {
     return walletMetadata[walletIndex];
   }, [walletMetadata]);
 
+  const getAuthObj = useCallback(async () => {
+    const timestamp = Math.round(Date.now() / 1000) 
+    const signature = await signMessage(
+      `signature-from-${wallet.address.toLowerCase()}-at-${timestamp}`,
+      wallet.privateKey
+    )
+
+    return {
+      wallet: wallet.address,
+      signature,
+      timestamp
+    }
+  }, [wallet])
+
   return {
     wallet,
     accessWallet,
@@ -50,6 +65,7 @@ export function useWallet() {
     savePKIndex,
     addPrivateKey,
     privateKeys,
-    removePrivateKey
+    removePrivateKey,
+    getAuthObj
   };
 }

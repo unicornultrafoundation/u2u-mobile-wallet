@@ -292,5 +292,16 @@
   "showSafetyWarningDescription": "Hiển thị cảnh báo khi truy cập dApp lạ",
   "message": "Nội dung",
   "signMessageWarning": "Kiểm tra nội dung trước khi ký",
-  "txData": "Dữ liệu transaction"
+  "txData": "Dữ liệu transaction",
+  "notifications": "Thông báo",
+  "askMarkAllRead": "Đánh dấu đọc tất cả thông báo?",
+  "all": "Tất cả",
+  "unread": "Chưa xem",
+  "emptyNoti": "Không có thông báo",
+  "experimentalFeatures": "Tính năng thử nghiệm",
+  "experimentalFeaturesDescription": "Đóng góp để hoàn thiện các tính năng mới",
+  "u2uConnect": "U2U Connect",
+  "u2uConnectDesc": "Xác thực giao dịch từ bên ngoài Super App",
+  "subscribeNews": "Tin tức",
+  "subscribeNewsDesc": "Nhận cập nhật mới nhất từ U2U network"
 }

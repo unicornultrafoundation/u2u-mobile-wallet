@@ -16,6 +16,7 @@ import SelectWalletModal from '../../../component/SelectWalletModal';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
+import { useLocalStore } from '../../../state/local';
 
 interface Props {
   collapsed: boolean;
@@ -31,6 +32,7 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
   const { wallet, getWalletMetadata } = useWallet();
   const { name } = useNetwork()
   const { t } = useTranslation()
+  const { enableU2UConnect } = useLocalStore()
 
   if (collapsed) {
     return <HeaderSearchComponent onGoBack={onGoBack} action={action}/>;
@@ -77,9 +79,11 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
           >
             <Icon name="copy" width={16} height={16}/>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('SessionApproval')}>
-            <Icon name="scan" width={16} height={16} />
-          </TouchableOpacity>
+          {enableU2UConnect && (
+            <TouchableOpacity onPress={() => navigation.navigate('SessionApproval')}>
+              <Icon name="scan" width={16} height={16} />
+            </TouchableOpacity>
+          )}
         </View>
         <View style={{ flexDirection: 'row' }}>
           <SelectNetworkModal
@@ -92,9 +96,9 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
               )
             }}
           />
-          {/* <TouchableOpacity style={{marginHorizontal: 12}}>
+          <TouchableOpacity onPress={() => navigation.navigate('Notification')} style={{marginHorizontal: 12}}>
             <Icon name="notification" width={24} height={24} />
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
       </View>
     </View>

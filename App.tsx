@@ -39,7 +39,6 @@ import { useTracking } from './src/hook/useTracking';
 import MainTabNav from './src/stack/MainTab';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useCrashlytics } from './src/hook/useCrashlytics';
-import { useNotifications } from './src/hook/useNotifications';
 import ToastComponent from './src/component/Toast';
 
 //@ts-ignore
@@ -75,14 +74,15 @@ function buildDeepLinkFromNotificationData(data: any): string | null {
   }
   if (navigationId === 'external-sign') {
     const signRequestID = data?.signRequestId
-    console.log('here ', `u2umobilewallet://wallet/external-sign/${signRequestID}`)
     return `u2umobilewallet://wallet/external-sign/${signRequestID}`;
   }
   // if (navigationId === 'home') {
   //   return 'u2umobilewallet://home';
   // }
   if (navigationId === 'discover') {
-    return 'u2umobilewallet://discover-dashboard';
+    const newsId = data?.newsId
+    if (newsId) return `u2umobilewallet://discover/detail/${newsId}`
+    return 'u2umobilewallet://discover/dashboard';
   }
   const url = data?.url;
   if (typeof url === 'string') {
@@ -110,7 +110,8 @@ const linking = {
       },
       DiscoverStack: {
         screens: {
-          Home: 'discover-dashboard'
+          Home: 'discover/dashboard',
+          NewsDetails: 'discover/detail/:id'
         }
       }
     }
@@ -154,10 +155,8 @@ function App(): JSX.Element {
   const {unlocked} = useGlobalStore()
   const { type, isConnected } = useNetInfo();
   const {darkMode: isDarkMode, language} = usePreferenceStore()
-  const preferenceTheme = isDarkMode ? darkTheme : lightTheme
-  const {t} = useTranslation()
 
-  const {blockExplorer, chainId} = useNetwork()
+  const {chainId} = useNetwork()
   const networkStore = useNetworkStore()
 
   const routeNameRef = React.useRef<string>();

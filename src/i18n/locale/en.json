@@ -292,5 +292,16 @@
   "showSafetyWarningDescription": "Show warning when access unknown dApp",
   "message": "Message",
   "signMessageWarning": "Please review the message carefully before signing.",
-  "txData": "Data"
+  "txData": "Data",
+  "notifications": "Notifications",
+  "askMarkAllRead": "Do you want to mark all notifications as read?",
+  "all": "All",
+  "unread": "Unread",
+  "emptyNoti": "No notification yet",
+  "experimentalFeatures": "Experimental features",
+  "experimentalFeaturesDescription": "Help make our new features safe",
+  "u2uConnect": "U2U Connect",
+  "u2uConnectDesc": "Use U2U Super App for external sign request",
+  "subscribeNews": "News",
+  "subscribeNewsDesc": "Subscribe to get latest news on U2U network"
 }
