@@ -11,6 +11,7 @@ import "fast-text-encoding";
 import "./shim"
 import { CacheManager } from '@georstat/react-native-image-cache';
 import { Dirs } from 'react-native-file-access';
+import notifee, { EventType } from '@notifee/react-native';
 
 CacheManager.config = {
   baseDir: `${Dirs.CacheDir}/images_cache/`,
@@ -45,6 +46,20 @@ global.fetch = fetchPolyfill
 messaging().setBackgroundMessageHandler(async remoteMessage => {
   console.log('Message handled in the background!', remoteMessage);
 });
+
+notifee.onBackgroundEvent(async ({ type, detail }) => {
+  const { notification, pressAction } = detail;
+
+  // Check if the user pressed the "Mark as read" action
+  if (type === EventType.ACTION_PRESS && pressAction.id === 'mark-as-read') {
+    // Update external API
+    
+
+    // Remove the notification
+    await notifee.cancelNotification(notification.id);
+  }
+});
+
 
 // Check if app was launched in the background and conditionally render null if so
 function HeadlessCheck({ isHeadless }) {
