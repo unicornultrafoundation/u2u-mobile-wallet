@@ -18,6 +18,7 @@ import { typography } from "../../theme/typography";
 import SignMessageDetail from "./SignMessageDetail";
 import SignTxDetail from "./SignTxDetail";
 import { SvgUri } from "react-native-svg";
+import { handleGoBack } from "../../util/navigation";
 
 export default function SignExternalRequestScreen() {
   const { darkMode } = usePreferenceStore();
@@ -47,21 +48,21 @@ export default function SignExternalRequestScreen() {
         type: 'error',
         text1: t('requestAlreadySigned'),
       })
-      navigation.goBack()
+      handleGoBack(navigation)
     }
     if (data.status === SignRequestStatus.STATUS_REJECTED) {
       Toast.show({
         type: 'error',
         text1: t('requestAlreadyRejected'),
       })
-      navigation.goBack()
+      handleGoBack(navigation)
     }
     if (data.status === SignRequestStatus.STATUS_EXPIRED) {
       Toast.show({
         type: 'error',
         text1: t('requestExpired'),
       })
-      navigation.goBack()
+      handleGoBack(navigation)
     }
 
     if (data.session.dAppMetadata.chainId && Number(chainId) !== data.session.dAppMetadata.chainId) {
@@ -97,7 +98,7 @@ export default function SignExternalRequestScreen() {
       const rs = await rejectRequest()
       setLoading(false)
       console.log(rs)
-      navigation.goBack()
+      handleGoBack(navigation)
     } catch (error) {
       setLoading(false)
       console.log(error)

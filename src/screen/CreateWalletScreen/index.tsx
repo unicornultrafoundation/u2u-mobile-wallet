@@ -11,6 +11,7 @@ import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 import { useLocalStore } from '../../state/local';
+import { handleGoBack } from '../../util/navigation';
 
 const CreateWalletScreen = () => {
   const navigation = useNavigation<any>()
@@ -24,7 +25,7 @@ const CreateWalletScreen = () => {
 
   const handleBack = () => {
     if (currentStep === 0) {
-      navigation.goBack()
+      handleGoBack(navigation)
     } else {
       setCurrentStep(currentStep - 1)
     }

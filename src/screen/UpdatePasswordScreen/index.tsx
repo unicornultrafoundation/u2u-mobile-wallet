@@ -8,6 +8,7 @@ import { useGlobalStore } from '../../state/global';
 import AuthStep from './AuthStep';
 import NewPassStep from './NewPassStep';
 import ConfirmStep from './ConfirmStep';
+import { handleGoBack } from '../../util/navigation';
 
 const ExportSeedPhraseScreen = () => {
   const navigation = useNavigation<any>()
@@ -32,7 +33,7 @@ const ExportSeedPhraseScreen = () => {
         return (
           <AuthStep
             onNextStep={() => setStep('new-pass')}
-            onBack={() => navigation.goBack()}
+            onBack={() => handleGoBack(navigation)}
           />
         )
       case 'new-pass':
@@ -40,7 +41,7 @@ const ExportSeedPhraseScreen = () => {
           <NewPassStep
             savePassword={setPasswordToConfirm}
             onNextStep={() => setStep('confirm-pass')}
-            onBack={() => navigation.goBack()}
+            onBack={() => handleGoBack(navigation)}
           />
         )
       case 'confirm-pass':
@@ -48,7 +49,7 @@ const ExportSeedPhraseScreen = () => {
           <ConfirmStep
             passwordToConfirm={passwordToConfirm}
             onBack={() => setStep('new-pass')}
-            onNextStep={() => navigation.goBack()}
+            onNextStep={() => handleGoBack(navigation)}
           />
         )
       default:

@@ -16,6 +16,7 @@ import Toast from "react-native-toast-message";
 import LottieView from "lottie-react-native";
 import messaging from '@react-native-firebase/messaging';
 import { useNetwork } from "../../hook/useNetwork";
+import { handleGoBack } from "../../util/navigation";
 
 export default function SessionApprovalScreen() {
   const navigation = useNavigation<any>()
@@ -68,7 +69,7 @@ export default function SessionApprovalScreen() {
 
   const handleReject = () => {
     setSessionID('')
-    navigation.goBack()
+    handleGoBack(navigation)
   }
 
   if (isLoading) {

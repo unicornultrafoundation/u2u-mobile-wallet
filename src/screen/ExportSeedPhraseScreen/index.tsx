@@ -7,6 +7,7 @@ import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/nativ
 import { useGlobalStore } from '../../state/global';
 import AuthStep from './AuthStep';
 import ShowSeedStep from './ShowSeedStep';
+import { handleGoBack } from '../../util/navigation';
 
 const ExportSeedPhraseScreen = () => {
   const navigation = useNavigation<any>()
@@ -30,13 +31,13 @@ const ExportSeedPhraseScreen = () => {
         return (
           <AuthStep
             onNextStep={() => setStep('show-seed')}
-            onBack={() => navigation.goBack()}
+            onBack={() => handleGoBack(navigation)}
           />
         )
       case 'show-seed':
         return (
           <ShowSeedStep
-            onBack={() => navigation.goBack()}
+            onBack={() => handleGoBack(navigation)}
           />
         )
       default:
