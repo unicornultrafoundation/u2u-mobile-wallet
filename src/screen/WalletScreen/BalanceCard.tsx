@@ -53,12 +53,12 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
+            gap: 32
           }}>
           <View
             style={{
               alignItems: 'center',
               justifyContent: 'center',
-              marginRight: 32,
             }}>
             <TouchableOpacity
               style={styles.balanceActionButton}
@@ -81,7 +81,6 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
             style={{
               alignItems: 'center',
               justifyContent: 'center',
-              marginRight: 32,
             }}>
             <TouchableOpacity
               style={styles.balanceActionButton}
