@@ -5,12 +5,13 @@ import { Platform } from "react-native"
 import { requestUserPermissionIOS, requestPermissionAndroid } from "../util/notification";
 import { useNavigation } from "@react-navigation/native";
 import { useWallet } from "./useWallet";
-import { fetchAllNoti, markAllNotiRead } from "../service/notifications";
+import { fetchAllNoti, markAllNotiRead, markNotiRead } from "../service/notifications";
 import { useNetwork } from "./useNetwork";
 import notifee, { EventType } from '@notifee/react-native';
 import { onMessageReceivedNotifee } from "../util/notifee";
 
 export interface Notifications {
+  id: string;
   title: string;
   description: string;
   notificationData: Record<string, any>;
@@ -148,12 +149,22 @@ export const useNotifications = (status = 'all') => {
     }
   })
 
+  const {mutateAsync: mutateReadSingle} = useMutation({
+    mutationKey: ['mark-single-noti-read', wallet.address, networkConfig?.api_endpoint],
+    mutationFn: async (notiID: string) => {
+      if (!networkConfig) return
+      const authHeaders = await getAuthObj()
+      return markNotiRead(networkConfig.api_endpoint, authHeaders, notiID)
+    }
+  })
+
   return {
     notifications,
     fetchNextPage,
     isFetching,
     countUnread,
     refetchNoti: refetch,
-    markAsRead: mutateAsync
+    markAsRead: mutateAsync,
+    markSingleRead: mutateReadSingle
   }
 }
