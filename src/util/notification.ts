@@ -1,11 +1,12 @@
 import messaging from '@react-native-firebase/messaging';
 import {PermissionsAndroid} from 'react-native';
+import notifee, {AuthorizationStatus} from '@notifee/react-native';
 
 export const requestUserPermissionIOS = async () => {
-  const authStatus = await messaging().requestPermission();
+  const authStatus = await notifee.requestPermission();
   const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    authStatus.authorizationStatus === AuthorizationStatus.AUTHORIZED ||
+    authStatus.authorizationStatus === AuthorizationStatus.PROVISIONAL;
 
   if (enabled) {
     console.log('Authorization status ios:', authStatus);

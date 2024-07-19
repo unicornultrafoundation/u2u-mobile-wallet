@@ -9,6 +9,7 @@ import ConfirmStep from './ConfirmStep';
 import AuthStep from './AuthStep';
 import DelegateStep from './DelegateStep';
 import { usePreference } from '../../hook/usePreference';
+import { handleGoBack } from '../../util/navigation';
 
 const DelegateScreen = () => {
   const {preferenceTheme} = usePreference()
@@ -26,7 +27,7 @@ const DelegateScreen = () => {
         return (
           <AmountStep
             onNextStep={() => setStep('confirm')}
-            onBack={() => navigation.goBack()}
+            onBack={() => handleGoBack(navigation)}
             validator={validator}
           />
         )

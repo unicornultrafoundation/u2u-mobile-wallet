@@ -14,6 +14,7 @@ import Button from "../../component/Button";
 import { useWalletNickname } from "../../hook/useWalletNickname";
 import Toast from "react-native-toast-message";
 import { typography } from "../../theme/typography";
+import { handleGoBack } from "../../util/navigation";
 
 export default function NicknameScreen() {
   const {t} = useTranslation()
@@ -42,7 +43,7 @@ export default function NicknameScreen() {
         text1: t('updateWalletNicknameSuccess'),
       })
       await refetch()
-      navigation.goBack()
+      handleGoBack(navigation)
     } catch (error: any) {
       console.log(error)
       Toast.show({

@@ -9,6 +9,7 @@ import CheckBox from "../../component/Checkbox";
 import Separator from "../../component/Separator";
 import TextButton from "../../component/Button/TextButton";
 import { useNavigation } from "@react-navigation/native";
+import { handleGoBack } from "../../util/navigation";
 
 export default function WarningModal({modalVisible, onClose}: {
   modalVisible: boolean;
@@ -22,7 +23,7 @@ export default function WarningModal({modalVisible, onClose}: {
   const [showWarning, setShowWarning] = useState(true)
 
   const handleBack = () => {
-    navigation.goBack()
+    handleGoBack(navigation)
   }
 
   const handleAccept = () => {

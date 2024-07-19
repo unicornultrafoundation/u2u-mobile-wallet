@@ -10,6 +10,7 @@ import Icon from '../../component/Icon';
 import Steps from '../../component/Steps';
 import { styles } from './styles';
 import { usePreference } from '../../hook/usePreference';
+import { handleGoBack } from '../../util/navigation';
 
 const ImportWalletScreen = () => {
   const navigation = useNavigation<any>()
@@ -21,7 +22,7 @@ const ImportWalletScreen = () => {
 
   const handleBack = () => {
     if (currentStep === 0) {
-      navigation.goBack()
+      handleGoBack(navigation)
     } else {
       setCurrentStep(currentStep - 1)
     }

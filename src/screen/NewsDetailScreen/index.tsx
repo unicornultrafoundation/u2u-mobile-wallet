@@ -24,6 +24,7 @@ import { useGlobalStore } from "../../state/global";
 import { Article } from '../../hook/useNews';
 import { useNewsByCategory } from '../../hook/useNewsByCategory';
 import { useNewsDetail } from '../../hook/useNewsDetail';
+import { handleGoBack } from '../../util/navigation';
 
 type Props = NativeStackScreenProps<DiscoverStackParamList, 'NewsDetails'>;
 
@@ -107,7 +108,7 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
   if (!article) {
     return (
       <View style={[styles.container, { padding: 16 }]}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => handleGoBack(navigation)}>
           <Icon name="arrow-left" width={24} height={24}/>
         </TouchableOpacity>
         <Text style={[styles.title, { textAlign: 'center' }]}>Article not found!</Text>
@@ -120,7 +121,7 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={{ padding: 16, paddingBottom: 120 }}>
           <View style={{ gap: 8 }}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity onPress={() => handleGoBack(navigation)}>
               <Icon name="arrow-left" width={24} height={24}/>
             </TouchableOpacity>
             <Image
