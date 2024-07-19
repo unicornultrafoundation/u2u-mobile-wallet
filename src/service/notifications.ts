@@ -1,4 +1,4 @@
-import { ALL_NOTI_ENDPOINT, MARK_ALL_NOTI_READ_ENDPOINT } from "../config/endpoint"
+import { ALL_NOTI_ENDPOINT, MARK_ALL_NOTI_READ_ENDPOINT, MARK_SINGLE_NOTI_READ } from "../config/endpoint"
 
 interface AuthObj {
   wallet: string;
@@ -46,6 +46,30 @@ export const markAllNotiRead = async (backendURL: string, authObj: AuthObj) => {
     method: 'PUT',
     headers: myHeaders,
     redirect: 'follow'
+  };
+
+  const rs = await fetch(url, requestOptions)
+
+  return rs.json()
+}
+
+export const markNotiRead = async (backendURL: string, authObj: AuthObj, notiID: string) => {
+  const url = `${backendURL}${MARK_SINGLE_NOTI_READ}`
+
+  const myHeaders = new Headers();
+  myHeaders.append("wallet", authObj.wallet);
+  myHeaders.append("signature", authObj.signature);
+  myHeaders.append("timestamp", authObj.timestamp.toString());
+
+  const raw = JSON.stringify({
+    id: notiID
+  });
+  
+  const requestOptions: Record<string, any> = {
+    method: 'PATCH',
+    headers: myHeaders,
+    redirect: 'follow',
+    body: raw,
   };
 
   const rs = await fetch(url, requestOptions)

@@ -9,11 +9,12 @@ import { formatDate } from "../../util/date"
 import { usePreference } from "../../hook/usePreference";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "../../component/Icon";
+import { logErrorForMonitoring } from "../../hook/useCrashlytics";
 
 export default function UnreadNoti() {
   const navigation = useNavigation<any>()
   const {preferenceTheme} = usePreference()
-  const {notifications: pagedNotis, isFetching, fetchNextPage} = useNotifications('unread')
+  const {notifications: pagedNotis, isFetching, fetchNextPage, markSingleRead} = useNotifications('unread')
 
   const notifications = useMemo(() => {
     if (!pagedNotis) return [] as Notifications[]
@@ -46,8 +47,14 @@ export default function UnreadNoti() {
     }
   }
 
-  const handleNotiPress = (notiObj: Notifications) => {
+  const handleNotiPress = async (notiObj: Notifications) => {
     if (!notiObj.notificationData.navigationId) return
+
+    try {
+      await markSingleRead(notiObj.id) 
+    } catch (error) {
+      logErrorForMonitoring(error as Error, 'Error read single noti')
+    }
 
     switch (notiObj.notificationData.navigationId) {
       case 'discover':

@@ -11,12 +11,14 @@ import { useNavigation } from "@react-navigation/native";
 import ILLUS from '../../asset/images/empty_icon_illus.png'
 import Icon from "../../component/Icon";
 import { useTranslation } from "react-i18next";
+import { markNotiRead } from "../../service/notifications";
+import { logErrorForMonitoring } from "../../hook/useCrashlytics";
 
 export default function AllNoti() {
   const {t} = useTranslation()
   const navigation = useNavigation<any>()
   const {preferenceTheme} = usePreference()
-  const {notifications: pagedNotis, isFetching, fetchNextPage} = useNotifications()
+  const {notifications: pagedNotis, isFetching, fetchNextPage, markSingleRead} = useNotifications()
 
   const notifications = useMemo(() => {
     if (!pagedNotis) return [] as Notifications[]
@@ -49,8 +51,14 @@ export default function AllNoti() {
     }
   }
 
-  const handleNotiPress = (notiObj: Notifications) => {
+  const handleNotiPress = async (notiObj: Notifications) => {
     if (!notiObj.notificationData.navigationId) return
+
+    try {
+      await markSingleRead(notiObj.id) 
+    } catch (error) {
+      logErrorForMonitoring(error as Error, 'Error read single noti')
+    }
 
     switch (notiObj.notificationData.navigationId) {
       case 'discover':
