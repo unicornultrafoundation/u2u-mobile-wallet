@@ -23,10 +23,11 @@ export default ({ state, descriptors, navigation }: any) => {
   const {width: viewportWidth} = useWindowDimensions();
   const {darkMode} = usePreferenceStore()
 
-  const { routeName } = useGlobalStore()
+  const { routeName, drawerOpened } = useGlobalStore()
+
   const showTabBar = useMemo(() => {
-    return SHOW_BOTTOM_TAB_ROUTE.includes(routeName)
-  }, [routeName])
+    return SHOW_BOTTOM_TAB_ROUTE.includes(routeName) && !drawerOpened
+  }, [routeName, drawerOpened])
 
   const {t} = useTranslation<string>()
 
