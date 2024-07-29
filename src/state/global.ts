@@ -6,6 +6,8 @@ interface GlobalState {
   setSearchKeyword: (searchKeyword: string) => void;
   unlocked: boolean;
   setUnlocked: (unlocked: boolean) => void;
+  drawerOpened: boolean;
+  setDrawerOpened: (drawerOpened: boolean) => void;
 }
 
 export const useGlobalStore = create<GlobalState>((set, get) => ({
@@ -20,5 +22,9 @@ export const useGlobalStore = create<GlobalState>((set, get) => ({
   unlocked: false,
   setUnlocked: (val: boolean) => {
     set({ unlocked: val })
+  },
+  drawerOpened: false,
+  setDrawerOpened: (drawerOpened: boolean) => {
+    set({ drawerOpened })
   }
 }))

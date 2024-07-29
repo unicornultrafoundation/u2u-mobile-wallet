@@ -1,102 +1,94 @@
 // Drawer.js
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Animated, Dimensions, StyleSheet } from 'react-native';
-import { GestureEvent, PanGestureHandler, PanGestureHandlerEventPayload, State } from 'react-native-gesture-handler';
+import React, { useEffect } from 'react';
+import { TouchableOpacity, Animated, Dimensions, StyleSheet, View, Image } from 'react-native';
+import { useGlobalStore } from '../../state/global';
+import { usePreference } from '../../hook/usePreference';
+import Text from '../../component/Text'
+import Icon from '../Icon';
+import { getPhonePaddingTop } from '../../util/platform';
+import LOGO from '../../asset/images/logo_text_full.png'
+import { useTranslation } from 'react-i18next';
+import { typography } from '../../theme/typography';
+import { useNavigation } from '@react-navigation/native';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
-const Drawer = ({ children, drawerContent }: {
-  children?: JSX.Element;
-  drawerContent: ({closeDrawer}: {closeDrawer: () => void}) => JSX.Element
-}) => {
-  const [drawerOpened, setDrawerOpened] = useState(false);
-  const translateX = new Animated.Value(-width);
+const Drawer = () => {
+  const navigation = useNavigation<any>()
+  const {t} = useTranslation()
+  const {preferenceTheme} = usePreference()
+  const {drawerOpened, setDrawerOpened} = useGlobalStore()
+  const translateX = new Animated.Value(width);
 
-  const handleGesture = ({ nativeEvent }: GestureEvent<PanGestureHandlerEventPayload>) => {
-    if (nativeEvent.translationX > 0) {
-      translateX.setValue(nativeEvent.translationX - width);
+  useEffect(() => {
+    if (drawerOpened) {
+      Animated.timing(translateX, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(translateX, {
+        toValue: width,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
     }
-  };
-
-  const handleStateChange = ({ nativeEvent }: GestureEvent<PanGestureHandlerEventPayload>) => {
-    if (nativeEvent.state === State.END) {
-      if (nativeEvent.translationX > width / 2) {
-        openDrawer();
-      } else {
-        closeDrawer();
-      }
-    }
-  };
-
-  const openDrawer = () => {
-    setDrawerOpened(true);
-    Animated.timing(translateX, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  };
+  }, [drawerOpened])
 
   const closeDrawer = () => {
-    Animated.timing(translateX, {
-      toValue: -width,
-      duration: 300,
-      useNativeDriver: true,
-    }).start(() => setDrawerOpened(false));
+    setDrawerOpened(false)
   };
 
+  if (!drawerOpened) return null
+
   return (
-    <View style={styles.container}>
-      <PanGestureHandler
-        onGestureEvent={handleGesture}
-        onHandlerStateChange={handleStateChange}
-      >
-        <Animated.View style={[styles.drawer, { transform: [{ translateX }] }]}>
-          {drawerContent({ closeDrawer })}
-        </Animated.View>
-      </PanGestureHandler>
+    <>
       <Animated.View
         style={[
-          styles.mainContent,
-          drawerOpened && styles.mainContentOverlay,
+          styles.drawer,
+          {
+            transform: [{ translateX }],
+            backgroundColor: preferenceTheme.background.background
+          }
         ]}
       >
-        <TouchableOpacity onPress={openDrawer} style={styles.openButton}>
-          <Text style={styles.buttonText}>Open Drawer</Text>
-        </TouchableOpacity>
-        {children}
+        <View style={{padding: 16}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10}}>
+            <Image
+              source={LOGO}
+              width={135}
+              height={28}
+            />
+            <TouchableOpacity onPress={closeDrawer}>
+              <Icon name='close' width={28} height={28} />
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
+            onPress={() => {
+              navigation.navigate('Notification')
+            }}
+          >
+            <Icon name="notification" width={24} height={24} />
+            <Text style={[typography.body.medium, {color: preferenceTheme.text.title}]}>
+              {t('notification')}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </Animated.View>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   drawer: {
     position: 'absolute',
-    width: width * 0.8,
-    height: '100%',
-    backgroundColor: '#fff',
-    zIndex: 1,
-  },
-  mainContent: {
+    width,
+    height,
+    zIndex: 10,
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  mainContentOverlay: {
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  openButton: {
-    padding: 10,
-    backgroundColor: '#007bff',
-    borderRadius: 5,
-    margin: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
+    marginTop: getPhonePaddingTop()
   },
 });
 
