@@ -8,6 +8,7 @@ import { firebase } from "@react-native-firebase/app-check"
 import appsFlyer from "react-native-appsflyer"
 import messaging from '@react-native-firebase/messaging';
 import { logErrorForMonitoring } from "./useCrashlytics"
+import { getAllSession } from "../service/session"
 
 export const useTracking = () => {
   const { networkConfig } = useNetwork()
@@ -152,18 +153,9 @@ export const useTracking = () => {
     try {
       if (!networkConfig || !networkConfig.api_endpoint) return
 
-      const endpoint = `${networkConfig.api_endpoint}${GET_SESSION_BY_WALLET}/${wallet.address}`
-
-      const requestOptions: Record<string, any> = {
-        method: 'GET',
-        redirect: 'follow'
-      };
-      const rs = await fetch(endpoint, requestOptions)
-      const rsJSON = await rs.json()
-
-      if (rsJSON.statusCode && rsJSON.statusCode !== 200) return
+      const sessions = await getAllSession(networkConfig.api_endpoint, wallet.address)
       
-      rsJSON.forEach(async (i: any) => {
+      sessions.forEach(async (i: any) => {
         await messaging().subscribeToTopic(`u2u-connect-session-${i.id}`)
       })
 
