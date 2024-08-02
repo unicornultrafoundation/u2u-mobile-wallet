@@ -42,7 +42,10 @@ export default function ConnectedSessionScreen() {
         data={sessions}
         renderItem={({item}) => {
           return (
-            <TouchableOpacity style={styles.sessionRow}>
+            <TouchableOpacity
+              style={styles.sessionRow}
+              onPress={() => navigation.navigate('SessionDetail', {sessionID: item.id})}
+            >
               {item.dAppMetadata.logo ? (
                 <Image
                   source={{uri: item.dAppMetadata.logo}}
