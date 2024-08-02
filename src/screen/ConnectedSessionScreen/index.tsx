@@ -47,16 +47,19 @@ export default function ConnectedSessionScreen() {
                 <Image
                   source={{uri: item.dAppMetadata.logo}}
                   style={{
-                    width: 24,
-                    height: 24
+                    width: 36,
+                    height: 36
                   }}
                 />
               ) : (
-                <Icon name='u2u' width={24} height={24} />
+                <Icon name='u2u' width={36} height={36} />
               )}
-              <View style={{flex: 1, alignItems: 'flex-start', paddingHorizontal: 12}}>
+              <View style={{flex: 1, alignItems: 'flex-start', justifyContent: 'space-between', paddingHorizontal: 12}}>
                 <Text style={[typography.body.bold, {color: preferenceTheme.text.title}]}>
                   {item.dAppMetadata.name}
+                </Text>
+                <Text style={[typography.label2.bold, {color: preferenceTheme.text.secondary, textTransform: 'uppercase'}]}>
+                  {item.status}
                 </Text>
               </View>
               <Icon name="chevron-right" width={18} height={18} />
