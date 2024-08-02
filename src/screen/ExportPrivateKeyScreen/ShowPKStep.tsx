@@ -23,7 +23,7 @@ const ShowSeedStep = ({onBack, wallet}: {
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
 
   const handleCopy = () => {
-    Clipboard.setString(wallet.mnemonic);
+    Clipboard.setString(wallet.privateKey);
     Toast.show({
       type: "simpleNoti",
       text1: t('msgCopied'),
