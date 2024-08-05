@@ -303,5 +303,8 @@
   "u2uConnect": "U2U Connect",
   "u2uConnectDesc": "Use U2U Super App for external sign request",
   "subscribeNews": "News",
-  "subscribeNewsDesc": "Subscribe to get latest news on U2U network"
+  "subscribeNewsDesc": "Subscribe to get latest news on U2U network",
+  "connectedSession": "U2U connect sessions",
+  "sessionDetail": "Session detail",
+  "noConnectedSession": "No session"
 }

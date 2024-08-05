@@ -67,12 +67,25 @@ const Drawer = () => {
           <TouchableOpacity
             style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
             onPress={() => {
+              closeDrawer()
               navigation.navigate('Notification')
             }}
           >
             <Icon name="notification" width={24} height={24} />
             <Text style={[typography.body.medium, {color: preferenceTheme.text.title}]}>
               {t('notification')}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
+            onPress={() => {
+              closeDrawer()
+              navigation.navigate('ConnectedSession')
+            }}
+          >
+            <Icon name="connect" width={24} height={24} color='#D8D8D8' />
+            <Text style={[typography.body.medium, {color: preferenceTheme.text.title}]}>
+              {t('connectedSession')}
             </Text>
           </TouchableOpacity>
         </View>

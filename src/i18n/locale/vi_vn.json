@@ -303,5 +303,8 @@
   "u2uConnect": "U2U Connect",
   "u2uConnectDesc": "Xác thực giao dịch từ bên ngoài Super App",
   "subscribeNews": "Tin tức",
-  "subscribeNewsDesc": "Nhận cập nhật mới nhất từ U2U network"
+  "subscribeNewsDesc": "Nhận cập nhật mới nhất từ U2U network",
+  "connectedSession": "Phiên đăng nhập",
+  "sessionDetail": "Chi tiết phiên",
+  "noConnectedSession": "Không có phiên đăng nhập"
 }

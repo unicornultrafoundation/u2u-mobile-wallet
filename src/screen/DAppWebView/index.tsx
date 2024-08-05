@@ -35,7 +35,7 @@ const DAppWebView = () => {
 
   const appURL = route.params?.url || ""
   // const appURL = 'http://192.168.1.38:3000'
-  const [url, setURL] = useState(appURL.replace('{{slash}}', '/'))
+  const [url, setURL] = useState(appURL.replace(/{{slash}}/g, '/').replace(/%7B%7Bslash%7D%7D/g, "/"))
   const [inputURL, setInputURL] = useState(url)
   const [modalVisible, setModalVisible] = useState(true);
 

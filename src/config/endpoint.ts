@@ -12,3 +12,5 @@ export const FETCH_CLAIM_REQUEST_ENDPOINT = '/membership-requests/request-from-d
 export const ALL_NOTI_ENDPOINT = '/notifications/own-noti'
 export const MARK_ALL_NOTI_READ_ENDPOINT = '/notifications/read-all'
 export const MARK_SINGLE_NOTI_READ = '/notifications/read'
+
+export const GET_SIGNREQUEST = '/sign-request'

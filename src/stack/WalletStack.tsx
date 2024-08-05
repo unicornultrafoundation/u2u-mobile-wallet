@@ -14,6 +14,8 @@ import ExportPrivateKeyScreen from '../screen/ExportPrivateKeyScreen';
 import SignExternalRequestScreen from '../screen/SignExternalRequestScreen';
 import SessionApprovalScreen from '../screen/SessionApprovalScreen';
 import NotificationScreen from '../screen/NotificationScreen';
+import ConnectedSessionScreen from '../screen/ConnectedSessionScreen';
+import SessionDetailScreen from '../screen/SessionDetail';
 
 const WalletStack = createNativeStackNavigator();
 
@@ -38,6 +40,8 @@ const WalletStackScreen = () => {
       <WalletStack.Screen name="SessionApproval" component={SessionApprovalScreen} />
       <WalletStack.Screen name="SignExternalRequest" component={SignExternalRequestScreen} />
       <WalletStack.Screen name="Notification" component={NotificationScreen} />
+      <WalletStack.Screen name="ConnectedSession" component={ConnectedSessionScreen} />
+      <WalletStack.Screen name="SessionDetail" component={SessionDetailScreen} />
     </WalletStack.Navigator>
   );
 }
