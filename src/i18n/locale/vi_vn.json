@@ -306,5 +306,6 @@
   "subscribeNewsDesc": "Nhận cập nhật mới nhất từ U2U network",
   "connectedSession": "Phiên đăng nhập",
   "sessionDetail": "Chi tiết phiên",
-  "noConnectedSession": "Không có phiên đăng nhập"
+  "noConnectedSession": "Không có phiên đăng nhập",
+  "chat": "Chat"
 }

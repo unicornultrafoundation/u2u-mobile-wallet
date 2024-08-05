@@ -34,7 +34,7 @@ export default function ConnectedSessionScreen() {
           <Icon name="arrow-left" width={24} height={24} />
         </TouchableOpacity>
         <View style={{flexDirection: 'row'}}>
-          <Text style={styles.headerText}>{t('connectedSession')}</Text>
+          <Text style={[styles.headerText, {color: preferenceTheme.text.title}]}>{t('connectedSession')}</Text>
         </View>
         <View style={{width: 24}} />
       </View>
