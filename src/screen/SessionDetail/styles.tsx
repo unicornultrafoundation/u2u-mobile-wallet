@@ -13,5 +13,14 @@ export const styles = StyleSheet.create({
     fontWeight: '700',
     lineHeight: 25,
     letterSpacing: 0.38
-  }
+  },
+  dappInfoContainer: {
+    marginHorizontal: 20,
+    borderRadius: 20,
+    padding: 16,
+    marginBottom: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 12
+  },
 });

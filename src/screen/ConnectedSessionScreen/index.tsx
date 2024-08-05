@@ -69,6 +69,15 @@ export default function ConnectedSessionScreen() {
             </TouchableOpacity>
           )
         }}
+        ListEmptyComponent={() => {
+          return (
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              <Text style={[typography.body.bold, {color: preferenceTheme.text.secondary}]}>
+                {t('noConnectedSession')}
+              </Text>
+            </View>
+          )
+        }}
       />
     </SafeAreaView>
   )
