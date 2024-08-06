@@ -17,6 +17,7 @@ import NotificationScreen from '../screen/NotificationScreen';
 import ConnectedSessionScreen from '../screen/ConnectedSessionScreen';
 import SessionDetailScreen from '../screen/SessionDetail';
 import ChatDashboardScreen from '../screen/ChatDashboardScreen';
+import ChatSettingScreen from '../screen/ChatSettingScreen';
 
 const WalletStack = createNativeStackNavigator();
 
@@ -46,6 +47,7 @@ const WalletStackScreen = () => {
       <WalletStack.Screen name="SessionDetail" component={SessionDetailScreen} />
       {/* CHAT SCREENS */}
       <WalletStack.Screen name="ChatDashboard" component={ChatDashboardScreen} />
+      <WalletStack.Screen name="ChatSetting" component={ChatSettingScreen} />
     </WalletStack.Navigator>
   );
 }

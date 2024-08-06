@@ -904,6 +904,16 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'contact':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path d="M18 18.86H17.24C16.44 18.86 15.68 19.17 15.12 19.73L13.41 21.42C12.63 22.19 11.36 22.19 10.58 21.42L8.87 19.73C8.31 19.17 7.54 18.86 6.75 18.86H6C4.34 18.86 3 17.53 3 15.89V4.97C3 3.33 4.34 2 6 2H18C19.66 2 21 3.33 21 4.97V15.88C21 17.52 19.66 18.86 18 18.86Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M12.07 8.95078C12.03 8.95078 11.97 8.95078 11.92 8.95078C10.87 8.91078 10.04 8.06078 10.04 7.00078C10.04 5.92078 10.91 5.05078 11.99 5.05078C13.07 5.05078 13.94 5.93078 13.94 7.00078C13.95 8.06078 13.12 8.92078 12.07 8.95078Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M9.25 11.9609C7.92 12.8509 7.92 14.3009 9.25 15.1909C10.76 16.2009 13.24 16.2009 14.75 15.1909C16.08 14.3009 16.08 12.8509 14.75 11.9609C13.24 10.9609 10.77 10.9609 9.25 11.9609Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
       default:
         return null
     }

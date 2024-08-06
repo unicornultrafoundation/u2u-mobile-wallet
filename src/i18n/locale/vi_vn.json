@@ -307,5 +307,8 @@
   "connectedSession": "Phiên đăng nhập",
   "sessionDetail": "Chi tiết phiên",
   "noConnectedSession": "Không có phiên đăng nhập",
-  "chat": "Chat"
+  "chat": "Chat",
+  "noConversationDescription": "Chưa có cuộc trò chuyện nào. Chọn một địa chỉ liên hệ và bắt đầu trò chuyện",
+  "startNewConversation": "Bắt đầu chat",
+  "chatSetting": "Cài đặt chat"
 }

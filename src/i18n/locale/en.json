@@ -307,5 +307,8 @@
   "connectedSession": "U2U connect sessions",
   "sessionDetail": "Session detail",
   "noConnectedSession": "No session",
-  "chat": "Chat"
+  "chat": "Chat",
+  "noConversationDescription": "No conversation yet. Select a contact and start chatting",
+  "startNewConversation": "Start new conversation",
+  "chatSetting": "Chat setting"
 }
