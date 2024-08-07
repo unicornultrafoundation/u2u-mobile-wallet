@@ -310,5 +310,12 @@
   "chat": "Chat",
   "noConversationDescription": "No conversation yet. Select a contact and start chatting",
   "startNewConversation": "Start new conversation",
-  "chatSetting": "Chat setting"
+  "chatSetting": "Chat setting",
+  "manageListContact": "Contact list",
+  "archivedConversations": "Archived Conversations",
+  "blockedContacts": "Block",
+  "unblock": "Unblock",
+  "addToBlockList": "Add to blocked list",
+  "unblockConfirmationTitle": "Unblock address?",
+  "unblockConfirmation": "Are you sure you want to unblock this user? They will be able to contact you again."
 }

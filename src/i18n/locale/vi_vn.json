@@ -310,5 +310,12 @@
   "chat": "Chat",
   "noConversationDescription": "Chưa có cuộc trò chuyện nào. Chọn một địa chỉ liên hệ và bắt đầu trò chuyện",
   "startNewConversation": "Bắt đầu chat",
-  "chatSetting": "Cài đặt chat"
+  "chatSetting": "Cài đặt chat",
+  "manageListContact": "Danh sách liên hệ",
+  "archivedConversations": "Lưu trữ",
+  "blockedContacts": "Chặn",
+  "unblock": "Bỏ chặn",
+  "addToBlockList": "Chặn liên hệ",
+  "unblockConfirmationTitle": "Bỏ chặn liên hệ?",
+  "unblockConfirmation": "Bạn chắc chắn muốn bỏ chặn liên hệ này?"
 }

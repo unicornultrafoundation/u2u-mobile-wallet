@@ -36,16 +36,25 @@ const Text = ({
 
   const customStyle = useMemo(() => {
     const textColor = darkMode ? darkTheme.text[color] : lightTheme.text[color];
-    return {
-      color: textColor,
-      fontSize,
-      fontWeight,
-      letterSpacing,
-      textAlign
-    };
+    const rs: StyleProp<TextStyle> = {
+      color: textColor
+    }
+    if (fontSize) {
+      rs.fontSize = fontSize
+    }
+    if (fontWeight) {
+      rs.fontWeight = fontWeight
+    }
+    if (letterSpacing) {
+      rs.letterSpacing = letterSpacing
+    }
+    if (textAlign) {
+      rs.textAlign = textAlign
+    }
+    return rs
   }, [darkMode, color, fontWeight, letterSpacing]);
 
-  return (
+  return (  
     <RNText {...rest} allowFontScaling={false} style={[defaultStyle, customStyle, style]}>
       {children}
     </RNText>

@@ -914,6 +914,25 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'block':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Rect x="2.75" y="2.75" width="18.5" height="18.5" rx="9.25" stroke={color || "#8D8D8D"} strokeWidth="1.5"/>
+              <Path d="M18 5L5.5 18.5" stroke={color || "#8D8D8D"} strokeWidth="1.5"/>
+            </Svg>
+          </View>
+        )
+      case 'archived':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path d="M14.5 10.65H9.5" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M12 8.21002V13.21" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M16.82 2H7.18001C5.05001 2 3.32001 3.74 3.32001 5.86V19.95C3.32001 21.75 4.61001 22.51 6.19001 21.64L11.07 18.93C11.59 18.64 12.43 18.64 12.94 18.93L17.82 21.64C19.4 22.52 20.69 21.76 20.69 19.95V5.86C20.68 3.74 18.95 2 16.82 2Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
       default:
         return null
     }

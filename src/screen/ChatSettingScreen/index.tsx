@@ -66,7 +66,7 @@ export default function ChatSettingScreen() {
           }
         </TouchableOpacity>
         <TouchableOpacity
-          // onPress={() => navigation.navigate('NotificationSetting')}
+          onPress={() => navigation.navigate('ContactList')}
         >
           {
             renderTrigger({
@@ -76,22 +76,22 @@ export default function ChatSettingScreen() {
           }
         </TouchableOpacity>
         <TouchableOpacity
-          // onPress={() => navigation.navigate('NotificationSetting')}
+          onPress={() => navigation.navigate('ArchivedConversations')}
         >
           {
             renderTrigger({
-              icon: 'notification', 
-              title: 'archivedChats',
+              icon: 'archived', 
+              title: 'archivedConversations',
             })
           }
         </TouchableOpacity>
         <TouchableOpacity
-          // onPress={() => navigation.navigate('NotificationSetting')}
+          onPress={() => navigation.navigate('BlockedContact')}
         >
           {
             renderTrigger({
-              icon: 'notification', 
-              title: 'blockedConversation',
+              icon: 'block', 
+              title: 'blockedContacts',
             })
           }
         </TouchableOpacity>
