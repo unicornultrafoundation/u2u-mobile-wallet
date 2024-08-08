@@ -14,3 +14,5 @@ export const MARK_ALL_NOTI_READ_ENDPOINT = '/notifications/read-all'
 export const MARK_SINGLE_NOTI_READ = '/notifications/read'
 
 export const GET_SIGNREQUEST = '/sign-request'
+
+export const GET_BLOCKED_CONTACTS = '/conversations/block'

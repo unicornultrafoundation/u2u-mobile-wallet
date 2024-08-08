@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useNetwork } from "./useNetwork";
 import { useWallet } from "./useWallet";
+import { getBlockedContacts } from "../service/chat";
 
 interface ChatBlockedAddress {
   walletAddress: string;
@@ -11,22 +12,20 @@ export const useChatBlockedAddress = () => {
   const {networkConfig} = useNetwork()
 
   const {data, isFetching, fetchNextPage} = useInfiniteQuery({
-    queryKey: ['fetchChatBlockedAddress-infinite', wallet.address, networkConfig?.chainID],
+    queryKey: ['fetchChatBlockedAddress-infinite', wallet.address, networkConfig?.api_endpoint],
     queryFn: async ({pageParam = 1}) => {
-      return [
-        {walletAddress: '0x01B3232Bc2AdfBa8c39Ba4A4002924d62e39aE5d'},
-        {walletAddress: '0x01B3232Bc2AdfBa8c39Ba4A4002924d62e39aE5d'},
-        {walletAddress: '0x01B3232Bc2AdfBa8c39Ba4A4002924d62e39aE5d'},
-        {walletAddress: '0x01B3232Bc2AdfBa8c39Ba4A4002924d62e39aE5d'},
-        {walletAddress: '0x01B3232Bc2AdfBa8c39Ba4A4002924d62e39aE5d'},
-        {walletAddress: '0x01B3232Bc2AdfBa8c39Ba4A4002924d62e39aE5d'},
-        {walletAddress: '0x01B3232Bc2AdfBa8c39Ba4A4002924d62e39aE5d'},
-        {walletAddress: '0x01B3232Bc2AdfBa8c39Ba4A4002924d62e39aE5d'},
-        {walletAddress: '0x01B3232Bc2AdfBa8c39Ba4A4002924d62e39aE5d'},
-        {walletAddress: '0x01B3232Bc2AdfBa8c39Ba4A4002924d62e39aE5d'},
-        {walletAddress: '0x01B3232Bc2AdfBa8c39Ba4A4002924d62e39aE5d'},
-        {walletAddress: '0x01B3232Bc2AdfBa8c39Ba4A4002924d62e39aE5d'},
-      ] as ChatBlockedAddress[]
+      if (!networkConfig || !networkConfig.api_endpoint) return []
+      const rs = await getBlockedContacts(networkConfig.api_endpoint, {
+        page: pageParam,
+        limit: 20,
+        address: wallet.address
+      })
+
+      return rs.data.map((i: Record<string, any>) => {
+        return {
+          walletAddress: i.to
+        }
+      })
     },
     getNextPageParam: (lastPage, pages) => {
       const nextPageParam = lastPage.length === 0 ? undefined : pages.length + 1
