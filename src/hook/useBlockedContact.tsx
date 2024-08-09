@@ -1,7 +1,8 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { useNetwork } from "./useNetwork";
 import { useWallet } from "./useWallet";
-import { getBlockedContacts } from "../service/chat";
+import { blockContact, getBlockedContacts, unblockContact } from "../service/chat";
+import { signMessage } from "../util/wallet";
 
 interface ChatBlockedAddress {
   walletAddress: string;
@@ -33,13 +34,29 @@ export const useChatBlockedAddress = () => {
     },
   })
 
-  const blockAddress = (address: string) => {
+  const {mutateAsync: blockAddress} = useMutation({
+    mutationKey: ['block-address', wallet.address, networkConfig?.api_endpoint],
+    mutationFn: async (address: string) => {
+      if (!networkConfig) return
+      const signature = await signMessage(
+        `${wallet.address.toLowerCase()}-block-${address.toLowerCase()}`,
+        wallet.privateKey
+      )
+      return blockContact(networkConfig.api_endpoint, {from: wallet.address, to: address, signature})
+    }
+  })
 
-  }
-
-  const unblockAddress = (address: string) => {
-
-  }
+  const {mutateAsync: unblockAddress} = useMutation({
+    mutationKey: ['unblock-address', wallet.address, networkConfig?.api_endpoint],
+    mutationFn: async (address: string) => {
+      if (!networkConfig) return
+      const signature = await signMessage(
+        `${wallet.address.toLowerCase()}-unblock-${address.toLowerCase()}`,
+        wallet.privateKey
+      )
+      return unblockContact(networkConfig.api_endpoint, {from: wallet.address, to: address, signature})
+    }
+  })
 
   return {
     data, isFetching, fetchNextPage,
