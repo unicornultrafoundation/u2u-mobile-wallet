@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import Modal from "../../component/Modal";
 import { usePreference } from "../../hook/usePreference";
 import Text from '../../component/Text';
@@ -6,23 +6,24 @@ import { useTranslation } from "react-i18next";
 import Separator from "../../component/Separator";
 import theme from "../../theme";
 import { useChatBlockedAddress } from "../../hook/useBlockedContact";
+import TextInput from "../../component/TextInput";
 import { useState } from "react";
 
-export default function UnblockModal({ onRequestClose, visible, addressToUnblock }: {
+export default function BlockModal({ onRequestClose, visible }: {
   visible: boolean;
   onRequestClose: () => void;
-  addressToUnblock: string;
 }) {
   const {t} = useTranslation()
   const {preferenceTheme} = usePreference()
-  const {unblockAddress} = useChatBlockedAddress()
+  const {blockAddress} = useChatBlockedAddress()
 
+  const [addressToBlock, setAddressToBlock] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleUnblock = async () => {
+  const handleBlock = async () => {
     try {
       setLoading(true)
-      await unblockAddress(addressToUnblock)
+      await blockAddress(addressToBlock)
       setLoading(false)
       onRequestClose()
     } catch (error) {
@@ -34,10 +35,11 @@ export default function UnblockModal({ onRequestClose, visible, addressToUnblock
     <Modal visible={visible} onRequestClose={onRequestClose}>
       <View
         style={{
-          width: 280,
+          width: 320,
           padding: 24,
           alignItems: 'center',
           backgroundColor: preferenceTheme.background.background,
+          borderRadius: 16,
           shadowColor: 'rgb(0, 0, 0)',
           shadowOffset: {
             width: 0,
@@ -52,18 +54,28 @@ export default function UnblockModal({ onRequestClose, visible, addressToUnblock
           type="title2-bold"
           color="title"
         >
-          {t('unblockConfirmationTitle')}
+          {t('blockConfirmationTitle')}
         </Text>
         <Text type="caption1-regular" color="secondary" style={{marginVertical: 12, textAlign: 'center'}}>
-          {t('unblockConfirmation')}
+          {t('blockConfirmation')}
         </Text>  
+        <TextInput
+          value={addressToBlock}
+          onChangeText={setAddressToBlock}
+          // placeholder={t('searchTokenPlaceholder')}
+          containerStyle={{width: '100%'}}
+        />
         <Separator style={{ width: '100%' }}/>
         <TouchableOpacity
-          onPress={handleUnblock}
-          style={{ width: '100%', alignItems: 'center' }}>
-          <Text type="label-medium" style={{ color: theme.color.primary[500] }}>
-            {t('unblock')}
-          </Text>
+          onPress={handleBlock}
+          style={{ width: '100%', alignItems: 'center' }}
+          disabled={loading}
+        >
+          {loading ? <ActivityIndicator /> : (
+            <Text type="label-medium" style={{ color: theme.color.primary[500] }}>
+              {t('block')}
+            </Text>
+          )}
         </TouchableOpacity>
 
         <Separator style={{ width: '100%' }}/>

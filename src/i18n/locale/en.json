@@ -317,5 +317,7 @@
   "unblock": "Unblock",
   "addToBlockList": "Add to blocked list",
   "unblockConfirmationTitle": "Unblock address?",
-  "unblockConfirmation": "Are you sure you want to unblock this user? They will be able to contact you again."
+  "unblockConfirmation": "Are you sure you want to unblock this user? They will be able to contact you again.",
+  "blockConfirmationTitle": "Block address",
+  "blockConfirmation": "Blocking this wallet address will prevent the user associated with it from accessing your services. Use this feature to restrict access from unwanted users"
 }

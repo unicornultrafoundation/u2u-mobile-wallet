@@ -13,6 +13,8 @@ import { shortenAddress, truncate } from "../../util/string";
 import { typography } from "../../theme/typography";
 import Button from "../../component/Button";
 import UnblockModal from "./UnblockModal";
+import BlockModal from "./BlockModal";
+import { useDebounce } from "../../hook/useDebounce";
 
 export default function BlockedContactScreen() {
   const {t} = useTranslation()
@@ -26,16 +28,20 @@ export default function BlockedContactScreen() {
       setRouteName(route.name);
     }, [route]),
   );
+  
+  const [search, setSearch] = useState('')
+  const debouncedSearch = useDebounce(search, 500)
 
-  const {data} = useChatBlockedAddress()
+  const {data} = useChatBlockedAddress(debouncedSearch)
   const allChatBlockedAddress = useMemo(() => {
     if (!data) return []
     return data.pages.flat()
   }, [data])
 
-  const [search, setSearch] = useState('')
   const [showConfirmUnblock, setShowConfirmUnblock] = useState(false)
   const [addressToUnblock, setAddressToUnblock] = useState('')
+
+  const [showBlockModal, setShowBlockModal] = useState(false)
   
   return (
     <SafeAreaView
@@ -102,7 +108,7 @@ export default function BlockedContactScreen() {
                 borderRadius: 60,
               }}
               textStyle={[typography.label.medium]}
-              // onPress={handleClose}
+              onPress={() => setShowBlockModal(true)}
             >
               {t('addToBlockList')}
             </Button>
@@ -113,6 +119,10 @@ export default function BlockedContactScreen() {
         visible={showConfirmUnblock}
         onRequestClose={() => setShowConfirmUnblock(false)}
         addressToUnblock={addressToUnblock}
+      />
+      <BlockModal
+        visible={showBlockModal}
+        onRequestClose={() => setShowBlockModal(false)}
       />
     </SafeAreaView>
   )

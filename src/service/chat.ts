@@ -1,7 +1,10 @@
 import { BLOCK_CONTACTS, GET_BLOCKED_CONTACTS, UNBLOCK_CONTACTS } from "../config/endpoint"
 
-export const getBlockedContacts = async (backendURL: string, dto: {page: number, limit: number, address: string}) => {
-  const url = `${backendURL}${GET_BLOCKED_CONTACTS}?page=${dto.page}&limit=${dto.limit}&address=${dto.address}`
+export const getBlockedContacts = async (backendURL: string, dto: {page: number, limit: number, address: string, search?: string}) => {
+  let url = `${backendURL}${GET_BLOCKED_CONTACTS}?page=${dto.page}&limit=${dto.limit}&address=${dto.address}`
+  if (dto.search) {
+    url += `&search=${dto.search}`
+  }
   const rs = await fetch(url)
   const rsJSON = await rs.json()
   return rsJSON
@@ -16,8 +19,10 @@ export const blockContact = async (
   }
 ) => {
   const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
   const raw = JSON.stringify(dto);
   const url = `${backendURL}${BLOCK_CONTACTS}`
+
   const requestOptions: Record<string, any> = {
     method: 'POST',
     headers: myHeaders,
@@ -26,8 +31,9 @@ export const blockContact = async (
   };
 
   const rs = await fetch(url, requestOptions)
+  const rsJSON = await rs.json()
 
-  return rs.json()
+  return rsJSON
 }
 
 export const unblockContact = async (
@@ -39,6 +45,8 @@ export const unblockContact = async (
   }
 ) => {
   const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
   const raw = JSON.stringify(dto);
   const url = `${backendURL}${UNBLOCK_CONTACTS}`
   const requestOptions: Record<string, any> = {

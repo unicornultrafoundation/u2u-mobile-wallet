@@ -8,18 +8,19 @@ interface ChatBlockedAddress {
   walletAddress: string;
 }
 
-export const useChatBlockedAddress = () => {
+export const useChatBlockedAddress = (search?: string) => {
   const {wallet} = useWallet()
   const {networkConfig} = useNetwork()
 
-  const {data, isFetching, fetchNextPage} = useInfiniteQuery({
-    queryKey: ['fetchChatBlockedAddress-infinite', wallet.address, networkConfig?.api_endpoint],
+  const {data, isFetching, fetchNextPage, refetch} = useInfiniteQuery({
+    queryKey: ['fetchChatBlockedAddress-infinite', wallet.address, networkConfig?.api_endpoint, search],
     queryFn: async ({pageParam = 1}) => {
       if (!networkConfig || !networkConfig.api_endpoint) return []
       const rs = await getBlockedContacts(networkConfig.api_endpoint, {
         page: pageParam,
         limit: 20,
-        address: wallet.address
+        address: wallet.address,
+        search
       })
 
       return rs.data.map((i: Record<string, any>) => {
@@ -42,7 +43,9 @@ export const useChatBlockedAddress = () => {
         `${wallet.address.toLowerCase()}-block-${address.toLowerCase()}`,
         wallet.privateKey
       )
-      return blockContact(networkConfig.api_endpoint, {from: wallet.address, to: address, signature})
+      const rs = await blockContact(networkConfig.api_endpoint, {from: wallet.address, to: address, signature})
+      await refetch()
+      return rs
     }
   })
 
@@ -54,7 +57,9 @@ export const useChatBlockedAddress = () => {
         `${wallet.address.toLowerCase()}-unblock-${address.toLowerCase()}`,
         wallet.privateKey
       )
-      return unblockContact(networkConfig.api_endpoint, {from: wallet.address, to: address, signature})
+      const rs = await unblockContact(networkConfig.api_endpoint, {from: wallet.address, to: address, signature})
+      await refetch()
+      return rs
     }
   })
 

@@ -317,5 +317,7 @@
   "unblock": "Bỏ chặn",
   "addToBlockList": "Chặn liên hệ",
   "unblockConfirmationTitle": "Bỏ chặn liên hệ?",
-  "unblockConfirmation": "Bạn chắc chắn muốn bỏ chặn liên hệ này?"
+  "unblockConfirmation": "Bạn chắc chắn muốn bỏ chặn liên hệ này?",
+  "blockConfirmationTitle": "Chăn địa chỉ",
+  "blockConfirmation": "Blocking this wallet address will prevent the user associated with it from accessing your services. Use this feature to restrict access from unwanted users"
 }
