@@ -7,7 +7,7 @@ export const CONTACT_STORE_KEY = 'contact-storage'
 export interface Contact {
   name: string;
   address: string;
-  avatar: string;
+  avatar?: string;
 }
 
 interface ContactState {

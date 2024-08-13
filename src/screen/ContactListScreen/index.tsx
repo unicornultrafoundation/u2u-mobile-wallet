@@ -1,9 +1,9 @@
-import { SafeAreaView, TouchableOpacity, View, Image } from "react-native";
+import { SafeAreaView, TouchableOpacity, View, Image, FlatList, SectionList } from "react-native";
 import { useGlobalStore } from "../../state/global";
 import { usePreference } from "../../hook/usePreference";
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import EMPTY_ILLUS from '../../asset/images/empty_contact_illus.png'
 import { styles } from "./styles";
 import Icon from "../../component/Icon";
@@ -13,7 +13,11 @@ import { useContact } from "../../hook/useContact";
 import { typography } from "../../theme/typography";
 import Button from "../../component/Button";
 import TextInput from "../../component/TextInput";
+import AddContactModal from "./AddContactModal";
+import { groupByAlphabet } from "../../util/object";
+import theme from "../../theme";
 
+// TODO: implement alphabet floating list
 export default function ContactListScreen() {
   const {t} = useTranslation()
   const navigation = useNavigation<any>()
@@ -30,6 +34,17 @@ export default function ContactListScreen() {
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounce(search, 500)
   const {contactList} = useContact(debouncedSearch)
+
+  const [showAddContact, setShowAddContact] = useState(false)
+
+  const sectionContactList = useMemo(() => {
+    return groupByAlphabet(contactList, 'name').map((i) => {
+      return {
+        title: i.char,
+        data: i.items
+      }
+    })
+  }, [contactList])
   
   return (
     <SafeAreaView
@@ -42,7 +57,13 @@ export default function ContactListScreen() {
         <View style={{flexDirection: 'row'}}>
           <Text style={[styles.headerText, {color: preferenceTheme.text.title}]}>{t('manageListContact')}</Text>
         </View>
-        <View style={{width: 24}} />
+        <TouchableOpacity onPress={() => setShowAddContact(true)}>
+          <Icon
+            name="plus-circle"
+            width={24}
+            height={24}
+          />
+        </TouchableOpacity>
       </View>
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         {contactList.length === 0 ? (
@@ -61,7 +82,7 @@ export default function ContactListScreen() {
                 marginTop: 10,
               }}
               textStyle={[typography.label.medium]}
-              // onPress={handleClose}
+              onPress={() => setShowAddContact(true)}
             >
               {t('addContact')}
             </Button>
@@ -82,9 +103,46 @@ export default function ContactListScreen() {
                 );
               }}
             />
+            <SectionList
+              sections={sectionContactList}
+              keyExtractor={(item, index) => item + index}
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  style={styles.contactRow}
+                  onPress={() => {
+                    navigation.navigate('ContactDetail', {address: item.address})
+                  }}
+                >
+                  <View style={{width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center', backgroundColor: theme.color.primary[500]}}>
+                    <Text style={{color: '#FFFFFF'}}>
+                      {item.name[0].toUpperCase()}
+                    </Text>
+                  </View>
+                  <View style={{flex: 1}}>
+                    <Text type="body-medium" color="title">{item.name}</Text>
+                  </View>
+                  <TouchableOpacity>
+                    <Icon
+                      name="chat"
+                      width={24}
+                      height={24}
+                    />
+                  </TouchableOpacity>
+                </TouchableOpacity>
+              )}
+              renderSectionHeader={({section: {title}}) => (
+                <View style={{paddingHorizontal: 16}}>
+                  <Text type="subheadline-medium" color="secondary">{title}</Text>
+                </View>
+              )}
+            />
           </View>
         )}
       </View>
+      <AddContactModal
+        visible={showAddContact}
+        onRequestClose={() => setShowAddContact(false)}
+      />
     </SafeAreaView>
   )
 }

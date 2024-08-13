@@ -1,6 +1,7 @@
 import { View, Modal as RNModal, Pressable, ModalProps } from 'react-native';
 import React from 'react';
 import styles from './styles';
+import { BlurView } from '@react-native-community/blur';
 
 interface Props extends ModalProps {
   visible?: boolean;
@@ -18,6 +19,14 @@ const Modal = ({ visible, onRequestClose, children, ...rest }: Props) => {
       style={{ flex: 1 }}
       {...rest}
     >
+      {visible && (
+        <BlurView
+          style={styles.blurView}
+          blurType="light"
+          blurAmount={10}
+          reducedTransparencyFallbackColor="white"
+        />
+      )}
       <View style={styles.modalWrapper}>
         <Pressable onPress={onRequestClose} style={styles.overlay} />
         {children}

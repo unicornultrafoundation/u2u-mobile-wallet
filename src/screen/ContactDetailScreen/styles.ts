@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'flex-start'
   },
   headerText: {
     fontSize: 20,
@@ -14,18 +14,11 @@ export const styles = StyleSheet.create({
     lineHeight: 25,
     letterSpacing: 0.38
   },
-  blurView: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0
-  },
-  contactRow: {
+  actionRow: {
     flexDirection: 'row',
-    width: '100%',
-    gap: 12,
+    padding: 16,
     alignItems: 'center',
-    padding: 16
+    gap: 8,
+    borderBottomWidth: 1,
   }
 });

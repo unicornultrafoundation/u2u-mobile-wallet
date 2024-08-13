@@ -319,7 +319,11 @@
   "unblockConfirmationTitle": "Bỏ chặn liên hệ?",
   "unblockConfirmation": "Bạn chắc chắn muốn bỏ chặn liên hệ này?",
   "blockConfirmationTitle": "Chăn địa chỉ",
-  "blockConfirmation": "Blocking this wallet address will prevent the user associated with it from accessing your services. Use this feature to restrict access from unwanted users",
+  "blockConfirmation": "Địa chỉ ví này sẽ không thể gửi tin nhắn đến cho bạn nữa. Bạn có thể bỏ chặn bất cứ lúc nào",
   "noContactDescription": "Add new contact to get started",
-  "addContact": "Thêm liên hệ"
+  "addContact": "Thêm liên hệ",
+  "addContactTitle": "Thêm liên hệ",
+  "contactName": "Tên",
+  "walletAddress": "Địa chỉ ví",
+  "delete": "Xoá"
 }

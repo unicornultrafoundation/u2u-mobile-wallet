@@ -21,6 +21,7 @@ import ChatSettingScreen from '../screen/ChatSettingScreen';
 import BlockedContactScreen from '../screen/BlockedContactScreen';
 import ArchivedConversationsScreen from '../screen/ArchivedConversationsScreen';
 import ContactListScreen from '../screen/ContactListScreen';
+import ContactDetailScreen from '../screen/ContactDetailScreen';
 
 const WalletStack = createNativeStackNavigator();
 
@@ -54,6 +55,7 @@ const WalletStackScreen = () => {
       <WalletStack.Screen name="BlockedContact" component={BlockedContactScreen} />
       <WalletStack.Screen name="ArchivedConversations" component={ArchivedConversationsScreen} />
       <WalletStack.Screen name="ContactList" component={ContactListScreen} />
+      <WalletStack.Screen name="ContactDetail" component={ContactDetailScreen} />
     </WalletStack.Navigator>
   );
 }
