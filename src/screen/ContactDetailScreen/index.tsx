@@ -14,6 +14,7 @@ import Separator from "../../component/Separator";
 import { shortenAddress } from "../../util/string";
 import Toast from "react-native-toast-message";
 import BlockModal from "./BlockModal";
+import UpdateNameModal from "./UpdateNameModal";
 
 export default function ContactDetailScreen() {
   const {t} = useTranslation()
@@ -33,6 +34,7 @@ export default function ContactDetailScreen() {
   const contactItem = contactList[0]
 
   const [showBlockModal, setShowBlockModal] = useState(false)
+  const [showUpdateModal, setShowUpdateModal] = useState(false)
 
   const handleCopy = (value: string) => {
     Clipboard.setString(value);
@@ -72,7 +74,9 @@ export default function ContactDetailScreen() {
           <Text type="body-medium" color="title">
             {contactItem.name}
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setShowUpdateModal(true)}
+          >
             <Icon
               name="edit"
               width={24}
@@ -129,6 +133,11 @@ export default function ContactDetailScreen() {
         visible={showBlockModal}
         onRequestClose={() => setShowBlockModal(false)}
         addressToBlock={contactItem.address}
+      />
+      <UpdateNameModal
+        contactToUpdate={contactItem}
+        visible={showUpdateModal}
+        onRequestClose={() => setShowUpdateModal(false)}
       />
     </SafeAreaView>
   )

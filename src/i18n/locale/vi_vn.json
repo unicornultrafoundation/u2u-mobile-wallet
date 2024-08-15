@@ -325,5 +325,7 @@
   "addContactTitle": "Thêm liên hệ",
   "contactName": "Tên",
   "walletAddress": "Địa chỉ ví",
-  "delete": "Xoá"
+  "delete": "Xoá",
+  "updateContactTitle": "Cập nhật liên hệ",
+  "update": "Cập nhật"
 }

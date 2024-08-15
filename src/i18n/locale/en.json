@@ -325,5 +325,7 @@
   "addContactTitle": "Add new contact",
   "contactName": "Contact name",
   "walletAddress": "Wallet address",
-  "delete": "Delete"
+  "delete": "Delete",
+  "updateContactTitle": "Update contact",
+  "update": "Update"
 }
