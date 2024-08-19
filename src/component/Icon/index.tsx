@@ -895,6 +895,66 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'chat':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path fillRule="evenodd" clipRule="evenodd" d="M7.69524 13.3909C7.05048 13.3909 6.52667 12.8671 6.52667 12.2223C6.52667 11.5795 7.05048 11.0557 7.69524 11.0557C8.34001 11.0557 8.86382 11.5795 8.86382 12.2223C8.86382 12.8671 8.34001 13.3909 7.69524 13.3909ZM12.2381 13.3909C11.5933 13.3909 11.0695 12.8671 11.0695 12.2223C11.0695 11.5795 11.5933 11.0557 12.2381 11.0557C12.8829 11.0557 13.4067 11.5795 13.4067 12.2223C13.4067 12.8671 12.8829 13.3909 12.2381 13.3909ZM15.6125 12.2223C15.6125 12.8671 16.1363 13.3909 16.7811 13.3909C17.4258 13.3909 17.9496 12.8671 17.9496 12.2223C17.9496 11.5795 17.4258 11.0557 16.7811 11.0557C16.1363 11.0557 15.6125 11.5795 15.6125 12.2223Z" fill={color || "#8D8D8D"}/>
+              <Path fillRule="evenodd" clipRule="evenodd" d="M12.02 2C6.21 2 2 6.74612 2 12.015C2 13.6975 2.49 15.4291 3.35 17.0115C3.51 17.2729 3.53 17.6024 3.42 17.9139L2.75 20.1572C2.6 20.698 3.06 21.0976 3.57 20.9374L5.59 20.3375C6.14 20.1572 6.57 20.3866 7.08 20.698C8.54 21.5583 10.36 22 12 22C16.96 22 22 18.1642 22 11.985C22 6.65598 17.7 2 12.02 2Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'contact':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path d="M18 18.86H17.24C16.44 18.86 15.68 19.17 15.12 19.73L13.41 21.42C12.63 22.19 11.36 22.19 10.58 21.42L8.87 19.73C8.31 19.17 7.54 18.86 6.75 18.86H6C4.34 18.86 3 17.53 3 15.89V4.97C3 3.33 4.34 2 6 2H18C19.66 2 21 3.33 21 4.97V15.88C21 17.52 19.66 18.86 18 18.86Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M12.07 8.95078C12.03 8.95078 11.97 8.95078 11.92 8.95078C10.87 8.91078 10.04 8.06078 10.04 7.00078C10.04 5.92078 10.91 5.05078 11.99 5.05078C13.07 5.05078 13.94 5.93078 13.94 7.00078C13.95 8.06078 13.12 8.92078 12.07 8.95078Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M9.25 11.9609C7.92 12.8509 7.92 14.3009 9.25 15.1909C10.76 16.2009 13.24 16.2009 14.75 15.1909C16.08 14.3009 16.08 12.8509 14.75 11.9609C13.24 10.9609 10.77 10.9609 9.25 11.9609Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'block':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Rect x="2.75" y="2.75" width="18.5" height="18.5" rx="9.25" stroke={color || "#8D8D8D"} strokeWidth="1.5"/>
+              <Path d="M18 5L5.5 18.5" stroke={color || "#8D8D8D"} strokeWidth="1.5"/>
+            </Svg>
+          </View>
+        )
+      case 'archived':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
+              <Path d="M14.5 10.65H9.5" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M12 8.21002V13.21" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M16.82 2H7.18001C5.05001 2 3.32001 3.74 3.32001 5.86V19.95C3.32001 21.75 4.61001 22.51 6.19001 21.64L11.07 18.93C11.59 18.64 12.43 18.64 12.94 18.93L17.82 21.64C19.4 22.52 20.69 21.76 20.69 19.95V5.86C20.68 3.74 18.95 2 16.82 2Z" stroke={color || "#8D8D8D"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'send-chat':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 25" fill="none">
+              <Path d="M15.8554 8.62111L10.1916 14.3227L3.56064 10.2415C2.69176 9.70657 2.86787 8.38697 3.8467 8.10287L19.5022 3.54743C20.3925 3.28978 21.2156 4.12446 20.949 5.01889L16.304 20.6582C16.013 21.6369 14.7082 21.8064 14.1809 20.9325L10.1916 14.3227" stroke={color || "#33CC99"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'pin':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg
+              viewBox="0 0 24 24"
+              fill={color || "currentColor"}
+              height="100%"
+              width="100%"
+            >
+              <Path fill="none" d="M0 0h24v24H0z" />
+              <Path d="M13.828 1.686l8.486 8.486-1.415 1.414-.707-.707-4.242 4.242-.707 3.536-1.415 1.414-4.242-4.243-4.95 4.95-1.414-1.414 4.95-4.95-4.243-4.242 1.414-1.415L8.88 8.05l4.242-4.242-.707-.707 1.414-1.415zm.708 3.536l-4.671 4.67-2.822.565 6.5 6.5.564-2.822 4.671-4.67-4.242-4.243z" />
+            </Svg>
+          </View>
+        )
       default:
         return null
     }

@@ -10,6 +10,7 @@ import LOGO from '../../asset/images/logo_text_full.png'
 import { useTranslation } from 'react-i18next';
 import { typography } from '../../theme/typography';
 import { useNavigation } from '@react-navigation/native';
+import { useLocalStore } from '../../state/local';
 
 const { width, height } = Dimensions.get('window');
 
@@ -19,6 +20,8 @@ const Drawer = () => {
   const {preferenceTheme} = usePreference()
   const {drawerOpened, setDrawerOpened} = useGlobalStore()
   const translateX = new Animated.Value(width);
+
+  const {enableU2UConnect} = useLocalStore()
 
   useEffect(() => {
     if (drawerOpened) {
@@ -76,16 +79,30 @@ const Drawer = () => {
               {t('notification')}
             </Text>
           </TouchableOpacity>
+          {enableU2UConnect && (
+            <TouchableOpacity
+              style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
+              onPress={() => {
+                closeDrawer()
+                navigation.navigate('ConnectedSession')
+              }}
+            >
+              <Icon name="connect" width={24} height={24} color='#D8D8D8' />
+              <Text style={[typography.body.medium, {color: preferenceTheme.text.title}]}>
+                {t('connectedSession')}
+              </Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
             onPress={() => {
               closeDrawer()
-              navigation.navigate('ConnectedSession')
+              navigation.navigate('ChatDashboard')
             }}
           >
-            <Icon name="connect" width={24} height={24} color='#D8D8D8' />
+            <Icon name="chat" width={24} height={24} color='#D8D8D8' />
             <Text style={[typography.body.medium, {color: preferenceTheme.text.title}]}>
-              {t('connectedSession')}
+              {t('chat')}
             </Text>
           </TouchableOpacity>
         </View>

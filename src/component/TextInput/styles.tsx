@@ -9,6 +9,7 @@ export default StyleSheet.create({
     minWidth: 52,
     minHeight: 48,
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    gap: 4
   },
 })

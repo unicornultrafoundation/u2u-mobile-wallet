@@ -87,7 +87,7 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
             </TouchableOpacity>
           )}
         </View>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', gap: 2 }}>
           <SelectNetworkModal
             trigger={() => {
               return (

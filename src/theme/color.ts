@@ -139,7 +139,7 @@ export const lightTheme: Record<string, any> = {
 export const darkTheme: Record<string, any> = {
   background: {
     background: "#181818",
-    surface: "#191B1E",
+    surface: "#1F2225",
     surfaceHover: "#343434",
     surfaceActive: "#363636",
     surfaceDisable: "#8D8D8D"
