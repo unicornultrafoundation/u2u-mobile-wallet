@@ -933,6 +933,28 @@ const Icon = ({name, width, height, color, style}: {
             </Svg>
           </View>
         )
+      case 'send-chat':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 24 25" fill="none">
+              <Path d="M15.8554 8.62111L10.1916 14.3227L3.56064 10.2415C2.69176 9.70657 2.86787 8.38697 3.8467 8.10287L19.5022 3.54743C20.3925 3.28978 21.2156 4.12446 20.949 5.01889L16.304 20.6582C16.013 21.6369 14.7082 21.8064 14.1809 20.9325L10.1916 14.3227" stroke={color || "#33CC99"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </Svg>
+          </View>
+        )
+      case 'pin':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg
+              viewBox="0 0 24 24"
+              fill={color || "currentColor"}
+              height="100%"
+              width="100%"
+            >
+              <Path fill="none" d="M0 0h24v24H0z" />
+              <Path d="M13.828 1.686l8.486 8.486-1.415 1.414-.707-.707-4.242 4.242-.707 3.536-1.415 1.414-4.242-4.243-4.95 4.95-1.414-1.414 4.95-4.95-4.243-4.242 1.414-1.415L8.88 8.05l4.242-4.242-.707-.707 1.414-1.415zm.708 3.536l-4.671 4.67-2.822.565 6.5 6.5.564-2.822 4.671-4.67-4.242-4.243z" />
+            </Svg>
+          </View>
+        )
       default:
         return null
     }

@@ -15,8 +15,10 @@ import { shortenAddress } from "../../util/string";
 import Toast from "react-native-toast-message";
 import BlockModal from "./BlockModal";
 import UpdateNameModal from "./UpdateNameModal";
+import { useWallet } from "../../hook/useWallet";
 
 export default function ContactDetailScreen() {
+  const {wallet} = useWallet()
   const {t} = useTranslation()
   const navigation = useNavigation<any>()
   const {preferenceTheme} = usePreference()
@@ -97,7 +99,12 @@ export default function ContactDetailScreen() {
           <Separator style={{ width: '100%' }}/>
         </View>
         <View style={{width: '100%'}}>
-          <TouchableOpacity style={[styles.actionRow, {borderColor: preferenceTheme.divider}]}>
+          <TouchableOpacity
+            style={[styles.actionRow, {borderColor: preferenceTheme.divider}]}
+            onPress={() => {
+              navigation.navigate('ChatDetail', {userAddresses: [contactItem.address, wallet.address]})
+            }}
+          >
             <Icon name="chat" width={24} height={24} color={preferenceTheme.background.surfaceDisable} />
             <Text type="body-medium" color="title">
               {t('chat')}

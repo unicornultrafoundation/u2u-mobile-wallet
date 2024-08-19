@@ -327,5 +327,7 @@
   "walletAddress": "Wallet address",
   "delete": "Delete",
   "updateContactTitle": "Update contact",
-  "update": "Update"
+  "update": "Update",
+  "newMessagePlaceholder": "Enter message",
+  "pinConversation": "Pin"
 }
