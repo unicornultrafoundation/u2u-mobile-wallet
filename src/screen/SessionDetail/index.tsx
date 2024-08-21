@@ -124,6 +124,13 @@ export default function SessionDetailScreen() {
         }}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={.3}
+        ListEmptyComponent={() => {
+          return (
+            <View>
+              <Text type="subheadline-medium" color="primary">{t('noData')}</Text>
+            </View>
+          )
+        }}
       />
     </SafeAreaView>
   )

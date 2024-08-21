@@ -329,5 +329,6 @@
   "updateContactTitle": "Update contact",
   "update": "Update",
   "newMessagePlaceholder": "Enter message",
-  "pinConversation": "Pin"
+  "pinConversation": "Pin",
+  "noData": "No data"
 }

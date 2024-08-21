@@ -329,5 +329,6 @@
   "updateContactTitle": "Cập nhật liên hệ",
   "update": "Cập nhật",
   "newMessagePlaceholder": "Soạn tin nhắn",
-  "pinConversation": "Ghim"
+  "pinConversation": "Ghim",
+  "noData": "Không có dữ liệu"
 }
