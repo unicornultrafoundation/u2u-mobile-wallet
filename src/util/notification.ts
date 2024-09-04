@@ -8,9 +8,9 @@ export const requestUserPermissionIOS = async () => {
     authStatus.authorizationStatus === AuthorizationStatus.AUTHORIZED ||
     authStatus.authorizationStatus === AuthorizationStatus.PROVISIONAL;
 
-  if (enabled) {
-    console.log('Authorization status ios:', authStatus);
-  }
+  // if (enabled) {
+  //   console.log('Authorization status ios:', authStatus);
+  // }
 }
 
 export const requestPermissionAndroid = async () => {

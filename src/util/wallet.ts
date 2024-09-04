@@ -28,6 +28,20 @@ export const generateMnemonic = () => {
   return wallet.mnemonic?.phrase;
 };
 
+export const signTypedData = async (
+  {domain, types, message}: {
+    domain: ethers.TypedDataDomain,
+    types: Record<string, Array<ethers.TypedDataField>>,
+    message: Record<string, any>
+  }, 
+  privateKey: string
+) => {
+  const signer = new ethers.Wallet(privateKey)
+  const signature = await signer.signTypedData(domain, types, message)
+
+  return signature
+}
+
 export const signMessage = async (message: string, privateKey: string) => {
   const signer = new ethers.Wallet(privateKey)
   const signature = await signer.signMessage(message);

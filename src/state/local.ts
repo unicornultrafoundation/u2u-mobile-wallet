@@ -43,6 +43,10 @@ interface LocalState {
   setSubscribeNews: (subscribeNews: boolean) => void;
   enableU2UConnect: boolean;
   setEnableU2UConnect: (enableU2UConnect: boolean) => void;
+  // chatToken: string;
+  // setChatToken: (chatToken: string) => string;
+  // chatRefreshToken: string;
+  // setChatRefreshToken: (chatRefreshToken: string) => void;
 }
 
 export const useLocalStore = create<LocalState>()(
