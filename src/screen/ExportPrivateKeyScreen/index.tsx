@@ -8,6 +8,7 @@ import { useGlobalStore } from '../../state/global';
 import AuthStep from './AuthStep';
 import ShowPKStep from './ShowPKStep';
 import { Wallet } from '../../state/wallet';
+import { handleGoBack } from '../../util/navigation';
 
 const ExportPrivateKeyScreen = () => {
   const navigation = useNavigation<any>()
@@ -33,13 +34,13 @@ const ExportPrivateKeyScreen = () => {
         return (
           <AuthStep
             onNextStep={() => setStep('show-pk')}
-            onBack={() => navigation.goBack()}
+            onBack={() => handleGoBack(navigation)}
           />
         )
       case 'show-pk':
         return (
           <ShowPKStep
-            onBack={() => navigation.goBack()}
+            onBack={() => handleGoBack(navigation)}
             wallet={wallet}
           />
         )

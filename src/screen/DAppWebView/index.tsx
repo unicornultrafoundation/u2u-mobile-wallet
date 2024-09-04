@@ -19,6 +19,7 @@ import SelectNetworkModal from '../../component/SelectNetworkModal';
 import TextInput from '../../component/TextInput';
 import WarningModal from './WarningModal';
 import useFetchDappList from '../../hook/useFetchDappList';
+import { handleGoBack } from '../../util/navigation';
 
 const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `
@@ -34,7 +35,7 @@ const DAppWebView = () => {
 
   const appURL = route.params?.url || ""
   // const appURL = 'http://192.168.1.38:3000'
-  const [url, setURL] = useState(appURL.replace('{{slash}}', '/'))
+  const [url, setURL] = useState(appURL.replace(/{{slash}}/g, '/').replace(/%7B%7Bslash%7D%7D/g, "/"))
   const [inputURL, setInputURL] = useState(url)
   const [modalVisible, setModalVisible] = useState(true);
 
@@ -262,7 +263,7 @@ const DAppWebView = () => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
+            onPress={() => handleGoBack(navigation)}
           >
             <Icon
               style={{paddingRight: 0}}

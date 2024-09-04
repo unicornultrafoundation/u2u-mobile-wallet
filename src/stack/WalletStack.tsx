@@ -14,6 +14,15 @@ import ExportPrivateKeyScreen from '../screen/ExportPrivateKeyScreen';
 import SignExternalRequestScreen from '../screen/SignExternalRequestScreen';
 import SessionApprovalScreen from '../screen/SessionApprovalScreen';
 import NotificationScreen from '../screen/NotificationScreen';
+import ConnectedSessionScreen from '../screen/ConnectedSessionScreen';
+import SessionDetailScreen from '../screen/SessionDetail';
+import ChatDashboardScreen from '../screen/ChatDashboardScreen';
+import ChatSettingScreen from '../screen/ChatSettingScreen';
+import BlockedContactScreen from '../screen/BlockedContactScreen';
+import ArchivedConversationsScreen from '../screen/ArchivedConversationsScreen';
+import ContactListScreen from '../screen/ContactListScreen';
+import ContactDetailScreen from '../screen/ContactDetailScreen';
+import ChatDetailScreen from '../screen/ChatDetailScreen';
 
 const WalletStack = createNativeStackNavigator();
 
@@ -35,9 +44,20 @@ const WalletStackScreen = () => {
       <WalletStack.Screen name="WalletManagement" component={WalletManagementScreen} />
       <WalletStack.Screen name="ImportWithPrivateKey" component={ImportWithPrivateKeyScreen} />
       <WalletStack.Screen name="ExportPrivateKey" component={ExportPrivateKeyScreen} />
+      <WalletStack.Screen name="Notification" component={NotificationScreen} />
+      {/* SESSION SCREENS */}
       <WalletStack.Screen name="SessionApproval" component={SessionApprovalScreen} />
       <WalletStack.Screen name="SignExternalRequest" component={SignExternalRequestScreen} />
-      <WalletStack.Screen name="Notification" component={NotificationScreen} />
+      <WalletStack.Screen name="ConnectedSession" component={ConnectedSessionScreen} />
+      <WalletStack.Screen name="SessionDetail" component={SessionDetailScreen} />
+      {/* CHAT SCREENS */}
+      <WalletStack.Screen name="ChatDashboard" component={ChatDashboardScreen} />
+      <WalletStack.Screen name="ChatSetting" component={ChatSettingScreen} />
+      <WalletStack.Screen name="BlockedContact" component={BlockedContactScreen} />
+      <WalletStack.Screen name="ArchivedConversations" component={ArchivedConversationsScreen} />
+      <WalletStack.Screen name="ContactList" component={ContactListScreen} />
+      <WalletStack.Screen name="ContactDetail" component={ContactDetailScreen} />
+      <WalletStack.Screen name="ChatDetail" component={ChatDetailScreen} />
     </WalletStack.Navigator>
   );
 }

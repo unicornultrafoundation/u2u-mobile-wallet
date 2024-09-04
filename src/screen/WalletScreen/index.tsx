@@ -25,8 +25,10 @@ import Icon from '../../component/Icon';
 import ManageTokenModal from '../../component/ManageTokenModal';
 import { useTranslation } from 'react-i18next';
 import { useTracking } from '../../hook/useTracking';
+import Drawer from '../../component/Drawer';
 
 const WalletScreen = () => {
+  const { drawerOpened } = useGlobalStore()
   const { t } = useTranslation()
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
@@ -131,40 +133,43 @@ const WalletScreen = () => {
           {tab === 'crypto' && <CryptoTab collapsed={collapsed} onResetParentView={() => resetCollapsed()} />}
           {tab === 'nfts' && <NFTTab collapsed={collapsed} onResetParentView={() => resetCollapsed()} />}
         </ScrollView>
-        <View style={{ position: 'absolute', bottom: TABBAR_HEIGHT + 16, alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-          <ManageTokenModal
-            trigger={() => {
-              return (
-                <View
-                  style={{
-                    borderRadius: 80,
-                    backgroundColor: preferenceTheme.background.surface,
-                    paddingVertical: 12,
-                    paddingHorizontal: 16,
-                    flexDirection: 'row',
-                    gap: 8
-                  }}
-                >
-                  <Icon
-                    name="filter"
-                    width={15}
-                    height={15}
-                  />
-                  <Text
-                    style={[
-                      theme.typography.caption1.medium,
-                      {
-                        color: preferenceTheme.text.disabled,
-                      }
-                    ]}
+        {!drawerOpened && (
+          <View style={{ position: 'absolute', bottom: TABBAR_HEIGHT + 16, alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <ManageTokenModal
+              trigger={() => {
+                return (
+                  <View
+                    style={{
+                      borderRadius: 80,
+                      backgroundColor: preferenceTheme.background.surface,
+                      paddingVertical: 12,
+                      paddingHorizontal: 16,
+                      flexDirection: 'row',
+                      gap: 8
+                    }}
                   >
-                    {t('manageToken')}
-                  </Text>
-                </View>
-              )
-            }}
-          />
-        </View>
+                    <Icon
+                      name="filter"
+                      width={15}
+                      height={15}
+                    />
+                    <Text
+                      style={[
+                        theme.typography.caption1.medium,
+                        {
+                          color: preferenceTheme.text.disabled,
+                        }
+                      ]}
+                    >
+                      {t('manageToken')}
+                    </Text>
+                  </View>
+                )
+              }}
+            />
+          </View>
+        )}
+        <Drawer />
       </SafeAreaView>
     );
   } else {

@@ -5,10 +5,13 @@ import { Platform } from "react-native"
 import { requestUserPermissionIOS, requestPermissionAndroid } from "../util/notification";
 import { useNavigation } from "@react-navigation/native";
 import { useWallet } from "./useWallet";
-import { fetchAllNoti, markAllNotiRead } from "../service/notifications";
+import { fetchAllNoti, markAllNotiRead, markNotiRead } from "../service/notifications";
 import { useNetwork } from "./useNetwork";
+import notifee, { EventType } from '@notifee/react-native';
+import { onMessageReceivedNotifee } from "../util/notifee";
 
 export interface Notifications {
+  id: string;
   title: string;
   description: string;
   notificationData: Record<string, any>;
@@ -26,17 +29,69 @@ export const useNotifications = (status = 'all') => {
     if (Platform.OS === 'ios') requestUserPermissionIOS()
     else requestPermissionAndroid()
 
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
-      if (remoteMessage.data?.navigationId === 'external-sign') {
-        navigation.navigate('SignExternalRequest', {
-          signRequestID: remoteMessage.data?.signRequestId
-        })
-      }
-    });
+    const unsubscribe = messaging().onMessage(onMessageReceivedNotifee);
 
     return unsubscribe;
   }, [])
+
+  // Subscribe to events notifee
+  useEffect(() => {
+    return notifee.onForegroundEvent(({ type, detail }) => {
+      switch (type) {
+        case EventType.DISMISSED:
+          console.log('User dismissed notification', detail.notification);
+          break;
+        case EventType.PRESS:
+          const data = detail.notification?.data
+          const navigationId = data?.navigationId;
+          
+          if (navigationId === 'discover') {
+            const newsId = data?.newsId
+            if (newsId) {
+              navigation.navigate('DiscoverStack', {screen: 'NewsDetails', params: {id: newsId}})
+            } else {
+              navigation.navigate('DiscoverStack', {screen: 'Home'})
+            }
+          }
+
+          if (navigationId === 'external-sign') {
+            const signRequestId = data?.signRequestId
+            if (signRequestId) {
+              navigation.navigate(
+                'WalletStack', 
+                {
+                  screen: 'SignExternalRequest',
+                  params: {
+                    signRequestID: signRequestId
+                  }
+                }
+              )
+            }
+          }
+
+          if (navigationId === 'ecosystem') {
+            const url = data?.url;
+            if (url) {
+              navigation.navigate('EcosystemStack', {screen: 'DAppWebView', params: {url: url}})
+            }
+          }
+          break;
+      }
+    });
+  }, []);
+
+  async function bootstrap() {
+    const initialNotification = await notifee.getInitialNotification();
+
+    if (initialNotification) {
+      console.log('Notification caused application to open', initialNotification.notification);
+      console.log('Press action used to open the app', initialNotification.pressAction);
+    }
+  }
+
+  useEffect(() => {
+    bootstrap()
+  }, []);
 
   const {data: notifications, fetchNextPage, isFetching, refetch} = useInfiniteQuery({
     queryKey: ['notification', wallet.address, networkConfig?.api_endpoint, status],
@@ -94,12 +149,22 @@ export const useNotifications = (status = 'all') => {
     }
   })
 
+  const {mutateAsync: mutateReadSingle} = useMutation({
+    mutationKey: ['mark-single-noti-read', wallet.address, networkConfig?.api_endpoint],
+    mutationFn: async (notiID: string) => {
+      if (!networkConfig) return
+      const authHeaders = await getAuthObj()
+      return markNotiRead(networkConfig.api_endpoint, authHeaders, notiID)
+    }
+  })
+
   return {
     notifications,
     fetchNextPage,
     isFetching,
     countUnread,
     refetchNoti: refetch,
-    markAsRead: mutateAsync
+    markAsRead: mutateAsync,
+    markSingleRead: mutateReadSingle
   }
 }

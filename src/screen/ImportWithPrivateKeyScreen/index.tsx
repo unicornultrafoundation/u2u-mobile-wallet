@@ -16,6 +16,7 @@ import { getWalletFromPrivateKey } from "../../util/wallet";
 import theme from "../../theme";
 import { useWallet } from "../../hook/useWallet";
 import { logErrorForMonitoring } from "../../hook/useCrashlytics";
+import { handleGoBack } from "../../util/navigation";
 
 export default function ImportWithPrivateKeyScreen() {
   const navigation = useNavigation<any>()
@@ -45,7 +46,7 @@ export default function ImportWithPrivateKeyScreen() {
       const wallet = getWalletFromPrivateKey(_pk)
       addPrivateKey(_pk)
       setLoading(false)
-      navigation.goBack()
+      handleGoBack(navigation)
     } catch (err) {
       logErrorForMonitoring(error as any, "Import with private key error")
       setLoading(false)

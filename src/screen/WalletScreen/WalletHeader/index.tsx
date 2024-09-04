@@ -17,6 +17,7 @@ import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { useLocalStore } from '../../../state/local';
+import { useGlobalStore } from '../../../state/global';
 
 interface Props {
   collapsed: boolean;
@@ -33,6 +34,7 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
   const { name } = useNetwork()
   const { t } = useTranslation()
   const { enableU2UConnect } = useLocalStore()
+  const { setDrawerOpened } = useGlobalStore()
 
   if (collapsed) {
     return <HeaderSearchComponent onGoBack={onGoBack} action={action}/>;
@@ -85,7 +87,7 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
             </TouchableOpacity>
           )}
         </View>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', gap: 2 }}>
           <SelectNetworkModal
             trigger={() => {
               return (
@@ -96,8 +98,8 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
               )
             }}
           />
-          <TouchableOpacity onPress={() => navigation.navigate('Notification')} style={{marginHorizontal: 12}}>
-            <Icon name="notification" width={24} height={24} />
+          <TouchableOpacity onPress={() => setDrawerOpened(true)}>
+            <Icon name="menu" width={24} height={24} />
           </TouchableOpacity>
         </View>
       </View>

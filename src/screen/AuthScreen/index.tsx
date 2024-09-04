@@ -18,7 +18,7 @@ const AuthScreen = () => {
 
   const {t} = useTranslation<string>()
 
-  const {password, increasePasswordTry, passwordTry, setPasswordTry, lockedUntil, setLockedUntil} = useLocalStore()
+  const {password, increasePasswordTry, passwordTry, setPasswordTry, lockedUntil, setLockedUntil, savePassword} = useLocalStore()
   const {setUnlocked} = useGlobalStore()
   const [error, setError] = useState('')
 
@@ -45,6 +45,12 @@ const AuthScreen = () => {
 
   const handleContinue = (pass: string) => {
     setError('')
+    if (!password || password === '') {
+      savePassword(pass)
+      handleSuccess()
+      return;
+    }
+
     if (Date.now() <= lockedUntil) {
       setError(t('passwordRetryReached'))
       return
