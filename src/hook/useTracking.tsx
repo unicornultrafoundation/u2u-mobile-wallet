@@ -105,7 +105,7 @@ export const useTracking = () => {
         body: raw,
         redirect: 'follow'
       };
-      console.log('register device id', deviceID)
+      // console.log('register device id', deviceID)
       const rs = await fetch(endpoint, requestOptions)
       // toggleAlreadySubmitDeviceID()
       return rs
@@ -139,7 +139,7 @@ export const useTracking = () => {
         body: raw,
         redirect: 'follow'
       };
-      console.log('register device token', token)
+      // console.log('register device token', token)
       const rs = await fetch(endpoint, requestOptions)
       // toggleAlreadySubmitDeviceID()
       return rs
