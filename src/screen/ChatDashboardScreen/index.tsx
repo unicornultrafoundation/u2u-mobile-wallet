@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
-import { SafeAreaView, TouchableOpacity, View, Image, FlatList, ActivityIndicator } from "react-native";
+import { SafeAreaView, TouchableOpacity, View, Image, FlatList, ActivityIndicator, ScrollView } from "react-native";
 import { useGlobalStore } from "../../state/global";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -13,14 +13,11 @@ import Button from "../../component/Button";
 import TextInput from "../../component/TextInput";
 import { Conversation, useAllConversation } from "../../hook/chat/useAllConversation";
 import NewConversationModal from "./NewConversationModal";
-import Jazzicon from "react-native-jazzicon";
 import { useWallet } from "../../hook/useWallet";
-import { shortenAddress, truncate } from "../../util/string";
-import theme from "../../theme";
-import { isToday } from "date-fns";
-import { formatDate } from "../../util/date";
 import SwipeableFlatList from 'react-native-swipeable-list';
 import ConfirmationModal from "../../component/ConfirmationModal";
+import Tab from "../../component/Tab";
+import ConversationRow from "./ConversationRow";
 
 export default function ChatDashboardScreen() {
   const {t} = useTranslation()
@@ -36,17 +33,27 @@ export default function ChatDashboardScreen() {
     }, [route]),
   );
 
-  const {data: conversationPaged, refetch} = useAllConversation()
-  const allConversations = useMemo(() => {
-    if (!conversationPaged) return []
-    return conversationPaged.pages.flat()
-  }, [conversationPaged])
-
   const [search, setSearch] = useState('')
   const [showCreateConversationModal, setShowConversationModal] = useState(false)
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false)
   const [conversationToDelete, setConversationToDelete] = useState<Conversation>()
   const [deleting, setDeleting] = useState(false)
+
+  const [tab, setTab] = useState('all');
+  const tabs = [
+    { label: t('all'), value: 'all' },
+    { label: t('pending'), value: 'pending' }
+  ];
+
+  const {data: conversationPaged, refetch} = useAllConversation(tab)
+  const allConversations = useMemo(() => {
+    if (!conversationPaged) return []
+    return conversationPaged.pages.flat()
+  }, [conversationPaged])
+
+  const handleChangeTab = (t: string) => {
+    setTab(t);
+  };
 
   const handleDelete = async () => {
     try {
@@ -78,6 +85,42 @@ export default function ChatDashboardScreen() {
           <Icon name="setting" width={24} height={24} />
         </TouchableOpacity>
       </View>
+      {allConversations.length > 0 && (
+        <TextInput
+          containerStyle={{height: 48, margin: 16}}
+          placeholder={t('Search')}
+          placeholderTextColor={'#363636'}
+          onChangeText={text => {
+            setSearch(text);
+          }}
+          value={search}
+          preIcon={() => {
+            return (
+              <Icon name="search" width={24} height={24} />
+            );
+          }}
+        />
+      )}
+      <View style={{paddingHorizontal: 16, backgroundColor: preferenceTheme.background.background}}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <Tab
+            tabs={tabs}
+            selectedTab={tab}
+            onChange={handleChangeTab}
+            tabStyle={{
+              borderColor: 'transparent',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
+              paddingLeft: 0,
+              paddingRight: 12,
+            }}
+            containerStyle={{
+              borderColor: 'transparent',
+              // marginTop: 8,
+            }}
+          />
+        </ScrollView>
+      </View>
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         {allConversations.length === 0 ? (
           <View style={{width: 243, gap: 14, alignItems: 'center'}}>
@@ -106,65 +149,11 @@ export default function ChatDashboardScreen() {
           </View>
         ) : (
           <View style={{flex: 1, width: '100%'}}>
-            <TextInput
-              containerStyle={{height: 48, margin: 16}}
-              placeholder={t('Search')}
-              placeholderTextColor={'#363636'}
-              onChangeText={text => {
-                setSearch(text);
-              }}
-              value={search}
-              preIcon={() => {
-                return (
-                  <Icon name="search" width={24} height={24} />
-                );
-              }}
-            />
             <SwipeableFlatList
               data={allConversations}
               renderItem={({item}: {item: Conversation, index: number}) => {
-                const otherAddress = item.user.filter((i) => i !== wallet.address)[0]
                 return (
-                  <TouchableOpacity
-                    style={[styles.chatRowItem, {borderColor: preferenceTheme.outline, backgroundColor: preferenceTheme.background.background}]}
-                    // key={`conversation-${index}`}
-                  >
-                    <Jazzicon size={42} address={otherAddress}/>
-                    <View style={{flex: 1, justifyContent: 'space-between'}}>
-                      <Text
-                        type="body-medium"
-                        color="title"
-                      >
-                        {shortenAddress(otherAddress, 12, 12)}
-                      </Text>
-                      <Text
-                        type="body2-regular"
-                        color="secondary"
-                      >
-                        {truncate(item.lastMessageContent, 40)}
-                      </Text>
-                    </View>
-                    <View style={{justifyContent: 'space-between'}}>
-                      <Text
-                        type="caption1-medium"
-                        color="secondary"
-                      >
-                        {formatDate(item.updatedAt, isToday(item.updatedAt) ? 'HH:mm' : 'dd/MM/yyyy')}
-                      </Text>
-                      {item.newMessage > 0 ? (
-                        <View style={[styles.unreadContainer, {backgroundColor: theme.color.primary[500]}]}>
-                          <Text
-                            type="caption1-medium"
-                            color="title"
-                          >
-                            {item.newMessage}
-                          </Text>
-                        </View>
-                      ) : (
-                        <View style={{height: 22}} />
-                      )}
-                    </View>
-                  </TouchableOpacity>
+                  <ConversationRow item={item} />
                 )
               }}
               keyExtractor={(item: Conversation) => item.id}

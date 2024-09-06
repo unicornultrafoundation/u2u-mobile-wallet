@@ -37,9 +37,10 @@ export default function ChatDetailScreen() {
     }, [route]),
   );
 
-  const userAddresses: string[] = route.params?.userAddresses || []
-  // const {data} = useConversationDetail(userAddresses)
-  const {data: messagesPaged, fetchNextPage, isFetching} = useConversationMessages(userAddresses)
+  // const userAddresses: string[] = route.params?.userAddresses || []
+  const conversationID: string = route.params?.conversationID || ''
+  const {data} = useConversationDetail(conversationID)
+  const {data: messagesPaged, fetchNextPage, isFetching} = useConversationMessages(conversationID)
 
   const messages = useMemo(() => {
     if (!messagesPaged) return []
@@ -47,9 +48,9 @@ export default function ChatDetailScreen() {
   }, [messagesPaged])
 
   const otherContact = useMemo(() => {
-    const filtered = userAddresses.filter((item) => item !== wallet.address)
-    return filtered[0]
-  }, [userAddresses, wallet])
+    if (!data || !data.user) return ''
+    return data.user.filter((i) => i !== wallet.address.toLowerCase())[0]
+  }, [wallet, data])
 
   const optionStyles = {
     optionsContainer: [styles.optionsContainer, {backgroundColor: preferenceTheme.background.background}],
@@ -66,6 +67,21 @@ export default function ChatDetailScreen() {
 
   const handleSelectMenuAction = (value: number) => {
     
+  }
+
+  const handleSendMessage = async () => {
+    try {
+      if (!data) return
+      await data.sendMessage({
+        text: newMessage,
+        attachments: [],
+        quoted_message_id: '',
+      });
+
+      setNewMessage('')
+    } catch (error) {
+      console.log('send message error', error)
+    }
   }
 
   return (
@@ -166,7 +182,7 @@ export default function ChatDetailScreen() {
             placeholder={t('newMessagePlaceholder')}
             containerStyle={{flex: 1}}
           />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleSendMessage}>
             <Icon
               name="send-chat"
               width={24}
