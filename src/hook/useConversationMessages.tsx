@@ -1,114 +1,49 @@
-import { useInfiniteQuery } from "@tanstack/react-query"
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { useNetwork } from "./useNetwork"
 import { getConversationMessages } from "../service/chat"
 import { signMessage } from "../util/wallet"
 import { useWallet } from "./useWallet"
+import { useChat } from "./chat/useChat"
+import { MessagePaginationOptions } from "ermis-chat-js-sdk"
+import { toChecksumAddress } from "ethereum-checksum-address"
 
-export const useConversationMessages = (conversationID: string) => {
+const LIMIT = 25
+
+export const useConversationMessages = (conversationID: string, lastMessageID?: string) => {
   const {networkConfig} = useNetwork()
   const {wallet} = useWallet()
 
-  const {data, fetchNextPage, isFetching} = useInfiniteQuery({
-    queryKey: ['conversation-messages', conversationID, networkConfig?.api_endpoint],
-    queryFn: async ({pageParam = 1}) => {
-      if (!networkConfig) return []
-      const signature = await signMessage(
-        `conversation-${conversationID}`,
-        wallet.privateKey
-      )
-      const now = Date.now()
-      
-      return [
-        {
-          conversationID: conversationID,
-          from: wallet.address,
-          content: 'test content',
-          readBy: [],
-          createdAt: new Date(now)
-        },
-        {
-          conversationID: conversationID,
-          from: '0x0F9a26667C7Eb21734509044B0f18629589C2Cf5',
-          content: 'test content 2222',
-          readBy: [],
-          createdAt: new Date(now - 1000)
-        },
-        {
-          conversationID: conversationID,
-          from: wallet.address,
-          content: 'test content',
-          readBy: [],
-          createdAt: new Date(now)
-        },
-        {
-          conversationID: conversationID,
-          from: '0x0F9a26667C7Eb21734509044B0f18629589C2Cf5',
-          content: 'test content 2222',
-          readBy: [],
-          createdAt: new Date(now - 1000)
-        },
-        {
-          conversationID: conversationID,
-          from: wallet.address,
-          content: 'test content',
-          readBy: [],
-          createdAt: new Date(now)
-        },
-        {
-          conversationID: conversationID,
-          from: '0x0F9a26667C7Eb21734509044B0f18629589C2Cf5',
-          content: 'test content 2222',
-          readBy: [],
-          createdAt: new Date(now - 1000)
-        },
-        {
-          conversationID: conversationID,
-          from: wallet.address,
-          content: 'test content',
-          readBy: [],
-          createdAt: new Date(now)
-        },
-        {
-          conversationID: conversationID,
-          from: '0x0F9a26667C7Eb21734509044B0f18629589C2Cf5',
-          content: 'test content 2222',
-          readBy: [],
-          createdAt: new Date(now - 1000)
-        },
-        {
-          conversationID: conversationID,
-          from: wallet.address,
-          content: 'test content',
-          readBy: [],
-          createdAt: new Date(now)
-        },
-        {
-          conversationID: conversationID,
-          from: '0x0F9a26667C7Eb21734509044B0f18629589C2Cf5',
-          content: 'test content 2222',
-          readBy: [],
-          createdAt: new Date(now - 1000)
-        }
-      ]
-      // const messages = await getConversationMessages(
-      //   networkConfig.api_endpoint,
-      //   {
-      //     page: pageParam,
-      //     limit: 20,
-      //     signature,
-      //     userAddresses
-      //   }
-      // )
+  const {chatClient} = useChat()
 
-      // return messages
-    },
-    getNextPageParam: (lastPage, pages) => {
-      const nextPageParam = lastPage.length === 0 ? undefined : pages.length + 1
-      return nextPageParam
+  const {data, isFetching} = useQuery({
+    queryKey: ['conversation-messages', conversationID, networkConfig?.api_endpoint, chatClient?._getToken(), lastMessageID],
+    queryFn: async () => {
+      if (!networkConfig || !chatClient) return []
+      const channel = chatClient.channel("messaging", conversationID);
+      const messageCondition: MessagePaginationOptions = {
+        limit: LIMIT
+      }
+      if (lastMessageID) {
+        messageCondition.id_lt = lastMessageID
+      }
+      const detail = await channel.query({
+        messages: messageCondition
+      });
+
+      return detail.messages.map((message) => {
+        // console.log(message)
+        return {
+          conversationID: conversationID,
+          from: message.user?.id,
+          content: message.text,
+          readBy: [message.user_id],
+          createdAt: new Date(message.created_at!)
+        }
+      })
     },
   })
 
   return {
-    data, fetchNextPage, isFetching
+    data, isFetching
   }
 }

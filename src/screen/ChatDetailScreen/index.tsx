@@ -40,12 +40,7 @@ export default function ChatDetailScreen() {
   // const userAddresses: string[] = route.params?.userAddresses || []
   const conversationID: string = route.params?.conversationID || ''
   const {data} = useConversationDetail(conversationID)
-  const {data: messagesPaged, fetchNextPage, isFetching} = useConversationMessages(conversationID)
-
-  const messages = useMemo(() => {
-    if (!messagesPaged) return []
-    return messagesPaged.pages.flat()
-  }, [messagesPaged])
+  const {data: messages, isFetching} = useConversationMessages(conversationID)
 
   const otherContact = useMemo(() => {
     if (!data || !data.user) return ''
@@ -62,7 +57,7 @@ export default function ChatDetailScreen() {
 
   const handleLoadMore = () => {
     if (isFetching) return;
-    fetchNextPage()
+    // fetchNextPage()
   }
 
   const handleSelectMenuAction = (value: number) => {
@@ -75,7 +70,7 @@ export default function ChatDetailScreen() {
       await data.sendMessage({
         text: newMessage,
         attachments: [],
-        quoted_message_id: '',
+        // quoted_message_id: '',
       });
 
       setNewMessage('')
@@ -154,10 +149,10 @@ export default function ChatDetailScreen() {
       >
         <FlatList
           contentContainerStyle={{flexGrow: 1}}
-          data={messages}
+          data={messages?.reverse()}
           inverted
           renderItem={({item, index}) => {
-            const fromMe = item.from === wallet.address
+            const fromMe = item.from === wallet.address.toLowerCase()
             return (
               <View style={[styles.messageRow, {alignItems: fromMe ? 'flex-end' : 'flex-start'}]} key={`messages=${index}`}>
                 <Text
