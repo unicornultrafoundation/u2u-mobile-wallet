@@ -5,9 +5,8 @@ import { signMessage } from "../util/wallet"
 import { useWallet } from "./useWallet"
 import { useChat } from "./chat/useChat"
 import { MessagePaginationOptions } from "ermis-chat-js-sdk"
-import { toChecksumAddress } from "ethereum-checksum-address"
 
-const LIMIT = 25
+const LIMIT = 10
 
 export const useConversationMessages = (conversationID: string, lastMessageID?: string) => {
   const {networkConfig} = useNetwork()
@@ -15,14 +14,15 @@ export const useConversationMessages = (conversationID: string, lastMessageID?: 
 
   const {chatClient} = useChat()
 
-  const {data, isFetching} = useQuery({
-    queryKey: ['conversation-messages', conversationID, networkConfig?.api_endpoint, chatClient?._getToken(), lastMessageID],
+  const {data, isFetching, isLoading} = useQuery({
+    queryKey: ['conversation-messages', conversationID, wallet.address, networkConfig?.api_endpoint, chatClient?._getToken(), lastMessageID],
     queryFn: async () => {
       if (!networkConfig || !chatClient) return []
       const channel = chatClient.channel("messaging", conversationID);
       const messageCondition: MessagePaginationOptions = {
         limit: LIMIT
       }
+      // console.log('lastMessageID', lastMessageID)
       if (lastMessageID) {
         messageCondition.id_lt = lastMessageID
       }
@@ -33,6 +33,7 @@ export const useConversationMessages = (conversationID: string, lastMessageID?: 
       return detail.messages.map((message) => {
         // console.log(message)
         return {
+          id: message.id,
           conversationID: conversationID,
           from: message.user?.id,
           content: message.text,
@@ -41,9 +42,10 @@ export const useConversationMessages = (conversationID: string, lastMessageID?: 
         }
       })
     },
+    initialData: []
   })
 
   return {
-    data, isFetching
+    data, isFetching, isLoading
   }
 }
