@@ -1,12 +1,10 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import { useNetwork } from "./useNetwork"
-import { getConversationMessages } from "../service/chat"
-import { signMessage } from "../util/wallet"
 import { useWallet } from "./useWallet"
 import { useChat } from "./chat/useChat"
 import { MessagePaginationOptions } from "ermis-chat-js-sdk"
 
-const LIMIT = 10
+const LIMIT = 50
 
 export const useConversationMessages = (conversationID: string, lastMessageID?: string) => {
   const {networkConfig} = useNetwork()

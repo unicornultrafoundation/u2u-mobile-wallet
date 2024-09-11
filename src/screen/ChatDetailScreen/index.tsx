@@ -75,7 +75,6 @@ export default function ChatDetailScreen() {
 
   const handleLoadMore = () => {
     if (isFetching || !allMessages) return;
-    console.log('start load more')
     if (allMessages[allMessages.length - 1].id.toLowerCase() !== lastMessageID) {
       setLastMessageID(allMessages[allMessages.length - 1].id)
     }
@@ -180,7 +179,7 @@ export default function ChatDetailScreen() {
                   type="caption2-medium"
                   color="secondary"
                 >
-                  {isToday(item.createdAt) ? formatDate(item.createdAt, 'HH:mm:ss') : formatDate(item.createdAt, 'dd/MM HH:mm:ss')}
+                  {isToday(item.createdAt) ? formatDate(item.createdAt, 'HH:mm') : formatDate(item.createdAt, 'dd/MM HH:mm')}
                 </Text>
                 <View style={[styles.messageContainer, {backgroundColor: fromMe ? theme.color.primary[600] : preferenceTheme.background.surface}]}>
                   <Text>{item.content}</Text>
