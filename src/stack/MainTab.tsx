@@ -8,12 +8,14 @@ import SettingStackScreen from "./SettingStack";
 import { useRemoteConfig } from "../hook/useRemoteConfig";
 import DeviceInfo from "react-native-device-info";
 import { useNotifications } from "../hook/useNotifications";
+import { useChat } from "../hook/chat/useChat";
 
 const Tab = createBottomTabNavigator();
 
 export default function MainTabNav() {
   useNotifications()
   const {remoteConfig} = useRemoteConfig()
+  useChat()
 
   return (
     <Tab.Navigator

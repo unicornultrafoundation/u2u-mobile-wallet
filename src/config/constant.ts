@@ -19,5 +19,9 @@ export const APP_FLYERS_IOS_APP_ID = Config.APP_FLYERS_IOS_APP_ID
 
 export const APP_REMOTE_CONFIG = Config.APP_REMOTE_CONFIG
 
+export const ERMIS_API_KEY = Config.ERMIS_API_KEY
+export const ERMIS_PROJECT_ID = Config.ERMIS_PROJECT_ID
+export const ERMIS_BASE_URL = Config.ERMIS_BASE_URL
+
 export const DAPP_PROMOTION_NOTIFICATION_TOPIC = 'dapp-promotion'
 export const NEWS_NOTIFICATION_TOPIC = 'news'

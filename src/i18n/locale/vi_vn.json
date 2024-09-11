@@ -330,5 +330,8 @@
   "update": "Cập nhật",
   "newMessagePlaceholder": "Soạn tin nhắn",
   "pinConversation": "Ghim",
-  "noData": "Không có dữ liệu"
+  "noData": "Không có dữ liệu",
+  "deleteConversationConfirmMessage": "Bạn chắc chắn muốn xoá?",
+  "pending": "Đang chờ",
+  "accept": "Đồng ý"
 }

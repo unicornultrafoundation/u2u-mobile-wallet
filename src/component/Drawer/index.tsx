@@ -93,7 +93,7 @@ const Drawer = () => {
               </Text>
             </TouchableOpacity>
           )}
-          {/* <TouchableOpacity
+          <TouchableOpacity
             style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
             onPress={() => {
               closeDrawer()
@@ -104,7 +104,7 @@ const Drawer = () => {
             <Text style={[typography.body.medium, {color: preferenceTheme.text.title}]}>
               {t('chat')}
             </Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
       </Animated.View>
     </>

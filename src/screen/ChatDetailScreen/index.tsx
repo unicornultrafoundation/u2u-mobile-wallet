@@ -6,7 +6,7 @@ import Text from "../../component/Text";
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useGlobalStore } from "../../state/global";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Menu,
   MenuOptions,
@@ -21,6 +21,9 @@ import { useWallet } from "../../hook/useWallet";
 import { formatDate } from "../../util/date";
 import { shortenAddress } from "../../util/string";
 import Separator from "../../component/Separator";
+import { isToday } from "date-fns";
+import { useSubscribeMessage } from "../../hook/chat/useSubscribeMessage";
+import { getUniqueByField } from "../../util/array";
 
 export default function ChatDetailScreen() {
   const { t } = useTranslation()
@@ -37,19 +40,18 @@ export default function ChatDetailScreen() {
     }, [route]),
   );
 
-  const userAddresses: string[] = route.params?.userAddresses || []
-  // const {data} = useConversationDetail(userAddresses)
-  const {data: messagesPaged, fetchNextPage, isFetching} = useConversationMessages(userAddresses)
+  // const userAddresses: string[] = route.params?.userAddresses || []
+  const conversationID: string = route.params?.conversationID || ''
+  const {data} = useConversationDetail(conversationID)
 
-  const messages = useMemo(() => {
-    if (!messagesPaged) return []
-    return messagesPaged.pages.flat()
-  }, [messagesPaged])
+  const [lastMessageID, setLastMessageID] = useState('')
+  const {data: messages, isFetching} = useConversationMessages(conversationID, lastMessageID)
+  const {messages: latestMessages} = useSubscribeMessage(conversationID)
 
   const otherContact = useMemo(() => {
-    const filtered = userAddresses.filter((item) => item !== wallet.address)
-    return filtered[0]
-  }, [userAddresses, wallet])
+    if (!data || !data.user) return ''
+    return data.user.filter((i) => i !== wallet.address.toLowerCase())[0]
+  }, [wallet, data])
 
   const optionStyles = {
     optionsContainer: [styles.optionsContainer, {backgroundColor: preferenceTheme.background.background}],
@@ -57,15 +59,45 @@ export default function ChatDetailScreen() {
     optionTouchable: styles.optionTouchable,
   }
 
+  const [allMessagesHistory, setAllMessageHistory] = useState<Record<string, any>[]>([])
   const [newMessage, setNewMessage] = useState('')
 
+  useEffect(() => {
+    setAllMessageHistory([...messages, ...allMessagesHistory])
+  }, [messages])
+
+  const allMessages = useMemo(() => {
+    const value = getUniqueByField([...allMessagesHistory, ...latestMessages], 'id')
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+    return value
+  }, [allMessagesHistory, latestMessages])
+
+
   const handleLoadMore = () => {
-    if (isFetching) return;
-    fetchNextPage()
+    if (isFetching || !allMessages) return;
+    console.log('start load more')
+    if (allMessages[allMessages.length - 1].id.toLowerCase() !== lastMessageID) {
+      setLastMessageID(allMessages[allMessages.length - 1].id)
+    }
   }
 
   const handleSelectMenuAction = (value: number) => {
     
+  }
+
+  const handleSendMessage = async () => {
+    try {
+      if (!data) return
+      await data.sendMessage({
+        text: newMessage,
+        attachments: [],
+        // quoted_message_id: '',
+      });
+
+      setNewMessage('')
+    } catch (error) {
+      console.log('send message error', error)
+    }
   }
 
   return (
@@ -138,17 +170,17 @@ export default function ChatDetailScreen() {
       >
         <FlatList
           contentContainerStyle={{flexGrow: 1}}
-          data={messages}
+          data={allMessages}
           inverted
           renderItem={({item, index}) => {
-            const fromMe = item.from === wallet.address
+            const fromMe = item.from === wallet.address.toLowerCase()
             return (
               <View style={[styles.messageRow, {alignItems: fromMe ? 'flex-end' : 'flex-start'}]} key={`messages=${index}`}>
                 <Text
                   type="caption2-medium"
                   color="secondary"
                 >
-                  {formatDate(item.createdAt, 'HH:mm')}
+                  {isToday(item.createdAt) ? formatDate(item.createdAt, 'HH:mm:ss') : formatDate(item.createdAt, 'dd/MM HH:mm:ss')}
                 </Text>
                 <View style={[styles.messageContainer, {backgroundColor: fromMe ? theme.color.primary[600] : preferenceTheme.background.surface}]}>
                   <Text>{item.content}</Text>
@@ -166,7 +198,7 @@ export default function ChatDetailScreen() {
             placeholder={t('newMessagePlaceholder')}
             containerStyle={{flex: 1}}
           />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleSendMessage}>
             <Icon
               name="send-chat"
               width={24}
