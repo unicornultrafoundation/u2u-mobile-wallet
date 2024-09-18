@@ -49,7 +49,7 @@ export const signMessage = async (message: string, privateKey: string) => {
   return signature
 }
 
-export const signTransaction = async (rawTx: Record<string, any>, privateKey: string, rpc: string) => {
+export const signTransaction = async (rawTx: Record<string, any>, privateKey: string) => {
   const signer = new ethers.Wallet(privateKey)
   const signedTx = await signer.signTransaction(rawTx);
   return signedTx

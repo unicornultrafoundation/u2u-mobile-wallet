@@ -61,12 +61,12 @@ export function useWalletConnect() {
         supportedNamespaces: {
           eip155: {
             // chains: [`eip155:${networkConfig.chainID}`],
-            chains: [`eip155:1`],
+            chains: [`eip155:11155111`],
             methods: ['eth_sendTransaction', 'personal_sign'],
             events: ['accountsChanged', 'chainChanged'],
             accounts: [
               // `eip155:${networkConfig.chainID}:${wallet.address.toLowerCase()}`,
-              `eip155:1:${wallet.address.toLowerCase()}`,
+              `eip155:11155111:${wallet.address.toLowerCase()}`,
             ]
           }
         }
@@ -77,6 +77,8 @@ export function useWalletConnect() {
         id,
         namespaces: approvedNamespaces
       })
+      console.log('connected to session', session.topic)
+      console.log(walletKit.getActiveSessions())
       setProposal(undefined)
     } catch(error) {
       // use the error.message to show toast/info-box letting the user know that the connection attempt was unsuccessful

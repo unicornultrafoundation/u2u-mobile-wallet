@@ -12,6 +12,7 @@ import theme from "../../theme";
 import LottieView from "lottie-react-native";
 import { useWalletConnect } from "../../hook/useWalletConnect";
 import Button from "../../component/Button";
+import Icon from "../../component/Icon";
 
 export default function WCScanQRCode() {
   const navigation = useNavigation<any>()
@@ -20,7 +21,6 @@ export default function WCScanQRCode() {
   const {pair, proposal, approve, reject, walletKit} = useWalletConnect()
   const route = useRoute<any>();
   const { setRouteName } = useGlobalStore();
-  const { switchNetwork, chainId } = useNetwork()
 
   useFocusEffect(
     useCallback(() => {
@@ -29,6 +29,7 @@ export default function WCScanQRCode() {
   );
 
   const [wcURI, setWCURI] = useState('')
+  const [connected, setConnected] = useState(false)
   
   useEffect(() => {
     if (!wcURI) return
@@ -52,7 +53,7 @@ export default function WCScanQRCode() {
         <Button
           onPress={() => {
             setWCURI(
-              'wc:2966df13e63f31ed1ec86d385c102dd51c305d9bbd6fe9d427c6b05301fa8754@2?expiryTimestamp=1726655176&relay-protocol=irn&symKey=3cd98bdc9206241bda57489aad9d4cef055569999f53b751b65ccc0b526402a4'
+              'wc:169ceb0904de5d3b6f8ca1bc8016837d549245b81ec69f10f6295c0fa4864404@2?expiryTimestamp=1726682381&relay-protocol=irn&symKey=e2f9c224204dc9cc1a5ccd80dfcc37989fc0569391add3a3fd658526f0accb75'
             )
           }}
         >
@@ -69,6 +70,23 @@ export default function WCScanQRCode() {
         /> */}
       </SafeAreaView>
     )
+  }
+
+  if (connected) {
+    <SafeAreaView
+      style={[styles.container, {backgroundColor: preferenceTheme.background.background}]}
+    >
+      <View>
+        <Icon name="success" width={40} height={40} />
+        <Text>Connect success</Text>
+      </View>
+      <Button
+        style={{borderRadius: 60, marginBottom: 12, marginHorizontal: 16}}
+        onPress={navigation.goBack}
+      >
+        <Text>Confirm</Text>
+      </Button>
+    </SafeAreaView>
   }
 
   if (!proposal) {
@@ -116,7 +134,8 @@ export default function WCScanQRCode() {
           style={{borderRadius: 60, marginBottom: 12, marginHorizontal: 16}}
           onPress={() => {
             proposal && approve(proposal)
-            navigation.goBack()
+            setConnected(true)
+            // navigation.goBack()
           }}
         >
           <Text>Approve</Text>

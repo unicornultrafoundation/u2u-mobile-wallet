@@ -14,7 +14,7 @@ import Button from "../../component/Button";
 import SignMessageDetail from "./SignMessageDetail";
 import SignTxDetail from "./SignTxDetail";
 import { useWallet } from "../../hook/useWallet";
-import { signMessage } from "../../util/wallet";
+import { signMessage, signTransaction } from "../../util/wallet";
 import { typography } from "../../theme/typography";
 import { hexToString } from "../../util/string";
 
@@ -73,8 +73,13 @@ export default function WCSignRequest() {
         await walletKit.respondSessionRequest({ topic, response })
         navigation.goBack()
         break;
+      case 'eth_sendTransaction':
       case 'eth_signTransaction':
+        const txData = request.params[0]
+        const signedTx = await signTransaction(txData, wallet.privateKey)
+        const txResponse = { id, result: signedTx, jsonrpc: '2.0' }
 
+        await walletKit.respondSessionRequest({ topic, response: txResponse })
         navigation.goBack()
         break;
       default:
