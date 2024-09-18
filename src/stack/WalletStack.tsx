@@ -23,6 +23,8 @@ import ArchivedConversationsScreen from '../screen/ArchivedConversationsScreen';
 import ContactListScreen from '../screen/ContactListScreen';
 import ContactDetailScreen from '../screen/ContactDetailScreen';
 import ChatDetailScreen from '../screen/ChatDetailScreen';
+import WCScanQRCode from '../screen/WCScanQRCode';
+import WCSignRequest from '../screen/WCSignRequest';
 
 const WalletStack = createNativeStackNavigator();
 
@@ -58,6 +60,9 @@ const WalletStackScreen = () => {
       <WalletStack.Screen name="ContactList" component={ContactListScreen} />
       <WalletStack.Screen name="ContactDetail" component={ContactDetailScreen} />
       <WalletStack.Screen name="ChatDetail" component={ChatDetailScreen} />
+      {/* WALLET CONNECT SCREENS */}
+      <WalletStack.Screen name="WCScanQRCode" component={WCScanQRCode} />
+      <WalletStack.Screen name="WCSignRequest" component={WCSignRequest} />
     </WalletStack.Navigator>
   );
 }

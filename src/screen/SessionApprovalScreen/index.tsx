@@ -105,8 +105,6 @@ export default function SessionApprovalScreen() {
 
   if (!sessionDetail) return null
 
-  console.log(sessionDetail)
-
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: preferenceTheme.background.background}]}

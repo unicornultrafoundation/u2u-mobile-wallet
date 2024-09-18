@@ -8,6 +8,7 @@
 import 'react-native-gesture-handler';
 import '@ethersproject/shims';
 import 'event-target-polyfill'
+import '@walletconnect/react-native-compat'
 import React, { useEffect } from 'react';
 import { Linking, StatusBar } from 'react-native';
 

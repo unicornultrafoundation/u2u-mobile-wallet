@@ -5,14 +5,13 @@ import { styles } from '../styles';
 import Icon from '../../../component/Icon';
 import { useWallet } from '../../../hook/useWallet';
 import Text from '../../../component/Text';
-import { getDefaultWalletName, shortenAddress, truncate } from '../../../util/string';
+import { getDefaultWalletName } from '../../../util/string';
 import HeaderSearchComponent from './HeaderSearchComponent';
 import Clipboard from '@react-native-clipboard/clipboard';
 import SelectNetworkModal from '../../../component/SelectNetworkModal';
 import { useNetwork } from '../../../hook/useNetwork';
 import { usePreferenceStore } from '../../../state/preferences';
 import { darkTheme, lightTheme } from '../../../theme/color';
-import SelectWalletModal from '../../../component/SelectWalletModal';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
@@ -81,6 +80,10 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
           >
             <Icon name="copy" width={16} height={16}/>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('WCScanQRCode')}>
+            <Icon name="scan" width={16} height={16} />
+          </TouchableOpacity>
+          
           {enableU2UConnect && (
             <TouchableOpacity onPress={() => navigation.navigate('SessionApproval')}>
               <Icon name="scan" width={16} height={16} />

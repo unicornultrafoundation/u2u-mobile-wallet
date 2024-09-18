@@ -97,6 +97,18 @@ const Drawer = () => {
             style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
             onPress={() => {
               closeDrawer()
+              navigation.navigate('WCConnectedSession')
+            }}
+          >
+            <Icon name="connect" width={24} height={24} color='#D8D8D8' />
+            <Text style={[typography.body.medium, {color: preferenceTheme.text.title}]}>
+              {t('wcConnectedSession')}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
+            onPress={() => {
+              closeDrawer()
               navigation.navigate('ChatDashboard')
             }}
           >

@@ -305,6 +305,7 @@
   "subscribeNews": "News",
   "subscribeNewsDesc": "Subscribe to get latest news on U2U network",
   "connectedSession": "U2U connect sessions",
+  "wcConnectedSession": "Wallet connect sessions",
   "sessionDetail": "Session detail",
   "noConnectedSession": "No session",
   "chat": "Chat",
