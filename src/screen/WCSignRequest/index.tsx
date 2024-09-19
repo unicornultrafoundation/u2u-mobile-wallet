@@ -9,7 +9,7 @@ import Icon from "../../component/Icon";
 import Text from "../../component/Text";
 import theme from "../../theme";
 import { handleGoBack } from "../../util/navigation";
-import { useWalletConnect } from "../../hook/useWalletConnect";
+import { useWalletConnect } from "../../hook/walletconnect/useWalletConnect";
 import Button from "../../component/Button";
 import SignMessageDetail from "./SignMessageDetail";
 import SignTxDetail from "./SignTxDetail";
@@ -17,6 +17,7 @@ import { useWallet } from "../../hook/useWallet";
 import { signMessage, signTransaction } from "../../util/wallet";
 import { typography } from "../../theme/typography";
 import { hexToString } from "../../util/string";
+import { walletKit } from "../../util/walletconnect";
 
 export default function WCSignRequest() {
   const {t} = useTranslation()
@@ -32,7 +33,6 @@ export default function WCSignRequest() {
   );
 
   const {wallet} = useWallet()
-  const {walletKit} = useWalletConnect()
   const signRequest = route.params?.request
   const { topic, params, id } = signRequest
   const { request } = params

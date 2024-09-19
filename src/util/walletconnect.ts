@@ -1,9 +1,13 @@
 import { Core } from '@walletconnect/core'
 import { WC_PROJECT_ID } from '../config/constant'
+import WalletKit, { IWalletKit } from '@reown/walletkit';
 
 const core = new Core({
-  projectId: WC_PROJECT_ID
+  projectId: WC_PROJECT_ID,
+  relayUrl: 'wss://relay.walletconnect.org'
 })
+
+export let walletKit: IWalletKit;
 
 export const walletConnectOptions = {
   core, // <- pass the shared `core` instance
@@ -18,15 +22,75 @@ export const walletConnectOptions = {
   }
 }
 
-// const walletKit = await WalletKit.init({
-//   core, // <- pass the shared `core` instance
-//   metadata: {
-//     name: 'Demo React Native Wallet',
-//     description: 'Demo RN Wallet to interface with Dapps',
-//     url: 'www.walletconnect.com',
-//     icons: ['https://your_wallet_icon.png'],
-//     redirect: {
-//       native: 'yourwalletscheme://'
-//     }
-//   }
-// })
+export async function createWalletKit() {
+  walletKit = await WalletKit.init(walletConnectOptions);
+
+  try {
+    const clientId =
+      await walletKit.engine.signClient.core.crypto.getClientId();
+    console.log('WalletConnect ClientID: ', clientId);
+  } catch (error) {
+    console.error(
+      'Failed to set WalletConnect clientId in localStorage: ',
+      error,
+    );
+  }
+}
+
+export async function updateSignClientChainId(
+  chainId: string,
+  address: string,
+) {
+  // get most recent session
+  const sessions = walletKit.getActiveSessions();
+  if (!sessions) {
+    return;
+  }
+  const namespace = chainId.split(':')[0];
+  Object.values(sessions).forEach(async session => {
+    await walletKit.updateSession({
+      topic: session.topic,
+      namespaces: {
+        ...session.namespaces,
+        [namespace]: {
+          ...session.namespaces[namespace],
+          chains: [
+            ...new Set(
+              [chainId].concat(
+                Array.from(session.namespaces[namespace].chains || []),
+              ),
+            ),
+          ],
+          accounts: [
+            ...new Set(
+              [`${chainId}:${address}`].concat(
+                Array.from(session.namespaces[namespace].accounts),
+              ),
+            ),
+          ],
+        },
+      },
+    });
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const chainChanged = {
+      topic: session.topic,
+      event: {
+        name: 'chainChanged',
+        data: parseInt(chainId.split(':')[1], 10),
+      },
+      chainId: chainId,
+    };
+
+    const accountsChanged = {
+      topic: session.topic,
+      event: {
+        name: 'accountsChanged',
+        data: [`${chainId}:${address}`],
+      },
+      chainId,
+    };
+    await walletKit.emitSessionEvent(chainChanged);
+    await walletKit.emitSessionEvent(accountsChanged);
+  });
+}

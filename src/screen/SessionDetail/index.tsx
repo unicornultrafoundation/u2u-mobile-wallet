@@ -38,8 +38,6 @@ export default function SessionDetailScreen() {
     return pagedSignRequest.pages.flat()
   }, [pagedSignRequest])
 
-  console.log(signRequest)
-
   const handleLoadMore = () => {
     if (isFetching) return;
     fetchNextPage()

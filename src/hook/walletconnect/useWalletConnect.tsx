@@ -1,54 +1,26 @@
-import Client, { WalletKit } from "@reown/walletkit";
-import { useCallback, useEffect, useState } from "react";
-import { walletConnectOptions } from "../util/walletconnect";
+import { useCallback } from "react";
 import { WalletKitTypes } from "@reown/walletkit";
 import { buildApprovedNamespaces, getSdkError } from '@walletconnect/utils'
-import { useNetwork } from "./useNetwork";
-import { useWallet } from "./useWallet";
-import { useNavigation } from "@react-navigation/native";
+import { useNetwork } from "../useNetwork";
+import { useWallet } from "../useWallet";
+import { useGlobalStore } from "../../state/global";
+import { walletKit } from "../../util/walletconnect";
+import { useQuery } from "@tanstack/react-query";
+import { SessionTypes } from '@walletconnect/types';
 
 export function useWalletConnect() {
-  const navigation = useNavigation<any>()
   const {networkConfig} = useNetwork()
   const {wallet} = useWallet()
-  const [walletKit, setWalletKit] = useState<Client>()
-  const [proposal, setProposal] = useState<WalletKitTypes.SessionProposal>()
 
-  useEffect(() => {
-    (async () => {
-      const _walletKit = await WalletKit.init(walletConnectOptions)
-      setWalletKit(_walletKit)
-    })()
-  }, [])
-
-  useEffect(() => {
-    if (!walletKit) return
-    walletKit.on('session_proposal', (_p) => {
-      setProposal(_p)
-    })
-
-    walletKit.on("session_request", (p) => {
-      navigation.navigate('WalletStack', {screen: 'WCSignRequest', params: {request: p}})
-    });
-
-    walletKit.on('session_delete', (_p) => {
-      console.log('session deleted', _p.id)
-    })
-
-    walletKit.engine.signClient.events.on('session_ping', data => {
-      console.log('session_ping received', data);
-    });
-  }, [walletKit])
-
-  const getActiveSessions = useCallback(() => {
-    if (!walletKit) return []
-    console.log(walletKit.getActiveSessions())
-    return walletKit.getActiveSessions()
-  }, [walletKit])
+  const {setWCProposal} = useGlobalStore()
 
   const pair = useCallback((wcuri: string) => {
     if (!walletKit) return
-    return walletKit.core.pairing.pair({ uri: wcuri })
+    try {
+      return walletKit.pair({ uri: wcuri }) 
+    } catch (error) {
+      console.log(error)
+    }
   }, [walletKit])
 
   const approve = useCallback(async (proposal: WalletKitTypes.SessionProposal) => {
@@ -79,7 +51,7 @@ export function useWalletConnect() {
       })
       console.log('connected to session', session.topic)
       console.log(walletKit.getActiveSessions())
-      setProposal(undefined)
+      setWCProposal(undefined)
     } catch(error) {
       // use the error.message to show toast/info-box letting the user know that the connection attempt was unsuccessful
   
@@ -88,13 +60,13 @@ export function useWalletConnect() {
         reason: getSdkError("USER_REJECTED")
       })
 
-      setProposal(undefined)
+      setWCProposal(undefined)
     }
-  }, [walletKit, networkConfig, wallet])
+  }, [networkConfig, wallet, walletKit])
   
   const reject = useCallback(async (proposal: WalletKitTypes.SessionProposal) => {
     (async () => {
-      if (!walletKit || !proposal) return
+      if (!walletKit) return
       await walletKit.rejectSession({
         id: proposal.params.id,
         reason: getSdkError("USER_REJECTED")
@@ -102,12 +74,33 @@ export function useWalletConnect() {
     })()
   }, [walletKit])
 
+  const disconnect = useCallback(async (topic: string) => {
+    (async () => {
+      if (!walletKit) return
+      await walletKit.disconnectSession({
+        topic,
+        reason: getSdkError('USER_DISCONNECTED')
+      })
+    })()
+  }, [walletKit])
+
+  const {data, refetch} = useQuery({
+    queryKey: ['walletconnect-sessions', wallet.address, networkConfig?.chainID],
+    queryFn: () => {
+      if (!walletKit) return [] as SessionTypes.Struct[]
+      const rs = walletKit.getActiveSessions()
+      return Object.values(rs)
+    },
+    initialData: [] as SessionTypes.Struct[],
+    refetchInterval: 5000
+  })
+
   return {
-    walletKit,
-    proposal,
     pair,
     approve,
     reject,
-    getActiveSessions
+    disconnect,
+    connectedSessions: data,
+    refetch
   }
 }

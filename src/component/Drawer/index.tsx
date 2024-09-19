@@ -56,7 +56,7 @@ const Drawer = () => {
           }
         ]}
       >
-        <View style={{padding: 16}}>
+        <View style={{paddingHorizontal: 16, paddingVertical: 48}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10}}>
             <Image
               source={LOGO}

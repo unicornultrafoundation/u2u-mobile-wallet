@@ -49,7 +49,7 @@ export const useChat = () => {
         setChatToken(wallet.address, response.token)
         setChatRefreshToken(wallet.address, response.refresh_token)
       }
-      console.log('before init')
+      
       await chatClient.connectUser(
         {
           api_key: ERMIS_API_KEY,

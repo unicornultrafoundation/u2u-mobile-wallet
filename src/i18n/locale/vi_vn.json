@@ -334,5 +334,7 @@
   "noData": "Không có dữ liệu",
   "deleteConversationConfirmMessage": "Bạn chắc chắn muốn xoá?",
   "pending": "Đang chờ",
-  "accept": "Đồng ý"
+  "accept": "Đồng ý",
+  "disconnect": "Ngắt kết nối",
+  "expiry": "Hết hạn"
 }
