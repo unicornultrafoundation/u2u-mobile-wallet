@@ -100,8 +100,8 @@ const linking = {
     screens: {
       WalletStack: {
         screens: {
-          SignExternalRequest: 'wallet/external-sign/:signRequestID',
-          SessionApproval: 'wallet/session-approval/:sessionID'
+          WCSignRequest: 'wallet/external-sign/:signRequestID',
+          WCScanQRCode: 'wallet/session-approval/:sessionID'
         }
       },
       EcosystemStack: {
@@ -173,15 +173,11 @@ function App(): JSX.Element {
 
   const {i18n} = useTranslation<string>()
 
-  const {submitDeviceID, submitDeviceNotiToken, subscribeSessionTopic} = useTracking()
+  const {submitDeviceID, submitDeviceNotiToken} = useTracking()
   
   useEffect(() => {
     submitDeviceID()
   }, [submitDeviceID])
-
-  useEffect(() => {
-    subscribeSessionTopic()
-  }, [subscribeSessionTopic])
 
   useEffect(() => {
     submitDeviceNotiToken()

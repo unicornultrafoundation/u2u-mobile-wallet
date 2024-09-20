@@ -15,7 +15,6 @@ import { darkTheme, lightTheme } from '../../../theme/color';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
-import { useLocalStore } from '../../../state/local';
 import { useGlobalStore } from '../../../state/global';
 
 interface Props {
@@ -32,7 +31,6 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
   const { wallet, getWalletMetadata } = useWallet();
   const { name } = useNetwork()
   const { t } = useTranslation()
-  const { enableU2UConnect } = useLocalStore()
   const { setDrawerOpened } = useGlobalStore()
 
   if (collapsed) {
@@ -84,11 +82,6 @@ const WalletHeader = ({ collapsed, action, onGoBack }: Props) => {
             <Icon name="scan" width={16} height={16} />
           </TouchableOpacity>
           
-          {enableU2UConnect && (
-            <TouchableOpacity onPress={() => navigation.navigate('SessionApproval')}>
-              <Icon name="scan" width={16} height={16} />
-            </TouchableOpacity>
-          )}
         </View>
         <View style={{ flexDirection: 'row', gap: 2 }}>
           <SelectNetworkModal

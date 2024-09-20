@@ -10,7 +10,6 @@ import LOGO from '../../asset/images/logo_text_full.png'
 import { useTranslation } from 'react-i18next';
 import { typography } from '../../theme/typography';
 import { useNavigation } from '@react-navigation/native';
-import { useLocalStore } from '../../state/local';
 
 const { width, height } = Dimensions.get('window');
 
@@ -20,8 +19,6 @@ const Drawer = () => {
   const {preferenceTheme} = usePreference()
   const {drawerOpened, setDrawerOpened} = useGlobalStore()
   const translateX = new Animated.Value(width);
-
-  const {enableU2UConnect} = useLocalStore()
 
   useEffect(() => {
     if (drawerOpened) {
@@ -79,7 +76,7 @@ const Drawer = () => {
               {t('notification')}
             </Text>
           </TouchableOpacity>
-          {enableU2UConnect && (
+          {/* {enableU2UConnect && (
             <TouchableOpacity
               style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
               onPress={() => {
@@ -92,7 +89,7 @@ const Drawer = () => {
                 {t('connectedSession')}
               </Text>
             </TouchableOpacity>
-          )}
+          )} */}
           <TouchableOpacity
             style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
             onPress={() => {

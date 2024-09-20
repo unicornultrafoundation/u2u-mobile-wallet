@@ -11,11 +11,7 @@ import TxHistoryScreen from '../screen/TxHistoryScreen';
 import WalletManagementScreen from '../screen/WalletManagementScreen';
 import ImportWithPrivateKeyScreen from '../screen/ImportWithPrivateKeyScreen';
 import ExportPrivateKeyScreen from '../screen/ExportPrivateKeyScreen';
-import SignExternalRequestScreen from '../screen/SignExternalRequestScreen';
-import SessionApprovalScreen from '../screen/SessionApprovalScreen';
 import NotificationScreen from '../screen/NotificationScreen';
-import ConnectedSessionScreen from '../screen/ConnectedSessionScreen';
-import SessionDetailScreen from '../screen/SessionDetail';
 import ChatDashboardScreen from '../screen/ChatDashboardScreen';
 import ChatSettingScreen from '../screen/ChatSettingScreen';
 import BlockedContactScreen from '../screen/BlockedContactScreen';
@@ -49,11 +45,6 @@ const WalletStackScreen = () => {
       <WalletStack.Screen name="ImportWithPrivateKey" component={ImportWithPrivateKeyScreen} />
       <WalletStack.Screen name="ExportPrivateKey" component={ExportPrivateKeyScreen} />
       <WalletStack.Screen name="Notification" component={NotificationScreen} />
-      {/* SESSION SCREENS */}
-      <WalletStack.Screen name="SessionApproval" component={SessionApprovalScreen} />
-      <WalletStack.Screen name="SignExternalRequest" component={SignExternalRequestScreen} />
-      <WalletStack.Screen name="ConnectedSession" component={ConnectedSessionScreen} />
-      <WalletStack.Screen name="SessionDetail" component={SessionDetailScreen} />
       {/* CHAT SCREENS */}
       <WalletStack.Screen name="ChatDashboard" component={ChatDashboardScreen} />
       <WalletStack.Screen name="ChatSetting" component={ChatSettingScreen} />
