@@ -25,8 +25,6 @@ export default function ExperimentalSettingScreen() {
     }, [route])
   )
 
-  const {enableU2UConnect, setEnableU2UConnect} = useLocalStore()
-
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: preferenceTheme.background.background}}>
       <View style={styles.header}>
@@ -42,7 +40,7 @@ export default function ExperimentalSettingScreen() {
         </View>
         <View />
       </View>
-      <View>
+      {/* <View>
         <View style={styles.settingItem}>
           <View style={styles.settingItemTextContainer}>
             <Text style={theme.typography.body.medium}>
@@ -66,7 +64,7 @@ export default function ExperimentalSettingScreen() {
             />
           </View>
         </View>
-      </View>
+      </View> */}
     </SafeAreaView>
   )
 }

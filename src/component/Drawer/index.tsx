@@ -10,7 +10,6 @@ import LOGO from '../../asset/images/logo_text_full.png'
 import { useTranslation } from 'react-i18next';
 import { typography } from '../../theme/typography';
 import { useNavigation } from '@react-navigation/native';
-import { useLocalStore } from '../../state/local';
 
 const { width, height } = Dimensions.get('window');
 
@@ -20,8 +19,6 @@ const Drawer = () => {
   const {preferenceTheme} = usePreference()
   const {drawerOpened, setDrawerOpened} = useGlobalStore()
   const translateX = new Animated.Value(width);
-
-  const {enableU2UConnect} = useLocalStore()
 
   useEffect(() => {
     if (drawerOpened) {
@@ -56,7 +53,7 @@ const Drawer = () => {
           }
         ]}
       >
-        <View style={{padding: 16}}>
+        <View style={{paddingHorizontal: 16, paddingVertical: 48}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10}}>
             <Image
               source={LOGO}
@@ -79,7 +76,7 @@ const Drawer = () => {
               {t('notification')}
             </Text>
           </TouchableOpacity>
-          {enableU2UConnect && (
+          {/* {enableU2UConnect && (
             <TouchableOpacity
               style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
               onPress={() => {
@@ -92,7 +89,19 @@ const Drawer = () => {
                 {t('connectedSession')}
               </Text>
             </TouchableOpacity>
-          )}
+          )} */}
+          <TouchableOpacity
+            style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
+            onPress={() => {
+              closeDrawer()
+              navigation.navigate('WCConnectedSession')
+            }}
+          >
+            <Icon name="connect" width={24} height={24} color='#D8D8D8' />
+            <Text style={[typography.body.medium, {color: preferenceTheme.text.title}]}>
+              {t('wcConnectedSession')}
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
             onPress={() => {

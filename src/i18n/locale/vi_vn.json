@@ -305,6 +305,7 @@
   "subscribeNews": "Tin tức",
   "subscribeNewsDesc": "Nhận cập nhật mới nhất từ U2U network",
   "connectedSession": "Phiên đăng nhập",
+  "wcConnectedSession": "Phiên đăng nhập",
   "sessionDetail": "Chi tiết phiên",
   "noConnectedSession": "Không có phiên đăng nhập",
   "chat": "Chat",
@@ -333,5 +334,7 @@
   "noData": "Không có dữ liệu",
   "deleteConversationConfirmMessage": "Bạn chắc chắn muốn xoá?",
   "pending": "Đang chờ",
-  "accept": "Đồng ý"
+  "accept": "Đồng ý",
+  "disconnect": "Ngắt kết nối",
+  "expiry": "Hết hạn"
 }

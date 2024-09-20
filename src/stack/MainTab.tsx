@@ -9,10 +9,15 @@ import { useRemoteConfig } from "../hook/useRemoteConfig";
 import DeviceInfo from "react-native-device-info";
 import { useNotifications } from "../hook/useNotifications";
 import { useChat } from "../hook/chat/useChat";
+import useInitializeWalletKit from "../hook/walletconnect/useInitializeWalletKit";
+import { useWalletKitEventsManager } from "../hook/walletconnect/useWalletKitEventsManager";
 
 const Tab = createBottomTabNavigator();
 
 export default function MainTabNav() {
+  const initialized = useInitializeWalletKit()
+  useWalletKitEventsManager(initialized);
+
   useNotifications()
   const {remoteConfig} = useRemoteConfig()
   useChat()

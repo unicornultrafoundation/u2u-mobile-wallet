@@ -25,3 +25,5 @@ export const ERMIS_BASE_URL = Config.ERMIS_BASE_URL
 
 export const DAPP_PROMOTION_NOTIFICATION_TOPIC = 'dapp-promotion'
 export const NEWS_NOTIFICATION_TOPIC = 'news'
+
+export const WC_PROJECT_ID = Config.WC_PROJECT_ID

@@ -92,7 +92,7 @@ export const useTransaction = () => {
         ]
       )
     }
-    const signedTx = await signTransaction(rawTxObj, wallet.privateKey, rpc)
+    const signedTx = await signTransaction(rawTxObj, wallet.privateKey)
     txStore.setTxStatus('sending')
     const rs = await sendSignedTransaction(rpc, signedTx)
     if (!rs) return
@@ -122,7 +122,7 @@ export const useTransaction = () => {
 
     console.log('rawTxObj', rawTxObj)
 
-    const signedTx = await signTransaction(rawTxObj, wallet.privateKey, rpc)
+    const signedTx = await signTransaction(rawTxObj, wallet.privateKey)
     txStore.setTxStatus('sending')
     const rs = await sendSignedTransaction(rpc, signedTx)
     if (!rs) return
@@ -145,7 +145,6 @@ export const useTransaction = () => {
     const signedTx = await signTransaction(
       finalTx,
       wallet.privateKey,
-      rpc
     )
     return signedTx
   }, [wallet.privateKey, wallet.address, rpc, chainId])
