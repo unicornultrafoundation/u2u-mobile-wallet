@@ -25,6 +25,8 @@ export default function ExperimentalSettingScreen() {
     }, [route])
   )
 
+  const {enableChat, setEnableChat} = useLocalStore()
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: preferenceTheme.background.background}}>
       <View style={styles.header}>
@@ -40,11 +42,11 @@ export default function ExperimentalSettingScreen() {
         </View>
         <View />
       </View>
-      {/* <View>
+      <View>
         <View style={styles.settingItem}>
           <View style={styles.settingItemTextContainer}>
             <Text style={theme.typography.body.medium}>
-              {t('u2uConnect')}
+              {t('chatFeature')}
             </Text>
             <Text
               style={[
@@ -52,19 +54,19 @@ export default function ExperimentalSettingScreen() {
                 {color: preferenceTheme.text.secondary}
               ]}
             >
-              {t('u2uConnectDesc')}
+              {t('chatFeatureDesc')}
             </Text>
           </View>
           <View>
             <Toggle
-              isOn={enableU2UConnect}
+              isOn={enableChat}
               onToggle={() => {
-                setEnableU2UConnect(!enableU2UConnect)
+                setEnableChat(!enableChat)
               }}
             />
           </View>
         </View>
-      </View> */}
+      </View>
     </SafeAreaView>
   )
 }

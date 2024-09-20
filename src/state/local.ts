@@ -41,6 +41,8 @@ interface LocalState {
   setSubscribePromotion: (subscribePromotion: boolean) => void;
   subscribeNews: boolean;
   setSubscribeNews: (subscribeNews: boolean) => void;
+  enableChat: boolean;
+  setEnableChat: (enableChat: boolean) => void;
   chatToken: Record<string, string>;
   setChatToken: (address:string, chatToken: string) => void;
   chatRefreshToken: Record<string, string>;
@@ -121,6 +123,10 @@ export const useLocalStore = create<LocalState>()(
       subscribeNews: true,
       setSubscribeNews: (subscribeNews: boolean) => {
         set({ subscribeNews })
+      },
+      enableChat: false,
+      setEnableChat: (enableChat: boolean) => {
+        set({ enableChat })
       },
       chatToken: {},
       setChatToken: (address:string, chatToken: string) => {
