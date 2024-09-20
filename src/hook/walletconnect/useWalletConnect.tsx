@@ -32,13 +32,13 @@ export function useWalletConnect() {
         proposal: params,
         supportedNamespaces: {
           eip155: {
-            // chains: [`eip155:${networkConfig.chainID}`],
-            chains: [`eip155:11155111`],
+            chains: [`eip155:${networkConfig.chainID}`],
+            // chains: [`eip155:11155111`],
             methods: ['eth_sendTransaction', 'personal_sign'],
             events: ['accountsChanged', 'chainChanged'],
             accounts: [
-              // `eip155:${networkConfig.chainID}:${wallet.address.toLowerCase()}`,
-              `eip155:11155111:${wallet.address.toLowerCase()}`,
+              `eip155:${networkConfig.chainID}:${wallet.address.toLowerCase()}`,
+              // `eip155:11155111:${wallet.address.toLowerCase()}`,
             ]
           }
         }
