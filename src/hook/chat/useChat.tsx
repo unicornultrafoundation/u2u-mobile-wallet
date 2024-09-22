@@ -1,4 +1,4 @@
-import { ErmisAuth, ErmisChat, ErmisChatOptions } from 'ermis-chat-js-sdk';
+import { ErmisAuth, ErmisChat, ErmisChatOptions } from 'ermis-chat-sdk';
 import { useWallet } from '../useWallet';
 import { ERMIS_API_KEY, ERMIS_BASE_URL, ERMIS_PROJECT_ID } from '../../config/constant';
 import { signTypedData } from '../../util/wallet';
