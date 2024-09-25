@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useNetwork } from "./useNetwork"
 import { useWallet } from "./useWallet"
 import { useChat } from "./chat/useChat"
-import { MessagePaginationOptions } from "ermis-chat-sdk"
+import { MessagePaginationOptions } from "ermis-chat-js-sdk"
 
 const LIMIT = 50
 

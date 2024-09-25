@@ -4,7 +4,7 @@ import { signMessage } from "../util/wallet"
 import { useWallet } from "./useWallet"
 import { Conversation } from "./chat/useAllConversation"
 import { useChat } from "./chat/useChat"
-import { Message } from "ermis-chat-sdk"
+import { Message } from "ermis-chat-js-sdk"
 
 export const useConversationDetail = (conversationID: string) => {
   const {networkConfig} = useNetwork()
