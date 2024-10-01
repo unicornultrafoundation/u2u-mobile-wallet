@@ -34,6 +34,7 @@ export const useConversationDetail = (conversationID: string) => {
         lastMessageContent: channel.lastMessage() ? channel.lastMessage().text : '',
         updatedAt: new Date(channel.lastMessage() ? channel.lastMessage().updated_at : channel.data?.created_at as any),
         handleDelete: () => channel.delete({hard_delete: true}),
+        handleArchive: () => channel.delete({ hard_delete: false }),
         handleAccept: () => channel.acceptInvite(),
         handleReject: () => channel.rejectInvite(),
         sendMessage: (message: Message) => channel.sendMessage(message),
