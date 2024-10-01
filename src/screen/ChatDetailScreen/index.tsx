@@ -125,7 +125,7 @@ export default function ChatDetailScreen() {
             />
           </MenuTrigger>
           <MenuOptions customStyles={optionStyles}>
-            <MenuOption value="ar">
+            <MenuOption value="pin">
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Text
                   color="title"
@@ -142,7 +142,7 @@ export default function ChatDetailScreen() {
                   color="title"
                   type="label2-medium"
                 >
-                  {t('archivedConversations')}
+                  {t('archive')}
                 </Text>
                 <Icon name="archived" width={24} height={24} color={preferenceTheme.background.surfaceDisable} />
               </View>
