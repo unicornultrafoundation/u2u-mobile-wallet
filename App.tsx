@@ -8,6 +8,7 @@
 import 'react-native-gesture-handler';
 import '@ethersproject/shims';
 import 'event-target-polyfill'
+import '@walletconnect/react-native-compat'
 import React, { useEffect } from 'react';
 import { Linking, StatusBar } from 'react-native';
 
@@ -99,8 +100,8 @@ const linking = {
     screens: {
       WalletStack: {
         screens: {
-          SignExternalRequest: 'wallet/external-sign/:signRequestID',
-          SessionApproval: 'wallet/session-approval/:sessionID'
+          WCSignRequest: 'wallet/external-sign/:signRequestID',
+          WCScanQRCode: 'wallet/session-approval/:sessionID'
         }
       },
       EcosystemStack: {
@@ -172,15 +173,11 @@ function App(): JSX.Element {
 
   const {i18n} = useTranslation<string>()
 
-  const {submitDeviceID, submitDeviceNotiToken, subscribeSessionTopic} = useTracking()
+  const {submitDeviceID, submitDeviceNotiToken} = useTracking()
   
   useEffect(() => {
     submitDeviceID()
   }, [submitDeviceID])
-
-  useEffect(() => {
-    subscribeSessionTopic()
-  }, [subscribeSessionTopic])
 
   useEffect(() => {
     submitDeviceNotiToken()
