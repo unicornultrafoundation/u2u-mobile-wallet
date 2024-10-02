@@ -24,7 +24,11 @@ export const useChat = () => {
 
   const init = useCallback(async () => {
     try {
-      if (!ERMIS_API_KEY || !ERMIS_BASE_URL || !chatClient || chatClient._user) return
+      if (!ERMIS_API_KEY || !ERMIS_BASE_URL || !chatClient) return
+
+      if (chatClient.user) {
+        await chatClient.disconnectUser()
+      }
 
       let token = chatToken[wallet.address]
 
@@ -61,12 +65,13 @@ export const useChat = () => {
     } catch (error) {
       console.log('init chat error', error)
     }
-  }, [wallet, chatClient, chatToken, setChatRefreshToken, setChatToken])
+  }, [wallet.address, chatClient, chatToken, setChatRefreshToken, setChatToken])
 
   useEffect(() => {
     if (!wallet) return
+    console.log('fire hook')
     init()
-  }, [wallet, init])
+  }, [wallet.address, init])
 
   return {
     chatClient

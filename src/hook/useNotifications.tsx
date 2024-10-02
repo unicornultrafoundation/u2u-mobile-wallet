@@ -42,7 +42,9 @@ export const useNotifications = (status = 'all') => {
           console.log('User dismissed notification', detail.notification);
           break;
         case EventType.PRESS:
+          console.log('in here')
           const data = detail.notification?.data
+          console.log('noti data', data)
           const navigationId = data?.navigationId;
           
           if (navigationId === 'discover') {

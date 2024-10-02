@@ -64,7 +64,7 @@ const queryClient = new QueryClient()
 //   }
 // );
 
-const NAVIGATION_IDS = ['discover', 'ecosystem', 'external-sign'];
+const NAVIGATION_IDS = ['discover', 'ecosystem', 'external-sign', 'chat-detail'];
 
 function buildDeepLinkFromNotificationData(data: any): string | null {
   console.log('buildDeepLinkFromNotificationData', data)
@@ -77,9 +77,10 @@ function buildDeepLinkFromNotificationData(data: any): string | null {
     const signRequestID = data?.signRequestId
     return `u2umobilewallet://wallet/external-sign/${signRequestID}`;
   }
-  // if (navigationId === 'home') {
-  //   return 'u2umobilewallet://home';
-  // }
+  if (navigationId === 'chat-detail') {
+    const conversationID = data?.conversationID;
+    return `u2umobilewallet://wallet/chat-detail/${conversationID}`;
+  }
   if (navigationId === 'discover') {
     const newsId = data?.newsId
     if (newsId) return `u2umobilewallet://discover/detail/${newsId}`
@@ -101,7 +102,8 @@ const linking = {
       WalletStack: {
         screens: {
           WCSignRequest: 'wallet/external-sign/:signRequestID',
-          WCScanQRCode: 'wallet/session-approval/:sessionID'
+          WCScanQRCode: 'wallet/session-approval/:sessionID',
+          ChatDetail: 'wallet/chat-detail/:conversationID'
         }
       },
       EcosystemStack: {
