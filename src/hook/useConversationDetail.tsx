@@ -37,6 +37,7 @@ export const useConversationDetail = (conversationID: string) => {
         handleArchive: () => channel.delete({ hard_delete: false }),
         handleAccept: () => channel.acceptInvite(),
         handleReject: () => channel.rejectInvite(),
+        handleBlock: () => channel.blockUser(),
         sendMessage: (message: Message) => channel.sendMessage(message),
         messages: detail.messages
       } as Conversation

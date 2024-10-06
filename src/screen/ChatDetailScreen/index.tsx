@@ -80,23 +80,56 @@ export default function ChatDetailScreen() {
     }
   }
 
-  const handleSelectMenuAction = (value: number) => {
-    
+  const handleSelectMenuAction = async (value: string) => {
+    if (!data) return
+    switch (value) {
+      case 'block':
+        try {
+          await data.handleBlock()
+          navigation.goBack()
+          return
+        } catch (error) {
+          console.log(error) 
+          return;
+        }
+      case 'archive':
+        try {
+          await data.handleArchive()
+          navigation.goBack()
+          return
+        } catch (error) {
+          console.log(error) 
+          return;
+        }
+      case 'delete':
+        try {
+          await data.handleDelete()
+          navigation.goBack()
+          return
+        } catch (error) {
+          console.log(error) 
+          return;
+        }
+      default:
+        return;
+    }
   }
 
   const handleSendMessage = async () => {
+    if (!data) return
     try {
-      if (!data) return
       await data.sendMessage({
         text: newMessage,
         attachments: [],
         // quoted_message_id: '',
       });
 
-      setNewMessage('')
     } catch (error) {
       console.log('send message error', error)
+      console.log((error as Error).message)
     }
+
+    setNewMessage('')
   }
 
   return (
@@ -145,6 +178,17 @@ export default function ChatDetailScreen() {
                   {t('archive')}
                 </Text>
                 <Icon name="archived" width={24} height={24} color={preferenceTheme.background.surfaceDisable} />
+              </View>
+            </MenuOption>
+            <MenuOption value="delete">
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text
+                  color="title"
+                  type="label2-medium"
+                >
+                  {t('deleteChat')}
+                </Text>
+                <Icon name="trash" width={24} height={24} color={preferenceTheme.background.surfaceDisable} />
               </View>
             </MenuOption>
             <Separator />
