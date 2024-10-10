@@ -12,7 +12,6 @@ import { isValidDevice } from '../../../util/platform';
 import { usePreference } from '../../../hook/usePreference';
 import { useWallet } from '../../../hook/useWallet';
 import { useTracking } from '../../../hook/useTracking';
-import { useNetwork } from '../../../hook/useNetwork';
 import { useRemoteConfig } from '../../../hook/useRemoteConfig';
 
 const Step1 = () => {

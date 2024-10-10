@@ -6,10 +6,13 @@ import Button from '../../../component/Button';
 import theme from '../../../theme';
 import { useTranslation } from 'react-i18next';
 import { usePreference } from '../../../hook/usePreference';
+import { useNavigation } from '@react-navigation/native';
 
 const Step3 = () => {
   const {preferenceTheme} = usePreference()
   const { t } = useTranslation();
+
+  const navigation = useNavigation<any>()
 
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: 16, paddingVertical: 12}}>
@@ -41,6 +44,9 @@ const Step3 = () => {
         <Button
           type='text'
           style={{justifyContent: 'flex-start'}}
+          onPress={() => {
+            navigation.navigate('DiscoverStack', {screen: 'Home'})
+          }}
         >
           {t('exploreNow')}
         </Button>
