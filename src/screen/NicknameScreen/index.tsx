@@ -63,7 +63,7 @@ export default function NicknameScreen() {
   }
 
   const renderBody = () => {
-    if (currentNickname) {
+    if (!currentNickname) {
       return (
         <View style={[styles.nicknameContainer, {backgroundColor: preferenceTheme.background.background}]}>
           <Text style={[typography.footnote.regular, {color: preferenceTheme.text.primary}]}>{t('yourNickname')}</Text>
@@ -92,6 +92,19 @@ export default function NicknameScreen() {
             }}
           >
             {t('nicknameRules')}
+          </Text>
+          <Text 
+            style={{
+              fontSize: 11,
+              letterSpacing: 0.07,
+              lineHeight: 14,
+              paddingBottom: 12,
+              textAlign: 'left',
+              marginTop: 18
+            }}
+            color='title'
+          >
+            {t('nicknameWarning')}
           </Text>
         </View>
         <Button

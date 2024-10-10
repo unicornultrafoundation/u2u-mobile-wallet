@@ -269,6 +269,7 @@
   "nicknameSetting": "Set wallet nickname for easy transaction",
   "setYourWalletNickname": "Enter your nickname",
   "nicknameRules": "Wallet nickname can only contain digit and character, no special character is allowed",
+  "nicknameWarning": "Note: nickname can only be set once and can NOT be changed later.",
   "updateWalletNicknameFail": "Update wallet nickname fail",
   "wallet_already_have_nickname": "Wallet already have nickname",
   "updateWalletNicknameSuccess": "Update wallet nickname success",
