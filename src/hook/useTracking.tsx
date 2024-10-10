@@ -72,13 +72,14 @@ export const useTracking = () => {
       if (!networkConfig || !networkConfig.api_endpoint) return
       const deviceID = await DeviceInfo.syncUniqueId();
       const endpoint = `${networkConfig?.api_endpoint}${SUBMIT_DEVICE_ID_ENDPOINT}`
-      const authHeaders = await getAuthObj()
       
       // const appToken = await getAppCheckToken()
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       // myHeaders.append("X-Firebase-AppCheck", appToken)
+
+      const authHeaders = await getAuthObj()
       myHeaders.append("wallet", authHeaders.wallet);
       myHeaders.append("signature", authHeaders.signature);
       myHeaders.append("timestamp", authHeaders.timestamp.toString());
@@ -115,6 +116,10 @@ export const useTracking = () => {
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
+      const authHeaders = await getAuthObj()
+      myHeaders.append("wallet", authHeaders.wallet);
+      myHeaders.append("signature", authHeaders.signature);
+      myHeaders.append("timestamp", authHeaders.timestamp.toString());
       
       const raw = JSON.stringify({
         tokens: [token],
@@ -128,7 +133,6 @@ export const useTracking = () => {
       };
       // console.log('register device token', token)
       const rs = await fetch(endpoint, requestOptions)
-      // toggleAlreadySubmitDeviceID()
       return rs
 
     } catch (error) {
