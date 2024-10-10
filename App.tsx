@@ -25,7 +25,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useNetInfo } from "@react-native-community/netinfo";
-// import appsFlyer from 'react-native-appsflyer';
 import { MenuProvider } from 'react-native-popup-menu';
 import { useNetwork } from './src/hook/useNetwork';
 import { useGlobalStore } from './src/state/global';
@@ -33,7 +32,6 @@ import AuthScreen from './src/screen/AuthScreen';
 import { useNetworkStore } from './src/state/network';
 import { SUPPORTED_CHAINS } from './src/config/chain';
 import { useTranslation } from 'react-i18next';
-// import { APP_FLYERS_DEV_KEY, APP_FLYERS_IOS_APP_ID } from './src/config/constant';
 import messaging from '@react-native-firebase/messaging';
 import NoInternetScreen from './src/screen/NoInternetScreen';
 import { useTracking } from './src/hook/useTracking';
@@ -46,23 +44,6 @@ import ToastComponent from './src/component/Toast';
 global.CustomEvent = global.Event
 
 const queryClient = new QueryClient()
-
-// appsFlyer.initSdk(
-//   {
-//     devKey: APP_FLYERS_DEV_KEY!,
-//     isDebug: true,
-//     appId: APP_FLYERS_IOS_APP_ID,
-//     onInstallConversionDataListener: true, //Optional
-//     onDeepLinkListener: true, //Optional
-//     timeToWaitForATTUserAuthorization: 10 //for iOS 14.5
-//   },
-//   (result) => {
-//     console.log(result);
-//   },
-//   (error) => {
-//     console.error(error);
-//   }
-// );
 
 const NAVIGATION_IDS = ['discover', 'ecosystem', 'external-sign', 'chat-detail'];
 
