@@ -10,7 +10,7 @@ import { logErrorForMonitoring } from "./useCrashlytics"
 
 export const useTracking = () => {
   const { networkConfig } = useNetwork()
-  const {wallet} = useWallet()
+  const {wallet, getAuthObj} = useWallet()
   const {registeredWallet, addRegisteredWalelt} = useLocalStore()
 
   const [deviceID, setDeviceID] = useState("")
@@ -72,12 +72,16 @@ export const useTracking = () => {
       if (!networkConfig || !networkConfig.api_endpoint) return
       const deviceID = await DeviceInfo.syncUniqueId();
       const endpoint = `${networkConfig?.api_endpoint}${SUBMIT_DEVICE_ID_ENDPOINT}`
-
+      const authHeaders = await getAuthObj()
+      
       // const appToken = await getAppCheckToken()
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       // myHeaders.append("X-Firebase-AppCheck", appToken)
+      myHeaders.append("wallet", authHeaders.wallet);
+      myHeaders.append("signature", authHeaders.signature);
+      myHeaders.append("timestamp", authHeaders.timestamp.toString());
       
       const raw = JSON.stringify({
         deviceID
