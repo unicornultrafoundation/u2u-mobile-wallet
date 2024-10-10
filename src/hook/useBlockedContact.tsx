@@ -27,7 +27,7 @@ export const useChatBlockedAddress = (search?: string) => {
       //     walletAddress: i.to
       //   }
       // })
-      return []
+      return [] as ChatBlockedAddress[]
     },
     getNextPageParam: (lastPage, pages) => {
       const nextPageParam = lastPage.length === 0 ? undefined : pages.length + 1
