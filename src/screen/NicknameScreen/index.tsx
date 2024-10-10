@@ -63,7 +63,7 @@ export default function NicknameScreen() {
   }
 
   const renderBody = () => {
-    if (!currentNickname) {
+    if (currentNickname) {
       return (
         <View style={[styles.nicknameContainer, {backgroundColor: preferenceTheme.background.background}]}>
           <Text style={[typography.footnote.regular, {color: preferenceTheme.text.primary}]}>{t('yourNickname')}</Text>
