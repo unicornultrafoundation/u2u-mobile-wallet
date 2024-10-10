@@ -16,7 +16,6 @@ import { useWallet } from '../../hook/useWallet';
 import Scanner from '../../component/QRCodeScanner';
 import { isAddress } from 'ethers';
 import theme from '../../theme';
-import { getPhonePaddingBottom } from '../../util/platform';
 import ErrorTextInput from '../../component/TextInput/ErrorTextInput';
 import { ERC1155_ABI } from '../../util/abis/erc1155';
 import { useWalletNickname } from '../../hook/useWalletNickname';

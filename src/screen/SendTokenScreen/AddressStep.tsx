@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { styles } from './styles';
 import Text from '../../component/Text';
@@ -16,6 +16,8 @@ import { usePreference } from '../../hook/usePreference';
 import { getPhonePaddingBottom } from '../../util/platform';
 import ErrorTextInput from '../../component/TextInput/ErrorTextInput';
 import { useWalletNickname } from '../../hook/useWalletNickname';
+import { useSupportedTokens } from '../../hook/useSupportedTokens';
+import Toast from 'react-native-toast-message';
 
 const AddressStep = ({onNextStep, onBack}: {
   onNextStep: () => void;
@@ -25,6 +27,7 @@ const AddressStep = ({onNextStep, onBack}: {
   const {preferenceTheme} = usePreference()
   const {t} = useTranslation<string>()
   const { receiveAddress, setReceiveAddress, setTokenMeta, setAmount } = useTransactionStore()
+  const {supportedTokens} = useSupportedTokens()
 
   const [address, setAddress] = useState(receiveAddress)
   const [errorAddress, setErrorAddress] = useState('')
@@ -48,6 +51,22 @@ const AddressStep = ({onNextStep, onBack}: {
     return true
   }
 
+  const isWhitelistedToken = useCallback((tokenMeta: Record<string, any>) => {
+    if (!Array.isArray(supportedTokens)) return false
+
+    const index = supportedTokens.findIndex((item) => {
+      return (
+        item.name === tokenMeta.name &&
+        item.symbol === tokenMeta.symbol &&
+        item.decimals === tokenMeta.decimals &&
+        item.address === tokenMeta.address &&
+        item.logo === tokenMeta.logo
+      )
+    })
+
+    return index !== -1
+  }, [supportedTokens])
+
   const handleConfirm = async (value: string) => {
     if (await validateAdress(value)) {
       if (!isAddress(value)) {
@@ -68,6 +87,20 @@ const AddressStep = ({onNextStep, onBack}: {
       const dataObj = JSON.parse(value)
       if (!dataObj.address || !dataObj.amount || !dataObj.tokenMeta) {
         console.log('invalid QR data')
+        setShowScanner(false)
+        Toast.show({
+          type: 'error',
+          text1: t('invalidQR'),
+        })
+        return;
+      }
+
+      if (!isWhitelistedToken(dataObj.tokenMeta)) {
+        setShowScanner(false)
+        Toast.show({
+          type: 'error',
+          text1: t('unsupportedToken'),
+        })
         return;
       }
 
@@ -78,6 +111,10 @@ const AddressStep = ({onNextStep, onBack}: {
     } catch (error) {
       if (!isAddress(value)) {
         console.log('invalid QR data')
+        Toast.show({
+          type: 'error',
+          text1: t('invalidQR'),
+        })
         return;
       }
       setReceiveAddress(value)

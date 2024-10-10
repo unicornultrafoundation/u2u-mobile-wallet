@@ -338,5 +338,7 @@
   "pending": "Pending",
   "accept": "Accept",
   "disconnect": "Disconnect",
-  "expiry": "Expiry"
+  "expiry": "Expiry",
+  "invalidQR": "Invalid QR code",
+  "unsupportedToken": "Unsupported token"
 }

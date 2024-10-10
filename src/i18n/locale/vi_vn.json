@@ -337,5 +337,7 @@
   "pending": "Đang chờ",
   "accept": "Đồng ý",
   "disconnect": "Ngắt kết nối",
-  "expiry": "Hết hạn"
+  "expiry": "Hết hạn",
+  "invalidQR": "QR code không hợp lệ",
+  "unsupportedToken": "Token không hỗ trợ"
 }
