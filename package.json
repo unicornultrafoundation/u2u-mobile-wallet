@@ -42,7 +42,7 @@
     "crypto": "^1.0.1",
     "date-fns": "^2.30.0",
     "deprecated-react-native-prop-types": "^5.0.0",
-    "ermis-chat-js-sdk": "^1.1.4",
+    "ermis-chat-js-sdk": "^1.1.5",
     "ethereum-checksum-address": "^0.0.8",
     "ethers": "^6.7.1",
     "event-target-polyfill": "^0.0.3",
