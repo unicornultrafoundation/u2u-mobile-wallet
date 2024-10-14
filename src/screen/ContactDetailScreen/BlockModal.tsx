@@ -16,14 +16,15 @@ export default function BlockModal({ onRequestClose, visible, addressToBlock }: 
 }) {
   const {t} = useTranslation()
   const {preferenceTheme} = usePreference()
-  const {blockAddress} = useChatBlockedAddress()
+  // const {blockAddress} = useChatBlockedAddress()
 
   const [loading, setLoading] = useState(false)
 
   const handleBlock = async () => {
     try {
       setLoading(true)
-      await blockAddress(addressToBlock)
+      // TODO: block by ermis SDK
+      // await blockAddress(addressToBlock)
       setLoading(false)
       onRequestClose()
     } catch (error) {

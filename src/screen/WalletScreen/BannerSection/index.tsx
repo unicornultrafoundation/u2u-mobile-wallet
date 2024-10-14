@@ -25,7 +25,12 @@ const BannerSection = ({collapsed}: {collapsed: boolean}) => {
         width={width}
         height={147}
         // autoPlay={true}
-        data={[Step1, Step2, Step3, Step4]}
+        data={[
+          // Step1,
+          Step2,
+          Step3,
+          Step4
+        ]}
         scrollAnimationDuration={400}
         // onSnapToItem={(index) => console.log('current index:', index)}
         renderItem={({item}) => item()}

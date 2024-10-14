@@ -25,7 +25,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useNetInfo } from "@react-native-community/netinfo";
-// import appsFlyer from 'react-native-appsflyer';
 import { MenuProvider } from 'react-native-popup-menu';
 import { useNetwork } from './src/hook/useNetwork';
 import { useGlobalStore } from './src/state/global';
@@ -33,7 +32,6 @@ import AuthScreen from './src/screen/AuthScreen';
 import { useNetworkStore } from './src/state/network';
 import { SUPPORTED_CHAINS } from './src/config/chain';
 import { useTranslation } from 'react-i18next';
-// import { APP_FLYERS_DEV_KEY, APP_FLYERS_IOS_APP_ID } from './src/config/constant';
 import messaging from '@react-native-firebase/messaging';
 import NoInternetScreen from './src/screen/NoInternetScreen';
 import { useTracking } from './src/hook/useTracking';
@@ -47,24 +45,7 @@ global.CustomEvent = global.Event
 
 const queryClient = new QueryClient()
 
-// appsFlyer.initSdk(
-//   {
-//     devKey: APP_FLYERS_DEV_KEY!,
-//     isDebug: true,
-//     appId: APP_FLYERS_IOS_APP_ID,
-//     onInstallConversionDataListener: true, //Optional
-//     onDeepLinkListener: true, //Optional
-//     timeToWaitForATTUserAuthorization: 10 //for iOS 14.5
-//   },
-//   (result) => {
-//     console.log(result);
-//   },
-//   (error) => {
-//     console.error(error);
-//   }
-// );
-
-const NAVIGATION_IDS = ['discover', 'ecosystem', 'external-sign'];
+const NAVIGATION_IDS = ['discover', 'ecosystem', 'external-sign', 'chat-detail'];
 
 function buildDeepLinkFromNotificationData(data: any): string | null {
   console.log('buildDeepLinkFromNotificationData', data)
@@ -77,9 +58,10 @@ function buildDeepLinkFromNotificationData(data: any): string | null {
     const signRequestID = data?.signRequestId
     return `u2umobilewallet://wallet/external-sign/${signRequestID}`;
   }
-  // if (navigationId === 'home') {
-  //   return 'u2umobilewallet://home';
-  // }
+  if (navigationId === 'chat-detail') {
+    const conversationID = data?.conversationID;
+    return `u2umobilewallet://wallet/chat-detail/${conversationID}`;
+  }
   if (navigationId === 'discover') {
     const newsId = data?.newsId
     if (newsId) return `u2umobilewallet://discover/detail/${newsId}`
@@ -101,7 +83,8 @@ const linking = {
       WalletStack: {
         screens: {
           WCSignRequest: 'wallet/external-sign/:signRequestID',
-          WCScanQRCode: 'wallet/session-approval/:sessionID'
+          WCScanQRCode: 'wallet/session-approval/:sessionID',
+          ChatDetail: 'wallet/chat-detail/:conversationID'
         }
       },
       EcosystemStack: {

@@ -1,3 +1,4 @@
+import React from 'react'
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGlobalStore } from "../../state/global";
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
@@ -34,8 +35,15 @@ export default function NicknameScreen() {
 
   const [nickname, setNickname] = useState('')
 
+  const isValidNickname = (name: string) => {
+    return /^[^`~!@#$%^&*()_+={}\[\]|\\:;“’<,>.?๐฿]*$/gm.test(name)
+  }
+
   const handleSubmitNickname = async () => {
     try {
+      if (!isValidNickname) {
+        throw new Error(t("nicknameRules"))
+      }
       const rs = await submitWalletNickname(nickname)
       console.log(rs)
       Toast.show({
@@ -84,6 +92,19 @@ export default function NicknameScreen() {
             }}
           >
             {t('nicknameRules')}
+          </Text>
+          <Text 
+            style={{
+              fontSize: 11,
+              letterSpacing: 0.07,
+              lineHeight: 14,
+              paddingBottom: 12,
+              textAlign: 'left',
+              marginTop: 18
+            }}
+            color='title'
+          >
+            {t('nicknameWarning')}
           </Text>
         </View>
         <Button

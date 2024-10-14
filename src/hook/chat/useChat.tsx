@@ -2,9 +2,10 @@ import { ErmisAuth, ErmisChat, ErmisChatOptions } from 'ermis-chat-js-sdk';
 import { useWallet } from '../useWallet';
 import { ERMIS_API_KEY, ERMIS_BASE_URL, ERMIS_PROJECT_ID } from '../../config/constant';
 import { signTypedData } from '../../util/wallet';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useLocalStore } from '../../state/local';
 import { parseJwt } from '../../util/string';
+import { chatClient } from '../../util/chat';
 
 const options: ErmisChatOptions = {
   timeout: 6000,
@@ -16,15 +17,14 @@ export const useChat = () => {
   const {wallet} = useWallet()
   const {chatToken, setChatRefreshToken, setChatToken} = useLocalStore()
 
-  const chatClient = useMemo(() => {
-    if (!ERMIS_API_KEY || !ERMIS_BASE_URL || !ERMIS_PROJECT_ID) return undefined
-    
-    return ErmisChat.getInstance(ERMIS_API_KEY, ERMIS_PROJECT_ID, options);
-  }, [])
-
   const init = useCallback(async () => {
     try {
-      if (!ERMIS_API_KEY || !ERMIS_BASE_URL || !chatClient || chatClient._user) return
+      if (chatClient.user && chatClient.user.id === wallet.address.toLowerCase()) return
+      
+      if (chatClient.user && chatClient.user.id !== wallet.address.toLowerCase()) {
+        console.log('before disconnect', chatClient.user?.id)
+        await chatClient.disconnectUser()
+      }
 
       let token = chatToken[wallet.address]
 
@@ -37,7 +37,7 @@ export const useChat = () => {
       }
 
       if (!token) {
-        const authInstance = ErmisAuth.getInstance(ERMIS_API_KEY, wallet.address, options);
+        const authInstance = ErmisAuth.getInstance(ERMIS_API_KEY!, wallet.address, options);
       
         const challenge = await authInstance.startAuth() as Record<string, any>;
         delete challenge.types.EIP712Domain
@@ -61,12 +61,12 @@ export const useChat = () => {
     } catch (error) {
       console.log('init chat error', error)
     }
-  }, [wallet, chatClient, chatToken, setChatRefreshToken, setChatToken])
+  }, [wallet.address, chatToken, setChatRefreshToken, setChatToken])
 
   useEffect(() => {
     if (!wallet) return
     init()
-  }, [wallet, init])
+  }, [wallet.address, init])
 
   return {
     chatClient

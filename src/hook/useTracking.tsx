@@ -5,13 +5,12 @@ import DeviceInfo from "react-native-device-info"
 import { useLocalStore } from "../state/local"
 import { useWallet } from "./useWallet"
 import { firebase } from "@react-native-firebase/app-check"
-import appsFlyer from "react-native-appsflyer"
 import messaging from '@react-native-firebase/messaging';
 import { logErrorForMonitoring } from "./useCrashlytics"
 
 export const useTracking = () => {
   const { networkConfig } = useNetwork()
-  const {wallet} = useWallet()
+  const {wallet, getAuthObj} = useWallet()
   const {registeredWallet, addRegisteredWalelt} = useLocalStore()
 
   const [deviceID, setDeviceID] = useState("")
@@ -19,19 +18,6 @@ export const useTracking = () => {
   const getAppCheckToken = async (force = false) => {
     const { token } = await firebase.appCheck().getToken(force);
     return token
-  }
-  
-  const getAppFlyerUID = async (): Promise<string> => {
-    return new Promise((resolve) => {
-      appsFlyer.getAppsFlyerUID((err, uid) => {
-        if (err) {
-          console.log(err)
-          resolve("")
-        } else {
-          resolve(uid)
-        }
-      })
-    })
   }
 
   const registerWallet = useCallback(async () => {
@@ -86,14 +72,17 @@ export const useTracking = () => {
       if (!networkConfig || !networkConfig.api_endpoint) return
       const deviceID = await DeviceInfo.syncUniqueId();
       const endpoint = `${networkConfig?.api_endpoint}${SUBMIT_DEVICE_ID_ENDPOINT}`
-
+      
       // const appToken = await getAppCheckToken()
-      const appFlyerUID = await getAppFlyerUID()
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       // myHeaders.append("X-Firebase-AppCheck", appToken)
-      myHeaders.append("X-App-Flyer-UID", appFlyerUID)
+
+      const authHeaders = await getAuthObj()
+      myHeaders.append("wallet", authHeaders.wallet);
+      myHeaders.append("signature", authHeaders.signature);
+      myHeaders.append("timestamp", authHeaders.timestamp.toString());
       
       const raw = JSON.stringify({
         deviceID
@@ -127,6 +116,10 @@ export const useTracking = () => {
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
+      const authHeaders = await getAuthObj()
+      myHeaders.append("wallet", authHeaders.wallet);
+      myHeaders.append("signature", authHeaders.signature);
+      myHeaders.append("timestamp", authHeaders.timestamp.toString());
       
       const raw = JSON.stringify({
         tokens: [token],
@@ -140,7 +133,6 @@ export const useTracking = () => {
       };
       // console.log('register device token', token)
       const rs = await fetch(endpoint, requestOptions)
-      // toggleAlreadySubmitDeviceID()
       return rs
 
     } catch (error) {
@@ -153,7 +145,6 @@ export const useTracking = () => {
     submitDeviceNotiToken,
     registerWallet,
     getAppCheckToken,
-    getAppFlyerUID,
     deviceID
   }
 }

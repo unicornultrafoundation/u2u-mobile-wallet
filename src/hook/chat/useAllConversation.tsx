@@ -17,6 +17,8 @@ export interface Conversation {
   handleDelete: () => Promise<DeleteChannelAPIResponse<DefaultGenerics>>;
   handleAccept: () => Promise<APIResponse>,
   handleReject: () => Promise<APIResponse>,
+  handleArchive: () => Promise<APIResponse>,
+  handleBlock: () => Promise<any>,
   sendMessage: (message: Message) => Promise<SendMessageAPIResponse>,
   messages: MessageResponse<DefaultGenerics>[]
 }
@@ -60,8 +62,10 @@ export const useAllConversation = (filter: string) => {
           lastMessageContent: channel.lastMessage() ? channel.lastMessage().text : '',
           updatedAt: new Date(channel.lastMessage() ? channel.lastMessage().updated_at : channel.data?.created_at as any),
           handleDelete: () => channel.delete({hard_delete: true}),
+          handleArchive: () => channel.delete({hard_delete: false}),
           handleAccept: () => channel.acceptInvite(),
           handleReject: () => channel.rejectInvite(),
+          handleBlock: () => channel.blockUser(),
           sendMessage: (message: Message) => channel.sendMessage(message),
           messages: []
         } as Conversation
@@ -71,6 +75,7 @@ export const useAllConversation = (filter: string) => {
       const nextPageParam = lastPage.length === 0 ? undefined : pages.length + 1
       return nextPageParam
     },
+    refetchInterval: 5000
   })
 
   return {

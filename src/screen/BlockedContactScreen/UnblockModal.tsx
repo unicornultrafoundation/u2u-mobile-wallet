@@ -15,14 +15,15 @@ export default function UnblockModal({ onRequestClose, visible, addressToUnblock
 }) {
   const {t} = useTranslation()
   const {preferenceTheme} = usePreference()
-  const {unblockAddress} = useChatBlockedAddress()
+  // const {unblockAddress} = useChatBlockedAddress()
 
   const [loading, setLoading] = useState(false)
 
   const handleUnblock = async () => {
     try {
       setLoading(true)
-      await unblockAddress(addressToUnblock)
+      // TODO: unblock by ermis SDK
+      // await unblockAddress(addressToUnblock)
       setLoading(false)
       onRequestClose()
     } catch (error) {
