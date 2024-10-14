@@ -73,4 +73,18 @@ static void ClearKeychainIfNecessary() {
                     restorationHandler:restorationHandler];
 }
 
+- (void)applicationWillResignActive:(UIApplication *)application {
+  UIView *blurView = [[UIView alloc] initWithFrame:self.window.bounds];
+  blurView.tag = 1234; // Arbitrary tag to identify the view
+  blurView.backgroundColor = [UIColor whiteColor]; // Semi-transparent cover
+  [self.window addSubview:blurView];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+  UIView *blurView = [self.window viewWithTag:1234];
+  if (blurView) {
+    [blurView removeFromSuperview]; // Remove the cover when app becomes active
+  }
+}
+
 @end
