@@ -21,7 +21,7 @@ const Drawer = () => {
   const {drawerOpened, setDrawerOpened} = useGlobalStore()
   const translateX = new Animated.Value(width);
 
-  const {enableU2UConnect} = useLocalStore()
+  const {enableChat} = useLocalStore()
 
   useEffect(() => {
     if (drawerOpened) {
@@ -56,7 +56,7 @@ const Drawer = () => {
           }
         ]}
       >
-        <View style={{padding: 16}}>
+        <View style={{paddingHorizontal: 16, paddingVertical: 48}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10}}>
             <Image
               source={LOGO}
@@ -79,32 +79,32 @@ const Drawer = () => {
               {t('notification')}
             </Text>
           </TouchableOpacity>
-          {enableU2UConnect && (
+          <TouchableOpacity
+            style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
+            onPress={() => {
+              closeDrawer()
+              navigation.navigate('WCConnectedSession')
+            }}
+          >
+            <Icon name="connect" width={24} height={24} color='#D8D8D8' />
+            <Text style={[typography.body.medium, {color: preferenceTheme.text.title}]}>
+              {t('wcConnectedSession')}
+            </Text>
+          </TouchableOpacity>
+          {enableChat && (
             <TouchableOpacity
               style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
               onPress={() => {
                 closeDrawer()
-                navigation.navigate('ConnectedSession')
+                navigation.navigate('ChatDashboard')
               }}
             >
-              <Icon name="connect" width={24} height={24} color='#D8D8D8' />
+              <Icon name="chat" width={24} height={24} color='#D8D8D8' />
               <Text style={[typography.body.medium, {color: preferenceTheme.text.title}]}>
-                {t('connectedSession')}
+                {t('chat')}
               </Text>
             </TouchableOpacity>
           )}
-          {/* <TouchableOpacity
-            style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
-            onPress={() => {
-              closeDrawer()
-              navigation.navigate('ChatDashboard')
-            }}
-          >
-            <Icon name="chat" width={24} height={24} color='#D8D8D8' />
-            <Text style={[typography.body.medium, {color: preferenceTheme.text.title}]}>
-              {t('chat')}
-            </Text>
-          </TouchableOpacity> */}
         </View>
       </Animated.View>
     </>

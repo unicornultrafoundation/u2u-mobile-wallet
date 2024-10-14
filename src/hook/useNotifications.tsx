@@ -75,6 +75,13 @@ export const useNotifications = (status = 'all') => {
               navigation.navigate('EcosystemStack', {screen: 'DAppWebView', params: {url: url}})
             }
           }
+
+          if (navigationId === 'chat-detail') {
+            const conversationID = data?.conversationID;
+            if (conversationID) {
+              navigation.navigate('WalletStack', {screen: 'ChatDetail', params: {conversationID: conversationID}})
+            }
+          }
           break;
       }
     });

@@ -7,10 +7,10 @@ import Icon from "../../component/Icon";
 import Text from '../../component/Text';
 import { styles } from "./styles";
 import { useTranslation } from "react-i18next";
-import { useConnectedSessions } from "../../hook/useConnectedSessions";
 import { typography } from "../../theme/typography";
+import { useWalletConnect } from "../../hook/walletconnect/useWalletConnect";
 
-export default function ConnectedSessionScreen() {
+export default function WCConnectedSessionScreen() {
   const {t} = useTranslation()
   const navigation = useNavigation<any>()
   const {preferenceTheme} = usePreference()
@@ -23,7 +23,7 @@ export default function ConnectedSessionScreen() {
     }, [route]),
   );
 
-  const {data: sessions} = useConnectedSessions()
+  const {connectedSessions} = useWalletConnect()
 
   return (
     <SafeAreaView
@@ -34,21 +34,21 @@ export default function ConnectedSessionScreen() {
           <Icon name="arrow-left" width={24} height={24} />
         </TouchableOpacity>
         <View style={{flexDirection: 'row'}}>
-          <Text style={[styles.headerText, {color: preferenceTheme.text.title}]}>{t('connectedSession')}</Text>
+          <Text style={[styles.headerText, {color: preferenceTheme.text.title}]}>{t('wcConnectedSession')}</Text>
         </View>
         <View style={{width: 24}} />
       </View>
       <FlatList
-        data={sessions}
+        data={connectedSessions}
         renderItem={({item}) => {
           return (
             <TouchableOpacity
               style={styles.sessionRow}
-              onPress={() => navigation.navigate('SessionDetail', {sessionID: item.id})}
+              onPress={() => navigation.navigate('WCSessionDetail', {sessionDetail: item})}
             >
-              {item.dAppMetadata.logo ? (
+              {item.peer.metadata.icons[0] ? (
                 <Image
-                  source={{uri: item.dAppMetadata.logo}}
+                  source={{uri: item.peer.metadata.icons[0]}}
                   style={{
                     width: 36,
                     height: 36
@@ -59,11 +59,11 @@ export default function ConnectedSessionScreen() {
               )}
               <View style={{flex: 1, alignItems: 'flex-start', justifyContent: 'space-between', paddingHorizontal: 12}}>
                 <Text style={[typography.body.bold, {color: preferenceTheme.text.title}]}>
-                  {item.dAppMetadata.name}
+                  {item.peer.metadata.name}
                 </Text>
-                <Text style={[typography.label2.bold, {color: preferenceTheme.text.secondary, textTransform: 'uppercase'}]}>
+                {/* <Text style={[typography.label2.bold, {color: preferenceTheme.text.secondary, textTransform: 'uppercase'}]}>
                   {item.status}
-                </Text>
+                </Text> */}
               </View>
               <Icon name="chevron-right" width={18} height={18} />
             </TouchableOpacity>

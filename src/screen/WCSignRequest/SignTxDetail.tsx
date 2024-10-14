@@ -1,15 +1,23 @@
-import { View } from "react-native";
-import { styles } from "./styles";
-import Text from '../../component/Text';
-import { usePreference } from "../../hook/usePreference";
 import { useTranslation } from "react-i18next";
+import { View } from "react-native";
+import { usePreference } from "../../hook/usePreference";
+import Text from "../../component/Text";
+import { styles } from "./styles";
 import { formatNumberString, shortenAddress } from "../../util/string";
-import { formatEther } from "ethers";
 import { typography } from "../../theme/typography";
+import { formatEther } from "ethers";
 
-export default function SignTxDetail({data}: {data: Record<string, any>}) {
+export default function SignTxDetail({signRequest}: {
+  signRequest: Record<string, any>
+}) {
   const {t} = useTranslation()
   const {preferenceTheme} = usePreference()
+
+  const { topic, params, id } = signRequest
+  const { request } = params
+
+  const txData = request.params[0]
+
   return (
     <View style={[styles.requestInfoContainer, {backgroundColor: preferenceTheme.background.surface}]}>
       <View style={{paddingVertical: 6, alignItems: 'flex-start', justifyContent: 'space-between', gap: 8}}>
@@ -17,7 +25,7 @@ export default function SignTxDetail({data}: {data: Record<string, any>}) {
           {t('from')}:
         </Text>
         <Text>
-          {shortenAddress(data.rawData.from, 15, 15)}
+          {shortenAddress(txData.from, 15, 15)}
         </Text>
       </View>
       <View style={{paddingVertical: 6, alignItems: 'flex-start', justifyContent: 'space-between', gap: 8}}>
@@ -25,7 +33,7 @@ export default function SignTxDetail({data}: {data: Record<string, any>}) {
           {t('to')}:
         </Text>
         <Text>
-          {shortenAddress(data.rawData.to, 15, 15)}
+          {shortenAddress(txData.to, 15, 15)}
         </Text>
       </View>
       <View style={{paddingVertical: 6, alignItems: 'flex-start', justifyContent: 'space-between', gap: 8}}>
@@ -33,7 +41,7 @@ export default function SignTxDetail({data}: {data: Record<string, any>}) {
           {t('amount')}:
         </Text>
         <Text>
-          {formatNumberString(formatEther(data.rawData.value).toString())} U2U
+          {formatNumberString(formatEther(txData.value).toString())} U2U
         </Text>
       </View>
       <View style={{paddingVertical: 6, alignItems: 'flex-start', justifyContent: 'space-between', gap: 8}}>
@@ -41,7 +49,7 @@ export default function SignTxDetail({data}: {data: Record<string, any>}) {
           {t('txData')}
         </Text>
         <Text>
-          {shortenAddress(data.rawData.data, 15, 15)}
+          {shortenAddress(txData.data, 15, 15)}
         </Text>
       </View>
     </View>

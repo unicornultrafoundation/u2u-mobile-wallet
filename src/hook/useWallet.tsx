@@ -1,6 +1,5 @@
 import { useWalletStore, Wallet } from '../state/wallet';
 import { useCallback } from 'react';
-import { getPathIndex } from '../util/string';
 import { signMessage } from '../util/wallet';
 
 export function useWallet() {

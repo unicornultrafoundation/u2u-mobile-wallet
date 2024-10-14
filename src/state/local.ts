@@ -41,8 +41,12 @@ interface LocalState {
   setSubscribePromotion: (subscribePromotion: boolean) => void;
   subscribeNews: boolean;
   setSubscribeNews: (subscribeNews: boolean) => void;
-  enableU2UConnect: boolean;
-  setEnableU2UConnect: (enableU2UConnect: boolean) => void;
+  enableChat: boolean;
+  setEnableChat: (enableChat: boolean) => void;
+  chatToken: Record<string, string>;
+  setChatToken: (address:string, chatToken: string) => void;
+  chatRefreshToken: Record<string, string>;
+  setChatRefreshToken: (address:string, chatRefreshToken: string) => void;
 }
 
 export const useLocalStore = create<LocalState>()(
@@ -120,9 +124,27 @@ export const useLocalStore = create<LocalState>()(
       setSubscribeNews: (subscribeNews: boolean) => {
         set({ subscribeNews })
       },
-      enableU2UConnect: false,
-      setEnableU2UConnect: (enableU2UConnect: boolean) => {
-        set({ enableU2UConnect })
+      enableChat: false,
+      setEnableChat: (enableChat: boolean) => {
+        set({ enableChat })
+      },
+      chatToken: {},
+      setChatToken: (address:string, chatToken: string) => {
+        const currentChatToken = get().chatToken
+        currentChatToken[address] = chatToken
+
+        set({
+          chatToken: {...currentChatToken}
+        })
+      },
+      chatRefreshToken: {},
+      setChatRefreshToken: (address:string, chatRefreshToken: string) => {
+        const currentChatRefreshToken = get().chatRefreshToken
+        currentChatRefreshToken[address] = chatRefreshToken
+
+        set({
+          chatRefreshToken: {...currentChatRefreshToken}
+        })
       }
     }),
     {

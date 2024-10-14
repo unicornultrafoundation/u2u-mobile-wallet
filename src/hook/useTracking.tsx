@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { GET_SESSION_BY_WALLET, SUBMIT_DEVICE_ID_ENDPOINT, SUBMIT_DEVICE_NOTIFICATION_TOKEN, SUBMIT_WALLET_ENDPOINT } from "../config/endpoint"
+import { SUBMIT_DEVICE_ID_ENDPOINT, SUBMIT_DEVICE_NOTIFICATION_TOKEN, SUBMIT_WALLET_ENDPOINT } from "../config/endpoint"
 import { useNetwork } from "./useNetwork"
 import DeviceInfo from "react-native-device-info"
 import { useLocalStore } from "../state/local"
@@ -8,7 +8,6 @@ import { firebase } from "@react-native-firebase/app-check"
 import appsFlyer from "react-native-appsflyer"
 import messaging from '@react-native-firebase/messaging';
 import { logErrorForMonitoring } from "./useCrashlytics"
-import { getAllSession } from "../service/session"
 
 export const useTracking = () => {
   const { networkConfig } = useNetwork()
@@ -105,7 +104,7 @@ export const useTracking = () => {
         body: raw,
         redirect: 'follow'
       };
-      console.log('register device id', deviceID)
+      // console.log('register device id', deviceID)
       const rs = await fetch(endpoint, requestOptions)
       // toggleAlreadySubmitDeviceID()
       return rs
@@ -139,7 +138,7 @@ export const useTracking = () => {
         body: raw,
         redirect: 'follow'
       };
-      console.log('register device token', token)
+      // console.log('register device token', token)
       const rs = await fetch(endpoint, requestOptions)
       // toggleAlreadySubmitDeviceID()
       return rs
@@ -149,28 +148,12 @@ export const useTracking = () => {
     }
   }, [wallet, networkConfig])
 
-  const subscribeSessionTopic = useCallback(async () => {
-    try {
-      if (!networkConfig || !networkConfig.api_endpoint) return
-
-      const sessions = await getAllSession(networkConfig.api_endpoint, wallet.address)
-      
-      sessions.forEach(async (i: any) => {
-        await messaging().subscribeToTopic(`u2u-connect-session-${i.id}`)
-      })
-
-    } catch (error) {
-      logErrorForMonitoring(error as any, "subscribeSessionTopic error")
-    }
-  }, [wallet, networkConfig])
-
   return {
     submitDeviceID,
     submitDeviceNotiToken,
     registerWallet,
     getAppCheckToken,
     getAppFlyerUID,
-    subscribeSessionTopic,
     deviceID
   }
 }

@@ -1,3 +1,4 @@
+import { IWalletKit, WalletKitTypes } from '@reown/walletkit';
 import { create } from 'zustand'
 interface GlobalState {
   routeName: string;
@@ -8,6 +9,8 @@ interface GlobalState {
   setUnlocked: (unlocked: boolean) => void;
   drawerOpened: boolean;
   setDrawerOpened: (drawerOpened: boolean) => void;
+  wcProposal: WalletKitTypes.SessionProposal | undefined;
+  setWCProposal: (proposal: WalletKitTypes.SessionProposal | undefined) => void;
 }
 
 export const useGlobalStore = create<GlobalState>((set, get) => ({
@@ -26,5 +29,9 @@ export const useGlobalStore = create<GlobalState>((set, get) => ({
   drawerOpened: false,
   setDrawerOpened: (drawerOpened: boolean) => {
     set({ drawerOpened })
-  }
+  },
+  wcProposal: undefined,
+  setWCProposal: (wcProposal) => {
+    set({ wcProposal })
+  },
 }))
