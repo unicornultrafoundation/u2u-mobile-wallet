@@ -41,7 +41,7 @@ export default function NicknameScreen() {
 
   const handleSubmitNickname = async () => {
     try {
-      if (!isValidNickname) {
+      if (!isValidNickname(nickname)) {
         throw new Error(t("nicknameRules"))
       }
       const rs = await submitWalletNickname(nickname)

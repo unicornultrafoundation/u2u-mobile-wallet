@@ -11,9 +11,10 @@ import TextButton from "../../component/Button/TextButton";
 import { useNavigation } from "@react-navigation/native";
 import { handleGoBack } from "../../util/navigation";
 
-export default function WarningModal({modalVisible, onClose}: {
+export default function WarningModal({modalVisible, onClose, onAccept}: {
   modalVisible: boolean;
-  onClose: () => void
+  onClose: () => void;
+  onAccept: (acceptTerm: boolean) => void;
 }) {
   const navigation = useNavigation<any>()
   const {t} = useTranslation()
@@ -29,7 +30,7 @@ export default function WarningModal({modalVisible, onClose}: {
   const handleAccept = () => {
     if (!acceptTerm) return
     setShowSafetyWarning(showWarning)
-
+    onAccept(acceptTerm)
     onClose()
   }
 
