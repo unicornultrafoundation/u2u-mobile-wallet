@@ -2,7 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useWallet } from "../useWallet";
 import { useNetwork } from "../useNetwork";
 import { useChat } from "./useChat";
-import { APIResponse, DefaultGenerics, DeleteChannelAPIResponse, Message, MessageResponse, SendMessageAPIResponse } from "ermis-chat-js-sdk";
+import { APIResponse, ChannelMemberResponse, DefaultGenerics, DeleteChannelAPIResponse, Message, MessageResponse, SendMessageAPIResponse } from "ermis-chat-js-sdk";
 
 export interface Conversation {
   id: string;

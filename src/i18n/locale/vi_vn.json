@@ -340,5 +340,6 @@
   "disconnect": "Ngắt kết nối",
   "expiry": "Hết hạn",
   "invalidQR": "QR code không hợp lệ",
-  "unsupportedToken": "Token không hỗ trợ"
+  "unsupportedToken": "Token không hỗ trợ",
+  "emptyBlockList": "Chưa có liên hệ bị chặn"
 }

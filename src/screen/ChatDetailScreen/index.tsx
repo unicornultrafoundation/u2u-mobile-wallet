@@ -42,7 +42,7 @@ export default function ChatDetailScreen() {
 
   // const userAddresses: string[] = route.params?.userAddresses || []
   const conversationID: string = route.params?.conversationID || ''
-  const {data} = useConversationDetail(conversationID)
+  const {data, error} = useConversationDetail(conversationID)
 
   const [lastMessageID, setLastMessageID] = useState('')
   const {data: messages, isFetching} = useConversationMessages(conversationID, lastMessageID)

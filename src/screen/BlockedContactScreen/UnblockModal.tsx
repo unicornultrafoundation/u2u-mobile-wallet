@@ -8,10 +8,11 @@ import theme from "../../theme";
 import { useChatBlockedAddress } from "../../hook/useBlockedContact";
 import { useState } from "react";
 
-export default function UnblockModal({ onRequestClose, visible, addressToUnblock }: {
+export default function UnblockModal({ onRequestClose, visible, handleUnblock }: {
   visible: boolean;
   onRequestClose: () => void;
-  addressToUnblock: string;
+  // addressToUnblock: string;
+  handleUnblock: () => void;
 }) {
   const {t} = useTranslation()
   const {preferenceTheme} = usePreference()
@@ -19,11 +20,11 @@ export default function UnblockModal({ onRequestClose, visible, addressToUnblock
 
   const [loading, setLoading] = useState(false)
 
-  const handleUnblock = async () => {
+  const _handleUnblock = async () => {
     try {
       setLoading(true)
       // TODO: unblock by ermis SDK
-      // await unblockAddress(addressToUnblock)
+      await handleUnblock()
       setLoading(false)
       onRequestClose()
     } catch (error) {
@@ -60,7 +61,7 @@ export default function UnblockModal({ onRequestClose, visible, addressToUnblock
         </Text>  
         <Separator style={{ width: '100%' }}/>
         <TouchableOpacity
-          onPress={handleUnblock}
+          onPress={_handleUnblock}
           style={{ width: '100%', alignItems: 'center' }}>
           <Text type="label-medium" style={{ color: theme.color.primary[500] }}>
             {t('unblock')}
