@@ -10,7 +10,7 @@ import '@ethersproject/shims';
 import 'event-target-polyfill'
 import '@walletconnect/react-native-compat'
 import React, { useEffect } from 'react';
-import { Linking, StatusBar } from 'react-native';
+import { Linking, StatusBar, View, StyleSheet, AppState } from 'react-native';
 
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import analytics from '@react-native-firebase/analytics';
@@ -136,7 +136,7 @@ const linking = {
 function App(): JSX.Element {
   useCrashlytics()
 
-  const {unlocked} = useGlobalStore()
+  const {unlocked, isAppInBackground, setIsAppInBackground} = useGlobalStore()
   const { type, isConnected } = useNetInfo();
   const {darkMode: isDarkMode, language} = usePreferenceStore()
 
@@ -177,6 +177,17 @@ function App(): JSX.Element {
   useEffect(() => {
     i18n.changeLanguage(language)
   }, [language])
+
+  useEffect(() => {
+    const subscriptionBlur = AppState.addEventListener('blur', () => setIsAppInBackground(true));
+    const subscriptionFocus = AppState.addEventListener('focus', () => setIsAppInBackground(false));
+
+    // Cleanup the listener when the component unmounts
+    return () => {
+      subscriptionBlur.remove();
+      subscriptionFocus.remove();
+    };
+  }, []);
 
   if (!loaded) {
     return <SplashScreen />
@@ -233,6 +244,9 @@ function App(): JSX.Element {
           </QueryClientProvider>
         </MenuProvider>
         <ToastComponent />
+        {isAppInBackground && (
+          <View style={{...StyleSheet.absoluteFillObject, ...{backgroundColor: 'white', zIndex: 20}}} />
+        )}
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

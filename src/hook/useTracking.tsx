@@ -131,12 +131,13 @@ export const useTracking = () => {
         body: raw,
         redirect: 'follow'
       };
-      // console.log('register device token', token)
+
       const rs = await fetch(endpoint, requestOptions)
       return rs
 
     } catch (error) {
-      logErrorForMonitoring(error as any, "get device noti token error")
+      console.log('error here')
+      logErrorForMonitoring(error as any, "submitDeviceNotiToken error")
     }
   }, [wallet, networkConfig])
 

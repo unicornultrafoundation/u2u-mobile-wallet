@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
-import { useNetwork } from "./useNetwork"
-import { signMessage } from "../util/wallet"
-import { useWallet } from "./useWallet"
-import { Conversation } from "./chat/useAllConversation"
-import { useChat } from "./chat/useChat"
+import { useNetwork } from "../useNetwork"
+import { useWallet } from "../useWallet"
+import { Conversation } from "./useAllConversation"
+import { useChat } from "./useChat"
 import { Message } from "ermis-chat-js-sdk"
 
 export const useConversationDetail = (conversationID: string) => {

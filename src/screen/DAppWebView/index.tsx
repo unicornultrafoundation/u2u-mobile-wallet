@@ -38,6 +38,7 @@ const DAppWebView = () => {
   const [url, setURL] = useState(appURL.replace(/{{slash}}/g, '/').replace(/%7B%7Bslash%7D%7D/g, "/"))
   const [inputURL, setInputURL] = useState(url)
   const [modalVisible, setModalVisible] = useState(true);
+  const [acceptTerm, setAcceptTerm] = useState(false)
 
   const [resource, setResource] = useState('')
   const [loading, setLoading] = useState(true)
@@ -225,6 +226,7 @@ const DAppWebView = () => {
       <WarningModal
         modalVisible={modalVisible && !isListedDApp(url, dappList)}
         onClose={() => setModalVisible(false)}
+        onAccept={setAcceptTerm}
       />
       <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 16}}>
         <TouchableOpacity
@@ -275,61 +277,63 @@ const DAppWebView = () => {
         </View>
       </View>
       <View style={{flex: 1}}>
-        <WebView
-          // cacheEnabled={shouldUseCache}
-          ref={webRef}
-          // userAgent={
-          //   viewMode === 'DESKTOP' ?
-          //   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2564.109 Safari/537.36"
-          //   : undefined
-          // }
-          scalesPageToFit={true}
-          javaScriptEnabled={true}
-          automaticallyAdjustContentInsets={false}
-          injectedJavaScriptBeforeContentLoaded={ resource }
-          // injectedJavaScript={ Platform.OS === 'android' ? historyAPIShim : '' }
-          onMessage={onMessage}
-          onNavigationStateChange={(nativeEvent) => {
-            // if (Platform.OS === 'ios') {
-            //   return
+        {(acceptTerm || isListedDApp(url, dappList)) && (
+          <WebView
+            // cacheEnabled={shouldUseCache}
+            ref={webRef}
+            // userAgent={
+            //   viewMode === 'DESKTOP' ?
+            //   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2564.109 Safari/537.36"
+            //   : undefined
             // }
-            
-            if (nativeEvent.url !== inputURL) {
-              setInputURL(getPredictedURLTypeFromRaw(nativeEvent.url))
-            }
-          }}
-          onLoadStart={() => !alreadyInited && setLoadingURL(true)}
-          onLoadEnd={() => {
-            setLoadingURL(false)
-            if (!alreadyInited) {
-              setAlreadyInited(true)
-            }
-          }}
-          source={{ uri: getPredictedURLTypeFromRaw(url) }}
-          style={styles.webview}
-          containerStyle={{
-            flex: loadingURL || error !== '' ? 0 : 1,
-          }}
-          renderError={(errorName) => {
-            if (!errorName) return <Text>{''}</Text>;
-            setError(errorName)
-            return (
-              <View style={{backgroundColor: '#FFFFFF', height: '100%', alignItems: 'center', justifyContent: 'center'}}>
-                <Text 
-                  style={{
-                    fontSize: 30,
-                    marginBottom: 30,
-                    fontWeight: '500',
-                    fontFamily: Platform.OS === 'android' ? 'WorkSans-SemiBold' : undefined
-                  }}
-                >
-                  Error loading your DApp
-                </Text>
-                <Text>Error code: {errorName}</Text>
-              </View>
-            )
-          }}
-        /> 
+            scalesPageToFit={true}
+            javaScriptEnabled={true}
+            automaticallyAdjustContentInsets={false}
+            injectedJavaScriptBeforeContentLoaded={ resource }
+            // injectedJavaScript={ Platform.OS === 'android' ? historyAPIShim : '' }
+            onMessage={onMessage}
+            onNavigationStateChange={(nativeEvent) => {
+              // if (Platform.OS === 'ios') {
+              //   return
+              // }
+              
+              if (nativeEvent.url !== inputURL) {
+                setInputURL(getPredictedURLTypeFromRaw(nativeEvent.url))
+              }
+            }}
+            onLoadStart={() => !alreadyInited && setLoadingURL(true)}
+            onLoadEnd={() => {
+              setLoadingURL(false)
+              if (!alreadyInited) {
+                setAlreadyInited(true)
+              }
+            }}
+            source={{ uri: getPredictedURLTypeFromRaw(url) }}
+            style={styles.webview}
+            containerStyle={{
+              flex: loadingURL || error !== '' ? 0 : 1,
+            }}
+            renderError={(errorName) => {
+              if (!errorName) return <Text>{''}</Text>;
+              setError(errorName)
+              return (
+                <View style={{backgroundColor: '#FFFFFF', height: '100%', alignItems: 'center', justifyContent: 'center'}}>
+                  <Text 
+                    style={{
+                      fontSize: 30,
+                      marginBottom: 30,
+                      fontWeight: '500',
+                      fontFamily: Platform.OS === 'android' ? 'WorkSans-SemiBold' : undefined
+                    }}
+                  >
+                    Error loading your DApp
+                  </Text>
+                  <Text>Error code: {errorName}</Text>
+                </View>
+              )
+            }}
+          /> 
+        )}
       </View>
       <ConfirmTxModal
         showModal={confirmModalVisible}

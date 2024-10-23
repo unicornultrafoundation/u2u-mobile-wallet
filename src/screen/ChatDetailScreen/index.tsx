@@ -13,7 +13,7 @@ import {
   MenuOption,
   MenuTrigger,
 } from 'react-native-popup-menu';
-import { useConversationDetail } from "../../hook/useConversationDetail";
+import { useConversationDetail } from "../../hook/chat/useConversationDetail";
 import { useConversationMessages } from "../../hook/useConversationMessages";
 import TextInput from "../../component/TextInput";
 import theme from "../../theme";

@@ -11,6 +11,8 @@ interface GlobalState {
   setDrawerOpened: (drawerOpened: boolean) => void;
   wcProposal: WalletKitTypes.SessionProposal | undefined;
   setWCProposal: (proposal: WalletKitTypes.SessionProposal | undefined) => void;
+  isAppInBackground: boolean;
+  setIsAppInBackground: (isAppInBackground: boolean) => void;
 }
 
 export const useGlobalStore = create<GlobalState>((set, get) => ({
@@ -33,5 +35,9 @@ export const useGlobalStore = create<GlobalState>((set, get) => ({
   wcProposal: undefined,
   setWCProposal: (wcProposal) => {
     set({ wcProposal })
+  },
+  isAppInBackground: false,
+  setIsAppInBackground: (isAppInBackground: boolean) => {
+    set({ isAppInBackground })
   },
 }))

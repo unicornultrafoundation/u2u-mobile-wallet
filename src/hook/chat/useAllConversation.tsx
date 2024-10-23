@@ -36,13 +36,15 @@ export const useAllConversation = (filter: string) => {
     queryFn: async ({pageParam = 1}) => {
       if (!chatClient) return [] as Conversation[]
       const rs = await chatClient.queryChannels(
-          {
+        {
           // @ts-ignore
           type: ['messaging', 'team'],
           // @ts-ignore
-          roles: filter === 'all' ? ['owner', 'moder', 'member'] : ['pending'],
+          roles: filter === 'all' || filter === 'block' ? ['owner', 'moder', 'member'] : ['pending'],
+          // @ts-ignore
+          blocked: filter === 'block',
           limit: PAGE_SIZE,
-          offset: (pageParam - 1) * PAGE_SIZE
+          offset: (pageParam - 1) * PAGE_SIZE,
         },
         [{ last_message_at: -1 }],
         {
