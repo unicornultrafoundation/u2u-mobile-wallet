@@ -43,6 +43,7 @@ export const useConversationDetail = (conversationID: string) => {
         handleReject: () => channel.rejectInvite(),
         handleBlock: () => channel.blockUser(),
         sendMessage: (message: Message) => channel.sendMessage(message),
+        markRead: () => channel.markRead(),
         messages: detail.messages
       } as Conversation
     }

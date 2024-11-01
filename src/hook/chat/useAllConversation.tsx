@@ -2,7 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useWallet } from "../useWallet";
 import { useNetwork } from "../useNetwork";
 import { useChat } from "./useChat";
-import { APIResponse, ChannelMemberResponse, DefaultGenerics, DeleteChannelAPIResponse, Message, MessageResponse, SendMessageAPIResponse } from "ermis-chat-js-sdk";
+import { APIResponse, DefaultGenerics, DeleteChannelAPIResponse, Message, MessageResponse, SendMessageAPIResponse } from "ermis-chat-js-sdk";
 
 export interface Conversation {
   id: string;
@@ -19,6 +19,7 @@ export interface Conversation {
   handleReject: () => Promise<APIResponse>,
   handleArchive: () => Promise<APIResponse>,
   handleBlock: () => Promise<any>,
+  markRead: () => Promise<any>,
   sendMessage: (message: Message) => Promise<SendMessageAPIResponse>,
   messages: MessageResponse<DefaultGenerics>[]
 }
@@ -69,7 +70,8 @@ export const useAllConversation = (filter: string) => {
           handleReject: () => channel.rejectInvite(),
           handleBlock: () => channel.blockUser(),
           sendMessage: (message: Message) => channel.sendMessage(message),
-          messages: []
+          messages: [],
+          markRead: () => channel.markRead()
         } as Conversation
       })
     },

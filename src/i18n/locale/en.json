@@ -342,5 +342,6 @@
   "expiry": "Expiry",
   "invalidQR": "Invalid QR code",
   "unsupportedToken": "Unsupported token",
-  "emptyBlockList": "No contact blocked yet"
+  "emptyBlockList": "No contact blocked yet",
+  "profile": "Profile"
 }
