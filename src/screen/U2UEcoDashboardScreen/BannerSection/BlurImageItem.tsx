@@ -54,7 +54,7 @@ const BlurredImageItem = ({
       <Image source={{uri: backgroundImg}} style={styles.backgroundImage} />
       <View style={styles.upcomingOverlayContainer}>
         <LinearGradient
-          colors={gradientColor}
+          colors={gradientColor || ["#4c669f", "#3b5998", "#192f6a"]}
           style={styles.blurredSection}>
           <Image source={{uri: logoImg}} style={styles.smallImage} />
           <View style={styles.textContainer}>
