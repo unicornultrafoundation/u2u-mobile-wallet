@@ -7,9 +7,11 @@ import { usePreference } from "../../hook/usePreference";
 import { styles } from "./styles";
 import Icon from "../../component/Icon";
 import Text from "../../component/Text";
-import theme from "../../theme";
+import theme from "@/theme";
+import { useWallet } from "@/hook/useWallet";
 
 export default function ChatSettingScreen() {
+  const {wallet} = useWallet()
   const {t} = useTranslation()
   const navigation = useNavigation<any>()
   const {preferenceTheme} = usePreference()
@@ -56,12 +58,12 @@ export default function ChatSettingScreen() {
         style={{flex: 1, paddingTop: 24}}
       >
         <TouchableOpacity
-          // onPress={() => navigation.navigate('NotificationSetting')}
+          onPress={() => navigation.navigate('ContactDetail', {address: wallet.address.toLowerCase()})}
         >
           {
             renderTrigger({
-              icon: 'notification', 
-              title: 'notification',
+              icon: 'u2u', 
+              title: 'profile',
             })
           }
         </TouchableOpacity>

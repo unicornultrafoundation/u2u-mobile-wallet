@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { TextInput as RNTextInput, StyleProp, View, ViewStyle } from 'react-native'
 import { TextInputProps } from 'react-native'
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet'
@@ -18,7 +18,10 @@ interface Props extends TextInputProps {
   insideModal?: boolean
 }
 
-const TextInput = ({style, textWrapperStyle, containerStyle, placeholderTextColor, error, postIcon, preIcon, insideModal = false, ...rest}: Props) => {
+const TextInput = (
+  {style, textWrapperStyle, containerStyle, placeholderTextColor, error, postIcon, preIcon, insideModal = false, ...rest}: Props,
+  ref: any
+) => {
 
   const {preferenceTheme} = usePreference()
 
@@ -77,10 +80,12 @@ const TextInput = ({style, textWrapperStyle, containerStyle, placeholderTextColo
               style
             ]}
             placeholderTextColor={preferenceTheme.text.placeholder}
+            ref={ref}
           />
         ) : (
           <RNTextInput
             {...rest}
+            ref={ref}
             onFocus={(e) => {
               setFocused(true)
               rest.onFocus && rest.onFocus(e)
@@ -120,4 +125,4 @@ const TextInput = ({style, textWrapperStyle, containerStyle, placeholderTextColo
   )
 };
 
-export default TextInput;
+export default forwardRef(TextInput);

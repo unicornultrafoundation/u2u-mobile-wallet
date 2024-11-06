@@ -64,6 +64,7 @@ export default function ChatDetailScreen() {
 
   useEffect(() => {
     setAllMessageHistory([...messages, ...allMessagesHistory])
+    data?.markRead()
   }, [messages])
 
   const allMessages = useMemo(() => {

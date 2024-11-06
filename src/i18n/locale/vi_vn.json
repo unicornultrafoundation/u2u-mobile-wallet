@@ -341,5 +341,6 @@
   "expiry": "Hết hạn",
   "invalidQR": "QR code không hợp lệ",
   "unsupportedToken": "Token không hỗ trợ",
-  "emptyBlockList": "Chưa có liên hệ bị chặn"
+  "emptyBlockList": "Chưa có liên hệ bị chặn",
+  "profile": "Thông tin cá nhân"
 }

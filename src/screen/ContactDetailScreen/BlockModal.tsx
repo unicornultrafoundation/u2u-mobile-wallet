@@ -5,7 +5,7 @@ import Text from '../../component/Text';
 import { useTranslation } from "react-i18next";
 import Separator from "../../component/Separator";
 import theme from "../../theme";
-import { useChatBlockedAddress } from "../../hook/useBlockedContact";
+import { useChatBlockedAddress } from "@/hook/useBlockedContact";
 import TextInput from "../../component/TextInput";
 import { useState } from "react";
 
