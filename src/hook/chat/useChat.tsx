@@ -22,7 +22,7 @@ export const useChat = () => {
       if (chatClient.user && chatClient.user.id === wallet.address.toLowerCase()) return
       
       if (chatClient.user && chatClient.user.id !== wallet.address.toLowerCase()) {
-        console.log('before disconnect', chatClient.user?.id)
+        console.log('disconnect user from chat', chatClient.user?.id)
         await chatClient.disconnectUser()
       }
 
