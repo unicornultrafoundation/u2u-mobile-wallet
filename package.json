@@ -10,7 +10,9 @@
     "test": "jest",
     "postinstall": "rn-nodeify --install 'crypto,process,stream,events' --hack && patch-package",
     "bundle-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
+    "bundle-android-prod": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/",
     "build-apk-test": "cd android && ./gradlew assembleDebug",
+    "build-apk-prod": "cd android && ./gradlew assembleRelease",
     "build-ios": "cd ios && RCT_METRO_PORT=8088 fastlane beta",
     "build-android": "cd android && RCT_METRO_PORT=8088 fastlane beta",
     "clear-env": "rm -f node_modules/react-native-config/ios/ReactNativeConfig/GeneratedDotEnv.m"
@@ -42,7 +44,7 @@
     "crypto": "1.0.1",
     "date-fns": "2.30.0",
     "deprecated-react-native-prop-types": "5.0.0",
-    "ermis-chat-js-sdk": "1.2.2",
+    "ermis-chat-js-sdk": "1.2.4",
     "ethereum-checksum-address": "0.0.8",
     "ethers": "6.7.1",
     "event-target-polyfill": "0.0.3",
