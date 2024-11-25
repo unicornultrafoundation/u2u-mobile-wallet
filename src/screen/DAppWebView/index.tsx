@@ -20,6 +20,7 @@ import TextInput from '../../component/TextInput';
 import WarningModal from './WarningModal';
 import useFetchDappList from '../../hook/useFetchDappList';
 import { handleGoBack } from '../../util/navigation';
+import { isSupportedNetwork } from '@/util/blockchain';
 
 const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `
@@ -51,7 +52,7 @@ const DAppWebView = () => {
 
   const webRef = useRef<any>()
   const {wallet} = useWallet()
-  const {networkConfig} = useNetwork()
+  const {networkConfig, switchNetwork} = useNetwork()
 
   const isFocused = useIsFocused()
 
@@ -176,6 +177,21 @@ const DAppWebView = () => {
       case 'signTransaction':
         setTxObj(JSON.parse(JSON.stringify(params)))
         setConfirmModalVisible(true);
+        break;
+      case 'wallet_switchEthereumChain':
+        const chainId = Number(params.chainId)
+        if (!isSupportedNetwork(chainId)) {
+          const codeToRun = parseError(requestId, {
+            code: 4902,
+            message: 'Unrecognized chain ID'
+          })
+          if (webRef && webRef.current) {
+            webRef.current.injectJavaScript(codeToRun);
+          }
+          return
+        }
+        switchNetwork(chainId.toString())
+
         break;
       default:
         throw `Invalid method name ${method}`
