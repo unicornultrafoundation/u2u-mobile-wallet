@@ -1,3 +1,4 @@
+import { SUPPORTED_CHAINS } from '@/config/chain'
 import {ethers} from 'ethers'
 
 export const estimateGasPriceUtil = async (rpc: string) => {
@@ -29,4 +30,12 @@ export const getTxDetail = async (txHash: string, rpc: string) => {
 export const getBlockDetail = async (blockHash: string, rpc: string) => {
   const provider = new ethers.JsonRpcProvider(rpc)
   return provider.getBlock(blockHash)
+}
+
+export const isSupportedNetwork = (chainId: number) => {
+  const networkItem = SUPPORTED_CHAINS.find((item) => {
+    return Number(item.chainID) === chainId
+  })
+
+  return !!networkItem
 }
