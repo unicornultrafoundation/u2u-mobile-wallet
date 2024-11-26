@@ -32,14 +32,14 @@ export default function BlockedContactScreen() {
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounce(search, 500)
 
-  const {data} = useChatBlockedAddress(debouncedSearch)
+  const {data, refetch} = useChatBlockedAddress(debouncedSearch)
   const allChatBlockedAddress = useMemo(() => {
     if (!data) return []
     return data.pages.flat()
   }, [data])
 
   const [showConfirmUnblock, setShowConfirmUnblock] = useState(false)
-  const [addressToUnblock, setAddressToUnblock] = useState('')
+  const [addressToUnblock, setAddressToUnblock] = useState(-1)
 
   const [showBlockModal, setShowBlockModal] = useState(false)
   
@@ -56,6 +56,7 @@ export default function BlockedContactScreen() {
         </View>
         <View style={{width: 24}} />
       </View>
+      
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flex: 1, width: '100%'}}>
           <TextInput
@@ -77,7 +78,7 @@ export default function BlockedContactScreen() {
             contentContainerStyle={{
               paddingBottom: 24
             }}
-            renderItem={({item}) => {
+            renderItem={({item, index}) => {
               return (
                 <View style={[styles.rowItem, {borderColor: preferenceTheme.outline}]}>
                   <Text style={[typography.body.medium, {color: preferenceTheme.text.title}]}>
@@ -91,7 +92,8 @@ export default function BlockedContactScreen() {
                       paddingVertical: 8
                     }}
                     onPress={() => {
-                      setAddressToUnblock(item.walletAddress);
+                      setAddressToUnblock(index);
+
                       setShowConfirmUnblock(true)
                     }}
                   >
@@ -99,6 +101,9 @@ export default function BlockedContactScreen() {
                   </TouchableOpacity>
                 </View>
               )
+            }}
+            ListEmptyComponent={() => {
+              return <Text type="footnote-placeholder" style={{textAlign: 'left', paddingHorizontal: 16}}>{t('emptyBlockList')}</Text>
             }}
           />
           <View style={{paddingHorizontal: 16}}>
@@ -118,7 +123,11 @@ export default function BlockedContactScreen() {
       <UnblockModal
         visible={showConfirmUnblock}
         onRequestClose={() => setShowConfirmUnblock(false)}
-        addressToUnblock={addressToUnblock}
+        // addressToUnblock={addressToUnblock}
+        handleUnblock={async () => {
+          await allChatBlockedAddress[addressToUnblock].handleUnblock()
+          refetch()
+        }}
       />
       <BlockModal
         visible={showBlockModal}

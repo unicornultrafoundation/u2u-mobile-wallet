@@ -10,7 +10,7 @@ import '@ethersproject/shims';
 import 'event-target-polyfill'
 import '@walletconnect/react-native-compat'
 import React, { useEffect } from 'react';
-import { Linking, StatusBar, View, StyleSheet, AppState } from 'react-native';
+import { Linking, StatusBar, View, StyleSheet, AppState, Platform, NativeEventSubscription } from 'react-native';
 
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import analytics from '@react-native-firebase/analytics';
@@ -113,7 +113,9 @@ const linking = {
     }
   },
   subscribe(listener: (url: string) => void) {
-    const onReceiveURL = ({url}: {url: string}) => listener(url);
+    const onReceiveURL = ({url}: {url: string}) => {
+      return listener(url)
+    };
 
     // Listen to incoming links from deep linking
     const linkingSubscription = Linking.addEventListener('url', onReceiveURL);
@@ -179,14 +181,16 @@ function App(): JSX.Element {
   }, [language])
 
   useEffect(() => {
-    const subscriptionBlur = AppState.addEventListener('blur', () => setIsAppInBackground(true));
-    const subscriptionFocus = AppState.addEventListener('focus', () => setIsAppInBackground(false));
+    if (Platform.OS === 'android') {
+      const subscriptionBlur = AppState.addEventListener('blur', () => setIsAppInBackground(true));
+      const subscriptionFocus = AppState.addEventListener('focus', () => setIsAppInBackground(false));
 
-    // Cleanup the listener when the component unmounts
-    return () => {
-      subscriptionBlur.remove();
-      subscriptionFocus.remove();
-    };
+      // Cleanup the listener when the component unmounts
+      return () => {
+        subscriptionBlur && subscriptionBlur.remove();
+        subscriptionFocus.remove();
+      };
+    }
   }, []);
 
   if (!loaded) {

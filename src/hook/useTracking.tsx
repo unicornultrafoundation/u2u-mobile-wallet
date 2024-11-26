@@ -7,6 +7,7 @@ import { useWallet } from "./useWallet"
 import { firebase } from "@react-native-firebase/app-check"
 import messaging from '@react-native-firebase/messaging';
 import { logErrorForMonitoring } from "./useCrashlytics"
+import { Platform } from "react-native"
 
 export const useTracking = () => {
   const { networkConfig } = useNetwork()
@@ -34,7 +35,9 @@ export const useTracking = () => {
       
       const raw = JSON.stringify({
         address: wallet.address,
-        deviceIDs: [deviceID]
+        deviceIDs: [deviceID],
+        appVersion: DeviceInfo.getVersion(),
+        os: Platform.OS
       });
       
       const requestOptions: Record<string, any> = {

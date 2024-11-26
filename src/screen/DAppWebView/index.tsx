@@ -20,6 +20,7 @@ import TextInput from '../../component/TextInput';
 import WarningModal from './WarningModal';
 import useFetchDappList from '../../hook/useFetchDappList';
 import { handleGoBack } from '../../util/navigation';
+import { isSupportedNetwork } from '@/util/blockchain';
 
 const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `
@@ -27,14 +28,15 @@ const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.set
 const DAppWebView = () => {
 
   const { setRouteName } = useGlobalStore();
-  const {preferenceTheme} = usePreference()
-  const navigation = useNavigation()
+  const {preferenceTheme, showSafetyWarning} = usePreference()
+  const navigation = useNavigation<any>()
   const route = useRoute<any>();
   const {resetTxState} = useTransaction()
   const {data: dappList} = useFetchDappList();
 
   const appURL = route.params?.url || ""
   // const appURL = 'http://192.168.1.38:3000'
+  // console.log(appURL.replace(/{{slash}}/g, '/').replace(/%7B%7Bslash%7D%7D/g, "/"))
   const [url, setURL] = useState(appURL.replace(/{{slash}}/g, '/').replace(/%7B%7Bslash%7D%7D/g, "/"))
   const [inputURL, setInputURL] = useState(url)
   const [modalVisible, setModalVisible] = useState(true);
@@ -51,7 +53,7 @@ const DAppWebView = () => {
 
   const webRef = useRef<any>()
   const {wallet} = useWallet()
-  const {networkConfig} = useNetwork()
+  const {networkConfig, switchNetwork} = useNetwork()
 
   const isFocused = useIsFocused()
 
@@ -127,6 +129,10 @@ const DAppWebView = () => {
     setInputURL(getPredictedURLTypeFromRaw(url))
   }, [url])
 
+  useEffect(() => {
+    setURL(appURL.replace(/{{slash}}/g, '/').replace(/%7B%7Bslash%7D%7D/g, "/"))
+  }, [appURL])
+
   const handleConfirmTx = (txHash: string) => {
     const codeToRun = parseRun(requestIdForCallback, txHash)
     if (webRef && webRef.current) {
@@ -177,6 +183,21 @@ const DAppWebView = () => {
         setTxObj(JSON.parse(JSON.stringify(params)))
         setConfirmModalVisible(true);
         break;
+      case 'wallet_switchEthereumChain':
+        const chainId = Number(params.chainId)
+        if (!isSupportedNetwork(chainId)) {
+          const codeToRun = parseError(requestId, {
+            code: 4902,
+            message: 'Unrecognized chain ID'
+          })
+          if (webRef && webRef.current) {
+            webRef.current.injectJavaScript(codeToRun);
+          }
+          return
+        }
+        switchNetwork(chainId.toString())
+
+        break;
       default:
         throw `Invalid method name ${method}`
     }
@@ -206,13 +227,28 @@ const DAppWebView = () => {
     }
   }
 
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" />
-      </View>
-    )
+  const renderWebview = () => {
+    if (loading) return false
+    if (!showSafetyWarning) return true
+    if (isListedDApp(url, dappList)) return true
+    if (acceptTerm) return true
+    return false
   }
+
+  const renderModal = () => {
+    if (!showSafetyWarning) return false
+    if (isListedDApp(url, dappList)) return false
+    if (!modalVisible) return false
+    return true
+  }
+
+  // if (loading) {
+  //   return (
+  //     <View style={styles.container}>
+  //       <ActivityIndicator size="large" />
+  //     </View>
+  //   )
+  // }
 
   return (
     <View
@@ -224,7 +260,7 @@ const DAppWebView = () => {
       ]}
     >
       <WarningModal
-        modalVisible={modalVisible && !isListedDApp(url, dappList)}
+        modalVisible={renderModal()}
         onClose={() => setModalVisible(false)}
         onAccept={setAcceptTerm}
       />
@@ -265,7 +301,18 @@ const DAppWebView = () => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => handleGoBack(navigation)}
+            onPress={() => {
+              navigation.reset({
+                index: 0,
+                routes: [
+                  {
+                    name: 'EcosystemStack',
+                    params: { screen: 'U2UEcoDashboard' },
+                  },
+                ],
+              })
+              // navigation.navigate('EcosystemStack', {screen: 'U2UEcoDashboard'})
+            }}
           >
             <Icon
               style={{paddingRight: 0}}
@@ -277,7 +324,7 @@ const DAppWebView = () => {
         </View>
       </View>
       <View style={{flex: 1}}>
-        {(acceptTerm || isListedDApp(url, dappList)) && (
+        {(renderWebview()) && (
           <WebView
             // cacheEnabled={shouldUseCache}
             ref={webRef}
@@ -314,6 +361,7 @@ const DAppWebView = () => {
               flex: loadingURL || error !== '' ? 0 : 1,
             }}
             renderError={(errorName) => {
+              console.log('in error')
               if (!errorName) return <Text>{''}</Text>;
               setError(errorName)
               return (

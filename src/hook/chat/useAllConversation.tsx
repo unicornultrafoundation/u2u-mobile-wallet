@@ -19,6 +19,7 @@ export interface Conversation {
   handleReject: () => Promise<APIResponse>,
   handleArchive: () => Promise<APIResponse>,
   handleBlock: () => Promise<any>,
+  markRead: () => Promise<any>,
   sendMessage: (message: Message) => Promise<SendMessageAPIResponse>,
   messages: MessageResponse<DefaultGenerics>[]
 }
@@ -65,11 +66,12 @@ export const useAllConversation = (filter: string) => {
           updatedAt: new Date(channel.lastMessage() ? channel.lastMessage().updated_at : channel.data?.created_at as any),
           handleDelete: () => channel.delete({hard_delete: true}),
           handleArchive: () => channel.delete({hard_delete: false}),
-          handleAccept: () => channel.acceptInvite(),
+          handleAccept: () => channel.acceptInvite('accept'),
           handleReject: () => channel.rejectInvite(),
           handleBlock: () => channel.blockUser(),
           sendMessage: (message: Message) => channel.sendMessage(message),
-          messages: []
+          messages: [],
+          markRead: () => channel.markRead()
         } as Conversation
       })
     },

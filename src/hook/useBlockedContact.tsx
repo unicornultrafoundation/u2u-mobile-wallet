@@ -6,7 +6,10 @@ import { chatClient } from "../util/chat";
 
 interface ChatBlockedAddress {
   walletAddress: string;
+  handleUnblock: () => void;
 }
+
+const PAGE_SIZE = 20
 
 export const useChatBlockedAddress = (search?: string) => {
   const {wallet} = useWallet()
@@ -24,6 +27,8 @@ export const useChatBlockedAddress = (search?: string) => {
           // roles: filter === 'all' || filter === 'block' ? ['owner', 'moder', 'member'] : ['pending'],
           // @ts-ignore
           blocked: true,
+          limit: PAGE_SIZE,
+          offset: (pageParam - 1) * PAGE_SIZE,
         },
         [{ last_message_at: -1 }],
         {
@@ -35,7 +40,8 @@ export const useChatBlockedAddress = (search?: string) => {
         const user = Object.keys(channel.state.members)
         const blockedContact = user.find((i) => i.toLowerCase() !== wallet.address.toLowerCase())
         return {
-          walletAddress: blockedContact
+          walletAddress: blockedContact,
+          handleUnblock: () => channel.unblockUser()
         } as ChatBlockedAddress
       })
     },
@@ -46,6 +52,6 @@ export const useChatBlockedAddress = (search?: string) => {
   })
 
   return {
-    data, isFetching, fetchNextPage,
+    data, isFetching, fetchNextPage, refetch
   }
 }

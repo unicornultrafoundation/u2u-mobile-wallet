@@ -341,5 +341,7 @@
   "disconnect": "Disconnect",
   "expiry": "Expiry",
   "invalidQR": "Invalid QR code",
-  "unsupportedToken": "Unsupported token"
+  "unsupportedToken": "Unsupported token",
+  "emptyBlockList": "No contact blocked yet",
+  "profile": "Profile"
 }
