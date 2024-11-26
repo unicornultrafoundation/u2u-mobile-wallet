@@ -10,6 +10,8 @@ import Separator from "../../component/Separator";
 import TextButton from "../../component/Button/TextButton";
 import { useNavigation } from "@react-navigation/native";
 import { handleGoBack } from "../../util/navigation";
+import { useDebounce } from "@/hook/useDebounce";
+import { useGlobalStore } from "@/state/global";
 
 export default function WarningModal({modalVisible, onClose, onAccept}: {
   modalVisible: boolean;
@@ -19,6 +21,9 @@ export default function WarningModal({modalVisible, onClose, onAccept}: {
   const navigation = useNavigation<any>()
   const {t} = useTranslation()
   const {preferenceTheme, setShowSafetyWarning, showSafetyWarning} = usePreference()
+  const {unlocked} = useGlobalStore()
+
+  const visible = useDebounce(modalVisible, 100)
 
   const [acceptTerm, setAcceptTerm] = useState(false)
   const [showWarning, setShowWarning] = useState(true)
@@ -34,16 +39,18 @@ export default function WarningModal({modalVisible, onClose, onAccept}: {
     onClose()
   }
 
-  if (!showSafetyWarning) return null
+  const shouldShow = () => {
+    if (!unlocked) return false
+    if (!showSafetyWarning) return false
+    return visible
+  }
 
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        onClose();
-      }}
+      visible={shouldShow()}
+      onRequestClose={onClose}
     >
       <View style={{
         flex: 1,
