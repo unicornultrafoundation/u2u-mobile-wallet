@@ -23,6 +23,9 @@ export const useChat = () => {
       
       if (chatClient.user && chatClient.user.id !== wallet.address.toLowerCase()) {
         console.log('disconnect user from chat', chatClient.user?.id)
+
+        const authInstance = ErmisAuth.getInstance(ERMIS_API_KEY!, wallet.address, options);
+        authInstance._disconnect()
         await chatClient.disconnectUser()
       }
 
