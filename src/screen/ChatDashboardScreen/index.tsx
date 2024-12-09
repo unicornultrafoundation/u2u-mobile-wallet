@@ -81,7 +81,9 @@ export default function ChatDashboardScreen() {
         <View style={{flexDirection: 'row'}}>
           <Text style={[styles.headerText, {color: preferenceTheme.text.title}]}>{t('chat')}</Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('ChatSetting')}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ChatSetting')}
+        >
           <Icon name="setting" width={24} height={24} />
         </TouchableOpacity>
       </View>
