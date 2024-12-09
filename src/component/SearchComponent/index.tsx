@@ -11,7 +11,7 @@ import { useNetwork } from '../../hook/useNetwork';
 import { useTranslation } from 'react-i18next';
 import { usePreference } from '../../hook/usePreference';
 import { logErrorForMonitoring } from '../../hook/useCrashlytics';
-import { addHTTPS, getSearchURL, isDomain } from '../../util/string';
+import { addHTTPS, getSearchURL, isDomain, isURL } from '../../util/string';
 import { useNavigation } from '@react-navigation/native';
 // Define the types
 type SearchResult = {
@@ -104,7 +104,7 @@ const SearchComponent: React.FC = () => {
           if (results.length === 0 && searchQuery.length > 0) {
             setIsLayerVisible(false)
             setSearchQuery('')
-            navigation.navigate('DAppWebView', {url: isDomain(searchQuery) ? addHTTPS(searchQuery) : getSearchURL(searchQuery)});
+            navigation.navigate('DAppWebView', {url: isDomain(searchQuery) ? addHTTPS(searchQuery) : isURL(searchQuery) ? searchQuery : getSearchURL(searchQuery)});
           }
         }}
         blurOnSubmit
@@ -141,7 +141,7 @@ const SearchComponent: React.FC = () => {
                 onPress={() => {
                   setIsLayerVisible(false)
                   setSearchQuery('')
-                  navigation.navigate('DAppWebView', {url: isDomain(searchQuery) ? addHTTPS(searchQuery) : getSearchURL(searchQuery)});
+                  navigation.navigate('DAppWebView', {url: isDomain(searchQuery) ? addHTTPS(searchQuery) : isURL(searchQuery) ? searchQuery : getSearchURL(searchQuery)});
                 }}
               >
                 <Text
@@ -149,7 +149,7 @@ const SearchComponent: React.FC = () => {
                     marginHorizontal: 16
                   }}
                 >
-                  {isDomain(searchQuery) ? searchQuery : `${t('searchWeb')} ${searchQuery}`}
+                  {isDomain(searchQuery) || isURL(searchQuery) ? searchQuery : `${t('searchWeb')} ${searchQuery}`}
                   {/* No data */}
                 </Text>
               </TouchableOpacity>
