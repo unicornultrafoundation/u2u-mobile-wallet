@@ -113,7 +113,9 @@ const linking = {
     }
   },
   subscribe(listener: (url: string) => void) {
-    const onReceiveURL = ({url}: {url: string}) => listener(url);
+    const onReceiveURL = ({url}: {url: string}) => {
+      return listener(url)
+    };
 
     // Listen to incoming links from deep linking
     const linkingSubscription = Linking.addEventListener('url', onReceiveURL);

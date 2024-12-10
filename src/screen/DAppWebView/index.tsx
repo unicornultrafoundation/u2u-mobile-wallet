@@ -29,13 +29,14 @@ const DAppWebView = () => {
 
   const { setRouteName } = useGlobalStore();
   const {preferenceTheme, showSafetyWarning} = usePreference()
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const route = useRoute<any>();
   const {resetTxState} = useTransaction()
   const {data: dappList} = useFetchDappList();
 
   const appURL = route.params?.url || ""
   // const appURL = 'http://192.168.1.38:3000'
+  // console.log(appURL.replace(/{{slash}}/g, '/').replace(/%7B%7Bslash%7D%7D/g, "/"))
   const [url, setURL] = useState(appURL.replace(/{{slash}}/g, '/').replace(/%7B%7Bslash%7D%7D/g, "/"))
   const [inputURL, setInputURL] = useState(url)
   const [modalVisible, setModalVisible] = useState(true);
@@ -127,6 +128,10 @@ const DAppWebView = () => {
   useEffect(() => {
     setInputURL(getPredictedURLTypeFromRaw(url))
   }, [url])
+
+  useEffect(() => {
+    setURL(appURL.replace(/{{slash}}/g, '/').replace(/%7B%7Bslash%7D%7D/g, "/"))
+  }, [appURL])
 
   const handleConfirmTx = (txHash: string) => {
     const codeToRun = parseRun(requestIdForCallback, txHash)
@@ -224,13 +229,28 @@ const DAppWebView = () => {
     }
   }
 
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" />
-      </View>
-    )
+  const renderWebview = () => {
+    if (loading) return false
+    if (!showSafetyWarning) return true
+    if (isListedDApp(url, dappList)) return true
+    if (acceptTerm) return true
+    return false
   }
+
+  const renderModal = () => {
+    if (!showSafetyWarning) return false
+    if (isListedDApp(url, dappList)) return false
+    if (!modalVisible) return false
+    return true
+  }
+
+  // if (loading) {
+  //   return (
+  //     <View style={styles.container}>
+  //       <ActivityIndicator size="large" />
+  //     </View>
+  //   )
+  // }
 
   return (
     <View
@@ -242,7 +262,7 @@ const DAppWebView = () => {
       ]}
     >
       <WarningModal
-        modalVisible={modalVisible && !isListedDApp(url, dappList)}
+        modalVisible={renderModal()}
         onClose={() => setModalVisible(false)}
         onAccept={setAcceptTerm}
       />
@@ -283,7 +303,18 @@ const DAppWebView = () => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => handleGoBack(navigation)}
+            onPress={() => {
+              navigation.reset({
+                index: 0,
+                routes: [
+                  {
+                    name: 'EcosystemStack',
+                    params: { screen: 'U2UEcoDashboard' },
+                  },
+                ],
+              })
+              // navigation.navigate('EcosystemStack', {screen: 'U2UEcoDashboard'})
+            }}
           >
             <Icon
               style={{paddingRight: 0}}
@@ -295,7 +326,7 @@ const DAppWebView = () => {
         </View>
       </View>
       <View style={{flex: 1}}>
-        {(acceptTerm || !showSafetyWarning || isListedDApp(url, dappList)) && (
+        {(renderWebview()) && (
           <WebView
             // cacheEnabled={shouldUseCache}
             ref={webRef}
@@ -332,6 +363,7 @@ const DAppWebView = () => {
               flex: loadingURL || error !== '' ? 0 : 1,
             }}
             renderError={(errorName) => {
+              console.log('in error')
               if (!errorName) return <Text>{''}</Text>;
               setError(errorName)
               return (
