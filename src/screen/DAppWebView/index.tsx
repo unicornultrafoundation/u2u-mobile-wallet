@@ -28,7 +28,7 @@ const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.set
 const DAppWebView = () => {
 
   const { setRouteName } = useGlobalStore();
-  const {preferenceTheme} = usePreference()
+  const {preferenceTheme, showSafetyWarning} = usePreference()
   const navigation = useNavigation()
   const route = useRoute<any>();
   const {resetTxState} = useTransaction()
@@ -154,6 +154,7 @@ const DAppWebView = () => {
 
   const handleRPC = async (requestId: number, method: string, params: Record<string, any>) => {
     if (!method) return
+    console.log('method', method)
     switch (method) {
       case 'signPersonalMessage':
         if (!wallet.privateKey) return;
@@ -180,6 +181,7 @@ const DAppWebView = () => {
         break;
       case 'wallet_switchEthereumChain':
         const chainId = Number(params.chainId)
+        console.log('chainId', chainId)
         if (!isSupportedNetwork(chainId)) {
           const codeToRun = parseError(requestId, {
             code: 4902,
@@ -293,7 +295,7 @@ const DAppWebView = () => {
         </View>
       </View>
       <View style={{flex: 1}}>
-        {(acceptTerm || isListedDApp(url, dappList)) && (
+        {(acceptTerm || !showSafetyWarning || isListedDApp(url, dappList)) && (
           <WebView
             // cacheEnabled={shouldUseCache}
             ref={webRef}
