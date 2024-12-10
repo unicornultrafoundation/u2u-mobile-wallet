@@ -34,7 +34,14 @@ export default function ContactListScreen() {
   const {contactList} = useContact(debouncedSearch)
 
   const sectionContactList = useMemo(() => {
-    return groupByAlphabet(contactList, 'name').map((i) => {
+    const contactListWithUnknown = contactList.map((item) => {
+      return {
+        ...item,
+        name: item.name || item.id
+      }
+    })
+
+    return groupByAlphabet(contactListWithUnknown, 'name').map((i) => {
       return {
         title: i.char,
         data: i.items

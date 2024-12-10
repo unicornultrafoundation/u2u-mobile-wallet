@@ -159,6 +159,7 @@ const DAppWebView = () => {
 
   const handleRPC = async (requestId: number, method: string, params: Record<string, any>) => {
     if (!method) return
+    console.log('method', method)
     switch (method) {
       case 'signPersonalMessage':
         if (!wallet.privateKey) return;
@@ -185,6 +186,7 @@ const DAppWebView = () => {
         break;
       case 'wallet_switchEthereumChain':
         const chainId = Number(params.chainId)
+        console.log('chainId', chainId)
         if (!isSupportedNetwork(chainId)) {
           const codeToRun = parseError(requestId, {
             code: 4902,

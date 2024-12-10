@@ -1,11 +1,11 @@
-import { ErmisAuth, ErmisChat, ErmisChatOptions } from 'ermis-chat-js-sdk';
+import { ErmisAuth, ErmisChatOptions } from 'ermis-chat-js-sdk';
 import { useWallet } from '../useWallet';
-import { ERMIS_API_KEY, ERMIS_BASE_URL, ERMIS_PROJECT_ID } from '../../config/constant';
+import { ERMIS_API_KEY, ERMIS_BASE_URL } from '../../config/constant';
 import { signTypedData } from '../../util/wallet';
-import { useCallback, useEffect } from 'react';
-import { useLocalStore } from '../../state/local';
+import { useEffect } from 'react';
 import { parseJwt } from '../../util/string';
 import { chatClient } from '../../util/chat';
+import { useGlobalStore } from '@/state/global';
 
 const options: ErmisChatOptions = {
   timeout: 6000,
@@ -15,14 +15,15 @@ const options: ErmisChatOptions = {
 
 export const useChat = () => {
   const {wallet} = useWallet()
-  const {chatToken, setChatRefreshToken, setChatToken} = useLocalStore()
+  const {chatToken, setChatRefreshToken, setChatToken} = useGlobalStore()
 
-  const init = useCallback(async () => {
+  const init = async () => {
     try {
       if (chatClient.user && chatClient.user.id === wallet.address.toLowerCase()) return
       
       if (chatClient.user && chatClient.user.id !== wallet.address.toLowerCase()) {
-        console.log('disconnect user from chat', chatClient.user?.id)
+
+        ErmisAuth.logout()
         await chatClient.disconnectUser()
       }
 
@@ -41,6 +42,7 @@ export const useChat = () => {
       
         const challenge = await authInstance.startAuth() as Record<string, any>;
         delete challenge.types.EIP712Domain
+
         const signature = await signTypedData(challenge as any, wallet.privateKey)
         const response = await authInstance.getAuth(signature);
 
@@ -61,12 +63,12 @@ export const useChat = () => {
     } catch (error) {
       console.log('init chat error', error)
     }
-  }, [wallet.address, chatToken, setChatRefreshToken, setChatToken])
+  }
 
   useEffect(() => {
     if (!wallet) return
     init()
-  }, [wallet.address, init])
+  }, [wallet.address])
 
   return {
     chatClient
