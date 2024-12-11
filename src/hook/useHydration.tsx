@@ -48,9 +48,7 @@ export const useHydration = () => {
       setHydratedWallet(true)
       return;
     }
-    console.log('start wallet data migration')
     await EncryptedStorage.setItem(WALLET_STORE_KEY, oldData)
-    console.log('wallet data migration success')
     await useWalletStore.persist.rehydrate()
     setHydratedWallet(true)
   }

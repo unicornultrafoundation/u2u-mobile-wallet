@@ -175,6 +175,16 @@ export const queryAllWithdrawalRequest = (delegator: string, endpoint: string) =
   )
 }
 
+export const queryAllDelegationsOfWallet = (address: string, endpoint: string) => {
+  return request<any>(
+    endpoint,
+    Schema().ALL_DELEGATIONS_OF_WALLET, 
+    {
+      delegatorAddress: address,
+    }
+  )
+}
+
 export const fetchValidatorInfo = async (validatorAuth: string) => {
   try {
     if (!validatorAuth) return undefined

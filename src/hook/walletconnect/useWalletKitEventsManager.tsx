@@ -16,7 +16,6 @@ export const useWalletKitEventsManager = (initialized: boolean) => {
     if (!walletKit || !initialized) return
     //sign
     walletKit.on('session_proposal', (_p) => {
-      console.log('in here')
       navigation.navigate('WCScanQRCode')
       setWCProposal(_p)
     })

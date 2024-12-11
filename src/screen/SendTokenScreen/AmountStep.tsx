@@ -61,7 +61,6 @@ const AmountStep = ({onNextStep, onBack}: {
             )
           ]
         )
-        console.log("data", data)
         setTxData(data)
       } catch (error) {
         logErrorForMonitoring(error as any, "encodeTxData error")
@@ -74,7 +73,7 @@ const AmountStep = ({onNextStep, onBack}: {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <KeyboardAvoidingView
-        style={{flex: 1, paddingBottom: getPhonePaddingBottom()}}
+        style={{flex: 1, paddingBottom: getPhonePaddingBottom() + 24}}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={24}
       >
