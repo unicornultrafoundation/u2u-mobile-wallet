@@ -109,6 +109,18 @@ export const queryValidatorsApr = (vals: number[], endpoint: string) => {
   )
 }
 
+export const queryValidatorDelegations = (valId: number, page: number, endpoint: string) => {
+  return request<any>(
+    endpoint,
+    Schema().DELEGATIONS_PAGINATION,
+    {
+      validatorId: valId,
+      skip: page*TABLE_LIMIT,
+      limit: TABLE_LIMIT
+    }
+  )
+}
+
 export const queryEpochOfValidator = (valId: number, valIdHex: string, skip: number, endpoint: string) => {
   return request<any>(
     endpoint,

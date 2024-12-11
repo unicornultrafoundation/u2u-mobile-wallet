@@ -2,8 +2,6 @@ import React, { useCallback, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
 import Text from '../../component/Text';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { useGlobalStore } from '../../state/global';
 import Icon from '../../component/Icon';

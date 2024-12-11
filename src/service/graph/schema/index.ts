@@ -27,7 +27,6 @@ const VALIDATOR_GQL = `
   lockedUntil
   lockDays
   totalClaimedRewards
-  delegations {${DELEGATIONS_GQL}}
   totalDelegator
 `
 

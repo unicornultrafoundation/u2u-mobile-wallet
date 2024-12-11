@@ -5,13 +5,10 @@ import { useStaking } from '../../hook/useStaking';
 import Text from '../../component/Text';
 import { formatNumberString } from '../../util/string';
 import styles from './styles';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
 import { useCirculatingSupply } from '../../hook/useCirculatingSupply';
 import { useEpochRewards } from '../../hook/useEpochRewards';
 import { useFetchAllValidator } from '../../hook/useFetchAllValidator';
-import { useCurrentEpoch } from '../../hook/useCurrentEpoch';
 import { usePreference } from '../../hook/usePreference';
 
 const StakingInfoItem = ({title, value}: {
@@ -33,27 +30,15 @@ const StakingDataCard = () => {
   const { stakingContractOptions } = useStaking()
   const { validators } = useFetchAllValidator()
   const { supply } = useCirculatingSupply(stakingContractOptions)
-  const { fetchEpoch } = useCurrentEpoch(stakingContractOptions)
-  const { fetchRewardsPerEpoch } = useEpochRewards(stakingContractOptions)
+  const { data: rewardsPerEpoch } = useEpochRewards(stakingContractOptions)
 
   const {preferenceTheme} = usePreference()
-
-  const [rewardsPerEpoch, setRewardsPerEpoch] = useState("0")
 
   const totalDelegator = useMemo(() => {
     return validators.reduce((pre, cur) => {
       return pre + cur.totalDelegator
     }, 0)
   }, [validators])
-
-  useEffect(() => {
-    (async () => {
-      const epoch = await fetchEpoch()
-      if (!epoch) return
-      const rs = await fetchRewardsPerEpoch(epoch)
-      setRewardsPerEpoch(rs)
-    })()
-  }, [])
 
   return (
     <View style={[styles.stakingDataContainer, {backgroundColor: preferenceTheme.background.surface}]}>
