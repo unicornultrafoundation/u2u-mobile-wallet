@@ -3,6 +3,7 @@ export const groupByAlphabet = (
   keyField: string,
 ) => {
   const groups = data.reduce((_groups, item) => {
+    if (!item || !item[keyField]) return _groups;
     const groupString = item[keyField][0];
     if (!_groups[groupString]) {
       _groups[groupString] = [];

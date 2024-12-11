@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from 'react';
-import {Animated, FlatList} from 'react-native';
+import {Animated, FlatList, View} from 'react-native';
 
 interface BannerSectionProps {
   renderItemComponent: FunctionComponent<any>;
@@ -58,7 +58,7 @@ const BannerSection: React.FC<BannerSectionProps> = ({
         horizontal={true}
         renderItem={({item, index}: {item: any, index: number}) => {
           const RenderItemComponent = renderItemComponent;
-          return <RenderItemComponent {...item} index={index} key={`banner-item-${item.id}`} />;
+          return <View key={`banner-item-${item.id}`}><RenderItemComponent {...item} index={index} /></View>;
         }}
         keyExtractor={(item: any) => item.id}
       />

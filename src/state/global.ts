@@ -13,6 +13,11 @@ interface GlobalState {
   setWCProposal: (proposal: WalletKitTypes.SessionProposal | undefined) => void;
   isAppInBackground: boolean;
   setIsAppInBackground: (isAppInBackground: boolean) => void;
+
+  chatToken: Record<string, string>;
+  setChatToken: (address:string, chatToken: string) => void;
+  chatRefreshToken: Record<string, string>;
+  setChatRefreshToken: (address:string, chatRefreshToken: string) => void;
 }
 
 export const useGlobalStore = create<GlobalState>((set, get) => ({
@@ -39,5 +44,23 @@ export const useGlobalStore = create<GlobalState>((set, get) => ({
   isAppInBackground: false,
   setIsAppInBackground: (isAppInBackground: boolean) => {
     set({ isAppInBackground })
+  },
+  chatToken: {},
+  setChatToken: (address:string, chatToken: string) => {
+    const currentChatToken = get().chatToken
+    currentChatToken[address] = chatToken
+
+    set({
+      chatToken: {...currentChatToken}
+    })
+  },
+  chatRefreshToken: {},
+  setChatRefreshToken: (address:string, chatRefreshToken: string) => {
+    const currentChatRefreshToken = get().chatRefreshToken
+    currentChatRefreshToken[address] = chatRefreshToken
+
+    set({
+      chatRefreshToken: {...currentChatRefreshToken}
+    })
   },
 }))

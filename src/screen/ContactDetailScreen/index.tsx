@@ -204,7 +204,10 @@ export default function ContactDetailScreen() {
       />
       <UpdateNameModal
         visible={showUpdateModal}
-        onRequestClose={() => setShowUpdateModal(false)}
+        onRequestClose={() => {
+          refetch()
+          setShowUpdateModal(false)
+        }}
       />
     </SafeAreaView>
   )
