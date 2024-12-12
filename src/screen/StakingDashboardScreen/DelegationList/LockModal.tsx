@@ -12,12 +12,10 @@ import Separator from '../../../component/Separator';
 import BigNumber from 'bignumber.js';
 import { useFetchLockedStake } from '../../../hook/useFetchLockedStake';
 import { useWallet } from '../../../hook/useWallet';
-import { formatDate } from '../../../util/date';
 import TextInput from '../../../component/TextInput';
 import Button from '../../../component/Button';
 import { useStaking } from '../../../hook/useStaking';
-import { usePendingReward } from '../../../hook/usePendingReward';
-import { MIN_LOCKUP_DURATION } from '../../../config/constant';
+// import { MIN_LOCKUP_DURATION } from '../../../config/constant';
 import { useLockStake } from '../../../hook/useLockStake';
 import Toast from 'react-native-toast-message';
 import { useTransaction } from '../../../hook/useTransaction';
@@ -26,6 +24,7 @@ import { parseFromRaw } from '../../../util/bignum';
 import { usePreference } from '../../../hook/usePreference';
 import CustomBottomSheetModal from '../../../component/CustomBottomSheetModal';
 import { logErrorForMonitoring } from '../../../hook/useCrashlytics';
+import { useRemoteConfig } from '@/hook/useRemoteConfig';
 
 const LockModal = ({trigger, item}: {
   trigger: () => JSX.Element,
@@ -44,13 +43,16 @@ const LockModal = ({trigger, item}: {
   const {lockStake, relockStake} = useLockStake(stakingContractOptions)
   const {resetTxState} = useTransaction()
 
+  const {remoteConfig} = useRemoteConfig()
+
   const maxDuration = useMemo(() => {
     if (!valLockedStake || !valLockedStake.endTime) return 0
     const endTime = valLockedStake.endTime
     let now = Math.ceil((new Date()).getTime())
     if (endTime < now) return 0
     let duration = Math.ceil((endTime - now) / 86400000) - 1
-    if (duration < MIN_LOCKUP_DURATION) return 0
+    // if (duration < MIN_LOCKUP_DURATION) return 0
+    if (duration < remoteConfig.minLockupDuration) return 0
     return duration
   }, [valLockedStake])
 
@@ -154,8 +156,11 @@ const LockModal = ({trigger, item}: {
       return t('msgFieldNotEmpty')
     }
     const valDuration = Number(value)
-    if (valDuration < MIN_LOCKUP_DURATION) {
-      return t('msgMinimumLockup').replace('{value}', MIN_LOCKUP_DURATION.toString())
+    // if (valDuration < MIN_LOCKUP_DURATION) {
+    //   return t('msgMinimumLockup').replace('{value}', MIN_LOCKUP_DURATION.toString())
+    // }
+    if (valDuration < remoteConfig.minLockupDuration) {
+      return t('msgMinimumLockup').replace('{value}', remoteConfig.minLockupDuration.toString())
     }
     if (valDuration > maxDuration) {
       return t('msgLockedDurationCannotBeGreaterThanMax').replace('{value}', `${formatNumberString(maxDuration.toString())}`)
@@ -261,25 +266,27 @@ const LockModal = ({trigger, item}: {
             {t('max')}: {formatNumberString(maxDuration.toString())} {t('days')}
           </Text>
         </View>
-        <TextInput
-          value={duration}
-          error={errorDuration}
-          placeholder={t('lockedDurationDays')}
-          onChangeText={(val) => {
-            // const valNumber = Number(val)
-            // if (valNumber > maxDuration) return;
-            // setDuration(parseFormatedNumberInput(val.replaceAll(",", ".")))
-            const newVal = parseNumberFormatter(val.replaceAll(",", "."))
-            if (newVal != null) {
-              setDuration(newVal)
-            }
-          }}
-          keyboardType="numeric"
-          containerStyle={{
-            marginVertical: 8
-          }}
-          insideModal={true}
-        />
+        <View style={{justifyContent: 'flex-start'}}>
+          <TextInput
+            value={duration}
+            error={errorDuration}
+            placeholder={t('lockedDurationDays')}
+            onChangeText={(val) => {
+              // const valNumber = Number(val)
+              // if (valNumber > maxDuration) return;
+              // setDuration(parseFormatedNumberInput(val.replaceAll(",", ".")))
+              const newVal = parseNumberFormatter(val.replaceAll(",", "."))
+              if (newVal != null) {
+                setDuration(newVal)
+              }
+            }}
+            keyboardType="numeric"
+            containerStyle={{
+              marginVertical: 8
+            }}
+            insideModal={true}
+          />
+        </View>
         <View
           style={{width: '100%', flex: 1, justifyContent: 'flex-end'}}
         >
