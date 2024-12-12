@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Linking, TouchableOpacity, View } from 'react-native'
+import { Linking, Platform, TouchableOpacity, View } from 'react-native'
 import Toast from 'react-native-toast-message';
 import Text from '..//Text';
 import { usePreference } from '../../hook/usePreference'
@@ -18,7 +18,7 @@ export default function ToastComponent() {
         return (
           <View
             style={{
-              height: 60,
+              height: Platform.OS === 'ios' ? 60 : 80,
               width: '85%',
               padding: 12,
               borderRadius: 16,
@@ -71,7 +71,7 @@ export default function ToastComponent() {
         return (
           <View
             style={{
-              height: 60,
+              height: Platform.OS === 'ios' ? 60 : 80,
               width: '85%',
               padding: 12,
               borderRadius: 16,
@@ -114,7 +114,7 @@ export default function ToastComponent() {
         return (
           <View
             style={{
-              height: 40,
+              height: Platform.OS === 'ios' ? 40 : 60,
               padding: 8,
               borderRadius: 12,
               backgroundColor: preferenceTheme.background.surface,

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Image, View } from 'react-native';
+import { Image, SafeAreaView, View } from 'react-native';
 import { styles } from './styles';
 import Text from '../../component/Text';
 import { useTranslation } from 'react-i18next';
@@ -57,7 +57,7 @@ const SendStep = ({onSkip}: {
   }
 
   return (
-    <View style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1}}>
       <View style={styles.headerContainer}>
         <View />
         <View style={{flexDirection: 'row'}}>
@@ -100,7 +100,7 @@ const SendStep = ({onSkip}: {
           {t('skip')}
         </Button>
       </View>
-    </View>
+    </SafeAreaView>
   )
 };
 

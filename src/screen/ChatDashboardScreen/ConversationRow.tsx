@@ -13,6 +13,7 @@ import { isToday } from "date-fns"
 import theme from "../../theme"
 import { useTranslation } from "react-i18next"
 import { useNavigation } from "@react-navigation/native"
+import { useUserChatProfile } from "@/hook/chat/useUserChatProfile"
 
 export default function ConversationRow({item}: {
   item: Conversation
@@ -24,6 +25,8 @@ export default function ConversationRow({item}: {
   const otherAddress = useMemo(() => {
     return item.user.filter((i) => i !== wallet.address.toLowerCase())[0]
   }, [wallet, item])
+
+  const {data: otherProfile} = useUserChatProfile(otherAddress.toLowerCase())
 
   const {refetch} = useAllConversation('pending')
 
@@ -67,7 +70,7 @@ export default function ConversationRow({item}: {
           type="body-medium"
           color="title"
         >
-          {shortenAddress(otherAddress, 12, 12)}
+          {otherProfile ? `${truncate(otherProfile.name || otherProfile.id, 12)}` : shortenAddress(otherAddress, 12, 12)}
         </Text>
         {item.role === 'pending' ? (
           <View style={{flexDirection: 'row', gap: 12, alignItems: 'flex-end'}}>

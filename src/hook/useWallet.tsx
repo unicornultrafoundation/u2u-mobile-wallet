@@ -34,6 +34,13 @@ export function useWallet() {
   }, [walletMetadata]);
 
   const getAuthObj = useCallback(async () => {
+    if (!wallet) {
+      return {
+        wallet: '',
+        signature: '',
+        timestamp: 0
+      }
+    }
     const timestamp = Math.round(Date.now() / 1000) 
     const signature = await signMessage(
       `signature-from-${wallet.address.toLowerCase()}-at-${timestamp}`,

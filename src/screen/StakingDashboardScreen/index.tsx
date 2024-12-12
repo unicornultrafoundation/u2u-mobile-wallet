@@ -7,8 +7,6 @@ import StakingDataCard from './StakingDataCard'
 import { useTranslation } from 'react-i18next'
 import Text from '../../component/Text'
 import theme from '../../theme'
-import { usePreferenceStore } from '../../state/preferences'
-import { darkTheme, lightTheme } from '../../theme/color'
 import Separator from '../../component/Separator'
 import InvestmentTotalCard from './InvestmentTotalCard'
 import ValidatorsList from './ValidatorsList'
@@ -17,9 +15,6 @@ import DelegationList from './DelegationList'
 import WithdrawalRequestList from './WithdrawalRequestList'
 import { ScrollView } from 'react-native'
 import LockedStakeList from './LockedStakeList'
-import { useFetchAllValidator } from '../../hook/useFetchAllValidator'
-import { useNetwork } from '../../hook/useNetwork'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { usePreference } from '../../hook/usePreference'
 
 const StakingDashboardScreen = () => {
@@ -34,13 +29,6 @@ const StakingDashboardScreen = () => {
 
   const {t} = useTranslation<string>()
   const {preferenceTheme} = usePreference()
-
-  const { fetch: fetchAllValidators } = useFetchAllValidator()
-  const {networkConfig} = useNetwork()
-
-  useEffect(() => {
-    fetchAllValidators()
-  }, [networkConfig])
 
   const [tab, setTab] = useState('validators');
   const tabs = [

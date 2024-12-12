@@ -11,6 +11,7 @@ import TxDetail from '../../component/TxDetail';
 import { useNavigation } from '@react-navigation/native';
 import { usePreference } from '../../hook/usePreference';
 import { logErrorForMonitoring } from '../../hook/useCrashlytics';
+import { SafeAreaView } from 'react-native';
 
 const DelegateStep = ({onSkip}: {
   onSkip: () => void
@@ -53,7 +54,7 @@ const DelegateStep = ({onSkip}: {
   }
 
   return (
-    <View style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1}}>
       <View style={styles.headerContainer}>
         <View />
         <View style={{flexDirection: 'row'}}>
@@ -96,7 +97,7 @@ const DelegateStep = ({onSkip}: {
           {t('skip')}
         </Button>
       </View>
-    </View>
+    </SafeAreaView>
   )
 };
 

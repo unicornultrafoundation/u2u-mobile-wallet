@@ -10,6 +10,8 @@ import { formatNumberString } from '../../util/string'
 import { SvgUri } from 'react-native-svg'
 import { useStaking } from '../../hook/useStaking'
 import { usePreference } from '../../hook/usePreference'
+import { useAllPendingRewards } from '@/hook/useAllPendingRewards'
+import { useTotalStakedAmount } from '@/hook/useTotalStakedAmount'
 
 const InvestmentTotalCard = () => {
   const {t} = useTranslation<string>()
@@ -18,7 +20,9 @@ const InvestmentTotalCard = () => {
 
   const {wallet} = useWallet()
   const {balance} = useNativeBalance(wallet.address)
-  const {allPendingRewards, totalStakedAmount} = useStaking()
+
+  const {data: totalStakedAmount} = useTotalStakedAmount()
+  const {data: allPendingRewards} = useAllPendingRewards()
 
   const renderItem = ({label, value} : {
     label: string,

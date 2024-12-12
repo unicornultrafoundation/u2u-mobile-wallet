@@ -5,6 +5,7 @@ import { ContractOptions } from "../util/contract"
 import { useCurrentEpoch } from "./useCurrentEpoch"
 import { fetchCurrentEpochSnapShot } from "../service/staking"
 import { logErrorForMonitoring } from "./useCrashlytics"
+import { useQuery } from "@tanstack/react-query"
 
 const getEpochRewards = async (epoch: number, rpc: string, stakingContractOptions?: ContractOptions) => {
   if (!stakingContractOptions) {
@@ -28,12 +29,19 @@ const getEpochRewards = async (epoch: number, rpc: string, stakingContractOption
 
 export const useEpochRewards = (stakingContractOptions?: ContractOptions) => {
   const {rpc} = useNetwork()
+  const {data: currentEpoch} = useCurrentEpoch(stakingContractOptions)
 
-  const fetchRewardsPerEpoch = async (epoch: number) => {
-    return getEpochRewards(epoch, rpc, stakingContractOptions)
-  }
+  const {data, isFetching, refetch} = useQuery({
+    queryKey: ['rewards-per-epoch', stakingContractOptions?.contractAddress, currentEpoch],
+    queryFn: async () => {
+      if (!currentEpoch) return '0'
+      return getEpochRewards(currentEpoch, rpc, stakingContractOptions)
+    },
+    initialData: '0',
+    enabled: !!currentEpoch
+  })
 
   return {
-    fetchRewardsPerEpoch
+    data, isFetching, refetch
   }
 }

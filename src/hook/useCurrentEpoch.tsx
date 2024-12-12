@@ -3,6 +3,7 @@ import { useNetwork } from "./useNetwork";
 import { fetchCurrentEpoch } from "../service/staking";
 import BigNumber from "bignumber.js";
 import { logErrorForMonitoring } from "./useCrashlytics";
+import { useQuery } from "@tanstack/react-query";
 
 const getCurrentEpoch = async (rpc: string, stakingContractOptions?: ContractOptions) => {
   if (!stakingContractOptions) {
@@ -21,11 +22,14 @@ const getCurrentEpoch = async (rpc: string, stakingContractOptions?: ContractOpt
 export const useCurrentEpoch = (stakingContractOptions?: ContractOptions) => {
   const {rpc} = useNetwork()
 
-  const fetchEpoch = async () => {
-    return await getCurrentEpoch(rpc, stakingContractOptions)
-  }
+  const {data, isFetching, refetch} = useQuery({
+    queryKey: ['current-epoch', stakingContractOptions?.contractAddress],
+    queryFn: () => {
+      return getCurrentEpoch(rpc, stakingContractOptions)
+    }
+  })
 
   return {
-    fetchEpoch
+    data, isFetching, refetch
   }
 }

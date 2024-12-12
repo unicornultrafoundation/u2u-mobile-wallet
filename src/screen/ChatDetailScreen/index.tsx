@@ -24,6 +24,7 @@ import Separator from "../../component/Separator";
 import { isToday } from "date-fns";
 import { useSubscribeMessage } from "../../hook/chat/useSubscribeMessage";
 import { getUniqueByField } from "../../util/array";
+import { useUserChatProfile } from "@/hook/chat/useUserChatProfile";
 
 export default function ChatDetailScreen() {
   const { t } = useTranslation()
@@ -52,6 +53,8 @@ export default function ChatDetailScreen() {
     if (!data || !data.user) return ''
     return data.user.filter((i) => i !== wallet.address.toLowerCase())[0]
   }, [wallet, data])
+
+  const {data: otherProfile} = useUserChatProfile(otherContact.toLowerCase())
 
   const optionStyles = {
     optionsContainer: [styles.optionsContainer, {backgroundColor: preferenceTheme.background.background}],
@@ -146,7 +149,11 @@ export default function ChatDetailScreen() {
             type="subheadline-medium"
             color="primary"
           >
-            {shortenAddress(otherContact, 10, 10)}
+            {otherProfile ? (
+              `${otherProfile.name}`
+            ) : 
+              shortenAddress(otherContact, 10, 10)
+            }
           </Text>
         </View>
         <Menu onSelect={handleSelectMenuAction}>

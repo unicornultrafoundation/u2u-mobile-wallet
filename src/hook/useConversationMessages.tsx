@@ -20,7 +20,7 @@ export const useConversationMessages = (conversationID: string, lastMessageID?: 
       const messageCondition: MessagePaginationOptions = {
         limit: LIMIT
       }
-      // console.log('lastMessageID', lastMessageID)
+
       if (lastMessageID) {
         messageCondition.id_lt = lastMessageID
       }
@@ -29,7 +29,7 @@ export const useConversationMessages = (conversationID: string, lastMessageID?: 
       });
 
       return detail.messages.map((message) => {
-        // console.log(message)
+
         return {
           id: message.id,
           conversationID: conversationID,

@@ -56,7 +56,6 @@ const DelegationItem = ({item}: {
     try {
       setClaiming(true)
       const tx = await claimRewards({toValidatorID: Number(item.validator.valId)})
-      console.log(tx)
       setClaiming(false) 
 
       if (!tx) {
@@ -120,6 +119,10 @@ const DelegationItem = ({item}: {
 
   const handleUnstake = async () => {
     setShowUnstake(true)
+  }
+
+  if (actualStakedAmount.isEqualTo(0)) {
+    return null
   }
 
   return (

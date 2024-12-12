@@ -27,7 +27,6 @@ const VALIDATOR_GQL = `
   lockedUntil
   lockDays
   totalClaimedRewards
-  delegations {${DELEGATIONS_GQL}}
   totalDelegator
 `
 
@@ -188,12 +187,21 @@ export const Schema = () => {
     DELEGATIONS_PAGINATION: minimalGQL`
       query Delegations($validatorId: Int!, $skip: Int!, $limit: Int!) {
         delegations(where:{
-            validatorId: $validatorId
+          validatorId: $validatorId
         } orderBy: stakedAmount
           orderDirection: desc  
           first: $limit
           skip: $skip
         ) {${DELEGATIONS_GQL}}
+      }
+    `,
+    ALL_DELEGATIONS_OF_WALLET: minimalGQL`
+      query Delegations($delegatorAddress: String!) {
+        delegations(where:{
+          delegator: $delegatorAddress
+        }) {
+          ${DELEGATIONS_GQL}
+        }
       }
     `,
     STAKING_APR: minimalGQL`

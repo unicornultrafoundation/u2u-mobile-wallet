@@ -4,9 +4,16 @@ import { useStaking } from '../../../hook/useStaking';
 import ValidatorItem from './ValidatorItem';
 import { useFetchAllValidator } from '../../../hook/useFetchAllValidator';
 import { TABBAR_HEIGHT } from '../../../component/CustomBottomTab';
+import { useNetwork } from '@/hook/useNetwork';
 
 const ValidatorsList = () => {
-  const {validators} = useFetchAllValidator()
+  const {validators, fetch} = useFetchAllValidator()
+
+  const {networkConfig} = useNetwork()
+
+  useEffect(() => {
+    fetch()
+  }, [networkConfig])
 
   return (
     <View style={{
