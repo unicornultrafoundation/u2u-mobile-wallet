@@ -108,18 +108,20 @@ const TextInput = (
         {renderPostIcon()}
       </View>
       {error && (
-        <Text
-          style={[
-            theme.typography.caption2.regular,
-            {
-              color: theme.accentColor.error.normal,
-              marginTop: 6,
-              marginLeft: 1
-            }
-          ]}
-        >
-          {error}
-        </Text>
+        <View style={{width: '100%', justifyContent: 'flex-start'}}>
+          <Text
+            style={[
+              theme.typography.caption2.regular,
+              {
+                color: theme.accentColor.error.normal,
+                marginTop: 6,
+                marginLeft: 1
+              }
+            ]}
+          >
+            {error}
+          </Text>
+        </View>
       )}
     </View>
   )

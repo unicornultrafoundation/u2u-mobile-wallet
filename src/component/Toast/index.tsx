@@ -17,7 +17,7 @@ export default function ToastComponent() {
       success: ({text1, text2, props}: any) => {
         return (
           <View
-            style={{
+            style={[{
               height: Platform.OS === 'ios' ? 60 : 80,
               width: '85%',
               padding: 12,
@@ -25,8 +25,10 @@ export default function ToastComponent() {
               backgroundColor: preferenceTheme.background.surface,
               flexDirection: 'row',
               alignItems: 'center',
-              marginTop: 16
-            }}
+              marginTop: 16,
+              borderColor: preferenceTheme.outline,
+              borderWidth: 1
+            }, theme.shadow]}
           >
             <View style={{padding: 10, paddingRight: 0}}>
               <Icon name='success' height={32} width={32} />
@@ -70,7 +72,7 @@ export default function ToastComponent() {
       error: ({text1, text2, props}: any) => {
         return (
           <View
-            style={{
+            style={[{
               height: Platform.OS === 'ios' ? 60 : 80,
               width: '85%',
               padding: 12,
@@ -78,8 +80,10 @@ export default function ToastComponent() {
               backgroundColor: preferenceTheme.background.surface,
               flexDirection: 'row',
               alignItems: 'center',
-              marginTop: 16
-            }}
+              marginTop: 16,
+              borderColor: preferenceTheme.outline,
+              borderWidth: 1
+            }, theme.shadow]}
           >
             <View style={{padding: 10}}>
               <Icon name='error' height={32} width={32} />
@@ -113,15 +117,17 @@ export default function ToastComponent() {
       simpleNoti: ({text1, text2, props}: any) => {
         return (
           <View
-            style={{
+            style={[{
               height: Platform.OS === 'ios' ? 40 : 60,
               padding: 8,
               borderRadius: 12,
               backgroundColor: preferenceTheme.background.surface,
               flexDirection: 'row',
               alignItems: 'center',
-              marginTop: 16
-            }}
+              marginTop: 16,
+              borderColor: preferenceTheme.outline,
+              borderWidth: 1
+            }, theme.shadow]}
           >
             <View style={{flex: 1, paddingHorizontal: 12}}>
               <Text

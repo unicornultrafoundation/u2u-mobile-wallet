@@ -3,12 +3,14 @@ import { fetchRemoteConfig } from "../service/remoteConfig"
 
 interface RemoteAppConfig {
   versionInReview: string;
-  allowClaimMembership: boolean
+  allowClaimMembership: boolean,
+  minLockupDuration: number, // in days
 }
 
-const defaultConfig:RemoteAppConfig = {
+const defaultConfig: RemoteAppConfig = {
   versionInReview: "",
-  allowClaimMembership: true
+  allowClaimMembership: true,
+  minLockupDuration: 14
 }
 
 export function useRemoteConfig() {
@@ -16,6 +18,7 @@ export function useRemoteConfig() {
   const query = useQuery<RemoteAppConfig>({
     queryKey: ['remote-config'],
     queryFn: () => fetchRemoteConfig(),
+    initialData: defaultConfig
   })
   
   return {

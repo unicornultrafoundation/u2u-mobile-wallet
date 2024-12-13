@@ -81,8 +81,8 @@ android {
         applicationId "com.u2umobilewallet"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 76
-        versionName "1.39"
+        versionCode 77
+        versionName "1.40"
         missingDimensionStrategy 'react-native-camera', 'general'
     }
     signingConfigs {

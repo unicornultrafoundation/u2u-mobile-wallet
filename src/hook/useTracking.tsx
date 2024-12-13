@@ -141,6 +141,7 @@ export const useTracking = () => {
     } catch (error) {
       console.log('error here')
       logErrorForMonitoring(error as any, "submitDeviceNotiToken error")
+      console.log('error wallet', wallet)
     }
   }, [wallet, networkConfig])
 
