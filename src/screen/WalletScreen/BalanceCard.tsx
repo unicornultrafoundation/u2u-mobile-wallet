@@ -11,6 +11,7 @@ import { useWallet } from '../../hook/useWallet';
 import { useNativeBalance } from '../../hook/useNativeBalance';
 import { formatNumberString } from '../../util/string';
 import { useTranslation } from 'react-i18next';
+import { useU2UPrice } from '@/hook/useU2UPrice';
 
 const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
   const {darkMode} = usePreferenceStore();
@@ -24,6 +25,7 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
   const {toggleShowBalance, showBalance} = usePreferenceStore()
 
   const {t} = useTranslation<string>()
+  const {data: u2uPrice} = useU2UPrice()
 
   return (
     <View style={styles.balanceCardContainer}>
@@ -34,18 +36,18 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
 
       <Text style={styles.balanceNumberInFiatText}>
         {/* $0 */}
-        {showBalance ? formatNumberString(balance, 4) : "******"} U2U
+        {showBalance ? `$ ${formatNumberString((Number(balance) * u2uPrice).toString(), 4)}` : "******"}
       </Text>
 
-      {/* {!collapsed && (
+      {!collapsed && (
         <Text
           style={[
             styles.balanceNumberInU2U,
             {color: preferenceTheme.text.secondary},
           ]}>
-          {formatNumberString(balance, 4)} U2U
+          {showBalance ? formatNumberString(balance, 4) : "*******"} U2U
         </Text>
-      )} */}
+      )}
 
       {!collapsed && (
         <View

@@ -345,5 +345,8 @@
   "invalidQR": "Invalid QR code",
   "unsupportedToken": "Unsupported token",
   "emptyBlockList": "No contact blocked yet",
-  "profile": "Profile"
+  "profile": "Profile",
+  "setChatProfile": "Update profile",
+  "setChatProfileDescription": "You need to update your personal profile to continue using chat function",
+  "noWR": "No withdrawal request"
 }

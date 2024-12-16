@@ -18,6 +18,8 @@ import SwipeableFlatList from 'react-native-swipeable-list';
 import ConfirmationModal from "../../component/ConfirmationModal";
 import Tab from "../../component/Tab";
 import ConversationRow from "./ConversationRow";
+import { useUserProfile } from "@/hook/chat/useUserProfile";
+import SetProfileModal from "./SetProfileModal";
 
 export default function ChatDashboardScreen() {
   const {t} = useTranslation()
@@ -32,6 +34,8 @@ export default function ChatDashboardScreen() {
       setRouteName(route.name);
     }, [route]),
   );
+
+  const {data: profile, refetch: refetchProfile} = useUserProfile(wallet.address.toLowerCase())
 
   const [search, setSearch] = useState('')
   const [showCreateConversationModal, setShowConversationModal] = useState(false)
@@ -74,6 +78,13 @@ export default function ChatDashboardScreen() {
     <SafeAreaView
       style={{backgroundColor: preferenceTheme.background.background, flex: 1}}
     >
+      <SetProfileModal
+        modalVisible={profile?.name === '' || !profile?.name || profile.name === wallet.address.toLowerCase()}
+        onClose={() => navigation.goBack()}
+        onAccept={() => {
+          navigation.navigate('ContactDetail', {address: wallet.address.toLowerCase()})
+        }}
+      />
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={navigation.goBack}>
           <Icon name="arrow-left" width={24} height={24} />
