@@ -185,12 +185,23 @@ export const queryAllDelegationsOfWallet = (address: string, endpoint: string) =
   )
 }
 
+let validatorInfoCache: Record<string, {expiredAt: number, data: any}> = {}
+
 export const fetchValidatorInfo = async (validatorAuth: string) => {
   try {
     if (!validatorAuth) return undefined
+    if (validatorInfoCache[validatorAuth]) {
+      if (validatorInfoCache[validatorAuth].expiredAt > Date.now()) return validatorInfoCache[validatorAuth].data
+    }
     const url = `https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/validators_info/${validatorAuth.toLowerCase()}/info.json`
     const response = await fetch(url)
     const data = await response.json()
+
+    validatorInfoCache[validatorAuth] = {
+      expiredAt: Date.now() + 10 * 60 * 1000, // 10 minutes,
+      data: data
+    }
+
     return data
   } catch (error) {
     // logErrorForMonitoring(error as any, "fetchValidatorInfo error")

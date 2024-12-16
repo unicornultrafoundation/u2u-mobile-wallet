@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { styles } from './styles';
-import { TouchableOpacity, View } from 'react-native';
+import { Image, View } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
@@ -137,13 +137,24 @@ const DelegationItem = ({item}: {
       key={`delegation-${item.id}`}
     >
       <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 4}}>
-        <View style={{width: 34, height: 34, marginRight: 8}}>
-          <SvgUri
-            uri={"https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg"}
-            width="100%"
-            height="100%"
+        {item.validator.avatar ? (
+          <Image
+            source={{ uri: item.validator.avatar }}
+            style={{
+              width: 26,
+              height: 26,
+              marginRight: 8
+            }}
           />
-        </View>
+        ) : (
+          <View style={{width: 34, height: 34, paddingRight: 8}}>
+            <SvgUri
+              uri="https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg"
+              width="100%"
+              height="100%"
+            />
+          </View>
+        )}
         <View
           style={{flex: 1, justifyContent: 'space-between'}}
         >

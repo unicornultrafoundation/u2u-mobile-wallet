@@ -184,6 +184,8 @@
   "msgLockStakeSuccess": "Lock stake success",
   "msgLockStakeFail": "Lock stake fail",
   "validatorID": "Validator ID",
+  "validator": "Validator",
+  "earlyUnlock": "Early unlock",
   "duration": "Duration",
   "availableAtValueDate": "Available at {value}",
   "availableAt": "Available at",

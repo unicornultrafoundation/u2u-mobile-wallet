@@ -9,6 +9,7 @@ import { useNetwork } from "./useNetwork"
 export interface LockedStake {
   delegator: string
   validatorId: string
+  validatorName: string
   duration: number
   endTime: number
   lockedAmount: BigNumber

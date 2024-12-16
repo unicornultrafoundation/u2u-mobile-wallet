@@ -79,7 +79,8 @@ const LockedStakeItem = ({item}: {
                   }
                 ]}
               >
-                {t('availableAtValueDate').replace('{value}', formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy"))}
+                {/* {t('availableAtValueDate').replace('{value}', formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy"))} */}
+                {t('earlyUnlock')}
               </Text>
             </View>
           )
@@ -98,16 +99,16 @@ const LockedStakeItem = ({item}: {
         }
       ]}
     >
-      <View style={{flexDirection: 'row', gap: 5, justifyContent: 'space-between'}}>
-        {renderItem({label: 'duration', content: parseInterval(0, item.duration)})}
-      </View>
+      {/* <View style={{flexDirection: 'row', gap: 5, justifyContent: 'space-between'}}>
+        {renderItem({label: 'duration', content: parseInterval(0, item.duration), flex: 1})}
+      </View> */}
       <View style={{flexDirection: 'row', gap: 5}}>
-        {renderItem({label: 'validatorID', content: item.validatorId, flex: 1})}
+        {renderItem({label: 'validator', content: item.validatorName, flex: 1})}
         {renderItem({label: 'amount', content: `${parseFromRaw(item.lockedAmount.toFixed(), 18, true)} U2U`, flex: 1})}
       </View>
       <View style={{flexDirection: 'row', gap: 5}}>
         {renderItem({label: 'claimable', content: `${formatNumberString(pendingRewards, 6)} U2U`, flex: 1})}
-        {renderItem({label: 'lockedUntil', content: formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy"), flex: 1})}
+        {renderItem({label: 'availableAt', content: formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy"), flex: 1})}
       </View>
       {
         isClaimable ? (

@@ -184,6 +184,8 @@
   "msgLockStakeSuccess": "Khoá cổ phần thành công",
   "msgLockStakeFail": "Khoá cổ phần thất bại",
   "validatorID": "Mã người xác thực",
+  "validator": "Người xác thực",
+  "earlyUnlock": "Mở khoá trước hạn",
   "duration": "Thời gian",
   "availableAtValueDate": "Nhận thưởng vào lúc {value}",
   "availableAt": "Có sẵn vào",
