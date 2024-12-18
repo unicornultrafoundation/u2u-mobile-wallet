@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
 import Text from '../../component/Text';
 import styles from './styles';
 import theme from '../../theme';
@@ -12,6 +12,7 @@ import TokenRow from './TokenRow';
 import CustomTokenModal from '../CustomTokenModal';
 import { useLocalStore } from '../../state/local';
 import { usePreference } from '../../hook/usePreference';
+import { BottomSheetView } from '@gorhom/bottom-sheet';
 
 const ModalContent = () => {
   const {preferenceTheme} = usePreference()
@@ -23,7 +24,7 @@ const ModalContent = () => {
   const [searchQuery, setSearchQuery] = useState('')
 
   return (
-    <View style={styles.contentContainer}>
+    <BottomSheetView style={styles.contentContainer}>
       <TextInput
         value={searchQuery}
         onChangeText={setSearchQuery}
@@ -34,7 +35,7 @@ const ModalContent = () => {
         triggerStyle={{width: '100%'}}
         trigger={() => {
           return (
-            <View
+            <BottomSheetView
               style={{
                 width: '100%',
                 justifyContent: 'space-between',
@@ -58,7 +59,7 @@ const ModalContent = () => {
                 width={24}
                 height={24}
               />
-            </View>
+            </BottomSheetView>
           )
         }}
       />
@@ -72,7 +73,7 @@ const ModalContent = () => {
         }}
         style={{width: '100%'}}
       />
-    </View>
+    </BottomSheetView>
   )
 }
 

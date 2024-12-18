@@ -1,6 +1,6 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
 import { styles } from './styles';
@@ -198,18 +198,23 @@ const LockModal = ({trigger, item}: {
       
       alertSuccess(tx);
 
+      setAmount('0')
+      setDuration('0')
+      handleClose()
+
     } catch (error) {
       logErrorForMonitoring(error as any, "handleLock error")
-      setLocking(false)
 
       alertError(error)
+    } finally {
+      setLocking(false)
     }
   }
 
   const renderForm = () => {
     return (
-      <View style={{width: '100%', flex: 1}}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <BottomSheetView style={{width: '100%', flex: 1}}>
+        <BottomSheetView style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text
             style={[
               theme.typography.footnote.regular
@@ -231,7 +236,7 @@ const LockModal = ({trigger, item}: {
               {t('available')}: {formatNumberString(parsedStakedAmount, 4)} U2U
             </Text>
           </TouchableOpacity>
-        </View>
+        </BottomSheetView>
         <TextInput
           value={amount}
           error={errorAmount}
@@ -249,7 +254,7 @@ const LockModal = ({trigger, item}: {
           }}
           insideModal={true}
         />
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 12}}>
+        <BottomSheetView style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 12}}>
           <Text
             style={[
               theme.typography.footnote.regular
@@ -265,8 +270,8 @@ const LockModal = ({trigger, item}: {
           >
             {t('max')}: {formatNumberString(maxDuration.toString())} {t('days')}
           </Text>
-        </View>
-        <View style={{justifyContent: 'flex-start'}}>
+        </BottomSheetView>
+        <BottomSheetView style={{justifyContent: 'flex-start'}}>
           <TextInput
             value={duration}
             error={errorDuration}
@@ -286,9 +291,9 @@ const LockModal = ({trigger, item}: {
             }}
             insideModal={true}
           />
-        </View>
-        <View
-          style={{width: '100%', flex: 1, justifyContent: 'flex-end'}}
+        </BottomSheetView>
+        <BottomSheetView
+          style={{paddingVertical: 18}}
         >
           <Button
             fullWidth
@@ -301,8 +306,8 @@ const LockModal = ({trigger, item}: {
           >
             {t('lock')}
           </Button>
-        </View>
-      </View>
+        </BottomSheetView>
+      </BottomSheetView>
     )
   }
 
@@ -311,18 +316,18 @@ const LockModal = ({trigger, item}: {
       modalRef={bottomSheetModalRef}
       trigger={trigger()}
       triggerModal={
-        <View style={[
+        <BottomSheetView style={[
           styles.contentContainer,
         ]}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View style={{width: 34, height: 34, marginRight: 8}}>
+          <BottomSheetView style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <BottomSheetView style={{width: 34, height: 34, marginRight: 8}}>
               <SvgUri
                 uri={"https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg"}
                 width="100%"
                 height="100%"
               />
-            </View>
-            <View
+            </BottomSheetView>
+            <BottomSheetView
               style={{flex: 1, justifyContent: 'space-between'}}
             >
               <Text
@@ -345,11 +350,11 @@ const LockModal = ({trigger, item}: {
               >
                 {shortenAddress(item.validator.auth, 8, 8)}
               </Text>
-            </View>
-          </View>
+            </BottomSheetView>
+          </BottomSheetView>
           <Separator style={{width: '100%'}} />
           {renderForm()}
-        </View>
+        </BottomSheetView>
       }
       snapPoints={snapPoints}
       hasSeparator={false}

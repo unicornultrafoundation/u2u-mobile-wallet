@@ -1,6 +1,6 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { LockedStake } from '../../../hook/useFetchLockedStake';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
@@ -169,7 +169,7 @@ const UnlockModal = ({trigger, item}: {
     content: string,
   }) => {
     return (
-      <View style={{flexDirection: 'row', gap: 8, marginBottom: 10}}>
+      <BottomSheetView style={{flexDirection: 'row', gap: 8, marginBottom: 10}}>
         <Text
           style={[
             theme.typography.footnote.regular
@@ -185,14 +185,14 @@ const UnlockModal = ({trigger, item}: {
         >
           {content}
         </Text>
-      </View>
+      </BottomSheetView>
     )
   }
 
   const renderForm = () => {
     return (
-      <View style={{width: '100%', flex: 1, paddingVertical: 10}}>
-        <View style={{flexDirection: 'row', gap: 8}}>
+      <BottomSheetView style={{width: '100%', flex: 1, paddingVertical: 10}}>
+        <BottomSheetView style={{flexDirection: 'row', gap: 8}}>
           <Text
             style={[
               theme.typography.footnote.regular
@@ -216,7 +216,7 @@ const UnlockModal = ({trigger, item}: {
               {t('available')}: {formatNumberString(parsedStakedAmount, 4)} U2U
             </Text>
           </TouchableOpacity>
-        </View>
+        </BottomSheetView>
         <TextInput
           value={amount}
           error={errorAmount}
@@ -237,7 +237,7 @@ const UnlockModal = ({trigger, item}: {
         {renderItem({label: 'penalty', content: `${penalty} U2U`})}
         {renderItem({label: 'lockedDurationDays', content: parseInterval(0, item.duration)})}
         {renderItem({label: 'availableAt', content: formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy")})}
-        <View style={{width: '100%', flex: 1, justifyContent: 'flex-end'}}>
+        <BottomSheetView style={{width: '100%', flex: 1, justifyContent: 'flex-end'}}>
           <Button
             fullWidth
             style={{
@@ -249,8 +249,8 @@ const UnlockModal = ({trigger, item}: {
           >
             {t('unlock')}
           </Button>
-        </View>
-      </View>
+        </BottomSheetView>
+      </BottomSheetView>
     )
   }
 

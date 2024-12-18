@@ -15,6 +15,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useWallet } from '../../hook/useWallet';
 import ConfirmationModal from '../ConfirmationModal';
+import { BottomSheetView } from '@gorhom/bottom-sheet';
 
 interface Props extends ViewProps {
   item: Wallet;
@@ -66,7 +67,7 @@ const WalletRow = ({ item, selected, disabled, onSelect, onEdit, onDelete, ...re
   
   return (
     <>
-      <View style={styles.walletRowContainer} {...rest}>
+      <BottomSheetView style={styles.walletRowContainer} {...rest}>
         <TouchableOpacity
           onPress={onSelect}
           disabled={disabled}
@@ -109,7 +110,7 @@ const WalletRow = ({ item, selected, disabled, onSelect, onEdit, onDelete, ...re
             </MenuOption>
           </MenuOptions>
         </Menu>
-      </View>
+      </BottomSheetView>
       <ConfirmationModal 
         visible={visible} 
         message={t('msgAreYouSureToDeleteWallet')}

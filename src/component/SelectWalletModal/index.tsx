@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useMemo, useState, useEffect } from 'react';
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetScrollView, BottomSheetView } from '@gorhom/bottom-sheet';
 import styles from './styles';
-import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, ActivityIndicator } from 'react-native';
 import Text from '../Text';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { usePreferenceStore } from '../../state/preferences';
@@ -108,12 +108,12 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
 
   const renderTriggerModal = () => {
     return (
-      <View
+      <BottomSheetView
         style={[
           styles.contentContainer,
         ]}>
         {loading && (
-          <View
+          <BottomSheetView
             style={{
               position: 'absolute',
               top: 0,
@@ -129,7 +129,7 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
           >
             <ActivityIndicator style={{marginRight: 8}} />
             <Text>{t('loading')}...</Text>
-          </View>
+          </BottomSheetView>
         )}
         <BottomSheetScrollView style={{ flex: 1 }} bounces={false}>
           {sortedWalletList.map(item => {
@@ -174,7 +174,7 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
             {t('createNewWallet')}
           </Text>
         </TouchableOpacity>
-      </View>
+      </BottomSheetView>
     )
   }
 

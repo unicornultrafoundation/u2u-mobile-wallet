@@ -121,9 +121,9 @@ const DelegationItem = ({item}: {
     setShowUnstake(true)
   }
 
-  if (actualStakedAmount.isEqualTo(0) && pendingRewards === "0") {
-    return null
-  }
+  // if (actualStakedAmount.isEqualTo(0) && pendingRewards === "0") {
+  //   return null
+  // }
 
   return (
     <View
@@ -183,23 +183,38 @@ const DelegationItem = ({item}: {
           </Text>
         </View>
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <LockModal
-            item={item}
-            trigger={() => {
-              return (
-                <View style={{
-                  backgroundColor: preferenceTheme.background.surface,
-                  paddingHorizontal: 12,
-                  paddingVertical: 4,
-                  borderRadius: 30,
-                }}>
-                  <Text style={theme.typography.footnote.bold}>
-                    {t('lock')}
-                  </Text>
-                </View>
-              )
-            }}
-          />
+          {
+            actualStakedAmount.isEqualTo(0) ? (
+              <View style={{
+                backgroundColor: preferenceTheme.background.surfaceDisable,
+                paddingHorizontal: 12,
+                paddingVertical: 4,
+                borderRadius: 30,
+              }}>
+                <Text style={theme.typography.footnote.bold}>
+                  {t('locked')}
+                </Text>
+              </View>
+            ) : (
+              <LockModal
+                item={item}
+                trigger={() => {
+                  return (
+                    <View style={{
+                      backgroundColor: preferenceTheme.background.surface,
+                      paddingHorizontal: 12,
+                      paddingVertical: 4,
+                      borderRadius: 30,
+                    }}>
+                      <Text style={theme.typography.footnote.bold}>
+                        {t('lock')}
+                      </Text>
+                    </View>
+                  )
+                }}
+              />
+            )
+          }
         </View>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 12, gap: 6}}>

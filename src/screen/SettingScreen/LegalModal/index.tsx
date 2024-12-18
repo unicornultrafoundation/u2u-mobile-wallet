@@ -1,7 +1,7 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next';
-import { Linking, TouchableOpacity, View } from 'react-native';
+import { Linking, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import Text from '../../../component/Text';
 import theme from '../../../theme';
@@ -38,7 +38,7 @@ const LegalModal = ({trigger}: {
       title='legal' 
       trigger={trigger()} 
       triggerModal={
-        <View>
+        <BottomSheetView>
           <TouchableOpacity style={[styles.settingItem]} onPress={handlePrivacyPress}>
             <Text style={[theme.typography.footnote.medium, {flex: 1}]}>{t('privacyPolicy')}</Text>
             <Icon
@@ -57,7 +57,7 @@ const LegalModal = ({trigger}: {
               color={preferenceTheme.text.disabled}
             />
           </TouchableOpacity>
-        </View>
+        </BottomSheetView>
       }
       snapPoints={snapPoints}
     />

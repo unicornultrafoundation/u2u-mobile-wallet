@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useMemo } from 'react'
 import { View } from 'react-native';
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetScrollView, BottomSheetView } from '@gorhom/bottom-sheet';
 import GasPriceInput from './GasPriceInput';
 import GasLimitInput from './GasLimitInput';
 import Button from '../Button';
@@ -31,12 +31,12 @@ const CustomGasModal = ({trigger}: {
       title='customizeGasFee'
       trigger={trigger()}
       triggerModal={
-        <View style={{ flexDirection: 'column', flex: 1, paddingVertical: 10}}>
+        <BottomSheetView style={{ flexDirection: 'column', flex: 1, paddingVertical: 10}}>
           <BottomSheetScrollView style={{flex: 1, width: '100%'}}>
-            <View style={{gap: 16}}>
+            <BottomSheetView style={{gap: 16}}>
               <GasPriceInput />
               <GasLimitInput />
-            </View>
+            </BottomSheetView>
           </BottomSheetScrollView>
           <Button
             fullWidth
@@ -48,7 +48,7 @@ const CustomGasModal = ({trigger}: {
           >
             {t('continue')}
           </Button>
-        </View>
+        </BottomSheetView>
       }
       snapPoints={snapPoints}
       hasSeparator={false}

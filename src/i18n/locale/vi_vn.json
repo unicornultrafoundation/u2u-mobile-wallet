@@ -347,5 +347,6 @@
   "profile": "Thông tin cá nhân",
   "setChatProfile": "Cập nhật thông tin cá nhân",
   "setChatProfileDescription": "Bạn cần cập nhật thông tin cá nhân để tiếp tục sử dụng tính năng này",
-  "noWR": "Không có yêu cầu rút"
+  "noWR": "Không có yêu cầu rút",
+  "locked": "Đã khoá"
 }
