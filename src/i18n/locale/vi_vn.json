@@ -184,6 +184,8 @@
   "msgLockStakeSuccess": "Khoá cổ phần thành công",
   "msgLockStakeFail": "Khoá cổ phần thất bại",
   "validatorID": "Mã người xác thực",
+  "validator": "Người xác thực",
+  "earlyUnlock": "Mở khoá trước hạn",
   "duration": "Thời gian",
   "availableAtValueDate": "Nhận thưởng vào lúc {value}",
   "availableAt": "Có sẵn vào",
@@ -342,5 +344,8 @@
   "invalidQR": "QR code không hợp lệ",
   "unsupportedToken": "Token không hỗ trợ",
   "emptyBlockList": "Chưa có liên hệ bị chặn",
-  "profile": "Thông tin cá nhân"
+  "profile": "Thông tin cá nhân",
+  "setChatProfile": "Cập nhật thông tin cá nhân",
+  "setChatProfileDescription": "Bạn cần cập nhật thông tin cá nhân để tiếp tục sử dụng tính năng này",
+  "noWR": "Không có yêu cầu rút"
 }

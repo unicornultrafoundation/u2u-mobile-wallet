@@ -184,6 +184,8 @@
   "msgLockStakeSuccess": "Lock stake success",
   "msgLockStakeFail": "Lock stake fail",
   "validatorID": "Validator ID",
+  "validator": "Validator",
+  "earlyUnlock": "Early unlock",
   "duration": "Duration",
   "availableAtValueDate": "Available at {value}",
   "availableAt": "Available at",
@@ -343,5 +345,8 @@
   "invalidQR": "Invalid QR code",
   "unsupportedToken": "Unsupported token",
   "emptyBlockList": "No contact blocked yet",
-  "profile": "Profile"
+  "profile": "Profile",
+  "setChatProfile": "Update profile",
+  "setChatProfileDescription": "You need to update your personal profile to continue using chat function",
+  "noWR": "No withdrawal request"
 }

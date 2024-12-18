@@ -12,6 +12,10 @@ import { formatDate, parseInterval } from '../../../util/date';
 import Button from '../../../component/Button';
 import UnlockModal from './UnlockModal';
 import { useTranslation } from 'react-i18next';
+import { useClaimRewards } from '@/hook/useClaimRewards';
+import { useStaking } from '@/hook/useStaking';
+import { usePendingReward } from '@/hook/usePendingReward';
+import { useWallet } from '@/hook/useWallet';
 
 const LockedStakeItem = ({item}: {
   item: LockedStake
@@ -19,6 +23,12 @@ const LockedStakeItem = ({item}: {
   const {darkMode} = usePreferenceStore()
   const {t} = useTranslation()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
+
+  const {wallet} = useWallet()
+
+  const {stakingContractOptions} = useStaking()
+  const { pendingRewards } = usePendingReward({delegatorAddress: wallet.address, stakingContractOptions, validatorId: Number(item.validatorId)})
+  const { claimRewards } = useClaimRewards(stakingContractOptions)
 
   const isClaimable = useMemo(() => {
     if (item.endTime > Date.now()) return false
@@ -69,7 +79,8 @@ const LockedStakeItem = ({item}: {
                   }
                 ]}
               >
-                {t('availableAtValueDate').replace('{value}', formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy"))}
+                {/* {t('availableAtValueDate').replace('{value}', formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy"))} */}
+                {t('earlyUnlock')}
               </Text>
             </View>
           )
@@ -88,10 +99,16 @@ const LockedStakeItem = ({item}: {
         }
       ]}
     >
+      {/* <View style={{flexDirection: 'row', gap: 5, justifyContent: 'space-between'}}>
+        {renderItem({label: 'duration', content: parseInterval(0, item.duration), flex: 1})}
+      </View> */}
       <View style={{flexDirection: 'row', gap: 5}}>
-        {renderItem({label: 'validatorID', content: item.validatorId, flex: 1})}
+        {renderItem({label: 'validator', content: item.validatorName, flex: 1})}
         {renderItem({label: 'amount', content: `${parseFromRaw(item.lockedAmount.toFixed(), 18, true)} U2U`, flex: 1})}
-        {renderItem({label: 'duration', content: parseInterval(0, item.duration)})}
+      </View>
+      <View style={{flexDirection: 'row', gap: 5}}>
+        {renderItem({label: 'claimable', content: `${formatNumberString(pendingRewards, 6)} U2U`, flex: 1})}
+        {renderItem({label: 'availableAt', content: formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy"), flex: 1})}
       </View>
       {
         isClaimable ? (
@@ -117,7 +134,6 @@ const LockedStakeItem = ({item}: {
           </View>
         ) : renderUnlockModal()
       }
-      
     </View>
   )
 }

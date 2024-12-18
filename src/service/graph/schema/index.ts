@@ -175,6 +175,7 @@ export const Schema = () => {
           }
           validator {
             id
+            auth
           }
           duration
           lockedAmount

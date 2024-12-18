@@ -12,6 +12,7 @@ import { useStaking } from '../../hook/useStaking'
 import { usePreference } from '../../hook/usePreference'
 import { useAllPendingRewards } from '@/hook/useAllPendingRewards'
 import { useTotalStakedAmount } from '@/hook/useTotalStakedAmount'
+import { useU2UPrice } from '@/hook/useU2UPrice'
 
 const InvestmentTotalCard = () => {
   const {t} = useTranslation<string>()
@@ -23,6 +24,8 @@ const InvestmentTotalCard = () => {
 
   const {data: totalStakedAmount} = useTotalStakedAmount()
   const {data: allPendingRewards} = useAllPendingRewards()
+
+  const {data: u2uPrice} = useU2UPrice()
 
   const renderItem = ({label, value} : {
     label: string,
@@ -83,7 +86,7 @@ const InvestmentTotalCard = () => {
             }
           ]}
         >
-          $0
+          ${formatNumberString((Number(totalStakedAmount) * u2uPrice).toString(), 3)}
         </Text>
       </View>
       <View style={{flexDirection: 'row'}}>

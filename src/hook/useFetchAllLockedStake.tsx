@@ -14,9 +14,11 @@ export const useFetchAllLockedStake = (delAddress: string) => {
     try {
       const data = await queryAllLockedStake(delAddress.toLowerCase(), networkConfig.sfcSubgraph)
       if (data && data.lockedUps) {
-        const mappedRs: LockedStake[] = data.lockedUps.map((i: Record<string, any>) => {
-          return lockedStakeDataProcessor(i)
-        })
+        const mappedRs: LockedStake[] = await Promise.all(
+          data.lockedUps.map((i: Record<string, any>) => {
+            return lockedStakeDataProcessor(i)
+          })
+        )
         return mappedRs
       }
       return [] as LockedStake[]

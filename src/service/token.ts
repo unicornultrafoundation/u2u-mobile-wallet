@@ -9,6 +9,13 @@ export const fetchOwnedToken = async (explorerURL: string, address: string) => {
   return rsJSON.result || []
 }
 
+export const fetchU2UPrice = async (backendURL: string) => {
+  const url = `${backendURL}/stats/price`
+  const rs = await fetch(url)
+  const rsJSON = await rs.json()
+  return rsJSON.u2u || 0
+}
+
 export const fetchNativeBalance = async (explorerURL: string, address: string) => {
   const url = `${explorerURL}/api?module=account&action=eth_get_balance&address=${address}`
   const rs = await fetch(url)

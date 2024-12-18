@@ -43,7 +43,7 @@ export const delegatorDataProcessor = async (data: any, totalStaked: BigNumber):
 
 export const validatorDataProcessor = async (data: any, totalStaked: BigNumber, apr: number): Promise<Validator> => {  
   if (!data) return {} as Validator
-  const valInfo = await fetchValidatorInfo(data.auth)
+  const valInfo = await fetchValidatorInfo(data.auth.toLowerCase())
 
   const valAvartar = valInfo && data.auth ? `https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/validators_info/${data.auth.toLowerCase()}/logo.png` : ""
 
@@ -80,11 +80,15 @@ export const epochOfvalidator  = (data: any): ValidatorEpochInfo => {
   }
 }
 
-export const lockedStakeDataProcessor = (data: any): LockedStake => {  
+export const lockedStakeDataProcessor = async (data: any): Promise<LockedStake> => {  
   if (!data) return {} as LockedStake
+
+  const valInfo = await fetchValidatorInfo(data.validator.auth)
+
   return {
     delegator: data.delegator.id,
     validatorId: data.validator.id,
+    validatorName: valInfo && valInfo.moniker ? valInfo.moniker : `Validator ${data.validatorId}`,
     duration: Number(data.duration) * 1000,
     endTime: Number(data.endTime) * 1000,
     lockedAmount: BigNumber(data.lockedAmount),
