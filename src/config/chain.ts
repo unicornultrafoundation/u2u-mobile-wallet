@@ -12,7 +12,7 @@ export interface NetworkConfig {
   u2uNetworkSubgraph: string;
   stakingGraphql: string;
   circulatingSupplyEndpoint: string;
-  withdrawPeriodTime: number;
+  // withdrawPeriodTime: number;
   dappURL: string;
   ecosystemSettingURL: string;
   genesisWallet: string[];
@@ -33,7 +33,7 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     u2uNetworkSubgraph: "https://graph.u2u.xyz/subgraphs/name/u2u/sfc-network",
     stakingGraphql: "https://staking-graphql.u2u.xyz/graphql",
     circulatingSupplyEndpoint: "https://report.u2u.xyz/api/circulating/",
-    withdrawPeriodTime: 604800,
+    // withdrawPeriodTime: 604800,
     dappURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/dapp_mainnet.json",
     ecosystemSettingURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/ecosystem_setting_mainnet.json",
     suppoted_nfts_endpoint: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/supported_nfts_mainnet.json",
@@ -53,7 +53,7 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     u2uNetworkSubgraph: "https://subgraph-testnet.u2u.xyz/subgraphs/name/u2u/sfc-network",
     stakingGraphql: "https://testnet-staking-graphql.u2u.xyz/graphql",
     circulatingSupplyEndpoint: "https://report.u2u.xyz/api/circulating/",
-    withdrawPeriodTime: 604800,
+    // withdrawPeriodTime: 604800,
     dappURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/dapp.json",
     ecosystemSettingURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/ecosystem_setting.json",
     suppoted_nfts_endpoint: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/supported_nfts.json",
