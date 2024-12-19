@@ -11,14 +11,14 @@ const ManageTokenModal = ({trigger}: {
   // const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['75%'], []);
+  // const snapPoints = useMemo(() => ['75%'], []);
 
   return (
     <CustomBottomSheetModal
       title='manageToken'
       trigger={trigger()}
       triggerModal={<ModalContent/>}
-      snapPoints={snapPoints}
+      snapPoints={['75%']}
       hasSeparator={false}
     />
   )

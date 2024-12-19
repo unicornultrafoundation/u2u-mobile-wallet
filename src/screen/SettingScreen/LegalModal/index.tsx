@@ -20,7 +20,7 @@ const LegalModal = ({trigger}: {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['35%'], []);
+  // const snapPoints = useMemo(() => ['35%'], []);
 
   const handleTermsPress = () => {
     // Xử lý khi người dùng nhấn vào "Terms"
@@ -59,7 +59,7 @@ const LegalModal = ({trigger}: {
           </TouchableOpacity>
         </BottomSheetView>
       }
-      snapPoints={snapPoints}
+      snapPoints={['35%']}
     />
   )
 }

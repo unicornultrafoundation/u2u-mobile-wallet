@@ -57,7 +57,7 @@ const LockModal = ({trigger, item}: {
   }, [valLockedStake])
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['50%'], []);
+  // const snapPoints = useMemo(() => ['50%'], []);
 
   const [amount, setAmount] = useState('0')
   const [duration, setDuration] = useState('0')
@@ -356,7 +356,7 @@ const LockModal = ({trigger, item}: {
           {renderForm()}
         </BottomSheetView>
       }
-      snapPoints={snapPoints}
+      snapPoints={['50%']}
       hasSeparator={false}
     />
   )

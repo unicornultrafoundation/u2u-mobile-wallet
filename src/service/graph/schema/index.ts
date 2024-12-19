@@ -351,6 +351,17 @@ export const Schema = () => {
           }
         }
       }
+    `,
+    // Dex
+    DEX_TOKENS: minimalGQL`
+      query AllDexTokens {
+        tokens {
+          id
+          symbol
+          name
+          decimals
+        }
+      }
     `
   }
 }

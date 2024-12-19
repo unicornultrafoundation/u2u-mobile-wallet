@@ -2,11 +2,11 @@ import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/nativ
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
-import { useGlobalStore } from "../../state/global";
-import { usePreference } from "../../hook/usePreference";
+import { useGlobalStore } from "@/state/global";
+import { usePreference } from "@/hook/usePreference";
 import { styles } from "./styles";
-import Icon from "../../component/Icon";
-import Text from "../../component/Text";
+import Icon from "@/component/Icon";
+import Text from "@/component/Text";
 import theme from "@/theme";
 import { useWallet } from "@/hook/useWallet";
 

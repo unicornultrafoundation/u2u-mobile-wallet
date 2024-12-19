@@ -101,6 +101,20 @@ const BalanceCard = ({collapsed}: {collapsed: boolean}) => {
             </TouchableOpacity>
             <Text style={styles.balanceActionButtonText}>{t('receive')}</Text>
           </View>
+          {/* <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <TouchableOpacity
+              style={styles.balanceActionButton}
+              onPress={() => {
+                navigation.navigate('Swap');
+              }}>
+              <Icon name="swap" width={24} height={24} color={preferenceTheme.divider} />
+            </TouchableOpacity>
+            <Text style={styles.balanceActionButtonText}>{t('swap')}</Text>
+          </View> */}
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <TouchableOpacity
               style={[styles.balanceActionButton, {marginRight: 0}]}

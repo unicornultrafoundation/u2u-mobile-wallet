@@ -349,5 +349,8 @@
   "setChatProfile": "Update profile",
   "setChatProfileDescription": "You need to update your personal profile to continue using chat function",
   "noWR": "No withdrawal request",
-  "locked": "Locked"
+  "locked": "Locked",
+  "swap": "Swap",
+  "selectToken": "Select token",
+  "slideToSwap": "Slide to swap"
 }

@@ -29,7 +29,7 @@ const UnlockModal = ({trigger, item}: {
   const {preferenceTheme} = usePreference()
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['50%'], []);
+  // const snapPoints = useMemo(() => ['50%'], []);
 
   const handleClose = useCallback(() => {
     bottomSheetModalRef.current?.close();
@@ -259,7 +259,7 @@ const UnlockModal = ({trigger, item}: {
       modalRef={bottomSheetModalRef}
       trigger={trigger()}
       triggerModal={renderForm()}
-      snapPoints={snapPoints}
+      snapPoints={['50%']}
       hasSeparator={false}
     />
   )

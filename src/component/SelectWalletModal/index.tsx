@@ -42,7 +42,7 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['60%'], []);
+  // const snapPoints = useMemo(() => ['60%'], []);
 
   // callbacks
   const handleClose = useCallback(() => {
@@ -185,7 +185,7 @@ const SelectWalletModal = ({ trigger }: { trigger: () => JSX.Element }) => {
         title={'manageWallet'}
         trigger={trigger()}
         triggerModal={renderTriggerModal()}
-        snapPoints={snapPoints}
+        snapPoints={['60%']}
       />
       <EditWalletModal
         visible={editWalletModalVisible}

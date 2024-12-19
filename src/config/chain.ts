@@ -17,6 +17,7 @@ export interface NetworkConfig {
   ecosystemSettingURL: string;
   genesisWallet: string[];
   api_endpoint: string;
+  dexSubgraph: string;
 }
 
 export const SUPPORTED_CHAINS: NetworkConfig[] = [
@@ -38,7 +39,8 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     ecosystemSettingURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/ecosystem_setting_mainnet.json",
     suppoted_nfts_endpoint: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/supported_nfts_mainnet.json",
     genesisWallet: ["0xDa86486EA632c5A3b43c166c8799ca1Ca942Fe30", "0x131Bf53E6eCd05d46D418E970488Fc3DeA295D34"],
-    api_endpoint: "https://sa-backend.u2u.xyz"
+    api_endpoint: "https://sa-backend.u2u.xyz",
+    dexSubgraph: ""
   },
   {
     chainID: "2484",
@@ -58,7 +60,8 @@ export const SUPPORTED_CHAINS: NetworkConfig[] = [
     ecosystemSettingURL: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/ecosystem_setting.json",
     suppoted_nfts_endpoint: "https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/mobile_config/supported_nfts.json",
     genesisWallet: [],
-    api_endpoint: "https://sa-backend-dev.u2u.xyz"
+    api_endpoint: "https://sa-backend-dev.u2u.xyz",
     // api_endpoint: "http://172.20.42.180:3000",
+    dexSubgraph: "https://subgraph-amm-testnet.grofidex.io/subgraphs/name/amm/grofidex-v1"
   }
 ]

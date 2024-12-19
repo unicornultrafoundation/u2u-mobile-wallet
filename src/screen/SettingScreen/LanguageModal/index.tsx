@@ -24,7 +24,7 @@ const LanguageModal = ({trigger}: {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['35%'], []);
+  // const snapPoints = useMemo(() => ['35%'], []);
 
   return (
     <CustomBottomSheetModal 
@@ -59,7 +59,7 @@ const LanguageModal = ({trigger}: {
           })}
         </BottomSheetScrollView>
       }
-      snapPoints={snapPoints}
+      snapPoints={['35%']}
     />
   )
 }

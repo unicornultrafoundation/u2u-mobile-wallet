@@ -44,7 +44,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   // variables
-  const snapPoints = useMemo(() => ['90%'], []);
+  // const snapPoints = useMemo(() => ['90%'], []);
 
   const {t} = useTranslation<string>()
 
@@ -127,7 +127,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
     <BottomSheetModal
       ref={ref}
       // index={1}
-      snapPoints={snapPoints}
+      snapPoints={['90%']}
       onChange={handleSheetChanges}
       enablePanDownToClose
       backgroundStyle={{

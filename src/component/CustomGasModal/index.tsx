@@ -18,7 +18,7 @@ const CustomGasModal = ({trigger}: {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['50%'], []);
+  // const snapPoints = useMemo(() => ['50%'], []);
 
   // callbacks
   const handleClose = useCallback(() => {
@@ -50,7 +50,7 @@ const CustomGasModal = ({trigger}: {
           </Button>
         </BottomSheetView>
       }
-      snapPoints={snapPoints}
+      snapPoints={['50%']}
       hasSeparator={false}
       triggerStyle={{flex: 1}}
     />

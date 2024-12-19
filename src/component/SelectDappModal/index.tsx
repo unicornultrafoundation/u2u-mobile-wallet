@@ -33,7 +33,7 @@ const SelectDappModal = ({
   const { t } = useTranslation()
 
   // variables
-  const snapPoints = useMemo(() => ['40%', '60%'], []);
+  // const snapPoints = useMemo(() => ['40%', '60%'], []);
 
   const {items, toggleFavorite} = useFavoriteStore();
 
@@ -98,7 +98,7 @@ const SelectDappModal = ({
     <CustomBottomSheetModal
       trigger={trigger()}
       triggerModal={renderTriggerModal()}
-      snapPoints={snapPoints}
+      snapPoints={['40%', '60%']}
       hasSeparator={false}
     />
   );
