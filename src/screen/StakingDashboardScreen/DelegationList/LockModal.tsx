@@ -24,7 +24,7 @@ import { usePreference } from '@/hook/usePreference';
 import CustomBottomSheetModal from '@/component/CustomBottomSheetModal';
 import { logErrorForMonitoring } from '@/hook/useCrashlytics';
 import { useRemoteConfig } from '@/hook/useRemoteConfig';
-import { sleep } from '@/util/promise';
+import BigNumber from 'bignumber.js';
 
 const LockModal = ({trigger, item}: {
   trigger: () => JSX.Element,
@@ -70,7 +70,15 @@ const LockModal = ({trigger, item}: {
   }, []);
 
   const actualStakedAmount = useMemo(() => {
-    return item.actualStakedAmount
+    let _amount = item.actualStakedAmount
+
+    if (Date.now() < endTime) {
+      _amount = _amount.minus(BigNumber(lockedAmount || 0))
+    }
+    if (penalty) {
+      _amount = _amount.minus(penalty)
+    }
+    return _amount
   }, [item, lockedAmount, penalty, endTime])
 
   const parsedStakedAmount = useMemo(() => {

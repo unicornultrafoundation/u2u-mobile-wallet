@@ -2,26 +2,24 @@ import React, { useMemo, useState } from 'react'
 import { styles } from './styles';
 import { Image, View } from 'react-native';
 import { SvgUri } from 'react-native-svg';
-import Text from '../../../component/Text';
-import theme from '../../../theme';
-import { formatNumberString, shortenAddress } from '../../../util/string';
-import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
-import Button from '../../../component/Button';
-import { Validation } from '../../../service/staking';
-import { usePendingReward } from '../../../hook/usePendingReward';
-import { useWallet } from '../../../hook/useWallet';
-import { useStaking } from '../../../hook/useStaking';
+import Text from '@/component/Text';
+import theme from '@/theme';
+import { formatNumberString, shortenAddress } from '@/util/string';
+import Button from '@/component/Button';
+import { Validation } from '@/service/staking';
+import { usePendingReward } from '@/hook/usePendingReward';
+import { useWallet } from '@/hook/useWallet';
+import { useStaking } from '@/hook/useStaking';
 import { useTranslation } from 'react-i18next';
-import { useClaimRewards } from '../../../hook/useClaimRewards';
+import { useClaimRewards } from '@/hook/useClaimRewards';
 import Toast from 'react-native-toast-message';
-import { useTransaction } from '../../../hook/useTransaction';
+import { useTransaction } from '@/hook/useTransaction';
 import UnstakeSection from './UnstakeSection';
-import { useFetchLockedStake } from '../../../hook/useFetchLockedStake';
+import { useFetchLockedStake } from '@/hook/useFetchLockedStake';
 import BigNumber from 'bignumber.js';
 import LockModal from './LockModal';
-import { usePreference } from '../../../hook/usePreference';
-import { logErrorForMonitoring } from '../../../hook/useCrashlytics';
+import { usePreference } from '@/hook/usePreference';
+import { logErrorForMonitoring } from '@/hook/useCrashlytics';
 
 const DelegationItem = ({item}: {
   item: Validation
@@ -42,7 +40,15 @@ const DelegationItem = ({item}: {
   const [showUnstake, setShowUnstake] = useState(false)
 
   const actualStakedAmount = useMemo(() => {
-    return item.actualStakedAmount
+    let _amount = item.actualStakedAmount
+
+    if (Date.now() < endTime) {
+      _amount = _amount.minus(BigNumber(lockedAmount || 0))
+    }
+    if (penalty) {
+      _amount = _amount.minus(penalty)
+    }
+    return _amount
   }, [item, lockedAmount, penalty, endTime])
 
   const handleClaim = async () => {
