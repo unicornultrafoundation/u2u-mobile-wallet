@@ -1,12 +1,15 @@
 import React, { useMemo } from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
+import {
+  TouchableOpacity as ModalTouchableOpacity,
+} from '@gorhom/bottom-sheet';
 import styles from './styles'
 import { color as colorConfig } from '../../theme/color';
 import Text from '../Text';
 import { BaseButtonProps } from './type';
 
 
-const FillButton = ({color = 'primary', disabled, fullWidth, children, style, textStyle, loading, ...rest}: BaseButtonProps) => {
+const FillButton = ({color = 'primary', insideModal = false, disabled, fullWidth, children, style, textStyle, loading, ...rest}: BaseButtonProps) => {
   const [bgColor, textColor] = useMemo(() => {
     if (disabled) {
       return [colorConfig.primary[600], colorConfig.primary[300]]
@@ -31,8 +34,10 @@ const FillButton = ({color = 'primary', disabled, fullWidth, children, style, te
     }
   }, [color, disabled])
 
+  const Component = insideModal ? ModalTouchableOpacity : TouchableOpacity
+
   return (
-    <TouchableOpacity
+    <Component
       {...rest}
       style={[
         styles.buttonStyle,
@@ -57,7 +62,7 @@ const FillButton = ({color = 'primary', disabled, fullWidth, children, style, te
           {children}
         </Text>
       )}
-    </TouchableOpacity>
+    </Component>
   )
 }
 

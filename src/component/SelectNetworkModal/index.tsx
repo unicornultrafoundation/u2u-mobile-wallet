@@ -1,8 +1,8 @@
 import React, { useCallback, useRef, useMemo } from 'react'
 import {
-  BottomSheetModal, BottomSheetScrollView,
+  BottomSheetModal, BottomSheetScrollView, TouchableOpacity
 } from '@gorhom/bottom-sheet';
-import { TouchableOpacity } from 'react-native';
+// import { TouchableOpacity } from 'react-native';
 import Text from '../Text';
 import theme from '../../theme';
 import { useTranslation } from 'react-i18next';
@@ -76,7 +76,7 @@ const SelectNetworkModal = ({trigger}: {
       title={'selectNetwork'}
       trigger={trigger()}
       triggerModal={renderTriggerModal()}
-      snapPoints={['35%', '60%']}
+      snapPoints={['40%']}
     />
   )
 };

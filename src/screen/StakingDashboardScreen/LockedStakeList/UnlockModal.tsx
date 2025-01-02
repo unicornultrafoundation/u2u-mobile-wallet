@@ -1,26 +1,26 @@
-import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView, TouchableOpacity } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { TouchableOpacity } from 'react-native';
-import { LockedStake } from '../../../hook/useFetchLockedStake';
-import Text from '../../../component/Text';
-import theme from '../../../theme';
-import { formatNumberString, getDigit, parseNumberFormatter } from '../../../util/string';
-import { parseFromRaw } from '../../../util/bignum';
-import TextInput from '../../../component/TextInput';
-import { formatDate, parseInterval } from '../../../util/date';
-import { useCalcPenalty } from '../../../hook/useCalcPenalty';
-import { useStaking } from '../../../hook/useStaking';
-import Button from '../../../component/Button';
-import { useUnlockStake } from '../../../hook/useUnlockStake';
+// import { TouchableOpacity } from 'react-native';
+import { LockedStake } from '@/hook/useFetchLockedStake';
+import Text from '@/component/Text';
+import theme from '@/theme';
+import { formatNumberString, getDigit, parseNumberFormatter } from '@/util/string';
+import { parseFromRaw } from '@/util/bignum';
+import TextInput from '@/component/TextInput';
+import { formatDate, parseInterval } from '@/util/date';
+import { useCalcPenalty } from '@/hook/useCalcPenalty';
+import { useStaking } from '@/hook/useStaking';
+import Button from '@/component/Button';
+import { useUnlockStake } from '@/hook/useUnlockStake';
 import Toast from 'react-native-toast-message';
-import { useTransaction } from '../../../hook/useTransaction';
+import { useTransaction } from '@/hook/useTransaction';
 import { TransactionReceipt } from 'ethers';
-import { useFetchAllLockedStake } from '../../../hook/useFetchAllLockedStake';
-import { useWallet } from '../../../hook/useWallet';
+import { useFetchAllLockedStake } from '@/hook/useFetchAllLockedStake';
+import { useWallet } from '@/hook/useWallet';
 import { useTranslation } from 'react-i18next';
-import { usePreference } from '../../../hook/usePreference';
-import CustomBottomSheetModal from '../../../component/CustomBottomSheetModal';
-import { logErrorForMonitoring } from '../../../hook/useCrashlytics';
+import { usePreference } from '@/hook/usePreference';
+import CustomBottomSheetModal from '@/component/CustomBottomSheetModal';
+import { logErrorForMonitoring } from '@/hook/useCrashlytics';
 
 const UnlockModal = ({trigger, item}: {
   trigger: () => JSX.Element,

@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import { getWalletFromMnemonic, getWalletFromPrivateKey } from '../util/wallet';
 import { getPathIndex } from '../util/string';
 

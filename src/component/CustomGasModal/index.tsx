@@ -40,6 +40,7 @@ const CustomGasModal = ({trigger}: {
           </BottomSheetScrollView>
           <Button
             fullWidth
+            insideModal
             style={{
               borderRadius: 60,
               marginTop: 10,

@@ -7,7 +7,6 @@ import theme from "@/theme";
 import TextInput from "@/component/TextInput";
 import { useState } from "react";
 import { useDexTokens } from "@/hook/swap/useDexTokens";
-import { FlatList, View } from "react-native";
 import TokenRow from "./TokenRow";
 
 export default function ModalContent({onSelect}: {
@@ -34,7 +33,7 @@ export default function ModalContent({onSelect}: {
         placeholder={t('searchTokenPlaceholder')}
         containerStyle={{width: '100%', marginTop: 12}}
       />
-      <FlatList
+      <BottomSheetFlatList
         data={allTokens.filter((t: Record<string, any>) => t.address.includes(searchQuery.toLowerCase()) || t.symbol.includes(searchQuery.toLowerCase()) || t.name.includes(searchQuery.toLowerCase()))}
         renderItem={({item}) => {
           return (

@@ -4,7 +4,7 @@ import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import styles from './styles';
 import theme from '../../theme';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
 import Text from '../Text';
 import { useTransaction } from '../../hook/useTransaction';
 import { getDigit, parseNumberFormatter } from '../../util/string';
@@ -33,7 +33,7 @@ const GasPriceInput = () => {
   }, [internalValue])
 
   return (
-    <View style={{alignItems: 'flex-start', width: '100%', gap: 3}}>
+    <BottomSheetView style={{alignItems: 'flex-start', width: '100%', gap: 3}}>
       <Text
         style={[
           theme.typography.footnote.regular,
@@ -45,7 +45,7 @@ const GasPriceInput = () => {
       >
         {t('gasPriceInU2U')}
       </Text>
-      <View
+      <BottomSheetView
         style={[
           styles.inputContainer,
           {
@@ -74,8 +74,8 @@ const GasPriceInput = () => {
           keyboardType="numeric"
           value={internalValue}
         />
-      </View>
-    </View>
+      </BottomSheetView>
+    </BottomSheetView>
   )
 }
 

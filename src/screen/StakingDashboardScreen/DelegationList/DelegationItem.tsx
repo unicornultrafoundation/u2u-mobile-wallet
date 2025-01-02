@@ -42,15 +42,8 @@ const DelegationItem = ({item}: {
   const [showUnstake, setShowUnstake] = useState(false)
 
   const actualStakedAmount = useMemo(() => {
-    if (item.stakedAmount && !item.stakedAmount.isZero()) {
-      let _amount = item.stakedAmount.minus(BigNumber(lockedAmount || 0))
-      if (penalty) {
-        _amount = _amount.minus(penalty)
-      }
-      return _amount
-    }
-    return BigNumber(0)
-  }, [item, lockedAmount, penalty])
+    return item.actualStakedAmount
+  }, [item, lockedAmount, penalty, endTime])
 
   const handleClaim = async () => {
     try {

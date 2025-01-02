@@ -351,5 +351,6 @@
   "locked": "Đã khoá",
   "swap": "Quy đổi",
   "selectToken": "Chọn token",
-  "slideToSwap": "Trượt để quy đổi"
+  "slideToSwap": "Trượt để quy đổi",
+  "noLockedStake": "Không có đầu tư khoá"
 }

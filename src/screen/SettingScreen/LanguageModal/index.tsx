@@ -1,14 +1,14 @@
 import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next';
-import { TouchableOpacity } from 'react-native';
-import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
+// import { TouchableOpacity } from 'react-native';
+import { usePreferenceStore } from '@/state/preferences';
+import { darkTheme, lightTheme } from '@/theme/color';
 import styles from './styles';
-import Text from '../../../component/Text';
-import theme from '../../../theme';
-import Icon from '../../../component/Icon';
-import CustomBottomSheetModal from '../../../component/CustomBottomSheetModal';
-import { BottomSheetModal, BottomSheetScrollView, BottomSheetView } from '@gorhom/bottom-sheet';
+import Text from '@/component/Text';
+import theme from '@/theme';
+import Icon from '@/component/Icon';
+import CustomBottomSheetModal from '@/component/CustomBottomSheetModal';
+import { BottomSheetModal, BottomSheetScrollView, BottomSheetView, TouchableOpacity } from '@gorhom/bottom-sheet';
 
 const LanguageModal = ({trigger}: {
   trigger: () => JSX.Element,

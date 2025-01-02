@@ -17,9 +17,15 @@ export const delegationDataProcessor = (data: any): Delegation => {
 
 export const validationDataProcessor = async (data: any, totalStaked: BigNumber, apr: number = 0): Promise<Validation> => {  
   if (!data) return {} as Validation
+  let actualStakedAmount = BigNumber(data.stakedAmount)
+  if (Math.round(Date.now()/1000) < Number(data.lockedEndtime)) {
+    actualStakedAmount = actualStakedAmount.minus(BigNumber(data.totalLockStake))
+  }
+
   return {
     id: data.id,
     stakedAmount: BigNumber(data.stakedAmount),
+    actualStakedAmount: actualStakedAmount,
     validator: await validatorDataProcessor(data.validator, totalStaked, apr)
   }
 }
@@ -82,9 +88,7 @@ export const epochOfvalidator  = (data: any): ValidatorEpochInfo => {
 
 export const lockedStakeDataProcessor = async (data: any): Promise<LockedStake> => {  
   if (!data) return {} as LockedStake
-
   const valInfo = await fetchValidatorInfo(data.validator.auth)
-
   return {
     delegator: data.delegator.id,
     validatorId: data.validator.id,

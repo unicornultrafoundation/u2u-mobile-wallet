@@ -12,7 +12,7 @@ import TokenRow from './TokenRow';
 import CustomTokenModal from '../CustomTokenModal';
 import { useLocalStore } from '../../state/local';
 import { usePreference } from '../../hook/usePreference';
-import { BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetFlatList, BottomSheetView } from '@gorhom/bottom-sheet';
 
 const ModalContent = () => {
   const {preferenceTheme} = usePreference()
@@ -64,7 +64,7 @@ const ModalContent = () => {
         }}
       />
       <Separator style={{width: '100%'}} />
-      <FlatList
+      <BottomSheetFlatList
         data={[...supportedTokens, ...customTokenList].filter((t: Record<string, any>) => t.address.includes(searchQuery) || t.symbol.includes(searchQuery) || t.name.includes(searchQuery))}
         renderItem={({item}) => {
           return (

@@ -352,5 +352,6 @@
   "locked": "Locked",
   "swap": "Swap",
   "selectToken": "Select token",
-  "slideToSwap": "Slide to swap"
+  "slideToSwap": "Slide to swap",
+  "noLockedStake": "No locked stake"
 }

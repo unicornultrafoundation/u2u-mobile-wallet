@@ -1,30 +1,30 @@
-import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView, TouchableOpacity } from '@gorhom/bottom-sheet';
 import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { TouchableOpacity } from 'react-native';
-import Text from '../../../component/Text';
-import theme from '../../../theme';
+// import { TouchableOpacity } from 'react-native';
+import Text from '@/component/Text';
+import theme from '@/theme';
 import { styles } from './styles';
 import { SvgUri } from 'react-native-svg';
-import { Validation } from '../../../service/staking';
-import { formatNumberString, shortenAddress, parseNumberFormatter } from '../../../util/string';
+import { Validation } from '@/service/staking';
+import { formatNumberString, shortenAddress, parseNumberFormatter } from '@/util/string';
 import { useTranslation } from 'react-i18next';
-import Separator from '../../../component/Separator';
-import BigNumber from 'bignumber.js';
-import { useFetchLockedStake } from '../../../hook/useFetchLockedStake';
-import { useWallet } from '../../../hook/useWallet';
-import TextInput from '../../../component/TextInput';
-import Button from '../../../component/Button';
-import { useStaking } from '../../../hook/useStaking';
+import Separator from '@/component/Separator';
+import { useFetchLockedStake } from '@/hook/useFetchLockedStake';
+import { useWallet } from '@/hook/useWallet';
+import TextInput from '@/component/TextInput';
+import Button from '@/component/Button';
+import { useStaking } from '@/hook/useStaking';
 // import { MIN_LOCKUP_DURATION } from '../../../config/constant';
-import { useLockStake } from '../../../hook/useLockStake';
+import { useLockStake } from '@/hook/useLockStake';
 import Toast from 'react-native-toast-message';
-import { useTransaction } from '../../../hook/useTransaction';
+import { useTransaction } from '@/hook/useTransaction';
 import { TransactionReceipt } from 'ethers';
-import { parseFromRaw } from '../../../util/bignum';
-import { usePreference } from '../../../hook/usePreference';
-import CustomBottomSheetModal from '../../../component/CustomBottomSheetModal';
-import { logErrorForMonitoring } from '../../../hook/useCrashlytics';
+import { parseFromRaw } from '@/util/bignum';
+import { usePreference } from '@/hook/usePreference';
+import CustomBottomSheetModal from '@/component/CustomBottomSheetModal';
+import { logErrorForMonitoring } from '@/hook/useCrashlytics';
 import { useRemoteConfig } from '@/hook/useRemoteConfig';
+import { sleep } from '@/util/promise';
 
 const LockModal = ({trigger, item}: {
   trigger: () => JSX.Element,
@@ -39,7 +39,7 @@ const LockModal = ({trigger, item}: {
 
   const {lockedStake: valLockedStake} = useFetchLockedStake(item.validator.auth.toLowerCase(), Number(item.validator.valId))
   const {lockedStake: myLockedStake, fetchLockedStake} = useFetchLockedStake(wallet.address.toLowerCase(), Number(item.validator.valId))
-  const {lockedAmount, penalty} = myLockedStake
+  const {lockedAmount, penalty, endTime} = myLockedStake
   const {lockStake, relockStake} = useLockStake(stakingContractOptions)
   const {resetTxState} = useTransaction()
 
@@ -70,15 +70,8 @@ const LockModal = ({trigger, item}: {
   }, []);
 
   const actualStakedAmount = useMemo(() => {
-    if (item.stakedAmount && !item.stakedAmount.isZero()) {
-      let _amount = item.stakedAmount.minus(BigNumber(lockedAmount || 0))
-      if (penalty) {
-        _amount = _amount.minus(penalty)
-      }
-      return _amount
-    }
-    return BigNumber(0)
-  }, [item, lockedAmount, penalty])
+    return item.actualStakedAmount
+  }, [item, lockedAmount, penalty, endTime])
 
   const parsedStakedAmount = useMemo(() => {
     return parseFromRaw(actualStakedAmount.toFixed(), 18)
@@ -233,7 +226,7 @@ const LockModal = ({trigger, item}: {
                 }
               ]}
             >
-              {t('available')}: {formatNumberString(parsedStakedAmount, 4)} U2U
+              {t('available')}: {formatNumberString(parsedStakedAmount, 2)} U2U
             </Text>
           </TouchableOpacity>
         </BottomSheetView>
@@ -296,6 +289,7 @@ const LockModal = ({trigger, item}: {
           style={{paddingVertical: 18}}
         >
           <Button
+            insideModal={true}
             fullWidth
             style={{
               borderRadius: 60
@@ -356,7 +350,7 @@ const LockModal = ({trigger, item}: {
           {renderForm()}
         </BottomSheetView>
       }
-      snapPoints={['50%']}
+      snapPoints={['65%']}
       hasSeparator={false}
     />
   )
