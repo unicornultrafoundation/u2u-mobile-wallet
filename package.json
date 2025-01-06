@@ -81,7 +81,7 @@
     "react-native-qrcode-scanner": "1.5.5",
     "react-native-qrcode-svg": "6.2.0",
     "react-native-randombytes": "3.6.1",
-    "react-native-reanimated": "3.5.4",
+    "react-native-reanimated": "3.15.5",
     "react-native-reanimated-carousel": "3.5.1",
     "react-native-render-html": "6.3.4",
     "react-native-safe-area-context": "4.7.4",
@@ -103,6 +103,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.23.2",
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@babel/plugin-transform-flow-strip-types": "7.22.5",
     "@babel/plugin-transform-private-methods": "7.22.5",
     "@babel/preset-env": "7.23.2",
