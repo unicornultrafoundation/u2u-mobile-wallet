@@ -3,7 +3,10 @@
   "displayName": "U2U Super App",
   "extra": {
     "eas": {
-      "projectId": "67f7b619-08d0-4559-98fc-cb24449dec16"
+      "projectId": "67f7b619-08d0-4559-98fc-cb24449dec16",
+      "android": {
+        "googleServicesFile": "android/app/google-services.json"
+      }
     }
   }
 }
