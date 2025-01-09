@@ -9,6 +9,7 @@ export interface Validation {
   id: string
   validator: Validator
   stakedAmount: BigNumber
+  actualStakedAmount: BigNumber
 }
 
 export interface Delegator {
@@ -161,6 +162,7 @@ export const queryAllLockedStake = (delegator: string, endpoint: string) => {
     Schema().ALL_LOCKED_STAKE, 
     {
       delegatorAddress: delegator,
+      timeNow: Math.round(Date.now()/1000)
     }
   )
 }

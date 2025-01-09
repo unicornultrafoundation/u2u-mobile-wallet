@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import styles from './styles';
-import {View, Image, ScrollView} from 'react-native';
+import {Image} from 'react-native';
 import Text from '../Text';
 import {darkTheme, lightTheme} from '../../theme/color';
 import {usePreferenceStore} from '../../state/preferences';
@@ -15,6 +15,7 @@ import StarButton from '../FavoriteButton';
 import {useFavoriteStore} from '../../state/favorite';
 import CustomBottomSheetModal from '../CustomBottomSheetModal';
 import { useTranslation } from 'react-i18next';
+import { BottomSheetScrollView, BottomSheetView } from '@gorhom/bottom-sheet';
 
 const SelectDappModal = ({
   trigger,
@@ -32,18 +33,18 @@ const SelectDappModal = ({
   const { t } = useTranslation()
 
   // variables
-  const snapPoints = useMemo(() => ['40%', '60%'], []);
+  // const snapPoints = useMemo(() => ['40%', '60%'], []);
 
   const {items, toggleFavorite} = useFavoriteStore();
 
   const renderTriggerModal = () => {
     return (
-      <View
+      <BottomSheetView
         style={[
           styles.contentContainer,
         ]}>
-        <View style={styles.headerContainer}>
-          <View style={{width: 40, height: 40}}>
+        <BottomSheetView style={styles.headerContainer}>
+          <BottomSheetView style={{width: 40, height: 40}}>
             <Image
               source={{uri: logoImg}}
               style={{
@@ -53,19 +54,19 @@ const SelectDappModal = ({
                 objectFit: 'cover'
               }}
             />
-          </View>
-          <View style={{flex: 1, paddingHorizontal: 8}}>
+          </BottomSheetView>
+          <BottomSheetView style={{flex: 1, paddingHorizontal: 8}}>
             <Text style={[theme.typography.label.bold]}>{title}</Text>
             {/* <Text style={[theme.typography.caption1.regular]}>{t('filter')}</Text> */}
-          </View>
+          </BottomSheetView>
           <StarButton
             isFavorite={
               items.find(item => item.title === title)?.isFavorite
             }
             onPress={() => toggleFavorite(title)}
           />
-        </View>
-        <ScrollView
+        </BottomSheetView>
+        <BottomSheetScrollView
           bounces={false}
           style={{
             display: 'flex',
@@ -80,16 +81,16 @@ const SelectDappModal = ({
           <Text style={[theme.typography.label.bold, styles.title]}>
             {t('socialMedia')}
           </Text>
-          <View style={{display: 'flex', flexDirection: 'row'}}>
+          <BottomSheetView style={{display: 'flex', flexDirection: 'row'}}>
             <Image source={Twitter} style={styles.socialIcon} />
             <Image source={Facebook} style={styles.socialIcon} />
             <Image source={Tele} style={styles.socialIcon} />
             <Image source={Discord} style={styles.socialIcon} />
             <Image source={Youtube} style={styles.socialIcon} />
             <Image source={Globe} style={styles.socialIcon} />
-          </View>
-        </ScrollView>
-      </View>
+          </BottomSheetView>
+        </BottomSheetScrollView>
+      </BottomSheetView>
     )
   }
 
@@ -97,7 +98,7 @@ const SelectDappModal = ({
     <CustomBottomSheetModal
       trigger={trigger()}
       triggerModal={renderTriggerModal()}
-      snapPoints={snapPoints}
+      snapPoints={['40%', '60%']}
       hasSeparator={false}
     />
   );

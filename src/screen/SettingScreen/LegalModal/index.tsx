@@ -1,13 +1,13 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView, TouchableOpacity } from '@gorhom/bottom-sheet';
 import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next';
-import { Linking, TouchableOpacity, View } from 'react-native';
+import { Linking } from 'react-native';
 import styles from './styles';
-import Text from '../../../component/Text';
-import theme from '../../../theme';
-import Icon from '../../../component/Icon';
-import { usePreference } from '../../../hook/usePreference';
-import CustomBottomSheetModal from '../../../component/CustomBottomSheetModal';
+import Text from '@/component/Text';
+import theme from '@/theme';
+import Icon from '@/component/Icon';
+import { usePreference } from '@/hook/usePreference';
+import CustomBottomSheetModal from '@/component/CustomBottomSheetModal';
 
 const LegalModal = ({trigger}: {
   trigger: () => JSX.Element,
@@ -20,7 +20,7 @@ const LegalModal = ({trigger}: {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['35%'], []);
+  // const snapPoints = useMemo(() => ['35%'], []);
 
   const handleTermsPress = () => {
     // Xử lý khi người dùng nhấn vào "Terms"
@@ -38,7 +38,7 @@ const LegalModal = ({trigger}: {
       title='legal' 
       trigger={trigger()} 
       triggerModal={
-        <View>
+        <BottomSheetView>
           <TouchableOpacity style={[styles.settingItem]} onPress={handlePrivacyPress}>
             <Text style={[theme.typography.footnote.medium, {flex: 1}]}>{t('privacyPolicy')}</Text>
             <Icon
@@ -57,9 +57,9 @@ const LegalModal = ({trigger}: {
               color={preferenceTheme.text.disabled}
             />
           </TouchableOpacity>
-        </View>
+        </BottomSheetView>
       }
-      snapPoints={snapPoints}
+      snapPoints={['35%']}
     />
   )
 }

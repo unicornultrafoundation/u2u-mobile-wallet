@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: getPhonePaddingTop(),
-    paddingBottom: getPhonePaddingBottom()
+    paddingBottom: getPhonePaddingBottom() + 24
   },
   headerContainer: {
     paddingHorizontal: 16,

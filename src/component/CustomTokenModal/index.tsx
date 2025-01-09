@@ -31,11 +31,11 @@ const CustomTokenModal = ({trigger, triggerStyle}: {
       </TouchableOpacity>
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        // index={0}
-        enableDynamicSizing
-        // snapPoints={snapPoints}
+        index={0}
+        // enableDynamicSizing
+        snapPoints={['65%']}
         enablePanDownToClose={true}
-        topInset={100}
+        bottomInset={40}
         android_keyboardInputMode="adjustResize"
         keyboardBlurBehavior={'restore'}
         backgroundStyle={{

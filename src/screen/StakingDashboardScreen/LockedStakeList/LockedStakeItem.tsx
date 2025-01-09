@@ -30,11 +30,6 @@ const LockedStakeItem = ({item}: {
   const { pendingRewards } = usePendingReward({delegatorAddress: wallet.address, stakingContractOptions, validatorId: Number(item.validatorId)})
   const { claimRewards } = useClaimRewards(stakingContractOptions)
 
-  const isClaimable = useMemo(() => {
-    if (item.endTime > Date.now()) return false
-    return true
-  }, [item])
-
   const renderItem = ({label, content, flex} : {
     label: string,
     content: string,
@@ -111,28 +106,7 @@ const LockedStakeItem = ({item}: {
         {renderItem({label: 'availableAt', content: formatDate(new Date(item.endTime), "HH:mm dd/MM/yyyy"), flex: 1})}
       </View>
       {
-        isClaimable ? (
-          <View
-            style={{
-              borderRadius: 60,
-              flex: 1,
-              paddingVertical: 8,
-              backgroundColor: theme.color.primary[500]
-            }}
-          >
-            <Text
-              style={[
-                theme.typography.label.medium,
-                {
-                  color: preferenceTheme.text.title,
-                  textAlign: 'center'
-                }
-              ]}
-            >
-              {t('alreadyReleased')}
-            </Text>
-          </View>
-        ) : renderUnlockModal()
+        renderUnlockModal()
       }
     </View>
   )

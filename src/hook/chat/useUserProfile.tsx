@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { chatClient } from "@/util/chat"
 
 export const useUserProfile = (id: string) => {
-  const {data, isLoading, refetch} = useQuery({
+  const {data, isLoading, isFetching, refetch} = useQuery({
     queryKey: ['user-profile', id],
     queryFn: async () => {
       if (!chatClient) return
@@ -13,6 +13,6 @@ export const useUserProfile = (id: string) => {
   })
 
   return {
-    data, isLoading, refetch
+    data, isLoading, refetch, isFetching
   }
 }

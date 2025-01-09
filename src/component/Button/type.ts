@@ -9,4 +9,5 @@ export interface BaseButtonProps extends TouchableOpacityProps {
   withIcon?: boolean
   textStyle?: StyleProp<TextStyle>
   loading?: boolean
+  insideModal?: boolean
 }

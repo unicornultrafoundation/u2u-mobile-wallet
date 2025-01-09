@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
 import Text from '../../component/Text';
 import styles from './styles';
 import theme from '../../theme';
@@ -12,6 +12,7 @@ import TokenRow from './TokenRow';
 import CustomTokenModal from '../CustomTokenModal';
 import { useLocalStore } from '../../state/local';
 import { usePreference } from '../../hook/usePreference';
+import { BottomSheetFlatList, BottomSheetView } from '@gorhom/bottom-sheet';
 
 const ModalContent = () => {
   const {preferenceTheme} = usePreference()
@@ -23,7 +24,7 @@ const ModalContent = () => {
   const [searchQuery, setSearchQuery] = useState('')
 
   return (
-    <View style={styles.contentContainer}>
+    <BottomSheetView style={styles.contentContainer}>
       <TextInput
         value={searchQuery}
         onChangeText={setSearchQuery}
@@ -34,7 +35,7 @@ const ModalContent = () => {
         triggerStyle={{width: '100%'}}
         trigger={() => {
           return (
-            <View
+            <BottomSheetView
               style={{
                 width: '100%',
                 justifyContent: 'space-between',
@@ -58,12 +59,12 @@ const ModalContent = () => {
                 width={24}
                 height={24}
               />
-            </View>
+            </BottomSheetView>
           )
         }}
       />
       <Separator style={{width: '100%'}} />
-      <FlatList
+      <BottomSheetFlatList
         data={[...supportedTokens, ...customTokenList].filter((t: Record<string, any>) => t.address.includes(searchQuery) || t.symbol.includes(searchQuery) || t.name.includes(searchQuery))}
         renderItem={({item}) => {
           return (
@@ -72,7 +73,7 @@ const ModalContent = () => {
         }}
         style={{width: '100%'}}
       />
-    </View>
+    </BottomSheetView>
   )
 }
 

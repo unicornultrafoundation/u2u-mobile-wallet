@@ -1,4 +1,3 @@
-import { useCallback } from "react"
 import BigNumber from "bignumber.js"
 import { queryLockedStake } from "../service/staking"
 import { lockedStakeDataProcessor } from "../util/staking"

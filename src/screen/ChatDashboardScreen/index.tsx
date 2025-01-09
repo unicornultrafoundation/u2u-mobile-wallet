@@ -35,7 +35,7 @@ export default function ChatDashboardScreen() {
     }, [route]),
   );
 
-  const {data: profile, refetch: refetchProfile} = useUserProfile(wallet.address.toLowerCase())
+  const {data: profile, refetch: refetchProfile, isFetching} = useUserProfile(wallet.address.toLowerCase())
 
   const [search, setSearch] = useState('')
   const [showCreateConversationModal, setShowConversationModal] = useState(false)
@@ -74,12 +74,17 @@ export default function ChatDashboardScreen() {
     }
   }
 
+  const showUpdateProfileModal = () => {
+    if (isFetching) return false
+    return profile?.name === '' || !profile?.name || profile.name === wallet.address.toLowerCase()
+  }
+
   return (
     <SafeAreaView
       style={{backgroundColor: preferenceTheme.background.background, flex: 1}}
     >
       <SetProfileModal
-        modalVisible={profile?.name === '' || !profile?.name || profile.name === wallet.address.toLowerCase()}
+        modalVisible={showUpdateProfileModal()}
         onClose={() => navigation.goBack()}
         onAccept={() => {
           navigation.navigate('ContactDetail', {address: wallet.address.toLowerCase()})

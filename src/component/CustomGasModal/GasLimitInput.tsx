@@ -4,7 +4,7 @@ import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import styles from './styles';
 import theme from '../../theme';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet';
 import Text from '../Text';
 import { useTransaction } from '../../hook/useTransaction';
 import { getDigit, parseNumberFormatter } from '../../util/string';
@@ -32,7 +32,7 @@ const GasLimitInput = () => {
   }, [internalValue])
 
   return (
-    <View style={{alignItems: 'flex-start', width: '100%'}}>
+    <BottomSheetView style={{alignItems: 'flex-start', width: '100%'}}>
       <Text
         style={[
           theme.typography.footnote.regular,
@@ -44,7 +44,7 @@ const GasLimitInput = () => {
       >
         {t('gasLimit')}
       </Text>
-      <View
+      <BottomSheetView
         style={[
           styles.inputContainer,
           {
@@ -73,8 +73,8 @@ const GasLimitInput = () => {
           keyboardType="numeric"
           value={internalValue}
         />
-      </View>
-    </View>
+      </BottomSheetView>
+    </BottomSheetView>
   )
 }
 

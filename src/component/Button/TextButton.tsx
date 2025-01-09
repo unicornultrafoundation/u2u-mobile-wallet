@@ -2,9 +2,12 @@ import React, { useMemo } from 'react';
 import Text from '../Text';
 import { color as colorConfig } from '../../theme/color';
 import { TouchableOpacity } from 'react-native';
+import {
+  TouchableOpacity as ModalTouchableOpacity,
+} from '@gorhom/bottom-sheet';
 import { BaseButtonProps } from './type';
 
-const TextButton = ({color, fullWidth, children, style, textStyle, ...rest}: BaseButtonProps) => {
+const TextButton = ({color, fullWidth, children, insideModal = false, style, textStyle, ...rest}: BaseButtonProps) => {
   const textColor = useMemo(() => {
     switch (color) {
       case 'primary':
@@ -20,8 +23,10 @@ const TextButton = ({color, fullWidth, children, style, textStyle, ...rest}: Bas
     }
   }, [color])
 
+  const Component = insideModal ? ModalTouchableOpacity : TouchableOpacity
+
   return (
-    <TouchableOpacity
+    <Component
       {...rest}
       style={[
         {
@@ -37,7 +42,7 @@ const TextButton = ({color, fullWidth, children, style, textStyle, ...rest}: Bas
       ]}>
         {children}
       </Text>
-    </TouchableOpacity>
+    </Component>
   )
 };
 

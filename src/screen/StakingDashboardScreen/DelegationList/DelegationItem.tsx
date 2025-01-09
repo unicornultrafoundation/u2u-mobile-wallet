@@ -2,26 +2,24 @@ import React, { useMemo, useState } from 'react'
 import { styles } from './styles';
 import { Image, View } from 'react-native';
 import { SvgUri } from 'react-native-svg';
-import Text from '../../../component/Text';
-import theme from '../../../theme';
-import { formatNumberString, shortenAddress } from '../../../util/string';
-import { usePreferenceStore } from '../../../state/preferences';
-import { darkTheme, lightTheme } from '../../../theme/color';
-import Button from '../../../component/Button';
-import { Validation } from '../../../service/staking';
-import { usePendingReward } from '../../../hook/usePendingReward';
-import { useWallet } from '../../../hook/useWallet';
-import { useStaking } from '../../../hook/useStaking';
+import Text from '@/component/Text';
+import theme from '@/theme';
+import { formatNumberString, shortenAddress } from '@/util/string';
+import Button from '@/component/Button';
+import { Validation } from '@/service/staking';
+import { usePendingReward } from '@/hook/usePendingReward';
+import { useWallet } from '@/hook/useWallet';
+import { useStaking } from '@/hook/useStaking';
 import { useTranslation } from 'react-i18next';
-import { useClaimRewards } from '../../../hook/useClaimRewards';
+import { useClaimRewards } from '@/hook/useClaimRewards';
 import Toast from 'react-native-toast-message';
-import { useTransaction } from '../../../hook/useTransaction';
+import { useTransaction } from '@/hook/useTransaction';
 import UnstakeSection from './UnstakeSection';
-import { useFetchLockedStake } from '../../../hook/useFetchLockedStake';
+import { useFetchLockedStake } from '@/hook/useFetchLockedStake';
 import BigNumber from 'bignumber.js';
 import LockModal from './LockModal';
-import { usePreference } from '../../../hook/usePreference';
-import { logErrorForMonitoring } from '../../../hook/useCrashlytics';
+import { usePreference } from '@/hook/usePreference';
+import { logErrorForMonitoring } from '@/hook/useCrashlytics';
 
 const DelegationItem = ({item}: {
   item: Validation
@@ -42,15 +40,16 @@ const DelegationItem = ({item}: {
   const [showUnstake, setShowUnstake] = useState(false)
 
   const actualStakedAmount = useMemo(() => {
-    if (item.stakedAmount && !item.stakedAmount.isZero()) {
-      let _amount = item.stakedAmount.minus(BigNumber(lockedAmount || 0))
-      if (penalty) {
-        _amount = _amount.minus(penalty)
-      }
-      return _amount
+    let _amount = item.actualStakedAmount
+
+    if (Date.now() < endTime) {
+      _amount = _amount.minus(BigNumber(lockedAmount || 0))
     }
-    return BigNumber(0)
-  }, [item, lockedAmount, penalty])
+    if (penalty) {
+      _amount = _amount.minus(penalty)
+    }
+    return _amount
+  }, [item, lockedAmount, penalty, endTime])
 
   const handleClaim = async () => {
     try {
@@ -121,9 +120,9 @@ const DelegationItem = ({item}: {
     setShowUnstake(true)
   }
 
-  if (actualStakedAmount.isEqualTo(0) && pendingRewards === "0") {
-    return null
-  }
+  // if (actualStakedAmount.isEqualTo(0) && pendingRewards === "0") {
+  //   return null
+  // }
 
   return (
     <View
@@ -183,23 +182,38 @@ const DelegationItem = ({item}: {
           </Text>
         </View>
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <LockModal
-            item={item}
-            trigger={() => {
-              return (
-                <View style={{
-                  backgroundColor: preferenceTheme.background.surface,
-                  paddingHorizontal: 12,
-                  paddingVertical: 4,
-                  borderRadius: 30,
-                }}>
-                  <Text style={theme.typography.footnote.bold}>
-                    {t('lock')}
-                  </Text>
-                </View>
-              )
-            }}
-          />
+          {
+            actualStakedAmount.isEqualTo(0) ? (
+              <View style={{
+                backgroundColor: preferenceTheme.background.surfaceDisable,
+                paddingHorizontal: 12,
+                paddingVertical: 4,
+                borderRadius: 30,
+              }}>
+                <Text style={theme.typography.footnote.bold}>
+                  {t('locked')}
+                </Text>
+              </View>
+            ) : (
+              <LockModal
+                item={item}
+                trigger={() => {
+                  return (
+                    <View style={{
+                      backgroundColor: preferenceTheme.background.surface,
+                      paddingHorizontal: 12,
+                      paddingVertical: 4,
+                      borderRadius: 30,
+                    }}>
+                      <Text style={theme.typography.footnote.bold}>
+                        {t('lock')}
+                      </Text>
+                    </View>
+                  )
+                }}
+              />
+            )
+          }
         </View>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 12, gap: 6}}>

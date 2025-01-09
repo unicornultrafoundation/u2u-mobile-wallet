@@ -4,6 +4,7 @@ import { queryAllWithdrawalRequest } from "../service/staking"
 import { withdrawalRequestDataProcessor } from "../util/staking"
 import { useNetwork } from "./useNetwork"
 import { useQuery } from "@tanstack/react-query"
+import { useRemoteConfig } from "./useRemoteConfig"
 
 export interface WithdrawalRequest {
   wrId: string
@@ -23,18 +24,18 @@ export interface WithdrawalRequest {
 export const useFetchWithdrawRequest = (delegatorAddr: string) => {
   const {networkConfig} = useNetwork()
 
-  const fetchAllWithdrawalRequest = useCallback(async () => {
-    if (!delegatorAddr || !networkConfig) return []
-    const data = await queryAllWithdrawalRequest(delegatorAddr, networkConfig.sfcSubgraph)
-    if (data && data.withdrawalRequests.length > 0) {
-      return data.withdrawalRequests.map((i: any) => withdrawalRequestDataProcessor(i, networkConfig.withdrawPeriodTime))
-    }
-    return []
-  }, [delegatorAddr, networkConfig])
+  const {remoteConfig} = useRemoteConfig()
 
   const { data } = useQuery({
-    queryKey: ['fetchAllWithdrawalRequest', delegatorAddr, networkConfig],
-    queryFn: fetchAllWithdrawalRequest,
+    queryKey: ['fetchAllWithdrawalRequest', delegatorAddr, networkConfig, remoteConfig],
+    queryFn: async () => {
+      if (!delegatorAddr || !networkConfig) return []
+      const data = await queryAllWithdrawalRequest(delegatorAddr, networkConfig.sfcSubgraph)
+      if (data && data.withdrawalRequests.length > 0) {
+        return data.withdrawalRequests.map((i: any) => withdrawalRequestDataProcessor(i, remoteConfig.withdrawPeriodTime))
+      }
+      return []
+    },
     refetchInterval: 60000,
     placeholderData: [] as WithdrawalRequest[]
   })

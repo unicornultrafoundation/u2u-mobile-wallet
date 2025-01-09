@@ -34,6 +34,7 @@ const VALIDATIONS_GQL = `
   id
   validator {${VALIDATOR_GQL}}
   stakedAmount
+  totalLockStake
 `
 
 const EPOCH_OF_VAL_GQL = `
@@ -148,27 +149,30 @@ export const Schema = () => {
     LOCKED_STAKE: minimalGQL`
       query LockedUp($delegatorAddress: String!, $valId: String!) {
         lockedUps (where:{
-            delegator: $delegatorAddress
-            validator: $valId
-          }) {
-            delegator {
-              id
-            }
-            validator {
-              id
-            }
-            duration
-            lockedAmount
-            unlockedAmount
-            penalty
-            endTime
+          delegator: $delegatorAddress
+          validator: $valId
+        }) {
+          delegator {
+            id
           }
+          validator {
+            id
+            auth
+          }
+          duration
+          lockedAmount
+          unlockedAmount
+          penalty
+          endTime
+        }
       }
     `,
     ALL_LOCKED_STAKE: minimalGQL`
-      query AllLockedUp($delegatorAddress: String!) {
+      query AllLockedUp($delegatorAddress: String!, $timeNow: Int!) {
         lockedUps (where:{
-          delegator: $delegatorAddress
+          delegator: $delegatorAddress,
+          lockedAmount_gt: "0",
+          endTime_gt: $timeNow
         }) {
           delegator {
             id
@@ -349,6 +353,17 @@ export const Schema = () => {
           owner {
             id
           }
+        }
+      }
+    `,
+    // Dex
+    DEX_TOKENS: minimalGQL`
+      query AllDexTokens {
+        tokens {
+          id
+          symbol
+          name
+          decimals
         }
       }
     `

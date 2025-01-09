@@ -56,7 +56,7 @@ const AuthStep = ({onNextStep, onBack}: {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <KeyboardAvoidingView 
-        style={{flex: 1, paddingBottom: getPhonePaddingBottom()}}
+        style={{flex: 1, paddingBottom: getPhonePaddingBottom() + 24}}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={24}
       >

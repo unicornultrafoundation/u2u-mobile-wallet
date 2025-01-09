@@ -1,30 +1,30 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView, TouchableOpacity } from '@gorhom/bottom-sheet';
 import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { TouchableOpacity, View } from 'react-native';
-import Text from '../../../component/Text';
-import theme from '../../../theme';
+// import { TouchableOpacity } from 'react-native';
+import Text from '@/component/Text';
+import theme from '@/theme';
 import { styles } from './styles';
 import { SvgUri } from 'react-native-svg';
-import { Validation } from '../../../service/staking';
-import { formatNumberString, shortenAddress, parseNumberFormatter } from '../../../util/string';
+import { Validation } from '@/service/staking';
+import { formatNumberString, shortenAddress, parseNumberFormatter } from '@/util/string';
 import { useTranslation } from 'react-i18next';
-import Separator from '../../../component/Separator';
-import BigNumber from 'bignumber.js';
-import { useFetchLockedStake } from '../../../hook/useFetchLockedStake';
-import { useWallet } from '../../../hook/useWallet';
-import TextInput from '../../../component/TextInput';
-import Button from '../../../component/Button';
-import { useStaking } from '../../../hook/useStaking';
+import Separator from '@/component/Separator';
+import { useFetchLockedStake } from '@/hook/useFetchLockedStake';
+import { useWallet } from '@/hook/useWallet';
+import TextInput from '@/component/TextInput';
+import Button from '@/component/Button';
+import { useStaking } from '@/hook/useStaking';
 // import { MIN_LOCKUP_DURATION } from '../../../config/constant';
-import { useLockStake } from '../../../hook/useLockStake';
+import { useLockStake } from '@/hook/useLockStake';
 import Toast from 'react-native-toast-message';
-import { useTransaction } from '../../../hook/useTransaction';
+import { useTransaction } from '@/hook/useTransaction';
 import { TransactionReceipt } from 'ethers';
-import { parseFromRaw } from '../../../util/bignum';
-import { usePreference } from '../../../hook/usePreference';
-import CustomBottomSheetModal from '../../../component/CustomBottomSheetModal';
-import { logErrorForMonitoring } from '../../../hook/useCrashlytics';
+import { parseFromRaw } from '@/util/bignum';
+import { usePreference } from '@/hook/usePreference';
+import CustomBottomSheetModal from '@/component/CustomBottomSheetModal';
+import { logErrorForMonitoring } from '@/hook/useCrashlytics';
 import { useRemoteConfig } from '@/hook/useRemoteConfig';
+import BigNumber from 'bignumber.js';
 
 const LockModal = ({trigger, item}: {
   trigger: () => JSX.Element,
@@ -39,7 +39,7 @@ const LockModal = ({trigger, item}: {
 
   const {lockedStake: valLockedStake} = useFetchLockedStake(item.validator.auth.toLowerCase(), Number(item.validator.valId))
   const {lockedStake: myLockedStake, fetchLockedStake} = useFetchLockedStake(wallet.address.toLowerCase(), Number(item.validator.valId))
-  const {lockedAmount, penalty} = myLockedStake
+  const {lockedAmount, penalty, endTime} = myLockedStake
   const {lockStake, relockStake} = useLockStake(stakingContractOptions)
   const {resetTxState} = useTransaction()
 
@@ -57,7 +57,7 @@ const LockModal = ({trigger, item}: {
   }, [valLockedStake])
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['50%'], []);
+  // const snapPoints = useMemo(() => ['50%'], []);
 
   const [amount, setAmount] = useState('0')
   const [duration, setDuration] = useState('0')
@@ -70,15 +70,16 @@ const LockModal = ({trigger, item}: {
   }, []);
 
   const actualStakedAmount = useMemo(() => {
-    if (item.stakedAmount && !item.stakedAmount.isZero()) {
-      let _amount = item.stakedAmount.minus(BigNumber(lockedAmount || 0))
-      if (penalty) {
-        _amount = _amount.minus(penalty)
-      }
-      return _amount
+    let _amount = item.actualStakedAmount
+
+    if (Date.now() < endTime) {
+      _amount = _amount.minus(BigNumber(lockedAmount || 0))
     }
-    return BigNumber(0)
-  }, [item, lockedAmount, penalty])
+    if (penalty) {
+      _amount = _amount.minus(penalty)
+    }
+    return _amount
+  }, [item, lockedAmount, penalty, endTime])
 
   const parsedStakedAmount = useMemo(() => {
     return parseFromRaw(actualStakedAmount.toFixed(), 18)
@@ -198,18 +199,23 @@ const LockModal = ({trigger, item}: {
       
       alertSuccess(tx);
 
+      setAmount('0')
+      setDuration('0')
+      handleClose()
+
     } catch (error) {
       logErrorForMonitoring(error as any, "handleLock error")
-      setLocking(false)
 
       alertError(error)
+    } finally {
+      setLocking(false)
     }
   }
 
   const renderForm = () => {
     return (
-      <View style={{width: '100%', flex: 1}}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <BottomSheetView style={{width: '100%', flex: 1}}>
+        <BottomSheetView style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text
             style={[
               theme.typography.footnote.regular
@@ -228,10 +234,10 @@ const LockModal = ({trigger, item}: {
                 }
               ]}
             >
-              {t('available')}: {formatNumberString(parsedStakedAmount, 4)} U2U
+              {t('available')}: {formatNumberString(parsedStakedAmount, 2)} U2U
             </Text>
           </TouchableOpacity>
-        </View>
+        </BottomSheetView>
         <TextInput
           value={amount}
           error={errorAmount}
@@ -249,7 +255,7 @@ const LockModal = ({trigger, item}: {
           }}
           insideModal={true}
         />
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 12}}>
+        <BottomSheetView style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 12}}>
           <Text
             style={[
               theme.typography.footnote.regular
@@ -265,8 +271,8 @@ const LockModal = ({trigger, item}: {
           >
             {t('max')}: {formatNumberString(maxDuration.toString())} {t('days')}
           </Text>
-        </View>
-        <View style={{justifyContent: 'flex-start'}}>
+        </BottomSheetView>
+        <BottomSheetView style={{justifyContent: 'flex-start'}}>
           <TextInput
             value={duration}
             error={errorDuration}
@@ -286,11 +292,12 @@ const LockModal = ({trigger, item}: {
             }}
             insideModal={true}
           />
-        </View>
-        <View
-          style={{width: '100%', flex: 1, justifyContent: 'flex-end'}}
+        </BottomSheetView>
+        <BottomSheetView
+          style={{paddingVertical: 18}}
         >
           <Button
+            insideModal={true}
             fullWidth
             style={{
               borderRadius: 60
@@ -301,8 +308,8 @@ const LockModal = ({trigger, item}: {
           >
             {t('lock')}
           </Button>
-        </View>
-      </View>
+        </BottomSheetView>
+      </BottomSheetView>
     )
   }
 
@@ -311,18 +318,18 @@ const LockModal = ({trigger, item}: {
       modalRef={bottomSheetModalRef}
       trigger={trigger()}
       triggerModal={
-        <View style={[
+        <BottomSheetView style={[
           styles.contentContainer,
         ]}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View style={{width: 34, height: 34, marginRight: 8}}>
+          <BottomSheetView style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <BottomSheetView style={{width: 34, height: 34, marginRight: 8}}>
               <SvgUri
                 uri={"https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg"}
                 width="100%"
                 height="100%"
               />
-            </View>
-            <View
+            </BottomSheetView>
+            <BottomSheetView
               style={{flex: 1, justifyContent: 'space-between'}}
             >
               <Text
@@ -345,13 +352,13 @@ const LockModal = ({trigger, item}: {
               >
                 {shortenAddress(item.validator.auth, 8, 8)}
               </Text>
-            </View>
-          </View>
+            </BottomSheetView>
+          </BottomSheetView>
           <Separator style={{width: '100%'}} />
           {renderForm()}
-        </View>
+        </BottomSheetView>
       }
-      snapPoints={snapPoints}
+      snapPoints={['65%']}
       hasSeparator={false}
     />
   )

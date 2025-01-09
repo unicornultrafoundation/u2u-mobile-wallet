@@ -10,7 +10,7 @@ import '@ethersproject/shims';
 import 'event-target-polyfill'
 import '@walletconnect/react-native-compat'
 import React, { useEffect } from 'react';
-import { Linking, StatusBar, View, StyleSheet, AppState, Platform, NativeEventSubscription } from 'react-native';
+import { Linking, StatusBar, View, StyleSheet, AppState, Platform } from 'react-native';
 
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import analytics from '@react-native-firebase/analytics';

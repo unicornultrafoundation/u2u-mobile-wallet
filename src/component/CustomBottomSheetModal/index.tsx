@@ -1,4 +1,4 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import React, { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View, Text, StyleProp, ViewStyle } from 'react-native';
@@ -15,10 +15,10 @@ interface Props {
   title?: string;
   trigger: JSX.Element;
   triggerModal: JSX.Element;
-  snapPoints: 
-  | Array<string | number>
-  | SharedValue<Array<string | number>>
-  | Readonly<(string | number)[] | SharedValue<(string | number)[]>>;
+  snapPoints: (string | number)[];
+  // | Array<string | number>
+  // | SharedValue<Array<string | number>>
+  // | Readonly<(string | number)[] | SharedValue<(string | number)[]>>;
   hasSeparator?: boolean;
   triggerStyle?: StyleProp<ViewStyle>;
 }
@@ -91,7 +91,7 @@ const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoi
           )
         }}
       >
-        <View 
+        <BottomSheetView 
           style={{ 
             flex: 1,
             flexDirection: 'column',
@@ -110,10 +110,10 @@ const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoi
             {t(title)}
           </Text>}
           {hasSeparator && <Separator style={{width: '100%', marginVertical: 2}} />}
-          <View style={{flex: 1, marginBottom: insets.bottom}}>
+          <BottomSheetView style={{flex: 1, marginBottom: insets.bottom}}>
             {triggerModal}
-          </View>
-        </View>
+          </BottomSheetView>
+        </BottomSheetView>
       </BottomSheetModal>
     </>
   )

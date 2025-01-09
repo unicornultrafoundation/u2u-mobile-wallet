@@ -112,7 +112,7 @@ export const useTracking = () => {
 
   const submitDeviceNotiToken = useCallback(async () => {
     try {
-      if (!networkConfig || !networkConfig.api_endpoint || !wallet) return
+      if (!networkConfig || !networkConfig.api_endpoint || !wallet || !wallet.privateKey) return
       const token = await messaging().getToken();
 
       const endpoint = `${networkConfig.api_endpoint}${SUBMIT_DEVICE_NOTIFICATION_TOKEN}`

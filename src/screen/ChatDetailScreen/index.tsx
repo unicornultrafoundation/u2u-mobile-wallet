@@ -78,7 +78,7 @@ export default function ChatDetailScreen() {
 
 
   const handleLoadMore = () => {
-    if (isFetching || !allMessages) return;
+    if (isFetching || !allMessages || allMessages.length === 0) return;
     if (allMessages[allMessages.length - 1].id.toLowerCase() !== lastMessageID) {
       setLastMessageID(allMessages[allMessages.length - 1].id)
     }
