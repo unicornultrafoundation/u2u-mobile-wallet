@@ -1,6 +1,7 @@
 import { Core } from '@walletconnect/core'
 import { WC_PROJECT_ID } from '../config/constant'
 import WalletKit, { IWalletKit } from '@reown/walletkit';
+import messaging from '@react-native-firebase/messaging'
 
 const core = new Core({
   projectId: WC_PROJECT_ID,
@@ -26,9 +27,19 @@ export async function createWalletKit() {
   walletKit = await WalletKit.init(walletConnectOptions);
 
   try {
-    const clientId =
-      await walletKit.engine.signClient.core.crypto.getClientId();
-    console.log('WalletConnect ClientID: ', clientId);
+    // const clientId =
+    //   await walletKit.engine.signClient.core.crypto.getClientId();
+    // console.log('WalletConnect ClientID: ', clientId);
+
+    messaging().onTokenRefresh(async (token) => {
+      await walletKit.registerDeviceToken({
+        // token: await messaging().getToken(), // device token
+        token,
+        clientId: await walletKit.core.crypto.getClientId(), //your instance clientId
+        notificationType: 'fcm', // notification type
+        enableEncrypted: true // flag that enabled detailed notifications
+      });
+    });
   } catch (error) {
     console.error(
       'Failed to set WalletConnect clientId in localStorage: ',

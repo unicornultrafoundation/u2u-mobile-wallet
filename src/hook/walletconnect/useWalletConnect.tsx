@@ -3,8 +3,8 @@ import { WalletKitTypes } from "@reown/walletkit";
 import { buildApprovedNamespaces, getSdkError } from '@walletconnect/utils'
 import { useNetwork } from "../useNetwork";
 import { useWallet } from "../useWallet";
-import { useGlobalStore } from "../../state/global";
-import { walletKit } from "../../util/walletconnect";
+import { useGlobalStore } from "@/state/global";
+import { walletKit } from "@/util/walletconnect";
 import { useQuery } from "@tanstack/react-query";
 import { SessionTypes } from '@walletconnect/types';
 
