@@ -636,7 +636,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.uniultra.superapp;
 				PRODUCT_NAME = U2UMobileWallet;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "org.uniultra.superapp AppStore 1716023442";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "*[expo] org.uniultra.superapp AppStore 2025-01-07T08:18:52.097Z";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -674,7 +674,7 @@
 				PRODUCT_NAME = U2UMobileWallet;
 				PROVISIONING_PROFILE = "78c6121d-4c49-451b-8cf2-44147c808047";
 				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "org.uniultra.superapp AppStore 1716023442";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "*[expo] org.uniultra.superapp AppStore 2025-01-07T08:18:52.097Z";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
