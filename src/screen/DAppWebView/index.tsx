@@ -9,7 +9,6 @@ import loadLocalResource from 'react-native-local-resource';
 import { isListedDApp, parseError, parseRun } from '../../util/dapp';
 import Icon from '../../component/Icon';
 import Text from '../../component/Text';
-import ConfirmTxModal from './ConfirmTxModal';
 import { useGlobalStore } from '../../state/global';
 import { Wallet, isHexString } from 'ethers';
 import { usePreference } from '../../hook/usePreference';
@@ -19,8 +18,8 @@ import SelectNetworkModal from '../../component/SelectNetworkModal';
 import TextInput from '../../component/TextInput';
 import WarningModal from './WarningModal';
 import useFetchDappList from '../../hook/useFetchDappList';
-import { handleGoBack } from '../../util/navigation';
 import { isSupportedNetwork } from '@/util/blockchain';
+import ConfirmTxModal from '@/component/ConfirmTxModal';
 
 const myResource = require('./mobile-provider.jsstring');
 const SCALE_FOR_DESKTOP = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `

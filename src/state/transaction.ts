@@ -62,7 +62,9 @@ export const useTransactionStore = create<TransactionState>((set) => ({
       name: "",
       category: "",
       graph: "",
-      description: ""
+      description: "",
+      is1155: false,
+      isGroup: false
     },
     tokenID: "",
     image: "",

@@ -123,8 +123,8 @@ const Icon = ({name, width, height, color, style}: {
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg width="100%" height="100%" viewBox="0 0 24 24" fill={color || "#D8D8D8"}>
-              {/* <Path fillRule="evenodd" clipRule="evenodd" d="M3.50083 13.7871V13.5681C3.53295 12.9202 3.7406 12.2925 4.10236 11.7496C4.7045 11.0975 5.1167 10.2983 5.29571 9.43598C5.29571 8.7695 5.29571 8.0935 5.35393 7.42703C5.65469 4.21842 8.82728 2 11.9611 2H12.0387C15.1725 2 18.345 4.21842 18.6555 7.42703C18.7137 8.0935 18.6555 8.7695 18.704 9.43598C18.8854 10.3003 19.2972 11.1019 19.8974 11.7591C20.2618 12.2972 20.4698 12.9227 20.4989 13.5681V13.7776C20.5206 14.648 20.2208 15.4968 19.6548 16.1674C18.907 16.9515 17.8921 17.4393 16.8024 17.5384C13.607 17.8812 10.383 17.8812 7.18762 17.5384C6.09914 17.435 5.08576 16.9479 4.33521 16.1674C3.778 15.4963 3.48224 14.6526 3.50083 13.7871Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <Path d="M9.55493 20.8518C10.0542 21.4785 10.7874 21.884 11.5922 21.9788C12.3971 22.0735 13.2072 21.8495 13.8433 21.3564C14.0389 21.2106 14.2149 21.041 14.3672 20.8518" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/> */}
+              {/* <Path fillRule="evenodd" clipRule="evenodd" d="M3.50083 13.7871V13.5681C3.53295 12.9202 3.7406 12.2925 4.10236 11.7496C4.7045 11.0975 5.1167 10.2983 5.29571 9.43598C5.29571 8.7695 5.29571 8.0935 5.35393 7.42703C5.65469 4.21842 8.82728 2 11.9611 2H12.0387C15.1725 2 18.345 4.21842 18.6555 7.42703C18.7137 8.0935 18.6555 8.7695 18.704 9.43598C18.8854 10.3003 19.2972 11.1019 19.8974 11.7591C20.2618 12.2972 20.4698 12.9227 20.4989 13.5681V13.7776C20.5206 14.648 20.2208 15.4968 19.6548 16.1674C18.907 16.9515 17.8921 17.4393 16.8024 17.5384C13.607 17.8812 10.383 17.8812 7.18762 17.5384C6.09914 17.435 5.08576 16.9479 4.33521 16.1674C3.778 15.4963 3.48224 14.6526 3.50083 13.7871Z" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M9.55493 20.8518C10.0542 21.4785 10.7874 21.884 11.5922 21.9788C12.3971 22.0735 13.2072 21.8495 13.8433 21.3564C14.0389 21.2106 14.2149 21.041 14.3672 20.8518" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/> */}
               <Path fill="none" d="M0 0h24v24H0z" />
               <Path d="M5 18h14v-6.969C19 7.148 15.866 4 12 4s-7 3.148-7 7.031V18zm7-16c4.97 0 9 4.043 9 9.031V20H3v-8.969C3 6.043 7.03 2 12 2zM9.5 21h5a2.5 2.5 0 11-5 0z" />
             </Svg>
@@ -134,8 +134,8 @@ const Icon = ({name, width, height, color, style}: {
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg width="100%" height="100%" viewBox="0 0 24 24" fill={color || "white"}>
-              {/* <Path fillRule="evenodd" clipRule="evenodd" d="M3.50083 13.7871V13.5681C3.53295 12.9202 3.7406 12.2925 4.10236 11.7496C4.7045 11.0975 5.1167 10.2983 5.29571 9.43598C5.29571 8.7695 5.29571 8.0935 5.35393 7.42703C5.65469 4.21842 8.82728 2 11.9611 2H12.0387C15.1725 2 18.345 4.21842 18.6555 7.42703C18.7137 8.0935 18.6555 8.7695 18.704 9.43598C18.8854 10.3003 19.2972 11.1019 19.8974 11.7591C20.2618 12.2972 20.4698 12.9227 20.4989 13.5681V13.7776C20.5206 14.648 20.2208 15.4968 19.6548 16.1674C18.907 16.9515 17.8921 17.4393 16.8024 17.5384C13.607 17.8812 10.383 17.8812 7.18762 17.5384C6.09914 17.435 5.08576 16.9479 4.33521 16.1674C3.778 15.4963 3.48224 14.6526 3.50083 13.7871Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <Path d="M9.55493 20.8518C10.0542 21.4785 10.7874 21.884 11.5922 21.9788C12.3971 22.0735 13.2072 21.8495 13.8433 21.3564C14.0389 21.2106 14.2149 21.041 14.3672 20.8518" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/> */}
+              {/* <Path fillRule="evenodd" clipRule="evenodd" d="M3.50083 13.7871V13.5681C3.53295 12.9202 3.7406 12.2925 4.10236 11.7496C4.7045 11.0975 5.1167 10.2983 5.29571 9.43598C5.29571 8.7695 5.29571 8.0935 5.35393 7.42703C5.65469 4.21842 8.82728 2 11.9611 2H12.0387C15.1725 2 18.345 4.21842 18.6555 7.42703C18.7137 8.0935 18.6555 8.7695 18.704 9.43598C18.8854 10.3003 19.2972 11.1019 19.8974 11.7591C20.2618 12.2972 20.4698 12.9227 20.4989 13.5681V13.7776C20.5206 14.648 20.2208 15.4968 19.6548 16.1674C18.907 16.9515 17.8921 17.4393 16.8024 17.5384C13.607 17.8812 10.383 17.8812 7.18762 17.5384C6.09914 17.435 5.08576 16.9479 4.33521 16.1674C3.778 15.4963 3.48224 14.6526 3.50083 13.7871Z" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M9.55493 20.8518C10.0542 21.4785 10.7874 21.884 11.5922 21.9788C12.3971 22.0735 13.2072 21.8495 13.8433 21.3564C14.0389 21.2106 14.2149 21.041 14.3672 20.8518" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/> */}
               <Path fill="none" d="M0 0h24v24H0z" />
               <Path d="M18.586 20H4a.5.5 0 01-.4-.8l.4-.533V10c0-1.33.324-2.584.899-3.687L1.393 2.808l1.415-1.415 19.799 19.8-1.415 1.414L18.586 20zM6.408 7.822A5.985 5.985 0 006 10v8h10.586L6.408 7.822zM20 15.786l-2-2V10a6 6 0 00-8.99-5.203L7.56 3.345A8 8 0 0120 10v5.786zM9.5 21h5a2.5 2.5 0 11-5 0z" />
             </Svg>
@@ -161,11 +161,11 @@ const Icon = ({name, width, height, color, style}: {
         return (
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
-              <Path d="M22.6315 13.0144H1.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <Path d="M20.7501 8.7779V6.82514C20.7501 4.996 19.2541 3.5 17.425 3.5H15.7812" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <Path d="M3.38159 8.7779V6.82095C3.38159 4.98867 4.86607 3.50314 6.69835 3.50105L8.37873 3.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <Path d="M20.7501 13.0144V17.5454C20.7501 19.3735 19.2541 20.8705 17.425 20.8705H15.7812" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <Path d="M3.38159 13.0144V17.5495C3.38159 19.3818 4.86607 20.8674 6.69835 20.8695L8.37873 20.8705" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M22.6315 13.0144H1.5" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M20.7501 8.7779V6.82514C20.7501 4.996 19.2541 3.5 17.425 3.5H15.7812" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M3.38159 8.7779V6.82095C3.38159 4.98867 4.86607 3.50314 6.69835 3.50105L8.37873 3.5" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M20.7501 13.0144V17.5454C20.7501 19.3735 19.2541 20.8705 17.425 20.8705H15.7812" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M3.38159 13.0144V17.5495C3.38159 19.3818 4.86607 20.8674 6.69835 20.8695L8.37873 20.8705" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </Svg>
           </View>
         )
@@ -283,10 +283,10 @@ const Icon = ({name, width, height, color, style}: {
           <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
             <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
               <Rect width="24" height="24" rx="12" fill="url(#paint0_linear_526_12784)"/>
-              <Path d="M18.4258 13.5972H15.7269C14.736 13.5965 13.9327 12.7939 13.9321 11.803C13.9321 10.812 14.736 10.0094 15.7269 10.0088H18.4258" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
-              <Path d="M16.0322 11.7618H15.8244" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
-              <Path fillRule="evenodd" clipRule="evenodd" d="M9.16495 6H14.9272C16.8593 6 18.4257 7.56634 18.4257 9.49844V14.2831C18.4257 16.2152 16.8593 17.7816 14.9272 17.7816H9.16495C7.23284 17.7816 5.6665 16.2152 5.6665 14.2831V9.49844C5.6665 7.56634 7.23284 6 9.16495 6Z" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
-              <Path d="M8.69043 9.02547H12.2897" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M18.4258 13.5972H15.7269C14.736 13.5965 13.9327 12.7939 13.9321 11.803C13.9321 10.812 14.736 10.0094 15.7269 10.0088H18.4258" stroke={color || "white"} strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M16.0322 11.7618H15.8244" stroke={color || "white"} strokeLinecap="round" strokeLinejoin="round"/>
+              <Path fillRule="evenodd" clipRule="evenodd" d="M9.16495 6H14.9272C16.8593 6 18.4257 7.56634 18.4257 9.49844V14.2831C18.4257 16.2152 16.8593 17.7816 14.9272 17.7816H9.16495C7.23284 17.7816 5.6665 16.2152 5.6665 14.2831V9.49844C5.6665 7.56634 7.23284 6 9.16495 6Z" stroke={color || "white"} strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M8.69043 9.02547H12.2897" stroke={color || "white"} strokeLinecap="round" strokeLinejoin="round"/>
               <Defs>
                 <LinearGradient id="paint0_linear_526_12784" x1="0" y1="24" x2="24" y2="0" gradientUnits="userSpaceOnUse">
                   <Stop stopColor="#29A37A"/>
@@ -952,6 +952,16 @@ const Icon = ({name, width, height, color, style}: {
             >
               <Path fill="none" d="M0 0h24v24H0z" />
               <Path d="M13.828 1.686l8.486 8.486-1.415 1.414-.707-.707-4.242 4.242-.707 3.536-1.415 1.414-4.242-4.243-4.95 4.95-1.414-1.414 4.95-4.95-4.243-4.242 1.414-1.415L8.88 8.05l4.242-4.242-.707-.707 1.414-1.415zm.708 3.536l-4.671 4.67-2.822.565 6.5 6.5.564-2.822 4.671-4.67-4.242-4.243z" />
+            </Svg>
+          </View>
+        )
+      case 'image':
+        return (
+          <View style={[{width: width, height: height, aspectRatio: 1}, style]}>
+            <Svg width="100%" height="100%" viewBox="0 0 20 20" fill="none">
+              <Path d="M7.50008 18.3327H12.5001C16.6667 18.3327 18.3334 16.666 18.3334 12.4993V7.49935C18.3334 3.33268 16.6667 1.66602 12.5001 1.66602H7.50008C3.33341 1.66602 1.66675 3.33268 1.66675 7.49935V12.4993C1.66675 16.666 3.33341 18.3327 7.50008 18.3327Z" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M7.49992 8.33333C8.42039 8.33333 9.16659 7.58714 9.16659 6.66667C9.16659 5.74619 8.42039 5 7.49992 5C6.57944 5 5.83325 5.74619 5.83325 6.66667C5.83325 7.58714 6.57944 8.33333 7.49992 8.33333Z" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <Path d="M2.2251 15.7918L6.33343 13.0335C6.99176 12.5918 7.94176 12.6418 8.53343 13.1501L8.80843 13.3918C9.45843 13.9501 10.5084 13.9501 11.1584 13.3918L14.6251 10.4168C15.2751 9.85846 16.3251 9.85846 16.9751 10.4168L18.3334 11.5835" stroke={color || "white"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </Svg>
           </View>
         )
