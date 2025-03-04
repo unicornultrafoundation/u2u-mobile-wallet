@@ -354,5 +354,6 @@
   "selectToken": "Select token",
   "slideToSwap": "Slide to swap",
   "noLockedStake": "No locked stake",
-  "stakeQuotaAvailable": "Stake quota available"
+  "stakeQuotaAvailable": "Stake quota available",
+  "validatorMaxCapExceed": "Exceed validator max cap"
 }

@@ -353,5 +353,6 @@
   "selectToken": "Chọn token",
   "slideToSwap": "Trượt để quy đổi",
   "noLockedStake": "Không có đầu tư khoá",
-  "stakeQuotaAvailable": "Stake còn lại"
+  "stakeQuotaAvailable": "Stake còn lại",
+  "validatorMaxCapExceed": "Stake còn lại của validator không đủ"
 }

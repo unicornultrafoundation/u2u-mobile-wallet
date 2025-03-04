@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
 import Icon from '../../component/Icon';
@@ -39,6 +39,10 @@ const AmountStep = ({onNextStep, onBack, validator}: {
   const [internalAmount, setInternalAmount] = useState(amount)
   const [error, setError] = useState('')
 
+  const availableAmount = useMemo(() => {
+    return validator.selfStakedAmount.multipliedBy(10).minus(validator.totalStakedAmount).dividedBy(10**18)
+  }, [validator])
+
   const handleContinue = async () => {
     setError('')
     const amountDigit = getDigit(internalAmount)
@@ -51,6 +55,11 @@ const AmountStep = ({onNextStep, onBack, validator}: {
 
     if (rawAmountBN.gt(balance)) {
       setError(t('insufficientBalance'))
+      return
+    }
+
+    if (rawAmountBN.gt(availableAmount)) {
+      setError(t('validatorMaxCapExceed'))
       return
     }
 
