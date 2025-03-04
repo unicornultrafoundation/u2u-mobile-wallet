@@ -24,7 +24,7 @@ const SelectNetworkModal = ({trigger}: {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  // const snapPoints = useMemo(() => ['35%', '60%'], []);
+  const snapPoints = useMemo(() => ['40%'], []);
 
   const handleClose = useCallback(() => {
     bottomSheetModalRef.current?.close();
@@ -76,7 +76,8 @@ const SelectNetworkModal = ({trigger}: {
       title={'selectNetwork'}
       trigger={trigger()}
       triggerModal={renderTriggerModal()}
-      snapPoints={['40%']}
+      snapPoints={snapPoints}
+      name={'titleNetwork'}
     />
   )
 };
