@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View } from 'react-native';
 import Text from '../../component/Text';
 import { Validator } from '../../service/staking';
@@ -16,6 +16,10 @@ const InfoTab = ({validator}: {
   const { t } = useTranslation()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
 
+  const availableAmount = useMemo(() => {
+    return validator.selfStakedAmount.multipliedBy(10).minus(validator.totalStakedAmount)
+  }, [validator])
+
   return (
     <View style={{paddingTop: 16, gap: 16}}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 8}}>
@@ -27,7 +31,7 @@ const InfoTab = ({validator}: {
             {VALIDATOR_COMMISSION}%
           </Text>
         </View>
-        <View style={{flex: 1}}>
+        <View style={{flex: 2}}>
           <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary, paddingBottom: 4}]}>
             {t('ID')}
           </Text>
@@ -46,7 +50,7 @@ const InfoTab = ({validator}: {
             {validator.totalDelegator}
           </Text>
         </View>
-        <View style={{flex: 1}}>
+        <View style={{flex: 2}}>
           <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary, paddingBottom: 4}]}>
             {t('votingPower')}
           </Text>
@@ -63,6 +67,14 @@ const InfoTab = ({validator}: {
           </Text>
           <Text style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}>
             {formatNumberString(validator.totalStakedAmount.dividedBy(10**18).toString(), 4)}
+          </Text>
+        </View>
+        <View style={{flex: 2}}>
+          <Text style={[theme.typography.caption2.regular, {color: preferenceTheme.text.secondary, paddingBottom: 4}]}>
+            {t('stakeQuotaAvailable')}
+          </Text>
+          <Text style={[theme.typography.caption1.medium, {color: preferenceTheme.text.title}]}>
+            {formatNumberString(availableAmount.dividedBy(10**18).toString(), 4)}
           </Text>
         </View>
       </View>
