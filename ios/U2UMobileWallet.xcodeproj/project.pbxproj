@@ -615,7 +615,7 @@
 				CODE_SIGN_ENTITLEMENTS = U2UMobileWallet/U2UMobileWalletDebug.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 138;
+				CURRENT_PROJECT_VERSION = 144;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 668U627Y5V;
 				ENABLE_BITCODE = NO;
@@ -636,7 +636,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.uniultra.superapp;
 				PRODUCT_NAME = U2UMobileWallet;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "*[expo] org.uniultra.superapp AppStore 2025-01-07T08:18:52.097Z";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "org.uniultra.superapp AppStore";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -653,7 +653,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 138;
+				CURRENT_PROJECT_VERSION = 144;
 				DEVELOPMENT_TEAM = 668U627Y5V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 668U627Y5V;
 				INFOPLIST_FILE = U2UMobileWallet/Info.plist;
@@ -674,7 +674,7 @@
 				PRODUCT_NAME = U2UMobileWallet;
 				PROVISIONING_PROFILE = "78c6121d-4c49-451b-8cf2-44147c808047";
 				PROVISIONING_PROFILE_SPECIFIER = "org.uniultra.superapp AppStore";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "*[expo] org.uniultra.superapp AppStore 2025-01-07T08:18:52.097Z";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "org.uniultra.superapp AppStore";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
