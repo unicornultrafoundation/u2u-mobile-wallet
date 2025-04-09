@@ -4,7 +4,6 @@ import { Validator } from '../../../service/staking';
 import { styles } from './styles';
 import { SvgUri } from 'react-native-svg';
 import Text from '../../../component/Text';
-import BigNumber from 'bignumber.js';
 import { formatNumberString, shortenAddress } from '../../../util/string';
 import theme from '../../../theme';
 import { useNavigation } from '@react-navigation/native';
@@ -22,6 +21,7 @@ const ValidatorItem = ({validator}: {
   }, [validator])
 
   const handleSelectValidator = (validator: Validator) => {
+    
     navigation.navigate("ValidatorDetail", {
       validator
     })

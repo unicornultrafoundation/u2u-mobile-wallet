@@ -1,5 +1,5 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, View, Text, StyleProp, ViewStyle } from 'react-native';
 import { usePreferenceStore } from '../../state/preferences';
@@ -8,7 +8,7 @@ import theme from '../../theme';
 import Separator from '../Separator';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { SharedValue, useReducedMotion } from 'react-native-reanimated';
+import { useReducedMotion } from 'react-native-reanimated';
 
 interface Props {
   modalRef?: React.RefObject<BottomSheetModalMethods>;
@@ -21,9 +21,10 @@ interface Props {
   // | Readonly<(string | number)[] | SharedValue<(string | number)[]>>;
   hasSeparator?: boolean;
   triggerStyle?: StyleProp<ViewStyle>;
+  name?: string
 }
 
-const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoints, hasSeparator = true, triggerStyle} : Props) => {
+const CustomBottomSheetModal = ({modalRef, name, title, trigger, triggerModal, snapPoints, hasSeparator = true, triggerStyle} : Props) => {
   const {darkMode} = usePreferenceStore()
   const preferenceTheme = darkMode ? darkTheme : lightTheme
   const insets = useSafeAreaInsets();
@@ -35,7 +36,7 @@ const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoi
   const bottomSheetModalRef = modalRef ?? useRef<BottomSheetModal>(null);
 
   // variables
-  // const snapPoints = useMemo(() => snapPoint, []);
+  const _snapPoints = useMemo(() => snapPoints, []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -44,9 +45,10 @@ const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoi
   const handleClose = useCallback(() => {
     bottomSheetModalRef.current?.close();
   }, []);
-  // const handleSheetChanges = useCallback((index: number) => {
-  //   console.log('handleSheetChanges', index);
-  // }, []);
+
+  useEffect(() => {
+    bottomSheetModalRef.current?.snapToIndex(_snapPoints.length - 1)
+  }, [bottomSheetModalRef.current])
 
   return (
     <>
@@ -59,14 +61,15 @@ const CustomBottomSheetModal = ({modalRef, title, trigger, triggerModal, snapPoi
       <BottomSheetModal
         animateOnMount={!reducedMotion}
         ref={bottomSheetModalRef}
-        index={0}
-        snapPoints={snapPoints}
+        name={name}
+        index={_snapPoints.length - 1}
+        snapPoints={_snapPoints}
         // onChange={handleSheetChanges}
         enablePanDownToClose={true}
         topInset={insets.top + 60}
         keyboardBlurBehavior={'restore'}
         backgroundStyle={{
-          backgroundColor: preferenceTheme.background.background,
+          backgroundColor: preferenceTheme.background.surface,
         }}
         handleStyle={{
           borderTopLeftRadius: 16,

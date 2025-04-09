@@ -1,4 +1,4 @@
-import { FlatList, KeyboardAvoidingView, Platform, SafeAreaView, TouchableOpacity, View } from "react-native";
+import { FlatList, KeyboardAvoidingView, Platform, Pressable, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { usePreference } from "../../hook/usePreference";
 import { styles } from "./styles";
 import Icon from "../../component/Icon";
@@ -6,7 +6,7 @@ import Text from "../../component/Text";
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useGlobalStore } from "../../state/global";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   Menu,
   MenuOptions,
@@ -14,17 +14,15 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import { useConversationDetail } from "../../hook/chat/useConversationDetail";
-import { useConversationMessages } from "../../hook/useConversationMessages";
 import TextInput from "../../component/TextInput";
 import theme from "../../theme";
 import { useWallet } from "../../hook/useWallet";
-import { formatDate } from "../../util/date";
 import { shortenAddress } from "../../util/string";
 import Separator from "../../component/Separator";
-import { isToday } from "date-fns";
-import { useSubscribeMessage } from "../../hook/chat/useSubscribeMessage";
-import { getUniqueByField } from "../../util/array";
 import { useUserChatProfile } from "@/hook/chat/useUserChatProfile";
+import MessageList from "./MessageList";
+import { useTransactionStore } from "@/state/transaction";
+import TxInput from "./TxInput";
 
 export default function ChatDetailScreen() {
   const { t } = useTranslation()
@@ -41,13 +39,10 @@ export default function ChatDetailScreen() {
     }, [route]),
   );
 
-  // const userAddresses: string[] = route.params?.userAddresses || []
   const conversationID: string = route.params?.conversationID || ''
-  const {data, error} = useConversationDetail(conversationID)
+  const {data} = useConversationDetail(conversationID)
 
-  const [lastMessageID, setLastMessageID] = useState('')
-  const {data: messages, isFetching} = useConversationMessages(conversationID, lastMessageID)
-  const {messages: latestMessages} = useSubscribeMessage(conversationID)
+  const {setTokenMeta, setReceiveAddress} = useTransactionStore()
 
   const otherContact = useMemo(() => {
     if (!data || !data.user) return ''
@@ -62,27 +57,9 @@ export default function ChatDetailScreen() {
     optionTouchable: styles.optionTouchable,
   }
 
-  const [allMessagesHistory, setAllMessageHistory] = useState<Record<string, any>[]>([])
   const [newMessage, setNewMessage] = useState('')
-
-  useEffect(() => {
-    setAllMessageHistory([...messages, ...allMessagesHistory])
-    data?.markRead()
-  }, [messages])
-
-  const allMessages = useMemo(() => {
-    const value = getUniqueByField([...allMessagesHistory, ...latestMessages], 'id')
-      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-    return value
-  }, [allMessagesHistory, latestMessages])
-
-
-  const handleLoadMore = () => {
-    if (isFetching || !allMessages || allMessages.length === 0) return;
-    if (allMessages[allMessages.length - 1].id.toLowerCase() !== lastMessageID) {
-      setLastMessageID(allMessages[allMessages.length - 1].id)
-    }
-  }
+  const [showMessageMenu, setShowMessageMenu] = useState(false)
+  const [inputMode, setInputMode] = useState<'text' | 'tx' | 'nft'>('text')
 
   const handleSelectMenuAction = async (value: string) => {
     if (!data) return
@@ -219,45 +196,123 @@ export default function ChatDetailScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={24}
       >
-        <FlatList
-          contentContainerStyle={{flexGrow: 1}}
-          data={allMessages}
-          inverted
-          renderItem={({item, index}) => {
-            const fromMe = item.from === wallet.address.toLowerCase()
-            return (
-              <View style={[styles.messageRow, {alignItems: fromMe ? 'flex-end' : 'flex-start'}]} key={`messages=${index}`}>
-                <Text
-                  type="caption2-medium"
-                  color="secondary"
-                >
-                  {isToday(item.createdAt) ? formatDate(item.createdAt, 'HH:mm') : formatDate(item.createdAt, 'dd/MM HH:mm')}
-                </Text>
-                <View style={[styles.messageContainer, {backgroundColor: fromMe ? theme.color.primary[600] : preferenceTheme.background.surface}]}>
-                  <Text>{item.content}</Text>
-                </View>
-              </View>
+        <View style={{flex: 1, position: 'relative'}}>
+          <MessageList />
+          {
+            showMessageMenu && (
+              <Pressable
+                style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.5)'}}
+                onPress={() => {
+                  setShowMessageMenu(false)
+                  setInputMode('text')
+                }}
+              />
             )
-          }}
-          onEndReached={handleLoadMore}
-          onEndReachedThreshold={.3}
-        />
-        <View style={{flexDirection: 'row', alignItems: 'center', gap: 8, padding: 16}}>
-          <TextInput
-            value={newMessage}
-            onChangeText={setNewMessage}
-            placeholder={t('newMessagePlaceholder')}
-            containerStyle={{flex: 1}}
-          />
-          <TouchableOpacity onPress={handleSendMessage}>
-            <Icon
-              name="send-chat"
-              width={24}
-              height={24}
-              color={theme.color.primary[500]}
-            />
-          </TouchableOpacity>
+          }
         </View>
+        {showMessageMenu && inputMode === 'text' && (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 48,
+              paddingVertical: 12,
+              paddingHorizontal: 16,
+              backgroundColor: preferenceTheme.background.surface
+            }}
+          >
+            <TouchableOpacity
+              style={{alignItems: 'center', gap: 6}}
+              onPress={() => {
+                if (!otherProfile) return
+                setTokenMeta({
+                  name: 'Ultra Unicorn',
+                  symbol: 'U2U',
+                  decimals: 18,
+                  address: '0x',
+                  logo: 'https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg',
+                })
+                setInputMode('tx')
+                setReceiveAddress(otherProfile.id)
+              }}
+            >
+              <View
+                style={{width: 40, height: 40, alignItems: 'center', justifyContent: 'center', borderRadius: 20, backgroundColor: preferenceTheme.background.surfaceHover}}
+              >
+                <Icon
+                  name="arrow-up"
+                  width={24}
+                  height={24}
+                  color={preferenceTheme.text.title}
+                />
+              </View>
+              <Text>Quick TX</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{alignItems: 'center', gap: 6}} onPress={() => setInputMode('nft')}>
+              <View
+                style={{width: 40, height: 40, alignItems: 'center', justifyContent: 'center', borderRadius: 20, backgroundColor: preferenceTheme.background.surfaceHover}}
+              >
+                <Icon
+                  name="image"
+                  width={24}
+                  height={24}
+                  color={preferenceTheme.text.title}
+                />
+              </View>
+              <Text>NFT</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        {inputMode === 'text' && (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 8, paddingHorizontal: 16, paddingVertical: 8,
+              backgroundColor: preferenceTheme.background.surface,
+            }}>
+            <TouchableOpacity
+              onPress={() => setShowMessageMenu(!showMessageMenu)}
+            >
+              <Icon
+                name={showMessageMenu ? "minus-circle" : "plus-circle"}
+                width={24}
+                height={24}
+                color={preferenceTheme.background.surfaceDisable}
+              />
+            </TouchableOpacity>
+            <TextInput
+              value={newMessage}
+              onChangeText={setNewMessage}
+              placeholder={t('newMessagePlaceholder')}
+              containerStyle={{flex: 1}}
+              placeholderTextColor={preferenceTheme.text.secondary}
+              textWrapperStyle={{
+                borderColor: theme.accentColor.primary.normal
+              }}
+            />
+            
+            <TouchableOpacity onPress={handleSendMessage}>
+              <Icon
+                name="send-chat"
+                width={24}
+                height={24}
+                color={theme.color.primary[500]}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+        {inputMode === 'tx' && (
+          <TxInput
+            onComplete={() => {
+              setInputMode('text')
+              setShowMessageMenu(false)
+            }}
+            conversationID={conversationID}
+          />
+        )}
+        
       </KeyboardAvoidingView>
     </SafeAreaView>
   )

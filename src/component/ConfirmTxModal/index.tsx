@@ -1,4 +1,4 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { View } from 'react-native';
 import {styles} from './styles'
@@ -7,7 +7,7 @@ import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import { SvgUri } from 'react-native-svg';
 import theme from '../../theme';
-import { formatNumberString, shortenAddress } from '../../util/string';
+import { shortenAddress } from '../../util/string';
 import { parseFromRaw } from '../../util/bignum';
 import { useTranslation } from 'react-i18next';
 import Icon from '../../component/Icon';
@@ -21,6 +21,7 @@ import { useNativeBalance } from '../../hook/useNativeBalance';
 import BigNumber from 'bignumber.js';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { logErrorForMonitoring } from '../../hook/useCrashlytics';
+import { useReducedMotion } from 'react-native-reanimated';
 
 const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
   onCloseModal: () => void;
@@ -44,7 +45,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   // variables
-  // const snapPoints = useMemo(() => ['90%'], []);
+  const reducedMotion = useReducedMotion();
 
   const {t} = useTranslation<string>()
 
@@ -112,21 +113,31 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
   useEffect(() => {
     if (!ref || !ref.current) return;
     if (showModal) {
+      console.log('open modal')
       ref.current.present()
+      ref.current.snapToIndex(0)
+      ref.current.snapToIndex(0)
     } else {
       ref.current.close()
     }
   }, [showModal, ref])
 
   useEffect(() => {
-    estimateGasLimit(txObj)
-    estimateGasPrice()
-  }, [txObj])
+    (async () => {
+      console.log('estimateGasLimit', txObj)
+      const gasLimit = await estimateGasLimit(txObj)
+      const gasPrice = await estimateGasPrice()
+      if (gasLimit === "0" || gasPrice === "0") {
+        console.log('close modal')
+        // onReject()
+      }
+    })()
+  }, [txObj, ref])
 
   return (
     <BottomSheetModal
       ref={ref}
-      // index={1}
+      animateOnMount={!reducedMotion}
       snapPoints={['90%']}
       onChange={handleSheetChanges}
       enablePanDownToClose
@@ -157,7 +168,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
         )
       }}
     >
-      <View
+      <BottomSheetView
         style={[
           styles.confirmTxContentContainer,
           {
@@ -165,20 +176,20 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
           }
         ]}
       >
-        <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface, width: '100%'}]}>
+        <BottomSheetView style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface, width: '100%'}]}>
           <Text style={theme.typography.caption2.regular}>{t('send')}</Text>
-          <View style={{flexDirection: 'row', alignItems: 'center', paddingTop: 8, width: '100%'}}>
-            <View style={{width: 24, height: 24}}>
+          <BottomSheetView style={{flexDirection: 'row', alignItems: 'center', paddingTop: 8, width: '100%'}}>
+            <BottomSheetView style={{width: 24, height: 24}}>
               <SvgUri
                 uri={"https://raw.githubusercontent.com/unicornultrafoundation/explorer-assets/master/public_assets/token_logos/u2u.svg"}
                 width="100%"
                 height="100%"
               />
-            </View>
+            </BottomSheetView>
             <Text style={[theme.typography.footnote.medium, {paddingHorizontal: 8}]}>
               {txObj.value ? parseFromRaw(txObj.value, 18, true) : 0} U2U
             </Text>
-          </View>
+          </BottomSheetView>
           <Separator />
             <Text style={theme.typography.caption2.regular}>{t('to')}</Text>
             <View style={{flexDirection: 'row', alignItems: 'center', paddingTop: 8}}>
@@ -187,29 +198,29 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
                 {txObj.to}
               </Text>
             </View>
-        </View>
+        </BottomSheetView>
 
-        <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface, width: '100%'}]}>
-          <View style={styles.cardRow}>
+        <BottomSheetView style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface, width: '100%'}]}>
+          <BottomSheetView style={styles.cardRow}>
             <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('estFee')}</Text>
             <Text style={[theme.typography.footnote.regular]}>{estimatedFee} U2U</Text>
-          </View>
-          <View style={styles.cardRow}>
+          </BottomSheetView>
+          <BottomSheetView style={styles.cardRow}>
             <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('maxFee')}</Text>
             <CustomGasModal
               trigger={() => {
                 return (
-                  <View style={{flexDirection: 'row'}}>
+                  <BottomSheetView style={{flexDirection: 'row'}}>
                     <Text style={[theme.typography.footnote.regular]}>{maxFee} U2U</Text>
                     <Icon name="chevron-right" />
-                  </View>
+                  </BottomSheetView>
                 )
               }}
             />
-          </View>
-        </View>
+          </BottomSheetView>
+        </BottomSheetView>
         {error && (
-          <View style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center', justifyContent: 'flex-start', width: '100%'}}>
+          <BottomSheetView style={{flexDirection: 'row', paddingBottom: 8, alignItems: 'center', justifyContent: 'flex-start', width: '100%'}}>
             <Icon name='error' width={18} height={18} />
             <Text style={[
               theme.typography.caption2.regular,
@@ -220,24 +231,24 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
             ]}>
               {error}
             </Text>
-          </View>
+          </BottomSheetView>
         )}
-        <View style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface, width: '100%'}]}>
-          <View style={styles.cardRow}>
+        <BottomSheetView style={[styles.cardContainer, {backgroundColor: preferenceTheme.background.surface, width: '100%'}]}>
+          <BottomSheetView style={styles.cardRow}>
             <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('from')}</Text>
             <Text style={[theme.typography.footnote.regular]}>{shortenAddress(wallet.address, 8, 8)}</Text>
-          </View>
-          <View style={styles.cardRow}>
+          </BottomSheetView>
+          <BottomSheetView style={styles.cardRow}>
             <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.secondary}]}>{t('network')}</Text>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <BottomSheetView style={{flexDirection: 'row', alignItems: 'center'}}>
               <Icon name='u2u' width={16} height={16} />
               <Text style={[theme.typography.footnote.regular, {color: preferenceTheme.text.title, paddingLeft: 4}]}>
                 {networkName}
               </Text>
-            </View>
-          </View>
-        </View>
-      </View>
+            </BottomSheetView>
+          </BottomSheetView>
+        </BottomSheetView>
+      </BottomSheetView>
       <Button
         style={{borderRadius: 60, marginBottom: 12, marginHorizontal: 16}}
         textStyle={theme.typography.label.medium}

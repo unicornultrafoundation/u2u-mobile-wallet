@@ -80,9 +80,11 @@ const CryptoTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onRes
     </ScrollView>
   } else {
     return (
-      assetsToShow.map((item) => {
-        return <TokenRow tokenObj={item} key={`token-asset-${item.symbol}-${item.name}`} />
-      })
+      <View style={{flex: 1}}>
+        {assetsToShow.map((item) => {
+          return <TokenRow tokenObj={item} key={`token-asset-${item.symbol}-${item.name}`} />
+        })}
+      </View>
     )
     // return (
     //   <FlatList

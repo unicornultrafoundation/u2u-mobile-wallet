@@ -55,7 +55,7 @@ const StakingDashboardScreen = () => {
             {
               color: preferenceTheme.text.primary,
               textAlign: 'center',
-              paddingVertical: 10
+              paddingTop: 24
             }]}
         >
           {t("myInvestment")}
