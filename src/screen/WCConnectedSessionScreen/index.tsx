@@ -9,6 +9,7 @@ import { styles } from "./styles";
 import { useTranslation } from "react-i18next";
 import { typography } from "../../theme/typography";
 import { useWalletConnect } from "../../hook/walletconnect/useWalletConnect";
+import { SvgUri } from "react-native-svg";
 
 export default function WCConnectedSessionScreen() {
   const {t} = useTranslation()
@@ -24,6 +25,17 @@ export default function WCConnectedSessionScreen() {
   );
 
   const {connectedSessions} = useWalletConnect()
+
+  const renderIcon = (icon: string) => {
+    if (icon.includes('.svg')) {
+      return (
+        <View style={{width: 36, height: 36}}>
+          <SvgUri uri={icon} width="100%" height="100%" />
+        </View>
+      )
+    }
+    return <Image source={{uri: icon}} style={{width: 36, height: 36}} />
+  }
 
   return (
     <SafeAreaView
@@ -46,15 +58,7 @@ export default function WCConnectedSessionScreen() {
               style={styles.sessionRow}
               onPress={() => navigation.navigate('WCSessionDetail', {sessionDetail: item})}
             >
-              {item.peer.metadata.icons[0] ? (
-                <Image
-                  source={{uri: item.peer.metadata.icons[0]}}
-                  style={{
-                    width: 36,
-                    height: 36
-                  }}
-                />
-              ) : (
+              {item.peer.metadata.icons[0] ? renderIcon(item.peer.metadata.icons[0]) : (
                 <Icon name='u2u' width={36} height={36} />
               )}
               <View style={{flex: 1, alignItems: 'flex-start', justifyContent: 'space-between', paddingHorizontal: 12}}>
