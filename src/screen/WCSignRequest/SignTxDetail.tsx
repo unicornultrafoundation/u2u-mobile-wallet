@@ -41,7 +41,7 @@ export default function SignTxDetail({signRequest}: {
           {t('amount')}:
         </Text>
         <Text>
-          {formatNumberString(formatEther(txData.value).toString())} U2U
+          {txData && txData.value ? formatNumberString(formatEther(txData.value).toString()) : "0"} U2U
         </Text>
       </View>
       <View style={{paddingVertical: 6, alignItems: 'flex-start', justifyContent: 'space-between', gap: 8}}>
@@ -49,7 +49,7 @@ export default function SignTxDetail({signRequest}: {
           {t('txData')}
         </Text>
         <Text>
-          {shortenAddress(txData.data, 15, 15)}
+          {txData && txData.value ? shortenAddress(txData.data, 15, 15) : ''}
         </Text>
       </View>
     </View>
