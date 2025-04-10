@@ -12,6 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		4EAE9209C829C591FEF60EBB /* libPods-U2UMobileWallet-U2UMobileWalletTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 314DA833E05F9B32792B51D0 /* libPods-U2UMobileWallet-U2UMobileWalletTests.a */; };
+		6132EF182BDFF13200BBE14D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6132EF172BDFF13200BBE14D /* PrivacyInfo.xcprivacy */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		84433B462B1E09B8008D3E41 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84433B452B1E09B8008D3E41 /* GoogleService-Info.plist */; };
 		8C69FEE03B1A1B8C0A2969C3 /* libPods-U2UMobileWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68C21CD7A284958ACE933451 /* libPods-U2UMobileWallet.a */; };
@@ -47,6 +48,7 @@
 		1B108610BA62F1F65DBD7532 /* Pods-U2UMobileWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-U2UMobileWallet.release.xcconfig"; path = "Target Support Files/Pods-U2UMobileWallet/Pods-U2UMobileWallet.release.xcconfig"; sourceTree = "<group>"; };
 		1E30C3585CE481033663E21F /* Pods-U2UMobileWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-U2UMobileWallet.debug.xcconfig"; path = "Target Support Files/Pods-U2UMobileWallet/Pods-U2UMobileWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		314DA833E05F9B32792B51D0 /* libPods-U2UMobileWallet-U2UMobileWalletTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-U2UMobileWallet-U2UMobileWalletTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6132EF172BDFF13200BBE14D /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = U2UMobileWallet/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		68C21CD7A284958ACE933451 /* libPods-U2UMobileWallet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-U2UMobileWallet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = U2UMobileWallet/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84433B452B1E09B8008D3E41 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				6132EF172BDFF13200BBE14D /* PrivacyInfo.xcprivacy */,
 				84433B452B1E09B8008D3E41 /* GoogleService-Info.plist */,
 				CE37C9EA2AB4096500F247C1 /* FontAwesome6_Brands.ttf */,
 				CE37C9EB2AB4096500F247C1 /* FontAwesome6_Regular.ttf */,
@@ -292,6 +295,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6132EF182BDFF13200BBE14D /* PrivacyInfo.xcprivacy in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				CE37C9EE2AB4096500F247C1 /* FontAwesome6_Regular.ttf in Resources */,
 				CE37C9EC2AB4096500F247C1 /* FontAwesome6_Solid.ttf in Resources */,
