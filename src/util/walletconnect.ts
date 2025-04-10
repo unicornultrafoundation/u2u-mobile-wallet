@@ -59,6 +59,9 @@ export async function updateSignClientChainId(
   }
   const namespace = chainId.split(':')[0];
   Object.values(sessions).forEach(async session => {
+    if (!session.namespaces[namespace]) {
+      return;
+    }
     await walletKit.updateSession({
       topic: session.topic,
       namespaces: {
@@ -75,7 +78,7 @@ export async function updateSignClientChainId(
           accounts: [
             ...new Set(
               [`${chainId}:${address}`].concat(
-                Array.from(session.namespaces[namespace].accounts),
+                Array.from(session.namespaces[namespace].accounts || []),
               ),
             ),
           ],
