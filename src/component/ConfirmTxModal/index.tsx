@@ -21,7 +21,7 @@ import { useNativeBalance } from '../../hook/useNativeBalance';
 import BigNumber from 'bignumber.js';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { logErrorForMonitoring } from '../../hook/useCrashlytics';
-import { useReducedMotion } from 'react-native-reanimated';
+// import { useReducedMotion } from 'react-native-reanimated';
 
 const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
   onCloseModal: () => void;
@@ -45,7 +45,7 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   // variables
-  const reducedMotion = useReducedMotion();
+  // const reducedMotion = useReducedMotion();
 
   const {t} = useTranslation<string>()
 
@@ -137,7 +137,8 @@ const ConfirmTxModal = ({showModal, onCloseModal, txObj, onConfirm, onReject}: {
   return (
     <BottomSheetModal
       ref={ref}
-      animateOnMount={!reducedMotion}
+      // animateOnMount={!reducedMotion}
+      animateOnMount={true}
       snapPoints={['90%']}
       onChange={handleSheetChanges}
       enablePanDownToClose

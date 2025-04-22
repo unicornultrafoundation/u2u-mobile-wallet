@@ -51,11 +51,13 @@ export default function WCSessionDetailScreen() {
       <View style={[styles.dappInfoContainer, {backgroundColor: '#1F2225'}]}>
         {sessionDetail.peer.metadata.icons[0] ? (
           sessionDetail.peer.metadata.icons[0].includes('.svg') ? (
-            <SvgUri
-              uri={sessionDetail.peer.metadata.icons[0]}
-              width="100%"
-              height="100%"
-            />
+            <View style={{width: 48, height: 48}}>
+              <SvgUri
+                uri={sessionDetail.peer.metadata.icons[0]}
+                width="100%"
+                height="100%"
+              />
+            </View>
           ) : (
             <Image source={{uri: sessionDetail.peer.metadata.icons[0]}} style={{ width: 48, height: 48 }}/>
           )
