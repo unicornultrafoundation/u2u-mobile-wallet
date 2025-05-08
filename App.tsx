@@ -1,0 +1,323 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
+
+import 'expo-dev-client';
+import "react-native-get-random-values";
+import 'react-native-gesture-handler';
+import '@ethersproject/shims';
+import 'event-target-polyfill'
+import '@walletconnect/react-native-compat'
+import * as wcUtils from "@walletconnect/utils";
+import { Buffer } from "buffer";
+
+import React, { useEffect } from 'react';
+import { Linking, StatusBar, View, StyleSheet, AppState, Platform, Text } from 'react-native';
+
+import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
+// import analytics from '@react-native-firebase/analytics';
+import "./src/i18n"
+import { useWallet } from './src/hook/useWallet';
+import OnboardingStackScreen from './src/stack/OnboardingStack';
+import { usePreferenceStore } from './src/state/preferences';
+import { darkTheme, lightTheme } from './src/theme/color';
+import { useHydration } from './src/hook/useHydration';
+import SplashScreen from './src/screen/SplashScreen';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { useNetInfo } from "@react-native-community/netinfo";
+import { MenuProvider } from 'react-native-popup-menu';
+import { useNetwork } from './src/hook/useNetwork';
+import { useGlobalStore } from './src/state/global';
+import AuthScreen from './src/screen/AuthScreen';
+import { useNetworkStore } from './src/state/network';
+import { SUPPORTED_CHAINS } from './src/config/chain';
+import { useTranslation } from 'react-i18next';
+import NoInternetScreen from './src/screen/NoInternetScreen';
+import { useTracking } from './src/hook/useTracking';
+import MainTabNav from './src/stack/MainTab';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useCrashlytics } from './src/hook/useCrashlytics';
+import ToastComponent from './src/component/Toast';
+import * as Notifications from 'expo-notifications';
+import crypto, {install} from "react-native-quick-crypto";
+import { ethers } from "ethers";
+
+// Shim for crypto project
+install();
+ethers.randomBytes.register((length) => {
+  return new Uint8Array(crypto.randomBytes(length));
+});
+ethers.computeHmac.register((algo, key, data) => {
+  return crypto.createHmac(algo, key).update(data).digest();
+});
+// @ts-ignore
+ethers.pbkdf2.register((passwd, salt, iter, keylen, algo) => {
+  return crypto.pbkdf2Sync(passwd, salt, iter, keylen, algo);
+});
+ethers.sha256.register((data: any) => {
+  return crypto.createHash('sha256').update(data).digest();
+});
+ethers.sha512.register((data: any) => {
+  return crypto.createHash('sha512').update(data).digest();
+});
+
+//@ts-ignore
+global.CustomEvent = global.Event
+
+// Patch the encoder to accept Buffer
+const origToString = (wcUtils as any).toString as (bytes: Uint8Array) => string;
+
+// Monkey-patch
+(wcUtils as any).toString = (bytes: Uint8Array | Buffer) => {
+  if (Buffer.isBuffer(bytes)) {
+    bytes = new Uint8Array(bytes);
+  }
+  return origToString(bytes as Uint8Array);
+};
+
+const queryClient = new QueryClient()
+
+const NAVIGATION_IDS = ['discover', 'ecosystem', 'external-sign', 'chat-detail'];
+
+function buildDeepLinkFromNotificationData(data: any): string | null {
+  console.log('buildDeepLinkFromNotificationData', data)
+  const navigationId = data?.navigationId;
+  if (!NAVIGATION_IDS.includes(navigationId)) {
+    console.log('Unverified navigationId', navigationId)
+    return null;
+  }
+  if (navigationId === 'external-sign') {
+    const signRequestID = data?.signRequestId
+    return `u2umobilewallet://wallet/external-sign/${signRequestID}`;
+  }
+  if (navigationId === 'chat-detail') {
+    const conversationID = data?.conversationID;
+    return `u2umobilewallet://wallet/chat-detail/${conversationID}`;
+  }
+  if (navigationId === 'discover') {
+    const newsId = data?.newsId
+    if (newsId) return `u2umobilewallet://discover/detail/${newsId}`
+    return 'u2umobilewallet://discover/dashboard';
+  }
+  const url = data?.url;
+  if (typeof url === 'string') {
+    return `u2umobilewallet://ecosystem/${url}`
+  }
+  console.log('Missing url')
+  return null
+}
+
+const linking = {
+  prefixes: ['u2umobilewallet://'],
+  config: {
+    // initialRouteName: 'WalletStack',
+    screens: {
+      WalletStack: {
+        screens: {
+          WCSignRequest: 'wallet/external-sign/:signRequestID',
+          WCScanQRCode: 'wallet/session-approval/:sessionID',
+          ChatDetail: 'wallet/chat-detail/:conversationID'
+        }
+      },
+      EcosystemStack: {
+        screens: {
+          DAppWebView: 'ecosystem/:url'
+        }
+      },
+      DiscoverStack: {
+        screens: {
+          Home: 'discover/dashboard',
+          NewsDetails: 'discover/detail/:id'
+        }
+      }
+    }
+  },
+  async getInitialURL() {
+    const url = await Linking.getInitialURL();
+    if (typeof url === 'string') {
+      return url;
+    }
+    //getInitialNotification: When the application is opened from a quit state.
+    // const message = await messaging().getInitialNotification();
+    // const deeplinkURL = buildDeepLinkFromNotificationData(message?.data);
+
+    // Handle URL from expo push notifications
+    const response = await Notifications.getLastNotificationResponseAsync();
+
+    const deeplinkURL = buildDeepLinkFromNotificationData(response?.notification.request.content.data.url);
+    if (typeof deeplinkURL === 'string') {
+      return deeplinkURL;
+    }
+  },
+  subscribe(listener: (url: string) => void) {
+    const onReceiveURL = ({url}: {url: string}) => {
+      return listener(url)
+    };
+
+    // Listen to incoming links from deep linking
+    const linkingSubscription = Linking.addEventListener('url', onReceiveURL);
+
+    //onNotificationOpenedApp: When the application is running, but in the background.
+    // const unsubscribe = messaging().onNotificationOpenedApp(remoteMessage => {
+    //   const url = buildDeepLinkFromNotificationData(remoteMessage.data)
+    //   if (typeof url === 'string') {
+    //     listener(url)
+    //   }
+    // });
+
+    // Listen to expo push notifications
+    const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+      const url = buildDeepLinkFromNotificationData(response.notification.request.content.data.url);
+
+      // Any custom logic to see whether the URL needs to be handled
+      //...
+
+      // Let React Navigation handle the URL
+      if (typeof url === 'string') {
+        listener(url);
+      }
+    });
+
+    return () => {
+      linkingSubscription.remove();
+      // unsubscribe();
+      subscription.remove();
+    };
+  },
+}
+
+function App(): React.JSX.Element {
+  // useCrashlytics()
+
+  const {unlocked, isAppInBackground, setIsAppInBackground} = useGlobalStore()
+  const { type, isConnected } = useNetInfo();
+  const {darkMode: isDarkMode, language} = usePreferenceStore()
+
+  const {chainId} = useNetwork()
+  const networkStore = useNetworkStore()
+
+  const routeNameRef = React.useRef<string>(undefined);
+  const navigationRef = React.useRef<NavigationContainerRef<any>>(null);
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? darkTheme.background.background : lightTheme.background.background,
+    flex: 1,
+  };
+
+  const {wallet} = useWallet()
+  const {loaded} = useHydration()
+
+  const {i18n} = useTranslation<string>()
+
+  const {submitDeviceID, submitDeviceNotiToken} = useTracking()
+  
+  useEffect(() => {
+    submitDeviceID()
+  }, [submitDeviceID])
+
+  useEffect(() => {
+    submitDeviceNotiToken()
+  }, [submitDeviceNotiToken])
+
+  useEffect(() => {
+    if (!loaded) return 
+    const networkItem = SUPPORTED_CHAINS.find((i) => i.chainID === chainId)
+    if (!networkItem) return;
+    networkStore.switchNetwork(networkItem)
+    
+  }, [loaded, chainId])
+
+  useEffect(() => {
+    i18n.changeLanguage(language)
+  }, [language])
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      const subscriptionBlur = AppState.addEventListener('blur', () => setIsAppInBackground(true));
+      const subscriptionFocus = AppState.addEventListener('focus', () => setIsAppInBackground(false));
+
+      // Cleanup the listener when the component unmounts
+      return () => {
+        subscriptionBlur && subscriptionBlur.remove();
+        subscriptionFocus.remove();
+      };
+    }
+  }, []);
+
+  if (!loaded) {
+    return <SplashScreen />
+  }
+
+  if (!isConnected && type !== "unknown") {
+    return <NoInternetScreen />
+  }
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <MenuProvider>
+          <QueryClientProvider client={queryClient}>
+            <NavigationContainer
+              linking={linking}
+              ref={navigationRef}
+              onReady={() => {
+                if (!navigationRef || !navigationRef.current) return
+                routeNameRef.current = navigationRef.current.getCurrentRoute()?.name;
+              }}
+              onStateChange={async () => {
+                if (!navigationRef || !navigationRef.current) return
+                const previousRouteName = routeNameRef.current;
+                const currentRouteName = navigationRef.current.getCurrentRoute()?.name;
+
+                if (!currentRouteName) return
+        
+                if (previousRouteName !== currentRouteName) {
+                  // await analytics().logScreenView({
+                  //   screen_name: currentRouteName,
+                  //   screen_class: currentRouteName,
+                  // });
+                }
+                routeNameRef.current = currentRouteName;
+              }}
+            >
+              <BottomSheetModalProvider>
+                <StatusBar
+                  barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+                  backgroundColor={backgroundStyle.backgroundColor}
+                  // backgroundColor="transparent"
+                />
+                {wallet.address === "" ? (
+                  <OnboardingStackScreen />
+                ) : (
+                  <>
+                    <MainTabNav />
+                    {!unlocked && (<AuthScreen />)}
+                  </>
+                )}
+              </BottomSheetModalProvider>
+            </NavigationContainer>
+          </QueryClientProvider>
+        </MenuProvider>
+        <ToastComponent />
+        {isAppInBackground && (
+          <View style={{...StyleSheet.absoluteFillObject, ...{backgroundColor: 'white', zIndex: 20}}} />
+        )}
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
+  );
+}
+
+function AppTest() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Hello, world!</Text>
+    </View>
+  );
+}
+
+export default App;

@@ -1,0 +1,187 @@
+[
+  {
+    "id": 1,
+    "quantity": 5,
+    "name": "Uni-Astro Eggs",
+    "image": "https://fakeimg.pl/24/",
+    "category": "U2 Game",
+    "items": [
+      {
+        "id": 1,
+        "name": "Eggs  #1",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 2,
+        "name": "Eggs #2",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 3,
+        "name": "Eggs #3",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 4,
+        "name": "Eggs #3",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 5,
+        "name": "Eggs #3",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 6,
+        "name": "Eggs #3",
+        "image": "https://fakeimg.pl/300/"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "quantity": 10,
+    "name": "MECH Cyper",
+    "image": "https://fakeimg.pl/24/",
+    "category": "U2 Game",
+    "items": [
+      {
+        "id": 1,
+        "name": "WARRIOR  #1",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 2,
+        "name": "WARRIOR #2",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 3,
+        "name": "WARRIOR #3",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 4,
+        "name": "WARRIOR #3",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 5,
+        "name": "WARRIOR #3",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 6,
+        "name": "WARRIOR #3",
+        "image": "https://fakeimg.pl/300/"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "quantity": 6,
+    "name": "THE MERGE",
+    "image": "https://fakeimg.pl/24/",
+    "category": "U2 Game",
+    "items": [
+      {
+        "id": 1,
+        "name": "ITEM  #1",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 2,
+        "name": "ITEM #2",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 3,
+        "name": "ITEM #3",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 4,
+        "name": "ITEM #3",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 5,
+        "name": "ITEM #3",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 6,
+        "name": "ITEM #3",
+        "image": "https://fakeimg.pl/300/"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "quantity": 8,
+    "name": "Unicorn Ultra",
+    "image": "https://fakeimg.pl/24/",
+    "category": "U2 Game",
+    "items": [
+      {
+        "id": 1,
+        "name": "ITEM  #1",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 2,
+        "name": "ITEM #2",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 3,
+        "name": "ITEM #3",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 4,
+        "name": "ITEM #3",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 5,
+        "name": "ITEM #3",
+        "image": "https://fakeimg.pl/300/"
+      },
+      {
+        "id": 6,
+        "name": "ITEM #3",
+        "image": "https://fakeimg.pl/300/"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "quantity": 5,
+    "name": "Uni-Astro Eggs",
+    "image": "https://fakeimg.pl/24/",
+    "category": "U2 Game",
+    "items": []
+  },
+  {
+    "id": 6,
+    "quantity": 10,
+    "name": "MECH Cyper",
+    "image": "https://fakeimg.pl/24/",
+    "items": []
+  },
+  {
+    "id": 7,
+    "quantity": 6,
+    "name": "THE MERGE",
+    "image": "https://fakeimg.pl/24/",
+    "items": []
+  },
+  {
+    "id": 8,
+    "quantity": 8,
+    "name": "Unicorn Ultra",
+    "image": "https://fakeimg.pl/24/",
+    "items": []
+  }
+]

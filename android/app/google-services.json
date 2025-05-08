@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "714693286925",
+    "project_id": "u2u-super-app",
+    "storage_bucket": "u2u-super-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714693286925:android:73a8bc793138fb7facc944",
+        "android_client_info": {
+          "package_name": "com.u2umobilewallet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE6f5Og_IzBC86RtQy6dpLcO7DGAKmu8A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
