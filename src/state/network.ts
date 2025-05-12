@@ -19,10 +19,14 @@ interface NetworkState {
 export const useNetworkStore = create<NetworkState>()(
   persist<NetworkState>(
     (set) => ({
-      name: "Testnet",
-      rpc: "https://rpc-nebulas-testnet.u2u.xyz",
-      chainId: "2484",
-      blockExplorer: "https://testnet.u2uscan.xyz",
+      // name: "Testnet",
+      // rpc: "https://rpc-nebulas-testnet.u2u.xyz",
+      // chainId: "2484",
+      // blockExplorer: "https://testnet.u2uscan.xyz",
+      name: "Mainnet",
+      rpc: "https://rpc-mainnet.u2u.xyz",
+      chainId: "39",
+      blockExplorer: "https://u2uscan.xyz",
       totalStakedAmount: "0",
       fetchTotalStakedAmount: () => set({ totalStakedAmount: "1" }),
       circulatingSupply: "0",

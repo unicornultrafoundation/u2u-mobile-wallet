@@ -41,7 +41,7 @@ import NoInternetScreen from './src/screen/NoInternetScreen';
 import { useTracking } from './src/hook/useTracking';
 import MainTabNav from './src/stack/MainTab';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useCrashlytics } from './src/hook/useCrashlytics';
+// import { useCrashlytics } from './src/hook/useCrashlytics';
 import ToastComponent from './src/component/Toast';
 import * as Notifications from 'expo-notifications';
 import crypto, {install} from "react-native-quick-crypto";
