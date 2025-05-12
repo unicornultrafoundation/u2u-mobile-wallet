@@ -8,11 +8,11 @@ export const MIN_LOCKUP_DURATION = 14
 export const APP_PASSWORD_RETRY_MAX = 5
 export const APP_LOCK_TIME = 30 * 60 * 1000 // 30 minutes
 
-export const NEWS_CATEGORY_ENDPOINT = `https://u2u.xyz/api/v1/categories`
-export const ALL_NEWS_ENDPOINT = `https://u2u.xyz/api/v1/blog`
-export const NEWS_BY_CATEGORY_ENDPOINT = `https://u2u.xyz/api/v1/blog/categories/`
-export const NEWS_DETAIL_ENDPOINT = `https://u2u.xyz/api/v1/blog/find/`
-export const FEATURED_NEWS_ENDPOINT = `https://u2u.xyz/api/v1/feature`
+export const NEWS_CATEGORY_ENDPOINT = `https://adx.u2u.xyz/api/v1/categories`
+export const ALL_NEWS_ENDPOINT = `https://adx.u2u.xyz/api/v1/blog`
+export const NEWS_BY_CATEGORY_ENDPOINT = `https://adx.u2u.xyz/api/v1/blog/categories/`
+export const NEWS_DETAIL_ENDPOINT = `https://adx.u2u.xyz/api/v1/blog/find/`
+export const FEATURED_NEWS_ENDPOINT = `https://adx.u2u.xyz/api/v1/feature`
 
 export const APP_REMOTE_CONFIG = Config.APP_REMOTE_CONFIG
 
