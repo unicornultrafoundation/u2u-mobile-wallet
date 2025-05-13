@@ -1,9 +1,8 @@
-import notifee from '@notifee/react-native';
 import * as Notifications from 'expo-notifications';
 
-export async function cancel(notificationId: string) {
-  await notifee.cancelNotification(notificationId);
-}
+// export async function cancel(notificationId: string) {
+//   await notifee.cancelNotification(notificationId);
+// }
 
 export async function onMessageReceivedNotifee(message: any) {
   console.log('A new FCM message arrived!', JSON.stringify(message));

@@ -6,9 +6,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useWallet } from "./useWallet";
 import { fetchAllNoti, markAllNotiRead, markNotiRead } from "../service/notifications";
 import { useNetwork } from "./useNetwork";
-import notifee, { EventType } from '@notifee/react-native';
-import { onMessageReceivedNotifee } from "../util/notifee";
 import * as ExpoNotifications from 'expo-notifications';
+import { onMessageReceivedNotifee } from "../util/notifee";
 
 ExpoNotifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -45,65 +44,62 @@ export const useNotifications = (status = 'all') => {
     return () => subscription.remove();
   }, [])
 
-  // Subscribe to events notifee
+  // Listen for notification presses/dismissals via Expo Notifications
   useEffect(() => {
-    return notifee.onForegroundEvent(({ type, detail }) => {
-      switch (type) {
-        case EventType.DISMISSED:
-          console.log('User dismissed notification', detail.notification);
-          break;
-        case EventType.PRESS:
-          const data = detail.notification?.data
-          const navigationId = data?.navigationId;
-          
-          if (navigationId === 'discover') {
-            const newsId = data?.newsId
-            if (newsId) {
-              navigation.navigate('DiscoverStack', {screen: 'NewsDetails', params: {id: newsId}})
-            } else {
-              navigation.navigate('DiscoverStack', {screen: 'Home'})
-            }
-          }
+    const subscription = ExpoNotifications.addNotificationResponseReceivedListener(response => {
+      const action = response.actionIdentifier;
+      const notification = response.notification;
+      const data = notification.request.content.data;
 
-          if (navigationId === 'external-sign') {
-            const signRequestId = data?.signRequestId
-            if (signRequestId) {
-              navigation.navigate(
-                'WalletStack', 
-                {
-                  screen: 'SignExternalRequest',
-                  params: {
-                    signRequestID: signRequestId
-                  }
-                }
-              )
-            }
-          }
+      // if (action === ExpoNotifications.NotificationResponseAction.DISMISSED) {
+      //   console.log('User dismissed notification', notification);
+      // } else 
+      if (action === ExpoNotifications.DEFAULT_ACTION_IDENTIFIER) {
+        const navigationId = data?.navigationId;
 
-          if (navigationId === 'ecosystem') {
-            const url = data?.url;
-            if (url) {
-              navigation.navigate('EcosystemStack', {screen: 'DAppWebView', params: {url: url}})
-            }
+        if (navigationId === 'discover') {
+          const newsId = data?.newsId;
+          if (newsId) {
+            navigation.navigate('DiscoverStack', { screen: 'NewsDetails', params: { id: newsId } });
+          } else {
+            navigation.navigate('DiscoverStack', { screen: 'Home' });
           }
+        }
 
-          if (navigationId === 'chat-detail') {
-            const conversationID = data?.conversationID;
-            if (conversationID) {
-              navigation.navigate('WalletStack', {screen: 'ChatDetail', params: {conversationID: conversationID}})
-            }
+        if (navigationId === 'external-sign') {
+          const signRequestId = data?.signRequestId;
+          if (signRequestId) {
+            navigation.navigate('WalletStack', {
+              screen: 'SignExternalRequest',
+              params: { signRequestID: signRequestId },
+            });
           }
-          break;
+        }
+
+        if (navigationId === 'ecosystem') {
+          const url = data?.url;
+          if (url) {
+            navigation.navigate('EcosystemStack', { screen: 'DAppWebView', params: { url } });
+          }
+        }
+
+        if (navigationId === 'chat-detail') {
+          const conversationID = data?.conversationID;
+          if (conversationID) {
+            navigation.navigate('WalletStack', { screen: 'ChatDetail', params: { conversationID } });
+          }
+        }
       }
     });
+    return () => subscription.remove();
   }, []);
 
   async function bootstrap() {
-    const initialNotification = await notifee.getInitialNotification();
-
-    if (initialNotification) {
-      console.log('Notification caused application to open', initialNotification.notification);
-      console.log('Press action used to open the app', initialNotification.pressAction);
+    // Get the notification response that opened the app, if any
+    const lastResponse = await ExpoNotifications.getLastNotificationResponseAsync();
+    if (lastResponse) {
+      console.log('Notification caused application to open', lastResponse.notification);
+      console.log('Action used to open the app', lastResponse.actionIdentifier);
     }
   }
 
