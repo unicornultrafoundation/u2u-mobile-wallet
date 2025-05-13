@@ -1,9 +1,7 @@
 import { usePreference } from "@/hook/usePreference";
-import Text from "@/component/Text";
 import { BottomSheetView, BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { styles } from "./styles";
 import { useTranslation } from "react-i18next";
-import theme from "@/theme";
 import TextInput from "@/component/TextInput";
 import { useState } from "react";
 import { useDexTokens } from "@/hook/swap/useDexTokens";

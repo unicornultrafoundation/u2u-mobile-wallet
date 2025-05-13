@@ -10,6 +10,7 @@ import useFetchDappList from '../../hook/useFetchDappList';
 
 const FeatureTab = () => {
   const {data: DATA, loading} = useFetchDappList();
+
   return (
     <ScrollView>
       {loading ? (

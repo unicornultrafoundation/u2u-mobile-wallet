@@ -354,5 +354,7 @@
   "slideToSwap": "Trượt để quy đổi",
   "noLockedStake": "Không có đầu tư khoá",
   "stakeQuotaAvailable": "Stake còn lại",
-  "validatorMaxCapExceed": "Stake còn lại của validator không đủ"
+  "validatorMaxCapExceed": "Stake còn lại của validator không đủ",
+  "cameraPermissionDescription": "Chúng tôi cần quyền truy cập camera của bạn",
+  "grantPermission": "Cấp quyền"
 }

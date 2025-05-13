@@ -34,10 +34,10 @@ const Scanner = ({onSuccess, onCancel, topContent}: {
     return (
       <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
         <Text style={[theme.typography.body.medium, { textAlign: 'center', marginBottom: 16 }]}>
-          {t('We need your permission to use the camera')}
+          {t('cameraPermissionDescription')}
         </Text>
         <Button onPress={requestPermission} style={{ borderRadius: 60, paddingVertical: 12, paddingHorizontal: 40 }}>
-          {t('grant permission')}
+          {t('grantPermission')}
         </Button>
         <Button
           onPress={onCancel}
@@ -64,8 +64,9 @@ const Scanner = ({onSuccess, onCancel, topContent}: {
   return (
     <View style={styles.container}>
       {topContent || (
-        <Text style={[theme.typography.headline.medium, {paddingHorizontal: 24}]}>\n          Scan QR code for {' '}
+        <Text style={[theme.typography.headline.medium, {paddingHorizontal: 24}]}>
           <Text style={theme.typography.headline.bold}>U2U super app</Text>
+          \n          Scan QR code for {' '}
         </Text>
       )}
       <CameraView

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View } from 'react-native';
 import { useFetchDelegator } from '../../../hook/useFetchDelegator';
 import { useWallet } from '../../../hook/useWallet';

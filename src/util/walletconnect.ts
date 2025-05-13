@@ -3,10 +3,14 @@ import { WC_PROJECT_ID } from '../config/constant'
 import WalletKit, { IWalletKit } from '@reown/walletkit';
 import * as Notifications from 'expo-notifications';
 
-const core = new Core({
-  projectId: WC_PROJECT_ID,
-  relayUrl: 'wss://relay.walletconnect.org'
-})
+let core;
+
+if (!core) {
+  core = new Core({
+    projectId: WC_PROJECT_ID,
+    relayUrl: 'wss://relay.walletconnect.org'
+  })
+}
 
 export let walletKit: IWalletKit;
 

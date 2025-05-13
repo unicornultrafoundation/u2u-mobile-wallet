@@ -60,7 +60,7 @@ const BannerSection: React.FC<BannerSectionProps> = ({
           const RenderItemComponent = renderItemComponent;
           return <View key={`banner-item-${item.id}`}><RenderItemComponent {...item} index={index} /></View>;
         }}
-        keyExtractor={(item: any) => item.id}
+        keyExtractor={(item: any) => item.title}
       />
     </Animated.View>
   );

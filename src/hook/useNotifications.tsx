@@ -33,78 +33,67 @@ export const useNotifications = (status = 'all') => {
   const {networkConfig} = useNetwork()
   const {wallet, getAuthObj} = useWallet()
   const navigation = useNavigation<any>()
-  useEffect(() => {
-    if (Platform.OS === 'ios') requestUserPermissionIOS()
-    else requestPermissionAndroid()
 
-    // const unsubscribe = messaging().onMessage(onMessageReceivedNotifee);
-
-    // return unsubscribe;
-    const subscription = ExpoNotifications.addNotificationReceivedListener(onMessageReceivedNotifee);
-    return () => subscription.remove();
-  }, [])
-
-  // Listen for notification presses/dismissals via Expo Notifications
-  useEffect(() => {
-    const subscription = ExpoNotifications.addNotificationResponseReceivedListener(response => {
-      const action = response.actionIdentifier;
-      const notification = response.notification;
-      const data = notification.request.content.data;
-
-      // if (action === ExpoNotifications.NotificationResponseAction.DISMISSED) {
-      //   console.log('User dismissed notification', notification);
-      // } else 
-      if (action === ExpoNotifications.DEFAULT_ACTION_IDENTIFIER) {
-        const navigationId = data?.navigationId;
-
-        if (navigationId === 'discover') {
-          const newsId = data?.newsId;
-          if (newsId) {
-            navigation.navigate('DiscoverStack', { screen: 'NewsDetails', params: { id: newsId } });
-          } else {
-            navigation.navigate('DiscoverStack', { screen: 'Home' });
-          }
-        }
-
-        if (navigationId === 'external-sign') {
-          const signRequestId = data?.signRequestId;
-          if (signRequestId) {
-            navigation.navigate('WalletStack', {
-              screen: 'SignExternalRequest',
-              params: { signRequestID: signRequestId },
-            });
-          }
-        }
-
-        if (navigationId === 'ecosystem') {
-          const url = data?.url;
-          if (url) {
-            navigation.navigate('EcosystemStack', { screen: 'DAppWebView', params: { url } });
-          }
-        }
-
-        if (navigationId === 'chat-detail') {
-          const conversationID = data?.conversationID;
-          if (conversationID) {
-            navigation.navigate('WalletStack', { screen: 'ChatDetail', params: { conversationID } });
-          }
-        }
+  function handleNotificationNavigation(data: any) {
+    const navigationId = data?.navigationId;
+    if (navigationId === 'discover') {
+      const newsId = data?.newsId;
+      if (newsId) {
+        navigation.navigate('DiscoverStack', {screen: 'NewsDetails', params: {id: newsId}});
+      } else {
+        navigation.navigate('DiscoverStack', {screen: 'Home'});
       }
-    });
-    return () => subscription.remove();
-  }, []);
-
-  async function bootstrap() {
-    // Get the notification response that opened the app, if any
-    const lastResponse = await ExpoNotifications.getLastNotificationResponseAsync();
-    if (lastResponse) {
-      console.log('Notification caused application to open', lastResponse.notification);
-      console.log('Action used to open the app', lastResponse.actionIdentifier);
+    }
+    if (navigationId === 'external-sign') {
+      const signRequestId = data?.signRequestId;
+      if (signRequestId) {
+        navigation.navigate('WalletStack', {
+          screen: 'SignExternalRequest',
+          params: {signRequestID: signRequestId}
+        });
+      }
+    }
+    if (navigationId === 'ecosystem') {
+      const url = data?.url;
+      if (url) {
+        navigation.navigate('EcosystemStack', {screen: 'DAppWebView', params: {url}});
+      }
+    }
+    if (navigationId === 'chat-detail') {
+      const conversationID = data?.conversationID;
+      if (conversationID) {
+        navigation.navigate('WalletStack', {screen: 'ChatDetail', params: {conversationID}});
+      }
     }
   }
 
   useEffect(() => {
-    bootstrap()
+    if (Platform.OS === 'ios') requestUserPermissionIOS()
+    else requestPermissionAndroid()
+
+    const receivedSub = ExpoNotifications.addNotificationReceivedListener(onMessageReceivedNotifee);
+    return () => receivedSub.remove();
+  }, [])
+
+  // Subscribe to notification response events (taps, etc.)
+  useEffect(() => {
+    const responseSub = ExpoNotifications.addNotificationResponseReceivedListener(response => {
+      const data = response.notification.request.content.data;
+      handleNotificationNavigation(data);
+    });
+    return () => responseSub.remove();
+  }, []);
+
+  // Handle initial notification if app was opened from quit state
+  useEffect(() => {
+    async function bootstrap() {
+      const response = await ExpoNotifications.getLastNotificationResponseAsync();
+      if (response) {
+        const data = response.notification.request.content.data;
+        handleNotificationNavigation(data);
+      }
+    }
+    bootstrap();
   }, []);
 
   const {data: notifications, fetchNextPage, isFetching, refetch} = useInfiniteQuery({

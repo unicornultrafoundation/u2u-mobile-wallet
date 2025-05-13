@@ -120,9 +120,9 @@ const DelegationItem = ({item}: {
     setShowUnstake(true)
   }
 
-  // if (actualStakedAmount.isEqualTo(0) && pendingRewards === "0") {
-  //   return null
-  // }
+  if (actualStakedAmount.isEqualTo(0) && pendingRewards === "0") {
+    return null
+  }
 
   return (
     <View

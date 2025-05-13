@@ -355,5 +355,7 @@
   "slideToSwap": "Slide to swap",
   "noLockedStake": "No locked stake",
   "stakeQuotaAvailable": "Stake quota available",
-  "validatorMaxCapExceed": "Exceed validator max cap"
+  "validatorMaxCapExceed": "Exceed validator max cap",
+  "cameraPermissionDescription": "We need your permission to use the camera",
+  "grantPermission": "Grant permission"
 }

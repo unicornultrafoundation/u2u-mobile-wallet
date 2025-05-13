@@ -27,7 +27,7 @@ import { useRemoteConfig } from '@/hook/useRemoteConfig';
 import BigNumber from 'bignumber.js';
 
 const LockModal = ({trigger, item}: {
-  trigger: () => JSX.Element,
+  trigger: () => React.JSX.Element,
   item: Validation
 }) => {
   const {preferenceTheme} = usePreference()

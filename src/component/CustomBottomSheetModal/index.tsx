@@ -1,20 +1,19 @@
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next';
-import { TouchableOpacity, View, Text, StyleProp, ViewStyle } from 'react-native';
+import { TouchableOpacity, View, Text, StyleProp, ViewStyle, Platform } from 'react-native';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';
 import theme from '../../theme';
 import Separator from '../Separator';
-import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 // import { useReducedMotion } from 'react-native-reanimated';
 
 interface Props {
-  modalRef?: React.RefObject<BottomSheetModalMethods>;
+  modalRef?: React.RefObject<BottomSheetModal | null>;
   title?: string;
-  trigger: JSX.Element;
-  triggerModal: JSX.Element;
+  trigger: React.JSX.Element;
+  triggerModal: React.JSX.Element;
   snapPoints: (string | number)[];
   // | Array<string | number>
   // | SharedValue<Array<string | number>>
@@ -48,7 +47,7 @@ const CustomBottomSheetModal = ({modalRef, name, title, trigger, triggerModal, s
 
   useEffect(() => {
     bottomSheetModalRef.current?.snapToIndex(_snapPoints.length - 1)
-  }, [bottomSheetModalRef.current])
+  }, [])
 
   return (
     <>
