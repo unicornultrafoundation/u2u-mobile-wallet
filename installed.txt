@@ -31,7 +31,6 @@ jail-monkey
 react
 react-i18next
 react-native
-react-native-config
 react-native-device-info
 react-native-encrypted-storage
 react-native-gesture-handler

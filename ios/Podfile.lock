@@ -1870,10 +1870,6 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-config (1.5.5):
-    - react-native-config/App (= 1.5.5)
-  - react-native-config/App (1.5.5):
-    - React-Core
   - react-native-encrypted-storage (4.0.3):
     - React-Core
   - react-native-get-random-values (1.11.0):
@@ -2822,7 +2818,6 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - "react-native-compat (from `../node_modules/@walletconnect/react-native-compat`)"
-  - react-native-config (from `../node_modules/react-native-config`)
   - react-native-encrypted-storage (from `../node_modules/react-native-encrypted-storage`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
@@ -3033,8 +3028,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/blur"
   react-native-compat:
     :path: "../node_modules/@walletconnect/react-native-compat"
-  react-native-config:
-    :path: "../node_modules/react-native-config"
   react-native-encrypted-storage:
     :path: "../node_modules/react-native-encrypted-storage"
   react-native-get-random-values:
@@ -3232,7 +3225,6 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: 444c5701aece79629bb73bd9e7ad8937ae65238c
   react-native-blur: 77d93dcc4aabc9ea137278b49dbb2dc005ad236b
   react-native-compat: 7edf2b8ddd93d92451b4dacf3ca92db50b536a50
-  react-native-config: 644074ab88db883fcfaa584f03520ec29589d7df
   react-native-encrypted-storage: 569d114e329b1c2c2d9f8c84bcdbe4478dda2258
   react-native-get-random-values: d16467cf726c618e9c7a8c3c39c31faa2244bbba
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187

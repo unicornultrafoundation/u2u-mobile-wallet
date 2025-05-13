@@ -1,5 +1,3 @@
-import Config from "react-native-config";
-
 export const VALIDATOR_COMMISSION = 15
 export const TABLE_LIMIT = 10;
 export const GAS_LIMIT_HARD = 1000000
@@ -14,13 +12,13 @@ export const NEWS_BY_CATEGORY_ENDPOINT = `https://adx.u2u.xyz/api/v1/blog/catego
 export const NEWS_DETAIL_ENDPOINT = `https://adx.u2u.xyz/api/v1/blog/find/`
 export const FEATURED_NEWS_ENDPOINT = `https://adx.u2u.xyz/api/v1/feature`
 
-export const APP_REMOTE_CONFIG = Config.APP_REMOTE_CONFIG
+export const APP_REMOTE_CONFIG = process.env.EXPO_PUBLIC_APP_REMOTE_CONFIG
 
-export const ERMIS_API_KEY = Config.ERMIS_API_KEY
-export const ERMIS_PROJECT_ID = Config.ERMIS_PROJECT_ID
-export const ERMIS_BASE_URL = Config.ERMIS_BASE_URL
+export const ERMIS_API_KEY = process.env.EXPO_PUBLIC_ERMIS_API_KEY
+export const ERMIS_PROJECT_ID = process.env.EXPO_PUBLIC_ERMIS_PROJECT_ID
+export const ERMIS_BASE_URL = process.env.EXPO_PUBLIC_ERMIS_BASE_URL
 
 export const DAPP_PROMOTION_NOTIFICATION_TOPIC = 'dapp-promotion'
 export const NEWS_NOTIFICATION_TOPIC = 'news'
 
-export const WC_PROJECT_ID = Config.WC_PROJECT_ID
+export const WC_PROJECT_ID = process.env.EXPO_PUBLIC_WC_PROJECT_ID
