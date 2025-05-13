@@ -22,6 +22,14 @@ export default function MainTabNav() {
   const {remoteConfig} = useRemoteConfig()
   // useChat()
 
+  const shouldHideEcosystemStack = () => {
+    if (!remoteConfig) return false
+    if (remoteConfig.versionInReview === DeviceInfo.getVersion() || `${remoteConfig.versionInReview}.0` === DeviceInfo.getVersion()) {
+      return true
+    }
+    return false
+  }
+
   return (
     <Tab.Navigator
       tabBar={({state, descriptors, navigation}) => <CustomBottomTab state={state} descriptors={descriptors} navigation={navigation} />}
@@ -30,7 +38,7 @@ export default function MainTabNav() {
     >
       <Tab.Screen name="DiscoverStack" component={DiscoverStackScreen} />
       {
-        remoteConfig && remoteConfig.versionInReview === DeviceInfo.getVersion() ? (
+        shouldHideEcosystemStack() ? (
           null
         ) : (
           <Tab.Screen name="EcosystemStack" component={EcosystemStackScreen} />
