@@ -92,7 +92,7 @@ android {
         applicationId 'com.u2umobilewallet'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 100
         versionName "1.45"
     }
     signingConfigs {
