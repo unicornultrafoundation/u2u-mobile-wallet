@@ -3,6 +3,7 @@ import { useNetwork } from './useNetwork';
 
 interface DAppMeta {
   description: string;
+  shortDescription: string;
   title: string;
   logoImg: string;
   backgroundImg: string;

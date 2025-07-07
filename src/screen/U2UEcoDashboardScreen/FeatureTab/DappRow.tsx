@@ -33,7 +33,7 @@ const DappRow = ({dappMeta}: {dappMeta: any}) => {
       <View style={{flex: 1, paddingHorizontal: 8}}>
         <Text style={[theme.typography.label.bold]}>{dappMeta.title}</Text>
         <Text style={[theme.typography.caption1.regular]}>
-          {dappMeta.description}
+          {dappMeta.shortDescription || dappMeta.description}
         </Text>
       </View>
       <View>
