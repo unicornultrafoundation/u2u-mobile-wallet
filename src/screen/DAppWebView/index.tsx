@@ -19,6 +19,8 @@ import WarningModal from './WarningModal';
 import useFetchDappList from '../../hook/useFetchDappList';
 import { getInAppProvider, isSupportedNetwork } from '@/util/blockchain';
 import ConfirmTxModal from '@/component/ConfirmTxModal';
+import { useHistoryStore } from '@/state/history';
+import { fetchHTML } from '@/util/request';
 
 // const SCALE_FOR_DESKTOP = 'const meta = document.createElement(\'meta\'); meta.setAttribute(\'content\', \'width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=1\'); meta.setAttribute(\'name\', \'viewport\'); document.getElementsByTagName(\'head\')[0].appendChild(meta); ';
 
@@ -30,6 +32,8 @@ const DAppWebView = () => {
   const route = useRoute<any>();
   const {resetTxState} = useTransaction();
   const {data: dappList} = useFetchDappList();
+
+  const {addHistory} = useHistoryStore()
 
   const appURL = route.params?.url || '';
   // const appURL = 'http://192.168.1.38:3000'
@@ -127,6 +131,19 @@ const DAppWebView = () => {
   useEffect(() => {
     setURL(appURL.replace(/{{slash}}/g, '/').replace(/%7B%7Bslash%7D%7D/g, '/'));
   }, [appURL]);
+
+  useEffect(() => {
+    (async () => {
+      const {title, favicon, description} = await fetchHTML(inputURL)
+      addHistory({
+        url: inputURL,
+        title: title,
+        description: inputURL,
+        image: favicon,
+        createdAt: Date.now(),
+      })
+    })()
+  }, [inputURL]);
 
   const handleConfirmTx = (txHash: string) => {
     const codeToRun = parseRun(requestIdForCallback, txHash);

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, FlatList, BackHandler, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {View, FlatList, BackHandler, TouchableOpacity, ActivityIndicator, Image} from 'react-native';
 import styles from './styles';
 import {useDebounce} from '../../hook/useDebounce';
 import DappRow from '../../screen/U2UEcoDashboardScreen/FeatureTab/DappRow';
@@ -13,6 +13,7 @@ import { usePreference } from '../../hook/usePreference';
 import { logErrorForMonitoring } from '../../hook/useCrashlytics';
 import { addHTTPS, getSearchURL, isDomain, isURL } from '../../util/string';
 import { useNavigation } from '@react-navigation/native';
+import { useHistoryStore } from '@/state/history';
 // Define the types
 type SearchResult = {
   // id: number;
@@ -38,6 +39,8 @@ const SearchComponent: React.FC = () => {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLayerVisible, setIsLayerVisible] = useState<boolean>(false);
   const [searching, setSearching] = useState(false)
+
+  const {history} = useHistoryStore()
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const {networkConfig} = useNetwork()
   const { t } = useTranslation();
@@ -136,6 +139,41 @@ const SearchComponent: React.FC = () => {
             backgroundColor: preferenceTheme.background.background,
             zIndex: 99,
           }}>
+            <View
+              style={{
+                marginHorizontal: 16,
+                gap: 12
+              }}
+            >
+              <Text>
+                {t('history')}
+              </Text>
+              <FlatList
+                horizontal
+                data={history.toReversed()}
+                keyExtractor={(item, index) => `item.url-${index}`}
+                contentContainerStyle={{gap: 12}}
+                renderItem={({item}) => (
+                  <TouchableOpacity
+                    style={{alignItems: 'center', width: 80, justifyContent: 'flex-start'}}
+                    onPress={() => {
+                      setIsLayerVisible(false)
+                      setSearchQuery('')
+                      navigation.navigate('DAppWebView', {url: item.url})
+                    }}
+                  >
+                    <Image source={{uri: item.image}} style={{width: 32, height: 32, borderRadius: 16, marginBottom: 4}} />
+                    <Text
+                      style={{fontSize: 12, color: preferenceTheme.text.primary, width: 80}}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                    >
+                      {item.title}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
           {searching ? (
             <ActivityIndicator />
           ) : (
