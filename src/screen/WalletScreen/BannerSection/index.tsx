@@ -1,17 +1,29 @@
-import React from 'react';
-import {Dimensions, Animated} from 'react-native';
+import React, { useMemo } from 'react';
+import {Dimensions, Animated, View} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
-import Step1 from './Step1';
-import Step2 from './Step2';
-import Step3 from './Step3';
-import Step4 from './Step4';
 import Separator from '../../../component/Separator';
 import {useFadeAnimation} from '../useFadeAnimation';
+import { useTranslation } from 'react-i18next';
+import AppViewStep from './AppViewStep';
+import { useNavigation } from '@react-navigation/native';
+import { useNetwork } from '@/hook/useNetwork';
+import { useRemoteConfig } from '@/hook/useRemoteConfig';
 
 const BannerSection = ({collapsed}: {collapsed: boolean}) => {
+  const {networkConfig} = useNetwork()
   const width = Dimensions.get('window').width;
 
   const {getAnimatedStyle} = useFadeAnimation(collapsed);
+  const { i18n } = useTranslation();
+  const navigation = useNavigation<any>()
+
+  const {remoteConfig} = useRemoteConfig()
+
+  const BANNER_CONFIG = remoteConfig.bannerConfig[i18n.language]
+
+  const filteredBanner = useMemo(() => {
+    return BANNER_CONFIG.filter((item) => !networkConfig ? false : item.network.includes(Number(networkConfig?.chainID)))
+  }, [networkConfig, BANNER_CONFIG])
 
   return (
     <Animated.View
@@ -24,16 +36,22 @@ const BannerSection = ({collapsed}: {collapsed: boolean}) => {
         loop
         width={width}
         height={147}
-        // autoPlay={true}
-        data={[
-          // Step1,
-          Step2,
-          Step3,
-          Step4
-        ]}
+        data={filteredBanner}
         scrollAnimationDuration={400}
         // onSnapToItem={(index) => console.log('current index:', index)}
-        renderItem={({item}) => item()}
+        renderItem={({item, index}) => {
+          return (
+            <AppViewStep
+              {...item}
+              position={`${index + 1}/${filteredBanner.length}`}
+              buttonOnPress={() => {
+                if (item.type === 'AppViewStep') {
+                  navigation.navigate(item.screen, item.screenParams)
+                }
+              }}
+            />
+          )
+        }}
       />
     </Animated.View>
   );

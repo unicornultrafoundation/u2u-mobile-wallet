@@ -1,18 +1,27 @@
-import React from 'react'
-import { Image, View } from 'react-native';
-import Step4Illus from "../../../asset/images/wallet_steps/step4.png"
-import Text from '../../../component/Text';
-import Button from '../../../component/Button';
-import theme from '../../../theme';
-import { useTranslation } from 'react-i18next';
-import { usePreference } from '../../../hook/usePreference';
-import { useNavigation } from '@react-navigation/native';
+import Button from "@/component/Button";
+import { usePreference } from "@/hook/usePreference";
+import theme from "@/theme";
+import { isURL } from "@/util/string";
+import { View, Text, Image } from "react-native";
 
-const Step3 = () => {
+interface AppViewStepProps {
+  title: string,
+  content: string,
+  buttonText: string,
+  buttonOnPress: () => void,
+  image: string,
+  position: string
+}
+
+export default function AppViewStep({
+  title,
+  content,
+  buttonText,
+  buttonOnPress,
+  image,
+  position
+}: AppViewStepProps) {
   const {preferenceTheme} = usePreference()
-  const { t } = useTranslation();
-
-  const navigation = useNavigation<any>()
 
   return (
     <View style={{flexDirection: 'row', paddingHorizontal: 16, paddingVertical: 12}}>
@@ -27,7 +36,7 @@ const Step3 = () => {
             }
           ]}
         >
-          {t('bannerTitle4')}
+          {position} {title}
         </Text>
         <Text
           style={[
@@ -39,21 +48,19 @@ const Step3 = () => {
             }
           ]}
         >
-          {t('bannerContent4')}
+          {content}
         </Text>
         <Button
           type='text'
           style={{justifyContent: 'flex-start'}}
-          onPress={() => {
-            navigation.navigate('DiscoverStack', {screen: 'Home'})
-          }}
+          onPress={buttonOnPress}
         >
-          {t('exploreNow')}
+          {buttonText} 
         </Button>
       </View>
       <View>
         <Image
-          source={Step4Illus}
+          source={isURL(image) ? {uri: image} : image as any}
           width={117}
           height={94}
           resizeMode="contain"
@@ -66,5 +73,3 @@ const Step3 = () => {
     </View>
   )
 }
-
-export default Step3;
