@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {JSX, useMemo} from 'react';
 import styles from './styles';
 import {Image} from 'react-native';
 import Text from '../Text';
