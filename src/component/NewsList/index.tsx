@@ -26,7 +26,7 @@ const NewsList = ({ news, hideTopNews = false }: Props) => {
   }, [news, rest]);
 
   const handleViewArticle = (article: Article) => {
-    navigation.navigate('NewsDetails', { article });
+    navigation.navigate('NewsDetails', {id: article.id});
   };
 
   return (

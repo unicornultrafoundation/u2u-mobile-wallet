@@ -5,13 +5,14 @@ import { useState } from "react";
 import { useDebounce } from "./useDebounce";
 
 export interface Article {
-  id: number;
+  id: string;
   title: string;
   description: string;
   date: string;
   category: string;
   thumbnail: string;
   content: string;
+  slices: any[];
 }
 
 export const useNews = () => {
@@ -40,6 +41,7 @@ export const useNews = () => {
       const nextPageParam = lastPage.length === 0 ? undefined : pages.length + 1
       return nextPageParam
     },
+    initialPageParam: 1
   })
 
   return {

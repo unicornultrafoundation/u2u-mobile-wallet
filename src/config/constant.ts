@@ -23,3 +23,5 @@ export const NEWS_NOTIFICATION_TOPIC = 'news'
 
 export const WC_PROJECT_ID = process.env.EXPO_PUBLIC_WC_PROJECT_ID
 export const JSONLINK_API_KEY = process.env.EXPO_PUBLIC_JSONLINK_API_KEY
+
+export const PRISMIC_ACCESS_TOKEN = "MC5hRWp6NVJBQUFCNEEyQW1Y.JSPvv71e77-977-977-9I34G77-9C--_ve-_ve-_vTx-bu-_ve-_vW3vv71sYxcEU--_vWZQ77-9ew"

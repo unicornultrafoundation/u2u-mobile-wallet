@@ -13,15 +13,16 @@ export const useNewsDetail = (id: string) => {
         const rs = await fetchNewsDetail(id)
         if (!rs.data) return {} as Article
         const rawNews = rs.data
-        const dateUnixNumber = Number(rawNews.create_at)
+
         return {
-          id: rawNews.news_id,
-          title: rawNews.news_title,
-          description: rawNews.meta_desc,
-          date: formatDate(new Date(dateUnixNumber * 1000), "MMMM dd, yyyy"),
-          category: rawNews.news_categories,
-          thumbnail: rawNews.news_avatar,
-          content: rawNews.news_description
+          id: rawNews.id,
+          title: rawNews.data.title,
+          description: rawNews.data.description,
+          date: formatDate(new Date(rawNews.last_publication_date), "MMMM dd, yyyy"),
+          category: rawNews.data.category.id,
+          thumbnail: rawNews.data.featured_image?.url || "",
+          content: "",
+          slices: rawNews.data.slices
         }
       } catch (error) {
         logErrorForMonitoring(error as any, 'fetch news detail fail')

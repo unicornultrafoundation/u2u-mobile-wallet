@@ -12,6 +12,8 @@
     "@ethersproject/shims": "^5.8.0",
     "@georstat/react-native-image-cache": "^3.1.0",
     "@gorhom/bottom-sheet": "^5.1.4",
+    "@prismicio/client": "^7.18.0",
+    "@prismicio/helpers": "^2.3.9",
     "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-native-clipboard/clipboard": "^1.16.2",
     "@react-native-community/blur": "^4.4.1",

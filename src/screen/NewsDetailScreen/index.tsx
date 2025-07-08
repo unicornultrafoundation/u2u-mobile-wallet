@@ -8,7 +8,8 @@ import {
   View,
 } from 'react-native';
 import { useStyles } from './styles';
-import Text from '../../component/Text';
+import Text from '@/component/Text';
+import { asHTML } from '@prismicio/helpers';
 import { color, darkTheme, lightTheme } from '../../theme/color';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DiscoverStackParamList } from '../../stack/DiscoverStack';
@@ -43,13 +44,12 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
     { name: 'website', url: '', icon: 'website' },
   ];
 
-  const newsDetailFromParams: Article = route.params.article || {};
+  // const newsDetailFromParams: Article = route.params.article || {};
   const articleId = (route.params as any).id || 0;
 
-  const {data: newsDetailFromAPI} = useNewsDetail(articleId)
-  const article = newsDetailFromAPI || newsDetailFromParams
-
-  const {news: pagedNews, isFetching} = useNewsByCategory(article.category)
+  const {data: newsDetailFromAPI, isFetching: isFetchingNewsDetail} = useNewsDetail(articleId)
+  const article = newsDetailFromAPI
+  const {news: pagedNews, isFetching} = useNewsByCategory(article?.category || "")
   
   const news = useMemo(() => {
     if (!pagedNews) return [] as Article[]
@@ -57,7 +57,12 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
   }, [pagedNews])
 
   const htmlSource = useMemo(() => {
-    return { html: article?.content || '' }
+    let content = ''
+    if (article?.slices && article?.slices.length > 0) {
+      content = asHTML(article.slices[0].primary.content) || ''
+    }
+
+    return {html: content}
   }, [article])
 
   const mixedStyle: Record<string, MixedStyleDeclaration> = useMemo(() => {
@@ -95,7 +100,7 @@ const NewsDetailScreen = ({ route, navigation }: Props) => {
     }, [route]),
   );
 
-  if (isFetching) {
+  if (isFetching || isFetchingNewsDetail) {
     return (
       <View style={[styles.container, { padding: 16 }]}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

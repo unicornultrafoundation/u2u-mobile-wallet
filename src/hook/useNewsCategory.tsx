@@ -16,12 +16,13 @@ export const useNewsCategory = () => {
     queryFn: async () => {
       try {
         const newsCateRs = await fetchNewsCategory()
-        return newsCateRs.data.map((i: any) => {
+        return newsCateRs.map((i: any) => {
           return {
-            id: i.categories_id,
-            name: i.categories_name,
-            slug: i.categories_slug,
-            parentID: i.parent_id || ""
+            id: i.id,
+            name: i.data.name,
+            slug: i.slugs[0],
+            // parentID: i.parent_id || ""
+            parentID: ""
           }
         })
       } catch (error) {
