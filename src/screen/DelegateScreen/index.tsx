@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { styles } from './styles';
-import Icon from '../../component/Icon';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Validator } from '../../service/staking';
 import AmountStep from './AmountStep';
@@ -60,7 +59,7 @@ const DelegateScreen = () => {
   }
 
   return (
-    <View
+    <SafeAreaView
       style={[
         styles.container,
         {
@@ -69,7 +68,7 @@ const DelegateScreen = () => {
       ]}
     >
       {renderStep()}
-    </View>
+    </SafeAreaView>
   )
 }
 
