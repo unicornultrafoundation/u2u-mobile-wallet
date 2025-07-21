@@ -13,6 +13,8 @@ import 'event-target-polyfill'
 import '@walletconnect/react-native-compat'
 import * as wcUtils from "@walletconnect/utils";
 import { Buffer } from "buffer";
+import { CacheManager } from '@georstat/react-native-image-cache';
+import { Dirs } from 'react-native-file-access';
 
 import React, { useEffect } from 'react';
 import { Linking, StatusBar, View, StyleSheet, AppState, Platform, Text } from 'react-native';
@@ -80,12 +82,23 @@ const origToString = (wcUtils as any).toString as (bytes: Uint8Array) => string;
   return origToString(bytes as Uint8Array);
 };
 
+// Cache image config
+CacheManager.config = {
+  baseDir: `${Dirs.CacheDir}/images_cache/`,
+  blurRadius: 15,
+  cacheLimit: 0,
+  maxRetries: 3 /* optional, if not provided defaults to 0 */,
+  retryDelay: 3000 /* in milliseconds, optional, if not provided defaults to 0 */,
+  sourceAnimationDuration: 1000,
+  thumbnailAnimationDuration: 1000,
+};
+
 const queryClient = new QueryClient()
 
 const NAVIGATION_IDS = ['discover', 'ecosystem', 'external-sign', 'chat-detail'];
 
 function buildDeepLinkFromNotificationData(data: any): string | null {
-  console.log('buildDeepLinkFromNotificationData', data)
+  // console.log('buildDeepLinkFromNotificationData data', data)
   const navigationId = data?.navigationId;
   if (!NAVIGATION_IDS.includes(navigationId)) {
     console.log('Unverified navigationId', navigationId)
@@ -149,7 +162,7 @@ const linking = {
     // Handle URL from expo push notifications
     const response = await Notifications.getLastNotificationResponseAsync();
 
-    const deeplinkURL = buildDeepLinkFromNotificationData(response?.notification.request.content.data.url);
+    const deeplinkURL = buildDeepLinkFromNotificationData(response?.notification.request.content.data);
     if (typeof deeplinkURL === 'string') {
       return deeplinkURL;
     }

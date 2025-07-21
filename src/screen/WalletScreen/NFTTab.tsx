@@ -123,10 +123,10 @@ const NFTTab = ({ collapsed, onResetParentView }: { collapsed: boolean, onResetP
           </View>
         )}
 
-        {data.map((item) => {
+        {data.map((item, index) => {
           if (item.isGroup) {
             return (
-              <NFTGroups groupItem={item as NFTCollectionGroups} />
+              <NFTGroups key={`nft-group-${index}`} groupItem={item as NFTCollectionGroups} />
             )
           } else {
             const itemWithBalance = dataWithBalance.find((i) => i.id === (item as NFTCollectionMeta).id)
