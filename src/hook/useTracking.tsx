@@ -111,12 +111,12 @@ export const useTracking = () => {
   ])
 
   const submitDeviceNotiToken = useCallback(async () => {
+    return
     try {
       if (!networkConfig || !networkConfig.api_endpoint || !wallet || !wallet.privateKey) return
       // const token = await messaging().getToken();
-      console.log('before submitDeviceNotiToken')
       const token = await Notifications.getDevicePushTokenAsync();
-      // const expoToken = await Notifications.getExpoPushTokenAsync();
+      const expoToken = await Notifications.getExpoPushTokenAsync();
 
       const endpoint = `${networkConfig.api_endpoint}${SUBMIT_DEVICE_NOTIFICATION_TOKEN}`
 
@@ -129,7 +129,7 @@ export const useTracking = () => {
       
       const raw = JSON.stringify({
         tokens: [token.data],
-        // expoTokens: [expoToken.data],
+        expoTokens: [expoToken.data],
         address: wallet.address
       });
       const requestOptions: Record<string, any> = {

@@ -13,11 +13,11 @@ interface ItemProps {
   backgroundImg: string;
 }
 const ImageItem = ({index, title, description, backgroundImg}: ItemProps) => {
-  const width = Dimensions.get('window').width;
+  const width = Dimensions.get('window').width || 375; // Fallback width
 
-  const CARD_LENGTH = width * 0.8;
-  const SPACING = width * 0.05;
-  const SIDECARD_LENGTH = (width * 0.18) / 2;
+  const CARD_LENGTH = Math.max(width * 0.8, 300); // Ensure minimum width
+  const SPACING = Math.max(width * 0.05, 16); // Ensure minimum spacing
+  const SIDECARD_LENGTH = Math.max((width * 0.18) / 2, 32); // Ensure minimum side card length
   const size = useSharedValue(0.8);
   const opacity = useSharedValue(1);
 

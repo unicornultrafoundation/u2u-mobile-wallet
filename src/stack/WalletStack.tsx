@@ -12,18 +12,19 @@ import WalletManagementScreen from '../screen/WalletManagementScreen';
 import ImportWithPrivateKeyScreen from '../screen/ImportWithPrivateKeyScreen';
 import ExportPrivateKeyScreen from '../screen/ExportPrivateKeyScreen';
 import NotificationScreen from '../screen/NotificationScreen';
-// import ChatDashboardScreen from '../screen/ChatDashboardScreen';
-// import ChatSettingScreen from '../screen/ChatSettingScreen';
-// import BlockedContactScreen from '../screen/BlockedContactScreen';
-// import ArchivedConversationsScreen from '../screen/ArchivedConversationsScreen';
-// import ContactListScreen from '../screen/ContactListScreen';
-// import ContactDetailScreen from '../screen/ContactDetailScreen';
-// import ChatDetailScreen from '../screen/ChatDetailScreen';
+import ChatDashboardScreen from '../screen/ChatDashboardScreen';
+import ChatSettingScreen from '../screen/ChatSettingScreen';
+import BlockedContactScreen from '../screen/BlockedContactScreen';
+import ArchivedConversationsScreen from '../screen/ArchivedConversationsScreen';
+import ContactListScreen from '../screen/ContactListScreen';
+import ContactDetailScreen from '../screen/ContactDetailScreen';
+import ChatDetailScreen from '../screen/ChatDetailScreen';
 import WCScanQRCode from '../screen/WCScanQRCode';
 import WCSignRequest from '../screen/WCSignRequest';
 import WCConnectedSessionScreen from '../screen/WCConnectedSessionScreen';
 import WCSessionDetailScreen from '../screen/WCSessionDetail';
 import SwapScreen from '@/screen/SwapScreen';
+import UniversalAccountScreen from '@/screen/UniversalAccountScreen';
 
 const WalletStack = createNativeStackNavigator();
 
@@ -47,13 +48,13 @@ const WalletStackScreen = () => {
       <WalletStack.Screen name="ExportPrivateKey" component={ExportPrivateKeyScreen} />
       <WalletStack.Screen name="Notification" component={NotificationScreen} />
       {/* CHAT SCREENS */}
-      {/* <WalletStack.Screen name="ChatDashboard" component={ChatDashboardScreen} />
+      <WalletStack.Screen name="ChatDashboard" component={ChatDashboardScreen} />
       <WalletStack.Screen name="ChatSetting" component={ChatSettingScreen} />
       <WalletStack.Screen name="BlockedContact" component={BlockedContactScreen} />
       <WalletStack.Screen name="ArchivedConversations" component={ArchivedConversationsScreen} />
       <WalletStack.Screen name="ContactList" component={ContactListScreen} />
       <WalletStack.Screen name="ContactDetail" component={ContactDetailScreen} />
-      <WalletStack.Screen name="ChatDetail" component={ChatDetailScreen} /> */}
+      <WalletStack.Screen name="ChatDetail" component={ChatDetailScreen} />
       {/* WALLET CONNECT SCREENS */}
       <WalletStack.Screen name="WCScanQRCode" component={WCScanQRCode} />
       <WalletStack.Screen name="WCSignRequest" component={WCSignRequest} />
@@ -61,6 +62,8 @@ const WalletStackScreen = () => {
       <WalletStack.Screen name="WCSessionDetail" component={WCSessionDetailScreen} />
       {/* SWAP SCREENS */}
       <WalletStack.Screen name="Swap" component={SwapScreen} />
+      {/* UNIVERSAL ACCOUNT SCREENS */}
+      <WalletStack.Screen name="UniversalAccount" component={UniversalAccountScreen} />
     </WalletStack.Navigator>
   );
 }

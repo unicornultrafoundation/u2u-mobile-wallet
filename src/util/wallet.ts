@@ -29,16 +29,33 @@ export const generateMnemonic = () => {
 };
 
 export const signTypedData = async (
-  {domain, types, message}: {
+  {domain, types, message, primaryType}: {
     domain: ethers.TypedDataDomain,
     types: Record<string, Array<ethers.TypedDataField>>,
-    message: Record<string, any>
+    message: Record<string, any>,
+    primaryType?: string
   }, 
   privateKey: string
 ) => {
   const signer = new ethers.Wallet(privateKey)
-  const signature = await signer.signTypedData(domain, types, message)
+  
+  // In ethers v6, signTypedData only accepts domain, types, and message
+  // The primaryType is handled internally by ethers or should be included in the types structure
+  // If you need to specify a primaryType, ensure it's the first key in your types object
+  // or ethers will automatically determine it from the message structure
 
+  const finalTypes: Record<string, Array<ethers.TypedDataField>> = {}
+  if (primaryType) {
+    finalTypes[primaryType] = types[primaryType]
+  }
+
+  Object.keys(types).forEach(key => {
+    if (!finalTypes[key]) {
+      finalTypes[key] = types[key]
+    }
+  })
+
+  const signature = await signer.signTypedData(domain, finalTypes, message)
   return signature
 }
 

@@ -8,7 +8,7 @@ import SettingStackScreen from "./SettingStack";
 import { useRemoteConfig } from "../hook/useRemoteConfig";
 import DeviceInfo from "react-native-device-info";
 import { useNotifications } from "../hook/useNotifications";
-// import { useChat } from "../hook/chat/useChat";
+import { useChat } from "@/hook/chat/useChat";
 import useInitializeWalletKit from "../hook/walletconnect/useInitializeWalletKit";
 import { useWalletKitEventsManager } from "../hook/walletconnect/useWalletKitEventsManager";
 
@@ -20,7 +20,7 @@ export default function MainTabNav() {
 
   useNotifications()
   const {remoteConfig} = useRemoteConfig()
-  // useChat()
+  useChat()
 
   const shouldHideEcosystemStack = () => {
     if (!remoteConfig) return false

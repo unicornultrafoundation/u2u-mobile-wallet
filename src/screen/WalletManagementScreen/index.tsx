@@ -269,6 +269,28 @@ export default function WalletManagementScreen() {
           </View>
           <Icon name="chevron-right" width={24} height={24}/>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingBottom: 12,
+            gap: 8,
+            width: '100%'
+          }}
+          onPress={() => navigation.navigate('UniversalAccount')}
+          disabled={loading}>
+          <Icon name="plus" width={24} height={24}/>
+          <View style={{flex: 1}}>
+            <Text type="body-medium" color="title">
+              {t('universalAccount')}
+            </Text>
+            <Text type="caption1-medium" color="secondary">
+              {t('accessUniversalAccount')}
+            </Text>
+          </View>
+          <Icon name="chevron-right" width={24} height={24}/>
+        </TouchableOpacity>
       </ScrollView>
       <EditWalletModal
         visible={editWalletModalVisible}

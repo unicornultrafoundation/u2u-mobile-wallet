@@ -13,3 +13,8 @@ export const MARK_ALL_NOTI_READ_ENDPOINT = '/notifications/read-all'
 export const MARK_SINGLE_NOTI_READ = '/notifications/read'
 
 export const GET_SIGNREQUEST = '/sign-request'
+
+
+// Universal Account endpoint
+export const UA_GET_NONCE_ENDPOINT = 'https://api-dev.u3id.io/api/v3/developer/auth/web3/nonce'
+export const UA_AUTH_WITH_MESSAGE_ENDPOINT = 'https://api-dev.u3id.io/api/v3/developer/auth/web3'

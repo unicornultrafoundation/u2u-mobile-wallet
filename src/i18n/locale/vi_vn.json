@@ -356,5 +356,9 @@
   "stakeQuotaAvailable": "Stake còn lại",
   "validatorMaxCapExceed": "Stake còn lại của validator không đủ",
   "cameraPermissionDescription": "Chúng tôi cần quyền truy cập camera của bạn",
-  "grantPermission": "Cấp quyền"
+  "grantPermission": "Cấp quyền",
+  "acceptInvitation": "Người dùng {{userWallet}} đã chấp nhận yêu cầu {{dateString}}",
+  "rejectInvitation": "Người dùng {{userWallet}} đã từ chối yêu cầu {{dateString}}",
+  "universalAccount": "Universal Account",
+  "accessUniversalAccount": "Truy cập universal account trên U2U network"
 }

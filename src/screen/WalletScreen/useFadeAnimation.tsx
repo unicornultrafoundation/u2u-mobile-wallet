@@ -11,7 +11,7 @@ export const useFadeAnimation = (showAnim: boolean) => {
       duration: 1000,
       easing: Easing.linear,
       useNativeDriver: false,
-    });
+    }).start();
   };
 
   const fadeIn = () => {
@@ -21,18 +21,23 @@ export const useFadeAnimation = (showAnim: boolean) => {
       duration: 1000,
       easing: Easing.linear,
       useNativeDriver: false,
-    });
+    }).start();
   };
 
   const getAnimatedStyle = (
     initialValue: number,
     transformedValue: number = 0,
-  ) =>
-    animatedValue.interpolate({
+  ) => {
+    // Ensure values are valid numbers
+    const safeInitialValue = isNaN(initialValue) ? 0 : initialValue;
+    const safeTransformedValue = isNaN(transformedValue) ? 0 : transformedValue;
+    
+    return animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [initialValue, transformedValue],
+      outputRange: [safeInitialValue, safeTransformedValue],
       extrapolate: 'clamp',
     });
+  };
 
   useEffect(() => {
     showAnim ? fadeOut() : fadeIn();

@@ -91,7 +91,7 @@ const Drawer = () => {
               {t('wcConnectedSession')}
             </Text>
           </TouchableOpacity>
-          {/* {enableChat && (
+          {enableChat && (
             <TouchableOpacity
               style={{flexDirection: 'row', gap: 8, paddingVertical: 17}}
               onPress={() => {
@@ -104,7 +104,7 @@ const Drawer = () => {
                 {t('chat')}
               </Text>
             </TouchableOpacity>
-          )} */}
+          )}
         </View>
       </Animated.View>
     </>

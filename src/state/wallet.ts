@@ -10,6 +10,7 @@ export interface Wallet {
   mnemonic: string;
   path: string;
   name?: string;
+  smartAccountAddress?: string;
 }
 
 interface WalletState {
@@ -46,6 +47,7 @@ export const useWalletStore = create(
         mnemonic: '',
         path: '',
         name: '',
+        smartAccountAddress: '',
       },
       walletMetadata: [],
       seedPhrase: '',
@@ -58,7 +60,6 @@ export const useWalletStore = create(
             walletMetadata: [{name: '', address: _wallet.address}],
             wallet: _wallet,
             generatedPath: [get().selectedIndex],
-
           });
         } catch(e) {
           throw e

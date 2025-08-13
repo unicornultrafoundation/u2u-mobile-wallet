@@ -357,5 +357,9 @@
   "stakeQuotaAvailable": "Stake quota available",
   "validatorMaxCapExceed": "Exceed validator max cap",
   "cameraPermissionDescription": "We need your permission to use the camera",
-  "grantPermission": "Grant permission"
+  "grantPermission": "Grant permission",
+  "acceptInvitation": "User {{userWallet}} accept invitation {{dateString}}",
+  "rejectInvitation": "User {{userWallet}} reject invitation {{dateString}}",
+  "universalAccount": "Universal Account",
+  "accessUniversalAccount": "Access your smart account on U2U network"
 }

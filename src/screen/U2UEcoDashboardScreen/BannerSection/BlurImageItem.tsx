@@ -28,10 +28,10 @@ const BlurredImageItem = ({
   index,
   gradientColor
 }: BlurredImageItemProps) => {
-  const width = Dimensions.get('window').width;
+  const width = Dimensions.get('window').width || 375; // Fallback width
   const { t } = useTranslation();
-  const SPACING = width * 0.1;
-  const SIDECARD_LENGTH = (width * 0.18) / 2;
+  const SPACING = Math.max(width * 0.1, 32); // Ensure minimum spacing
+  const SIDECARD_LENGTH = Math.max((width * 0.18) / 2, 32); // Ensure minimum side card length
   const size = useSharedValue(0.8);
   const opacity = useSharedValue(1);
 

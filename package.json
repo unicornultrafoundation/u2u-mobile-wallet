@@ -37,6 +37,7 @@
     "@walletconnect/utils": "^2.20.2",
     "bignumber.js": "^9.3.0",
     "date-fns": "^4.1.0",
+    "ermis-chat-js-sdk": "^1.6.6",
     "ethereum-checksum-address": "^0.0.8",
     "ethers": "^6.13.7",
     "event-target-polyfill": "^0.0.4",

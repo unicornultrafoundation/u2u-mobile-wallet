@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js";
 import { Wallet } from "../state/wallet";
 
 export const truncate = (str: string, len: number) => {
-  return `${str.substring(0, Math.min(len, str.length))}...`
+  return `${str.substring(0, Math.min(len, str.length))}${str.length > len ? '...' : ''}`
 }
 
 export const shortenAddress = (str: string, head: number, tail: number) => {
