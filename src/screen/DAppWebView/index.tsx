@@ -115,9 +115,9 @@ const DAppWebView = () => {
       .then((myResourceContent: any) => {
         setResource(
           myResourceContent
-            .replace('{{RPC_URL}}', networkConfig?.rpc)
-            .replace('{{WALLET_ADDRESS}}', wallet.address)
-            .replace('{{CHAIN_ID}}', networkConfig?.chainID)
+            .replace(/{{RPC_URL}}/g, networkConfig?.rpc)
+            .replace(/{{WALLET_ADDRESS}}/g, wallet.address)
+            .replace(/{{CHAIN_ID}}/g, networkConfig?.chainID)
         );
         setLoading(false);
       }
