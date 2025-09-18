@@ -63,6 +63,14 @@
         {
           "ios": {
             "useFrameworks": "static"
+          },
+          "android": {
+            "packagingOptions": {
+              "pickFirst": ["**/libcrypto.so"]
+            },
+            "ndk": {
+              "abiFilters": ["armeabi-v7a", "arm64-v8a"]
+            }
           }
         }
       ],
