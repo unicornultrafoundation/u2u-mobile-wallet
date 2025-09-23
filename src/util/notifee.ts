@@ -1,4 +1,4 @@
-import * as Notifications from 'expo-notifications';
+// import * as Notifications from 'expo-notifications';
 
 // export async function cancel(notificationId: string) {
 //   await notifee.cancelNotification(notificationId);
@@ -20,7 +20,8 @@ export async function onMessageReceivedNotifee(message: any) {
   //   data: message.data
   // });
 
-  Notifications.scheduleNotificationAsync({
+  const ExpoNotifications = await import('expo-notifications');
+  ExpoNotifications.scheduleNotificationAsync({
     content: {
       title: message.notification.title,
       body: message.notification.body,

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useMemo, useState, useEffect } from 'react';
+import React, { useCallback, useRef, useMemo, useState, useEffect, JSX } from 'react';
 import { BottomSheetModal, BottomSheetScrollView, BottomSheetView, TouchableOpacity } from '@gorhom/bottom-sheet';
 import styles from './styles';
 import { ActivityIndicator } from 'react-native';

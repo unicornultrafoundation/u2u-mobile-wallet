@@ -1,7 +1,6 @@
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import { SafeAreaView, TouchableOpacity, View } from "react-native";
 // import messaging from '@react-native-firebase/messaging';
-import * as Notifications from 'expo-notifications';
 import { useGlobalStore } from "../../state/global";
 import { useCallback, useEffect } from "react";
 import { styles } from "./styles";

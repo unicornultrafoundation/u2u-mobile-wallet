@@ -1,12 +1,15 @@
 import { Platform } from 'react-native';
-import * as Notifications from 'expo-notifications';
+// (Device guard removed)
+// Avoid top-level import; dynamically import inside functions
 import { IosAuthorizationStatus } from 'expo-notifications';
 
 export const requestUserPermissionIOS = async (): Promise<boolean> => {
   if (Platform.OS !== 'ios') {
     return true;
   }
-  const { status, ios } = await Notifications.requestPermissionsAsync({
+  // proceed even on simulator
+  const ExpoNotifications = await import('expo-notifications');
+  const { status, ios } = await ExpoNotifications.requestPermissionsAsync({
     ios: {
       allowAlert: true,
       allowBadge: true,
@@ -24,7 +27,8 @@ export const requestPermissionAndroid = async (): Promise<boolean> => {
   if (Platform.OS !== 'android') {
     return true;
   }
-  const { status } = await Notifications.requestPermissionsAsync();
+  const ExpoNotifications = await import('expo-notifications');
+  const { status } = await ExpoNotifications.requestPermissionsAsync();
   const enabled = status === 'granted';
   // if (enabled) {
   //   console.log('Authorization status android:', status);

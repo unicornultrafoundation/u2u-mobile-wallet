@@ -45,7 +45,6 @@ import MainTabNav from './src/stack/MainTab';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 // import { useCrashlytics } from './src/hook/useCrashlytics';
 import ToastComponent from './src/component/Toast';
-import * as Notifications from 'expo-notifications';
 import crypto, {install} from "react-native-quick-crypto";
 import { ethers } from "ethers";
 
@@ -160,6 +159,7 @@ const linking = {
     // const deeplinkURL = buildDeepLinkFromNotificationData(message?.data);
 
     // Handle URL from expo push notifications
+    const Notifications = await import('expo-notifications');
     const response = await Notifications.getLastNotificationResponseAsync();
 
     const deeplinkURL = buildDeepLinkFromNotificationData(response?.notification.request.content.data);
@@ -184,22 +184,25 @@ const linking = {
     // });
 
     // Listen to expo push notifications
-    const subscription = Notifications.addNotificationResponseReceivedListener(response => {
-      const url = buildDeepLinkFromNotificationData(response.notification.request.content.data.url);
+    let subscription: { remove: () => void } | null = null;
+    import('expo-notifications').then((Notifications) => {
+      subscription = Notifications.addNotificationResponseReceivedListener(response => {
+        const url = buildDeepLinkFromNotificationData(response.notification.request.content.data.url);
 
-      // Any custom logic to see whether the URL needs to be handled
-      //...
+        // Any custom logic to see whether the URL needs to be handled
+        //...
 
-      // Let React Navigation handle the URL
-      if (typeof url === 'string') {
-        listener(url);
-      }
+        // Let React Navigation handle the URL
+        if (typeof url === 'string') {
+          listener(url);
+        }
+      });
     });
 
     return () => {
       linkingSubscription.remove();
       // unsubscribe();
-      subscription.remove();
+      subscription && subscription.remove();
     };
   },
 }

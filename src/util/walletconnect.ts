@@ -1,7 +1,6 @@
 import { Core } from '@walletconnect/core'
 import { WC_PROJECT_ID } from '../config/constant'
 import WalletKit, { IWalletKit } from '@reown/walletkit';
-import * as Notifications from 'expo-notifications';
 
 let core;
 
@@ -34,8 +33,8 @@ export async function createWalletKit() {
     // const clientId =
     //   await walletKit.engine.signClient.core.crypto.getClientId();
     // console.log('WalletConnect ClientID: ', clientId);
-
-    const subscription = Notifications.addPushTokenListener(async (token) => {
+    const ExpoNotifications = await import('expo-notifications');
+    const subscription = ExpoNotifications.addPushTokenListener(async (token) => {
       await walletKit.registerDeviceToken({
         // token: await messaging().getToken(), // device token
         token: token.data,
