@@ -138,8 +138,8 @@ const DAppWebView = () => {
       addHistory({
         url: inputURL,
         title: title,
-        description: inputURL,
-        image: favicon,
+        description: description || '',
+        image: favicon || '',
         createdAt: Date.now(),
       })
     })()
