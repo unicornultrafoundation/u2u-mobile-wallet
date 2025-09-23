@@ -34,7 +34,7 @@ export function useWallet() {
   }, [walletMetadata]);
 
   const getAuthObj = useCallback(async () => {
-    if (!wallet) {
+    if (!wallet || !wallet.privateKey) {
       return {
         wallet: '',
         signature: '',

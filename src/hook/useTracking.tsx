@@ -5,8 +5,9 @@ import DeviceInfo from "react-native-device-info"
 import { useLocalStore } from "../state/local"
 import { useWallet } from "./useWallet"
 import { firebase } from "@react-native-firebase/app-check"
-import * as Notifications from 'expo-notifications';
+// Avoid importing expo-notifications at module scope to prevent simulator side effects
 import { logErrorForMonitoring } from "./useCrashlytics"
+// removed Device guard
 import { Platform } from "react-native"
 
 export const useTracking = () => {
@@ -83,6 +84,7 @@ export const useTracking = () => {
       // myHeaders.append("X-Firebase-AppCheck", appToken)
 
       const authHeaders = await getAuthObj()
+      if (!authHeaders.wallet) return
       myHeaders.append("wallet", authHeaders.wallet);
       myHeaders.append("signature", authHeaders.signature);
       myHeaders.append("timestamp", authHeaders.timestamp.toString());
@@ -114,8 +116,9 @@ export const useTracking = () => {
     try {
       if (!networkConfig || !networkConfig.api_endpoint || !wallet || !wallet.privateKey) return
       // const token = await messaging().getToken();
-      const token = await Notifications.getDevicePushTokenAsync();
-      const expoToken = await Notifications.getExpoPushTokenAsync();
+      const ExpoNotifications = await import('expo-notifications');
+      const token = await ExpoNotifications.getDevicePushTokenAsync();
+      const expoToken = await ExpoNotifications.getExpoPushTokenAsync();
 
       const endpoint = `${networkConfig.api_endpoint}${SUBMIT_DEVICE_NOTIFICATION_TOKEN}`
 

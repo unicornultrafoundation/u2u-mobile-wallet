@@ -6,17 +6,10 @@ import { useNavigation } from "@react-navigation/native";
 import { useWallet } from "./useWallet";
 import { fetchAllNoti, markAllNotiRead, markNotiRead } from "../service/notifications";
 import { useNetwork } from "./useNetwork";
-import * as ExpoNotifications from 'expo-notifications';
+// (Device guard removed)
 import { onMessageReceivedNotifee } from "../util/notifee";
 
-ExpoNotifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-    shouldShowBanner: true,
-    shouldShowList: true,
-  }),
-});
+// Delay import and handler setup until runtime to avoid simulator side effects
 
 export interface Notifications {
   id: string;
@@ -68,25 +61,47 @@ export const useNotifications = (status = 'all') => {
   }
 
   useEffect(() => {
-    if (Platform.OS === 'ios') requestUserPermissionIOS()
-    else requestPermissionAndroid()
+    let receivedSub: { remove: () => void } | null = null;
+    (async () => {
+      const ExpoNotifications = await import('expo-notifications');
+      ExpoNotifications.setNotificationHandler({
+        handleNotification: async () => ({
+          shouldPlaySound: false,
+          shouldSetBadge: false,
+          shouldShowBanner: true,
+          shouldShowList: true,
+        }),
+      });
 
-    const receivedSub = ExpoNotifications.addNotificationReceivedListener(onMessageReceivedNotifee);
-    return () => receivedSub.remove();
+      if (Platform.OS === 'ios') await requestUserPermissionIOS();
+      else await requestPermissionAndroid();
+
+      receivedSub = ExpoNotifications.addNotificationReceivedListener(onMessageReceivedNotifee);
+    })();
+    return () => {
+      receivedSub?.remove?.();
+    };
   }, [])
 
   // Subscribe to notification response events (taps, etc.)
   useEffect(() => {
-    const responseSub = ExpoNotifications.addNotificationResponseReceivedListener(response => {
-      const data = response.notification.request.content.data;
-      handleNotificationNavigation(data);
-    });
-    return () => responseSub.remove();
+    let responseSub: { remove: () => void } | null = null;
+    (async () => {
+      const ExpoNotifications = await import('expo-notifications');
+      responseSub = ExpoNotifications.addNotificationResponseReceivedListener((response) => {
+        const data = response.notification.request.content.data;
+        handleNotificationNavigation(data);
+      });
+    })();
+    return () => {
+      responseSub?.remove?.();
+    };
   }, []);
 
   // Handle initial notification if app was opened from quit state
   useEffect(() => {
     async function bootstrap() {
+      const ExpoNotifications = await import('expo-notifications');
       const response = await ExpoNotifications.getLastNotificationResponseAsync();
       if (response) {
         const data = response.notification.request.content.data;
