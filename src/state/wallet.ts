@@ -10,12 +10,11 @@ export interface Wallet {
   mnemonic: string;
   path: string;
   name?: string;
-  smartAccountAddress?: string;
 }
 
 interface WalletState {
   wallet: Wallet;
-  walletMetadata: { name: string, address: string }[];
+  walletMetadata: { name: string, address: string, walletType: 'seed' | 'pk' | 'ua' }[];
   seedPhrase: string;
   selectedIndex: number;
   accessWallet: (seedPhrase: string) => void;
@@ -32,8 +31,8 @@ interface WalletState {
   addPrivateKey: (pk: string) => void;
   removePrivateKey: (pk: string) => void;
   selectedIndexPK: number;
-  selectMode: 'pk' | 'seed';
-  savePKIndex: (pk: string) => void
+  savePKIndex: (pk: string) => void;
+  selectMode: 'pk' | 'seed' | 'ua';
 }
 
 export const WALLET_STORE_KEY = 'wallet-storage'
@@ -47,7 +46,7 @@ export const useWalletStore = create(
         mnemonic: '',
         path: '',
         name: '',
-        smartAccountAddress: '',
+        walletType: undefined,
       },
       walletMetadata: [],
       seedPhrase: '',
@@ -57,7 +56,7 @@ export const useWalletStore = create(
           const _wallet = getWalletFromMnemonic(seedPhrase, get().selectedIndex);
           set({
             seedPhrase,
-            walletMetadata: [{name: '', address: _wallet.address}],
+            walletMetadata: [{name: '', address: _wallet.address, walletType: 'seed'}],
             wallet: _wallet,
             generatedPath: [get().selectedIndex],
           });
@@ -83,7 +82,7 @@ export const useWalletStore = create(
           newPath += 1;
         }
         const _wallet = getWalletFromMnemonic(get().seedPhrase, newPath);
-        currentMetadata.push({name: '', address: _wallet.address})
+        currentMetadata.push({name: '', address: _wallet.address, walletType: 'seed'})
 
         const newOrder = [...get().walletOrder]
         newOrder.push(_wallet.address)
@@ -107,7 +106,7 @@ export const useWalletStore = create(
 
         if (metadataIndex === -1) {
           const walletMetadata = get().walletMetadata;
-          walletMetadata.push({address, name})
+          walletMetadata.push({address, name, walletType: 'seed'})
           set({
             walletMetadata: [...walletMetadata],
             editingWallet: undefined,
@@ -167,7 +166,7 @@ export const useWalletStore = create(
         newOrder.push(_wallet.address)
 
         const currentMetadata = get().walletMetadata
-        currentMetadata.push({name: '', address: _wallet.address})
+        currentMetadata.push({name: '', address: _wallet.address, walletType: 'pk'})
 
         set({
           privateKeys: current,
@@ -225,7 +224,7 @@ export const useWalletStore = create(
         set(newState)
       },
       selectedIndexPK: 0,
-      selectMode: 'seed'
+      selectMode: 'seed',
     }),
     {
       name: WALLET_STORE_KEY, // unique name

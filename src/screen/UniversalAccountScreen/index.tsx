@@ -8,12 +8,21 @@ import { useNavigation } from "@react-navigation/native";
 import { typography } from "@/theme/typography";
 import { useTranslation } from "react-i18next";
 import Button from "@/component/Button";
+import { ethers } from "ethers";
+import { authWithUniversalAccount } from "@/service/universalAccount";
 
 const UniversalAccountScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<any>()
   const { darkMode } = usePreferenceStore();
   const preferenceTheme = darkMode ? darkTheme : lightTheme;
+
+  const handleCreateNewUAWallet = async () => {
+    const wallet = ethers.Wallet.createRandom()
+    const privateKey = wallet.privateKey
+    const authRSJSON = await authWithUniversalAccount(privateKey)
+    console.log('authRSJSON', authRSJSON)
+  }
 
   return (
     <SafeAreaView
@@ -50,7 +59,7 @@ const UniversalAccountScreen = () => {
       >
         <Button
           color="primary"
-          onPress={() => {}}
+          onPress={handleCreateNewUAWallet}
         >
           {t('createNewWallet')}
         </Button>

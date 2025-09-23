@@ -269,7 +269,8 @@ export default function WalletManagementScreen() {
           </View>
           <Icon name="chevron-right" width={24} height={24}/>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* Generate Universal Account from private key */}
+        {/* <TouchableOpacity
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -290,7 +291,7 @@ export default function WalletManagementScreen() {
             </Text>
           </View>
           <Icon name="chevron-right" width={24} height={24}/>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </ScrollView>
       <EditWalletModal
         visible={editWalletModalVisible}

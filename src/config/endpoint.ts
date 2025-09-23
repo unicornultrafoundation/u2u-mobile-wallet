@@ -16,5 +16,5 @@ export const GET_SIGNREQUEST = '/sign-request'
 
 
 // Universal Account endpoint
-export const UA_GET_NONCE_ENDPOINT = 'https://api-dev.u3id.io/api/v3/developer/auth/web3/nonce'
-export const UA_AUTH_WITH_MESSAGE_ENDPOINT = 'https://api-dev.u3id.io/api/v3/developer/auth/web3'
+export const UA_GET_NONCE_ENDPOINT = 'https://api-dev.u3id.io/api/v3/auth/web3/nonce'
+export const UA_AUTH_WITH_MESSAGE_ENDPOINT = 'https://api-dev.u3id.io/api/v3/auth/web3'
