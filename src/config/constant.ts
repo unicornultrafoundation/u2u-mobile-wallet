@@ -14,10 +14,6 @@ export const FEATURED_NEWS_ENDPOINT = `https://adx.u2u.xyz/api/v1/feature`
 
 export const APP_REMOTE_CONFIG = process.env.EXPO_PUBLIC_APP_REMOTE_CONFIG
 
-export const ERMIS_API_KEY = process.env.EXPO_PUBLIC_ERMIS_API_KEY
-export const ERMIS_PROJECT_ID = process.env.EXPO_PUBLIC_ERMIS_PROJECT_ID
-export const ERMIS_BASE_URL = process.env.EXPO_PUBLIC_ERMIS_BASE_URL
-
 export const DAPP_PROMOTION_NOTIFICATION_TOPIC = 'dapp-promotion'
 export const NEWS_NOTIFICATION_TOPIC = 'news'
 

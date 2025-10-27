@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import { toChecksumAddress } from 'ethereum-checksum-address'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAddress } from 'ethers';
 
 export const LOCAL_STORE_KEY = 'local-storage'
 
@@ -41,12 +41,6 @@ interface LocalState {
   setSubscribePromotion: (subscribePromotion: boolean) => void;
   subscribeNews: boolean;
   setSubscribeNews: (subscribeNews: boolean) => void;
-  enableChat: boolean;
-  setEnableChat: (enableChat: boolean) => void;
-  // chatToken: Record<string, string>;
-  // setChatToken: (address:string, chatToken: string) => void;
-  // chatRefreshToken: Record<string, string>;
-  // setChatRefreshToken: (address:string, chatRefreshToken: string) => void;
 }
 
 export const useLocalStore = create<LocalState>()(
@@ -78,12 +72,12 @@ export const useLocalStore = create<LocalState>()(
         current.push({
           name: token.name,
           symbol: token.symbol,
-          address: toChecksumAddress(token.address),
+          address: getAddress(token.address),
           decimals: token.decimals
         })
 
         set({ customTokenList: current })
-        get().toggleToken(toChecksumAddress(token.address))
+        get().toggleToken(getAddress(token.address))
       },
       recentAddress: [],
       addRecentAddress: (address: string) => {
@@ -124,28 +118,6 @@ export const useLocalStore = create<LocalState>()(
       setSubscribeNews: (subscribeNews: boolean) => {
         set({ subscribeNews })
       },
-      enableChat: false,
-      setEnableChat: (enableChat: boolean) => {
-        set({ enableChat })
-      },
-      // chatToken: {},
-      // setChatToken: (address:string, chatToken: string) => {
-      //   const currentChatToken = get().chatToken
-      //   currentChatToken[address] = chatToken
-
-      //   set({
-      //     chatToken: {...currentChatToken}
-      //   })
-      // },
-      // chatRefreshToken: {},
-      // setChatRefreshToken: (address:string, chatRefreshToken: string) => {
-      //   const currentChatRefreshToken = get().chatRefreshToken
-      //   currentChatRefreshToken[address] = chatRefreshToken
-
-      //   set({
-      //     chatRefreshToken: {...currentChatRefreshToken}
-      //   })
-      // },
     }),
     {
       name: LOCAL_STORE_KEY, // unique name

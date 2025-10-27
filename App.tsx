@@ -94,7 +94,7 @@ CacheManager.config = {
 
 const queryClient = new QueryClient()
 
-const NAVIGATION_IDS = ['discover', 'ecosystem', 'external-sign', 'chat-detail'];
+const NAVIGATION_IDS = ['discover', 'ecosystem', 'external-sign'];
 
 function buildDeepLinkFromNotificationData(data: any): string | null {
   // console.log('buildDeepLinkFromNotificationData data', data)
@@ -106,10 +106,6 @@ function buildDeepLinkFromNotificationData(data: any): string | null {
   if (navigationId === 'external-sign') {
     const signRequestID = data?.signRequestId
     return `u2umobilewallet://wallet/external-sign/${signRequestID}`;
-  }
-  if (navigationId === 'chat-detail') {
-    const conversationID = data?.conversationID;
-    return `u2umobilewallet://wallet/chat-detail/${conversationID}`;
   }
   if (navigationId === 'discover') {
     const newsId = data?.newsId
@@ -133,7 +129,6 @@ const linking = {
         screens: {
           WCSignRequest: 'wallet/external-sign/:signRequestID',
           WCScanQRCode: 'wallet/session-approval/:sessionID',
-          ChatDetail: 'wallet/chat-detail/:conversationID'
         }
       },
       EcosystemStack: {

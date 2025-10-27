@@ -25,8 +25,6 @@ export default function ExperimentalSettingScreen() {
     }, [route])
   )
 
-  const {enableChat, setEnableChat} = useLocalStore()
-
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: preferenceTheme.background.background}}>
       <View style={styles.header}>
@@ -43,7 +41,7 @@ export default function ExperimentalSettingScreen() {
         <View />
       </View>
       <View>
-        <View style={styles.settingItem}>
+        {/* <View style={styles.settingItem}>
           <View style={styles.settingItemTextContainer}>
             <Text style={theme.typography.body.medium}>
               {t('chatFeature')}
@@ -65,7 +63,7 @@ export default function ExperimentalSettingScreen() {
               }}
             />
           </View>
-        </View>
+        </View> */}
       </View>
     </SafeAreaView>
   )
