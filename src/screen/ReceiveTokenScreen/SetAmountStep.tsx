@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-import { KeyboardAvoidingView, Platform, TextInput, View } from 'react-native';
-import { styles } from './styles';
-import { usePreferenceStore } from '../../state/preferences';
-import { darkTheme, lightTheme } from '../../theme/color';
+import { Platform, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import SetAmountStepHeader from './SetAmountStepHeader';
 import Text from '../../component/Text';
 import theme from '../../theme';

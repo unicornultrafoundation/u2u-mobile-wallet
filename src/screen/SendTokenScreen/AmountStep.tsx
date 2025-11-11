@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Keyboard, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Keyboard, Platform, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { styles } from './styles';
 import Icon from '../../component/Icon';
 import Text from '../../component/Text';
@@ -73,7 +74,7 @@ const AmountStep = ({onNextStep, onBack}: {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <KeyboardAvoidingView
-        style={{flex: 1, paddingBottom: getPhonePaddingBottom() + 24}}
+        style={{flex: 1, paddingBottom: 42}}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={24}
       >

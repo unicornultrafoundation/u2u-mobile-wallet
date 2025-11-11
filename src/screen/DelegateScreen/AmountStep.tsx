@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, View } from 'react-native';
+import { Platform, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { styles } from './styles';
 import Icon from '../../component/Icon';
 import Text from '../../component/Text';
@@ -8,7 +9,6 @@ import theme from '../../theme';
 import Button from '../../component/Button';
 import { formatNumberString, getDigit, parseNumberFormatter } from '../../util/string';
 import { useTransactionStore } from '../../state/transaction';
-import { useTokenBalance } from '../../hook/useTokenBalance';
 import { useWallet } from '../../hook/useWallet';
 import { SvgUri } from 'react-native-svg';
 import BigNumber from 'bignumber.js';

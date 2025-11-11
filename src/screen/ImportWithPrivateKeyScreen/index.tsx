@@ -1,4 +1,5 @@
-import { KeyboardAvoidingView, Platform, TouchableOpacity, View } from "react-native";
+import { Platform, TouchableOpacity, View } from "react-native";
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { usePreferenceStore } from "../../state/preferences";
 import { darkTheme, lightTheme } from "../../theme/color";
 import { styles } from "./styles";

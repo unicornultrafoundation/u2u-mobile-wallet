@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Keyboard, KeyboardAvoidingView, Platform, SafeAreaView, TouchableWithoutFeedback, View } from "react-native";
+import { Keyboard, Platform, TouchableWithoutFeedback, View } from "react-native";
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { styles } from "./styles";
 import Text from "../../component/Text";
 import { useTranslation } from "react-i18next";

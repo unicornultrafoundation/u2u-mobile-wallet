@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { KeyboardAvoidingView, View } from 'react-native'
+import React, { useCallback, useState } from 'react'
+import { View } from 'react-native'
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import styles from './styles'
 import { useFocusEffect, useRoute } from '@react-navigation/native'
 import { useGlobalStore } from '../../state/global'

@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { Platform } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { styles } from './styles';
 import { usePreferenceStore } from '../../state/preferences';
 import { darkTheme, lightTheme } from '../../theme/color';

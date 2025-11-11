@@ -220,7 +220,7 @@ const SettingScreen = () => {
             />
           </View>
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.navigate('ExperimentalSetting')}
         >
           {
@@ -230,7 +230,7 @@ const SettingScreen = () => {
               description: 'experimentalFeaturesDescription'
             })
           }
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </ScrollView>
       <Separator/>
       {renderFooter()}

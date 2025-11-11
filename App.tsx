@@ -15,6 +15,7 @@ import * as wcUtils from "@walletconnect/utils";
 import { Buffer } from "buffer";
 import { CacheManager } from '@georstat/react-native-image-cache';
 import { Dirs } from 'react-native-file-access';
+import { KeyboardProvider } from "react-native-keyboard-controller";
 
 import React, { useEffect } from 'react';
 import { Linking, StatusBar, View, StyleSheet, AppState, Platform, Text } from 'react-native';
@@ -270,55 +271,57 @@ function App(): React.JSX.Element {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider>
-        <MenuProvider>
-          <QueryClientProvider client={queryClient}>
-            <NavigationContainer
-              linking={linking}
-              ref={navigationRef}
-              onReady={() => {
-                if (!navigationRef || !navigationRef.current) return
-                routeNameRef.current = navigationRef.current.getCurrentRoute()?.name;
-              }}
-              onStateChange={async () => {
-                if (!navigationRef || !navigationRef.current) return
-                const previousRouteName = routeNameRef.current;
-                const currentRouteName = navigationRef.current.getCurrentRoute()?.name;
+      <KeyboardProvider>
+        <SafeAreaProvider>
+          <MenuProvider>
+            <QueryClientProvider client={queryClient}>
+              <NavigationContainer
+                linking={linking}
+                ref={navigationRef}
+                onReady={() => {
+                  if (!navigationRef || !navigationRef.current) return
+                  routeNameRef.current = navigationRef.current.getCurrentRoute()?.name;
+                }}
+                onStateChange={async () => {
+                  if (!navigationRef || !navigationRef.current) return
+                  const previousRouteName = routeNameRef.current;
+                  const currentRouteName = navigationRef.current.getCurrentRoute()?.name;
 
-                if (!currentRouteName) return
-        
-                if (previousRouteName !== currentRouteName) {
-                  // await analytics().logScreenView({
-                  //   screen_name: currentRouteName,
-                  //   screen_class: currentRouteName,
-                  // });
-                }
-                routeNameRef.current = currentRouteName;
-              }}
-            >
-              <BottomSheetModalProvider>
-                <StatusBar
-                  barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-                  backgroundColor={backgroundStyle.backgroundColor}
-                  // backgroundColor="transparent"
-                />
-                {wallet.address === "" ? (
-                  <OnboardingStackScreen />
-                ) : (
-                  <>
-                    <MainTabNav />
-                    {!unlocked && (<AuthScreen />)}
-                  </>
-                )}
-              </BottomSheetModalProvider>
-            </NavigationContainer>
-          </QueryClientProvider>
-        </MenuProvider>
-        <ToastComponent />
-        {isAppInBackground && (
-          <View style={{...StyleSheet.absoluteFillObject, ...{backgroundColor: 'white', zIndex: 20}}} />
-        )}
-      </SafeAreaProvider>
+                  if (!currentRouteName) return
+          
+                  if (previousRouteName !== currentRouteName) {
+                    // await analytics().logScreenView({
+                    //   screen_name: currentRouteName,
+                    //   screen_class: currentRouteName,
+                    // });
+                  }
+                  routeNameRef.current = currentRouteName;
+                }}
+              >
+                <BottomSheetModalProvider>
+                  <StatusBar
+                    barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+                    backgroundColor={backgroundStyle.backgroundColor}
+                    // backgroundColor="transparent"
+                  />
+                  {wallet.address === "" ? (
+                    <OnboardingStackScreen />
+                  ) : (
+                    <>
+                      <MainTabNav />
+                      {!unlocked && (<AuthScreen />)}
+                    </>
+                  )}
+                </BottomSheetModalProvider>
+              </NavigationContainer>
+            </QueryClientProvider>
+          </MenuProvider>
+          <ToastComponent />
+          {isAppInBackground && (
+            <View style={{...StyleSheet.absoluteFillObject, ...{backgroundColor: 'white', zIndex: 20}}} />
+          )}
+        </SafeAreaProvider>
+      </KeyboardProvider>
     </GestureHandlerRootView>
   );
 }
